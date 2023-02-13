@@ -1,6 +1,5 @@
-import styles from "./header.module.css";
-import Button from "./SharedComponents/Button";
-import "../app/globals.css";
+import styles from "../Header/header.module.css";
+import Button from "../SharedComponents/Button/Button";
 
 export default function Header() {
   return (
