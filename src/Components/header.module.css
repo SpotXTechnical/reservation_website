@@ -1,0 +1,22 @@
+.header_wrapper {
+  padding-block: 16px;
+}
+.offers {
+  color: var(--orange-color);
+}
+.menu_item {
+  color: var(--grey-color);
+}
+.notification_number {
+  font-size: 10px;
+  color: var(--white-color);
+  background-color: var(--blue-color);
+  border-radius: 50%;
+  padding: 1px 5px;
+  position: absolute;
+  bottom: 25px;
+  right: 0px;
+}
+.notifications_container {
+  position: relative;
+}
