@@ -8,6 +8,7 @@
   justify-content: center;
   color: var(--white-color);
   flex-direction: column;
+  margin-bottom: 80px;
 }
 .heading_main_title {
   font-size: 32px;

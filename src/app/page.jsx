@@ -2,6 +2,7 @@ import { Inter } from "@next/font/google";
 import styles from "./page.module.css";
 import Header from "@/Components/Header/Header";
 import HomeHeading from "@/Components/HomeHeading/HomeHeading";
+import RegionsHomeList from "@/Components/RegionsHomeList/RegionsHomeList";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../app/globals.css";
 
@@ -12,6 +13,7 @@ export default function Home() {
     <main className={styles.main}>
       <Header />
       <HomeHeading />
+      <RegionsHomeList />
     </main>
   );
 }

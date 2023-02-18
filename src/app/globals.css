@@ -3,6 +3,11 @@
   src: url("../../public/fonts/Montserrat-Regular.woff");
 }
 
+@font-face {
+  font-family: "Montserrat Bold";
+  src: url("../../public/fonts/Montserrat-Bold.woff");
+}
+
 body {
   margin: 0px;
   font-size: 16px !important;
@@ -13,9 +18,11 @@ body {
   --orange-color: #ff6b00;
   --grey-color: #a2a2a2;
   --Montserrat-Regular: "Montserrat Regular";
+  --Montserrat-Bold: "Montserrat Bold";
   --blue-color: #2396cc;
   --dark-color: #0c0c0c;
   --yellow-color: #fcd95c;
+  --light-blue-color: #44bcb7;
 }
 .container_wrapper {
   margin-inline: 80px;

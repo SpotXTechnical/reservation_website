@@ -1,0 +1,17 @@
+.regionsList_container {
+  margin: 0 80px 80px 80px;
+}
+.regionsList_header {
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.regionsList {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+}
+.regionsList > div {
+  width: 25%;
+}

@@ -1,0 +1,7 @@
+.view_all {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--light-blue-color);
+  cursor: pointer;
+  margin-bottom: 0px;
+}
