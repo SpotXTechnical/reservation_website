@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import Header from "@/Components/Header/Header";
 import HomeHeading from "@/Components/HomeHeading/HomeHeading";
 import RegionsHomeList from "@/Components/RegionsHomeList/RegionsHomeList";
+import MostPopularList from "@/Components/MostPopularList/MostPopularList";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../app/globals.css";
 
@@ -14,6 +15,7 @@ export default function Home() {
       <Header />
       <HomeHeading />
       <RegionsHomeList />
+      <MostPopularList />
     </main>
   );
 }

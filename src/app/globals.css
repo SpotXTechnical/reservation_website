@@ -17,11 +17,13 @@ body {
   --white-color: #ffffff;
   --orange-color: #ff6b00;
   --grey-color: #a2a2a2;
+  --ligth-grey-color: #7b7b7b;
   --Montserrat-Regular: "Montserrat Regular";
   --Montserrat-Bold: "Montserrat Bold";
   --blue-color: #2396cc;
   --dark-color: #0c0c0c;
   --yellow-color: #fcd95c;
+  --mustard-color: #fda82a;
   --light-blue-color: #44bcb7;
 }
 .container_wrapper {

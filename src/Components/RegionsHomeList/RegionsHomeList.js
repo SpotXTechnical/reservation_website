@@ -20,12 +20,8 @@ const RegionsHomeList = () => {
       </div>
       <div className={styles.regionsList}>
         {data.length > 0
-          ? data.map((region, id) => (
-              <RegionsCard
-                id={id}
-                name={region.name}
-                image={region?.images[0]?.url}
-              />
+          ? data.map(({ name, images }, id) => (
+              <RegionsCard id={id} name={name} image={images[0]?.url} />
             ))
           : [...Array(4)].map((e, i) => (
               <ShimmerThumbnail key={i} height={250} rounded />

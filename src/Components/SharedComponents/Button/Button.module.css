@@ -1,5 +1,9 @@
 .button_wrapper {
-  background: linear-gradient(180deg, #44bcb7 -16.5%, #2396cc 54.7%);
+  background: linear-gradient(
+    180deg,
+    var(--light-blue-color) -16.5%,
+    var(--blue-color) 54.7%
+  );
   box-shadow: 0px 2px 30px rgb(0 0 0 / 10%);
   border-radius: 12px;
   padding: 10px 25px;
