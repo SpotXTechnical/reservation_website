@@ -30,6 +30,8 @@ const MostPopularList = () => {
                   beds,
                   default_price,
                   is_favourite,
+                  active_ranges,
+                  nearest_active_ranges
                 },
                 id
               ) => (
@@ -42,6 +44,8 @@ const MostPopularList = () => {
                   beds={beds}
                   type={type}
                   is_favourite={is_favourite}
+                  active_ranges={active_ranges}
+                  nearest_active_ranges={nearest_active_ranges}
                 />
               )
             )
