@@ -4,6 +4,7 @@ import Header from "@/Components/Header/Header";
 import HomeHeading from "@/Components/HomeHeading/HomeHeading";
 import RegionsHomeList from "@/Components/RegionsHomeList/RegionsHomeList";
 import OffersList from "@/Components/OffersList/OffersList";
+import SubscribeUs from "@/Components/SubscribeUs/SubscribeUs";
 import MostPopularList from "@/Components/MostPopularList/MostPopularList";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../app/globals.css";

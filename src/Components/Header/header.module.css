@@ -3,9 +3,11 @@
 }
 .offers {
   color: var(--orange-color);
+  font-size: 14px;
 }
 .menu_item {
   color: var(--grey-color);
+  font-size: 14px;
 }
 .notification_number {
   font-size: 10px;

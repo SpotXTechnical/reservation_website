@@ -8,6 +8,11 @@
   src: url("../../public/fonts/Montserrat-Bold.woff");
 }
 
+@font-face {
+  font-family: "Montserrat Semi Bold";
+  src: url("../../public/fonts/Montserrat-SemiBold.woff");
+}
+
 body {
   margin: 0px;
   font-size: 16px !important;
@@ -19,6 +24,7 @@ body {
   --grey-color: #a2a2a2;
   --ligth-grey-color: #7b7b7b;
   --Montserrat-Regular: "Montserrat Regular";
+  --Montserrat-Semi-Bold: "Montserrat Semi Bold";
   --Montserrat-Bold: "Montserrat Bold";
   --blue-color: #2396cc;
   --dark-color: #0c0c0c;
@@ -27,11 +33,11 @@ body {
   --light-blue-color: #44bcb7;
 }
 .container_wrapper {
-  margin-inline: 80px;
+  padding-inline: 80px;
 }
 
 .second_container_wrapper {
-  margin-inline: 100px;
+  padding-inline: 100px;
 }
 
 .cursor-pointer {
