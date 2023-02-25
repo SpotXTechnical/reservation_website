@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import Header from "@/Components/Header/Header";
 import HomeHeading from "@/Components/HomeHeading/HomeHeading";
 import RegionsHomeList from "@/Components/RegionsHomeList/RegionsHomeList";
+import OffersList from "@/Components/OffersList/OffersList";
 import MostPopularList from "@/Components/MostPopularList/MostPopularList";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../app/globals.css";
@@ -16,6 +17,8 @@ export default function Home() {
       <HomeHeading />
       <RegionsHomeList />
       <MostPopularList />
+      <OffersList />
+      <SubscribeUs />
     </main>
   );
 }

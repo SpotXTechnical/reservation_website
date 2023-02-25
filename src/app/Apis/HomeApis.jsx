@@ -21,7 +21,21 @@ export const getRegions = async () => {
 export const getMostPopularProperties = async () => {
   try {
     const res = await fetch(
-      `${BASEURL}/api/v1/user/units?order_type=desc&order_by=default_price&per_page=12&page=1&most_popular:1`,
+      `${BASEURL}/api/v1/user/units?order_type=desc&order_by=default_price&per_page=12&page=1&most_popular=1`,
+      { Headers }
+    );
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};
+
+export const getRegionsWithSubRegionsList = async () => {
+  try {
+    const res = await fetch(
+      `${BASEURL}/api/v1/regions?with_sub=1&most_popular=1`,
       { Headers }
     );
     const data = await res.json();
