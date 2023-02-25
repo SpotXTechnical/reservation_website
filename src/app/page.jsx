@@ -1,6 +1,7 @@
 import { Inter } from "@next/font/google";
 import styles from "./page.module.css";
 import Header from "@/Components/Header/Header";
+import Footer from "@/Components/Footer/Footer";
 import HomeHeading from "@/Components/HomeHeading/HomeHeading";
 import RegionsHomeList from "@/Components/RegionsHomeList/RegionsHomeList";
 import OffersList from "@/Components/OffersList/OffersList";
@@ -20,6 +21,7 @@ export default function Home() {
       <MostPopularList />
       <OffersList />
       <SubscribeUs />
+      <Footer />
     </main>
   );
 }

@@ -31,6 +31,7 @@ body {
   --yellow-color: #fcd95c;
   --mustard-color: #fda82a;
   --light-blue-color: #44bcb7;
+  --dark-blue-color: #1a7873;
 }
 .container_wrapper {
   padding-inline: 80px;

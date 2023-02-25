@@ -1,4 +1,4 @@
-import styles from "../Header/header.module.css";
+import styles from "./header.module.css";
 import Button from "../SharedComponents/Button/Button";
 
 export default function Header() {
