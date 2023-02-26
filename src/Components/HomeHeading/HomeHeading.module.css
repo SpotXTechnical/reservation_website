@@ -14,6 +14,7 @@
   font-size: 32px;
   text-transform: capitalize;
   margin-bottom: 40px;
+  text-align: center;
 }
 .heading_search_input {
   background: var(--white-color);
@@ -41,4 +42,17 @@
   position: absolute;
   top: 12px;
   left: 12px;
+}
+
+@media screen and (max-width: 768px) {
+  .heading_search_input {
+    width: 70vw;
+  }
+  .heading_btn {
+    width: 28vw;
+    height: 52px;
+  }
+  .heading_search_input {
+    text-indent: 40px;
+  }
 }

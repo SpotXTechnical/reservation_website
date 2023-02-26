@@ -34,3 +34,17 @@
   font-size: 16px;
   width: 100%;
 }
+
+@media screen and (max-width: 1280px) {
+  .wrapper {
+    padding-inline: 60px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    padding-inline: 15px;
+    flex-direction: column;
+    gap: 20px;
+  }
+}

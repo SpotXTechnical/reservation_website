@@ -23,14 +23,16 @@ const OffersList = () => {
                   <Title text={region.name} />
                   <ViewAll />
                 </div>
-                <div className={styles.recommended_regions_list}>
-                  {region?.sub_regions?.map(({ id, name, images }) => (
-                    <ImportantRegionsCard
-                      id={id}
-                      name={name}
-                      image={images[0]?.url}
-                    />
-                  ))}
+                <div className={styles.recommended_regions_list_parent}>
+                  <div className={styles.recommended_regions_list}>
+                    {region?.sub_regions?.map(({ id, name, images }) => (
+                      <ImportantRegionsCard
+                        id={id}
+                        name={name}
+                        image={images[0]?.url}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             ))}

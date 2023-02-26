@@ -19,6 +19,7 @@
   list-style-type: none;
   display: flex;
   flex-direction: column;
+  padding: 0px;
 }
 .footer_wrapper ul li {
   margin-bottom: 20px;
@@ -33,4 +34,26 @@
   font-size: 13px;
   opacity: 0.8;
   text-align: center;
+}
+
+@media screen and (max-width: 1280px) {
+  .footer_wrapper {
+    padding: 32px 60px;
+  }
+  .footer_wrapper hr {
+    margin-inline: -60px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .footer_wrapper {
+    padding-inline: 15px;
+  }
+  .footer_wrapper > div {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .footer_wrapper hr {
+    margin-inline: -15px;
+  }
 }

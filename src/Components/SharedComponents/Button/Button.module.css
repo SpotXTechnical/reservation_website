@@ -10,3 +10,8 @@
   border: none;
   color: var(--white-color);
 }
+@media screen and (max-width: 768px) {
+  .button_wrapper {
+    padding: 5px 15px;
+  }
+}

@@ -13,13 +13,13 @@ const SubscribeUs = () => {
         </span>
       </div>
       <div className="col-sm-7 d-flex">
-        <div className="col-sm-9">
+        <div className="col-sm-8 col-md-9">
           <Input
             className={styles.subscribe_input}
             placeholder="Enter your email"
           />
         </div>
-        <div className="col-sm-3">
+        <div className="col-sm-4 col-md-3">
           <Button text="Subscribe" className={styles.subscribe_btn} />
         </div>
       </div>

@@ -18,14 +18,16 @@ const RegionsHomeList = () => {
         <Title text="Our Destinations" />
         <ViewAll />
       </div>
-      <div className={styles.regionsList}>
-        {data.length > 0
-          ? data.map(({ name, images }, id) => (
-              <RegionsCard id={id} name={name} image={images[0]?.url} />
-            ))
-          : [...Array(4)].map((e, i) => (
-              <ShimmerThumbnail key={i} height={250} rounded />
-            ))}
+      <div className={styles.regionsList_wrapper}>
+        <div className={styles.regionsList}>
+          {data.length > 0
+            ? data.map(({ name, images }, id) => (
+                <RegionsCard id={id} name={name} image={images[0]?.url} />
+              ))
+            : [...Array(4)].map((e, i) => (
+                <ShimmerThumbnail key={i} height={250} rounded />
+              ))}
+        </div>
       </div>
     </div>
   );

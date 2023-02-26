@@ -24,3 +24,24 @@
 .shimmer_wrapper > div {
   width: 25%;
 }
+
+@media screen and (max-width: 1280px) {
+  .recommended_regions_list {
+    width: 200%;
+  }
+  .recommended_regions_list_parent {
+    overflow-x: auto;
+  }
+  .recommended_regions_list_parent::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .recomended_regions_container {
+    margin: 0 15px 80px 15px;
+  }
+  .recommended_regions_list {
+    width: 300%;
+  }
+}
