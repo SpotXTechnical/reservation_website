@@ -8,7 +8,6 @@ import OffersList from "@/Components/OffersList/OffersList";
 import SubscribeUs from "@/Components/SubscribeUs/SubscribeUs";
 import MostPopularList from "@/Components/MostPopularList/MostPopularList";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../app/globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
