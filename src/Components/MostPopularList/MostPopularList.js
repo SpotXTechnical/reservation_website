@@ -31,12 +31,13 @@ const MostPopularList = () => {
                   default_price,
                   is_favourite,
                   active_ranges,
-                  nearest_active_ranges
+                  nearest_active_ranges,
                 },
                 id
               ) => (
                 <PopularCard
                   id={id}
+                  key={id}
                   title={title}
                   image={images[0]?.url}
                   default_price={default_price}

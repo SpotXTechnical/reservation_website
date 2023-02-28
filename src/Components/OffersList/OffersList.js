@@ -17,8 +17,8 @@ const OffersList = () => {
       <div className={styles.recommended_list_wrapper}>
         {Object.keys(data).length > 0 ? (
           <div className="w-100">
-            {data?.data?.map((region) => (
-              <div className="w-100">
+            {data?.data?.map((region, id) => (
+              <div className="w-100" key={id}>
                 <div className={styles.recomended_regions_list_header}>
                   <Title text={region.name} />
                   <ViewAll />
@@ -28,6 +28,7 @@ const OffersList = () => {
                     {region?.sub_regions?.map(({ id, name, images }) => (
                       <ImportantRegionsCard
                         id={id}
+                        key={id}
                         name={name}
                         image={images[0]?.url}
                       />
