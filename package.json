@@ -10,13 +10,19 @@
   },
   "dependencies": {
     "@next/font": "13.1.5",
+    "@reduxjs/toolkit": "^1.9.3",
     "bootstrap": "^5.2.3",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.5",
     "moment": "^2.29.4",
     "next": "13.1.5",
+    "popper.js": "^1.16.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-intl": "^6.2.10",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.9.0",
+    "react-select": "^5.7.2",
     "react-shimmer-effects": "^1.0.2",
     "reactstrap": "^9.1.5"
   }

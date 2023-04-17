@@ -1,6 +1,5 @@
 .home_heading_bg {
-  background: url("../../../public/assets/vecteezy_kayak-floating-on-blue-sea_3823729\ 1.png")
-    no-repeat center;
+  background: url("../../../public/assets/vecteezy_kayak-floating-on-blue-sea_3823729\ 1.png") no-repeat center;
   background-size: cover;
   height: 390px;
   display: flex;
@@ -10,12 +9,14 @@
   flex-direction: column;
   margin-bottom: 80px;
 }
+
 .heading_main_title {
   font-size: 32px;
   text-transform: capitalize;
   margin-bottom: 40px;
   text-align: center;
 }
+
 .heading_search_input {
   background: var(--white-color);
   box-shadow: 0px 4px 4px rgb(0 0 0 / 20%);
@@ -25,6 +26,7 @@
   width: 44.5vw;
   text-indent: 55px;
 }
+
 .heading_btn {
   height: 50px;
   color: var(--dark-color);
@@ -35,23 +37,40 @@
   font-size: 16px;
   width: 14vw;
 }
+
 .heading_search_input_wrapper {
   position: relative;
 }
+
 .heading_search_icon {
   position: absolute;
   top: 12px;
   left: 12px;
 }
 
+:global(main.rtl) .heading_btn {
+  border-radius: 12px 0px 0px 12px;
+}
+
+:global(main.rtl) .heading_search_input {
+  border-radius: 0px 12px 12px 0px;
+}
+
+:global(main.rtl) .heading_search_icon {
+  right: 20px;
+  left: 0px;
+}
+
 @media screen and (max-width: 768px) {
   .heading_search_input {
     width: 70vw;
   }
+
   .heading_btn {
     width: 28vw;
     height: 52px;
   }
+
   .heading_search_input {
     text-indent: 40px;
   }

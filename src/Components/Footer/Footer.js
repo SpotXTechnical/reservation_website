@@ -1,3 +1,4 @@
+import { FormattedMessage } from "react-intl";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
@@ -5,7 +6,9 @@ export default function Footer() {
     <div className={styles.footer_wrapper}>
       <div className="d-flex mb-4">
         <div className="col-sm-6">
-          <p className={styles.about_spotx}>About Spotx</p>
+          <p className={styles.about_spotx}>
+            <FormattedMessage id="home.mostPopularProperties" />
+          </p>
           <span className={styles.about}>
             “Maecenas faucibus mollis interdum. Nullamion etaquis risus eget
             urna mollis ornare vel eu leonardifaucibus mollis interdum”...{" "}
@@ -13,15 +16,25 @@ export default function Footer() {
         </div>
         <div className="col-sm-3">
           <ul>
-            <li>Rent your property</li>
-            <li>Privacy & policy</li>
-            <li>terms and conditions</li>
+            <li>
+              <FormattedMessage id="home.rentYourProperty" />
+            </li>
+            <li>
+              <FormattedMessage id="home.privacyAndPolicy" />
+            </li>
+            <li>
+              <FormattedMessage id="home.termsAndConditions" />
+            </li>
           </ul>
         </div>
         <div className="col-sm-3">
           <ul>
-            <li>Conact us</li>
-            <li>FAQ</li>
+            <li>
+              <FormattedMessage id="home.contactUs" />
+            </li>
+            <li>
+              <FormattedMessage id="home.FAQ" />
+            </li>
           </ul>
         </div>
       </div>

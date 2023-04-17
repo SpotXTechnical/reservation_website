@@ -5,17 +5,23 @@ import PopularCard from "../SharedComponents/PopularCard/PopularCard";
 import Title from "../SharedComponents/Title/Title";
 import ViewAll from "../SharedComponents/ViewAll/ViewAll";
 import { ShimmerThumbnail } from "react-shimmer-effects";
+import { useIntl } from "react-intl";
 import styles from "./MostPopularList.module.css";
+import { useSelector } from "react-redux";
 
 const MostPopularList = () => {
+  const intl = useIntl();
   const [data, setData] = useState([]);
+  let { lang } = useSelector((state) => state.language);
   useEffect(() => {
     getMostPopularProperties().then((res) => setData(res.data.slice(0, 4)));
-  }, []);
+  }, [lang]);
   return (
     <div className={styles.popularList_container}>
       <div className={styles.popularList_header}>
-        <Title text="Most Popular Properties" />
+        <Title
+          text={intl.formatMessage({ id: "home.mostPopularProperties" })}
+        />
         <ViewAll />
       </div>
       <div className={styles.popularList}>

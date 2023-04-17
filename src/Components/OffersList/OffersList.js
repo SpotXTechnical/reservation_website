@@ -6,19 +6,21 @@ import Title from "../SharedComponents/Title/Title";
 import ViewAll from "../SharedComponents/ViewAll/ViewAll";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import styles from "./OffersList.module.css";
+import { useSelector } from "react-redux";
 
 const OffersList = () => {
   const [data, setData] = useState({});
+  let { lang } = useSelector((state) => state.language);
   useEffect(() => {
     getRegionsWithSubRegionsList().then((res) => setData(res));
-  }, []);
+  }, [lang]);
   return (
     <div className={styles.recomended_regions_container}>
       <div className={styles.recommended_list_wrapper}>
         {Object.keys(data).length > 0 ? (
           <div className="w-100">
-            {data?.data?.map((region, id) => (
-              <div className="w-100" key={id}>
+            {data?.data?.map((region, i) => (
+              <div className="w-100" key={i}>
                 <div className={styles.recomended_regions_list_header}>
                   <Title text={region.name} />
                   <ViewAll />
