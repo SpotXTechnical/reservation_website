@@ -1,0 +1,27 @@
+.privacy_container {
+    min-height: 50vh;
+    margin: 40px 80px 80px 80px;
+}
+
+.title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 29px;
+    text-transform: capitalize;
+    color: var(--dark-color);
+    font-family: var(--Montserrat-Bold);
+    margin-bottom: 0px;
+    margin-bottom: 30px;
+}
+
+.privacy_content {
+    font-weight: 400;
+    font-size: 13px;
+    opacity: 0.8;
+    font-family: var(--Montserrat-Regular);
+}
+
+.privacy_content li {
+    margin-bottom: 16px;
+}
