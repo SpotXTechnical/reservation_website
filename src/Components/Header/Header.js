@@ -105,6 +105,13 @@ export default function Header() {
                 <ul className={styles.logout_menu}>
                   <li
                     onClick={() => {
+                      window.location.href = "/profile";
+                    }}
+                  >
+                    <FormattedMessage id="home.profile" />
+                  </li>
+                  <li
+                    onClick={() => {
                       window.location.href = "/signin";
                       localStorage.removeItem("user");
                     }}
@@ -116,7 +123,11 @@ export default function Header() {
             </div>
           ) : (
             <div>
-              <div onClick={()=> {window.location.href="/signin"}}>
+              <div
+                onClick={() => {
+                  window.location.href = "/signin";
+                }}
+              >
                 <Button text="SIGN IN" />
               </div>
             </div>

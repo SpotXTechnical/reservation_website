@@ -55,3 +55,18 @@ export const logOut = async (data) => {
     return err;
   }
 };
+
+export const getProfile = async () => {
+  try {
+    headers["Authorization"] = `Bearer ${JSON.parse(
+      localStorage.getItem("access_token")
+    )}`;
+    if (typeof window !== "undefined" && localStorage.getItem("language")) {
+      headers["Accept-Language"] = localStorage.getItem("language");
+    }
+    let res = await fetch(`${BASEURL}/api/v1/user/profile `, { headers });
+    return await res.json();
+  } catch (err) {
+    return err;
+  }
+};

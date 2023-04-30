@@ -1,6 +1,14 @@
 import { FormattedMessage } from "react-intl";
 
-const Input = ({ type, id, className, placeholder, onChange, error }) => {
+const Input = ({
+  type,
+  id,
+  className,
+  placeholder,
+  onChange,
+  error,
+  value,
+}) => {
   return (
     <>
       <input
@@ -8,6 +16,7 @@ const Input = ({ type, id, className, placeholder, onChange, error }) => {
         placeholder={placeholder}
         className={className}
         id={id}
+        value={value}
         onChange={onChange}
       />
       {error && (

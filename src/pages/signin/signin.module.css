@@ -62,8 +62,9 @@
     color: var(--light-grey-color);
 }
 
-.dont_have_account a {
+.signUp {
     color: var(--light-blue-color);
+    cursor: pointer;
 }
 
 .label {

@@ -54,9 +54,6 @@
 }
 
 .signup_input:focus {
-  /* color: #212529;
-    background-color: #fff; */
-  /* outline: 0;*/
   border-color: unset;
   box-shadow: none;
 }
@@ -72,8 +69,9 @@
   color: var(--light-grey-color);
 }
 
-.already_have_account a {
+.signIn {
   color: var(--light-blue-color);
+  cursor: pointer;
 }
 
 /* #passwordInput, #confirmPasswordInput{

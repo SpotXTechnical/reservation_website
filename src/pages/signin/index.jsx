@@ -152,10 +152,15 @@ export default function SignIn() {
             </form>
             <div className={styles.dont_have_account}>
               <span>
-                <FormattedMessage id="signin.dontHaveAcc" />
-                <div onClick={()=> {window.location.href="/signup"}}>
+                <FormattedMessage id="signin.dontHaveAcc" />{" "}
+                <span
+                  className={styles.signUp}
+                  onClick={() => {
+                    window.location.href = "/signup";
+                  }}
+                >
                   <FormattedMessage id="signin.signup" />
-                </div>
+                </span>
               </span>
             </div>
           </div>

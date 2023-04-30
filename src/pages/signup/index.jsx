@@ -136,7 +136,7 @@ export default function SignUp() {
         {Object.keys(validationErrors).length ? (
           <div class="alert alert-danger" role="alert">
             <ul>
-              {Object.entries(validationErrors).map(([k, errors],i) => (
+              {Object.entries(validationErrors).map(([k, errors], i) => (
                 <li key={i}>{errors[0]}</li>
               ))}
             </ul>
@@ -267,10 +267,15 @@ export default function SignUp() {
         </form>
         <div className={styles.already_have_account}>
           <span>
-            <FormattedMessage id="signup.haveAcc" />
-            <div onClick={()=> {window.location.href="/signin"}}>
+            <FormattedMessage id="signup.haveAcc" />{" "}
+            <span
+              className={styles.signIn}
+              onClick={() => {
+                window.location.href = "/signin";
+              }}
+            >
               <FormattedMessage id="signup.signin" />
-            </div>
+            </span>
           </span>
         </div>
       </div>
