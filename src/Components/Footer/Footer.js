@@ -19,10 +19,20 @@ export default function Footer() {
             <li>
               <FormattedMessage id="home.rentYourProperty" />
             </li>
-            <li>
+            <li
+              className="cursor-pointer"
+              onClick={() => {
+                window.location.href = "/privacy";
+              }}
+            >
               <FormattedMessage id="home.privacyAndPolicy" />
             </li>
-            <li>
+            <li
+              className="cursor-pointer"
+              onClick={() => {
+                window.location.href = "/terms";
+              }}
+            >
               <FormattedMessage id="home.termsAndConditions" />
             </li>
           </ul>

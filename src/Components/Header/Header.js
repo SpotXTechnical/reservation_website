@@ -27,7 +27,11 @@ export default function Header() {
     <div
       className={`container_wrapper d-flex align-items-center justify-content-between ${styles.header_wrapper}`}
     >
-      <div className="col-sm-6">
+      <div className="col-sm-6 cursor-pointer" 
+       onClick={() => {
+        window.location.href = "/";
+      }}
+      >
         <img src="/assets/Logo.png" alt="Logo" />
       </div>
       <div className="col-sm-6 d-flex justify-content-end">

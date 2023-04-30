@@ -46,6 +46,9 @@
     "home.search": "search",
     "home.Logout" : "Logout" ,
     "home.profile" : "Profile",
+    "home.privacy" : "Privacy",
+    "home.cancellationPolicy" : "cancellation policy",
+    
 
     "profile.title": "Profile",
     "profile.edit.title": "Edit Profile",
