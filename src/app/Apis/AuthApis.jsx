@@ -41,6 +41,23 @@ export const signIn = async (data) => {
   }
 };
 
+export const editProfile = async (data) => {
+  if (typeof window !== "undefined" && localStorage.getItem("language")) {
+    headers["Accept-Language"] = localStorage.getItem("language");
+    headers["Content-Type"] = "application/json, multipart/form-data";
+  }
+  try {
+    let res = await fetch(`${BASEURL}/api/v1/user/register`, {
+      headers,
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    return await res.json();
+  } catch (err) {
+    return err;
+  }
+};
+
 export const logOut = async (data) => {
   if (typeof window !== "undefined" && localStorage.getItem("language")) {
     headers["Accept-Language"] = localStorage.getItem("language");

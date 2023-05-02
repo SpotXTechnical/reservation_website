@@ -1,6 +1,7 @@
 import styles from "./profile.module.css";
 import { FormattedMessage, useIntl } from "react-intl";
 import { getProfile } from "@/app/Apis/AuthApis";
+import { editProfile } from "@/app/Apis/AuthApis";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -43,10 +44,10 @@ export default function SignIn() {
                 alt="signin"
               />
             </div>
-            {/* <div className={styles.edit_profile} onClick={() => router.push("/profile/edit")}>
+            <div className={styles.edit_profile} onClick={() => router.push("/profile/edit")}>
                 <div><span><img src={data.image ? data.image : "/assets/edit.png"} alt="callUs"/></span></div>
                 <div><span className="text-grey"><FormattedMessage id="edit"/></span></div>
-              </div> */}
+              </div>
             <div className={styles.head_section}>
               <div className={styles.img_wrapper}>
                 <div></div>
