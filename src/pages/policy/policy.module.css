@@ -29,3 +29,9 @@
 .policy_content li {
     margin-bottom: 16px;
 }
+
+@media screen and (max-width: 768px) {
+    .policy_container {
+        margin: 15px;
+    }
+}

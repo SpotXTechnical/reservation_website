@@ -92,12 +92,12 @@ export default function Header() {
             />
           </div>
 
-          <div
+          {/* <div
             className={`d-flex align-items-center gap-1 cursor-pointer ${styles.notifications_container}`}
           >
             <img src="/assets/notification.png" alt="notifications" />
             <div className={styles.notification_number}>2</div>
-          </div>
+          </div> */}
           {userData ? (
             <div className={styles.profile_img_wrapper}>
               <img

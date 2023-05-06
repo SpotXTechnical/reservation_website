@@ -25,3 +25,9 @@
 .privacy_content li {
     margin-bottom: 16px;
 }
+
+@media screen and (max-width: 768px) {
+    .privacy_container {
+        margin: 15px;
+    }
+}
