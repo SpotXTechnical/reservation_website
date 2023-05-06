@@ -90,6 +90,8 @@
     "day": "day",
     "le": "LE",
 
+    "overview" : "overview",
+
     "createAcc": "Create an account",
     "PhoneNumber": "Phone number",
     "Phone": "Phone",

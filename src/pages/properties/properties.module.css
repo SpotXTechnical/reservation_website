@@ -117,3 +117,33 @@
     line-height: 17px;
     color: var(--dark-grey);
 }
+
+.properties_details_container :global(.properties-details) {
+    margin-bottom: 60px;
+}
+
+.over_view .title {
+font-family: var(--Montserrat-Semi-Bold);
+font-style: normal;
+font-weight: 600;
+font-size: 20px;
+line-height: 27px;
+text-transform: capitalize;
+color: var(--dark-color);
+margin-bottom: 16px;
+}
+
+.over_view .description {
+
+font-family: var(--Montserrat-Semi-Bold);
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+letter-spacing: 0.025em;
+text-transform: lowercase;
+color: var(--dark-color);
+}
+
+.over_view .about {
+    
+}

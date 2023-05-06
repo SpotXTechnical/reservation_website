@@ -1,10 +1,10 @@
 import styles from "./profile.module.css";
 import { FormattedMessage, useIntl } from "react-intl";
-import { getProfile } from "@/app/Apis/AuthApis";
+import { getProfile } from "../../app/Apis/HomeApis";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Input from "@/Components/SharedComponents/Input/Input";
-import { getCities } from "@/app/Apis/HomeApis";
+import Input from "../../Components/SharedComponents/Input/Input";
+import { getCities } from "../../app/Apis/HomeApis";
 import { editProfile } from "../../app/Apis/AuthApis";
 
 export default function SignIn() {

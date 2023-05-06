@@ -1,5 +1,5 @@
 "use client";
-import { getRegions } from "@/app/Apis/HomeApis";
+import { getRegions } from "../../app/Apis/HomeApis";
 import { useEffect, useState } from "react";
 import RegionsCard from "../SharedComponents/RegionsCard/RegionsCard";
 import Title from "../SharedComponents/Title/Title";

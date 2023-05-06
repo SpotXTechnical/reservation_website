@@ -1,5 +1,5 @@
 "use client";
-import { getMostPopularProperties } from "@/app/Apis/HomeApis";
+import { getMostPopularProperties } from "../../app/Apis/HomeApis";
 import { useEffect, useState } from "react";
 import PopularCard from "../SharedComponents/PopularCard/PopularCard";
 import Title from "../SharedComponents/Title/Title";

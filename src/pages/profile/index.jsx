@@ -1,12 +1,11 @@
 import styles from "./profile.module.css";
 import { FormattedMessage, useIntl } from "react-intl";
-import { getProfile } from "@/app/Apis/AuthApis";
-import { editProfile } from "@/app/Apis/AuthApis";
+import { getProfile } from "../../app/Apis/AuthApis";
+import { editProfile } from "../../app/Apis/AuthApis";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import store, { langAction } from "@/store";
-
+import store, { langAction } from "../../store"
 export default function SignIn() {
   let { lang } = useSelector((state) => state.language);
   const avatar = "/assets/avatar.png";

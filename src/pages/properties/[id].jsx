@@ -70,7 +70,9 @@ export default function SignIn() {
       }
 
       <div className="row">
-        <div className="col-md-6 properties-details">
+        <div className="col-md-6">
+
+        <div className="properties-details">
           <div className={styles.specs}>
             <div className="flex-center">
               <span><img src="/assets/bed.png" alt="bed" /></span>
@@ -97,6 +99,22 @@ export default function SignIn() {
           <div className={styles.price}>
             <span>5000 <FormattedMessage id="le"/></span><span> / <FormattedMessage id="day"/></span>
           </div>
+        
+     
+        </div>
+        <div className={styles.over_view}>
+          <div className={styles.title}>
+          <FormattedMessage id="overview"/>
+            </div>
+            <div className={styles.description}>
+            {data.title}
+            </div>
+            <div className={styles.about}>
+{data.description}
+            </div>
+
+        </div>
+      
         </div>
         <div className="col-md-6">
 
