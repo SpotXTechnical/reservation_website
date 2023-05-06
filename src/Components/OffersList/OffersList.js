@@ -1,5 +1,5 @@
 "use client";
-import { getRegionsWithSubRegionsList } from "@/app/Apis/HomeApis";
+import { getRegionsWithSubRegionsList } from "../../app/Apis/HomeApis";
 import { useEffect, useState } from "react";
 import ImportantRegionsCard from "../SharedComponents/ImportantRegionsCard/ImportantRegionsCard";
 import Title from "../SharedComponents/Title/Title";

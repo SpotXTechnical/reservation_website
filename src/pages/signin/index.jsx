@@ -1,11 +1,11 @@
-import Input from "@/Components/SharedComponents/Input/Input";
+import Input from "../../Components/SharedComponents/Input/Input";
 import { useState } from "react";
 import styles from "./signin.module.css";
 import { FormattedMessage, useIntl } from "react-intl";
-import { signIn } from "@/app/Apis/AuthApis";
+import { signIn } from "../../app/Apis/AuthApis";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import store, { langAction } from "@/store";
+import store, { langAction } from "../../store";
 
 export default function SignIn() {
   if (typeof window !== "undefined") {

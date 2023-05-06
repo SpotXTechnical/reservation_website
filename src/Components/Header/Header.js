@@ -3,7 +3,7 @@ import Select from "react-select";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FormattedMessage } from "react-intl";
-import { langAction } from "@/store";
+import { langAction } from "../../store";
 import styles from "./header.module.css";
 
 export default function Header() {

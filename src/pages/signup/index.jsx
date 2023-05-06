@@ -1,11 +1,11 @@
-import Input from "@/Components/SharedComponents/Input/Input";
+import Input from "../../Components/SharedComponents/Input/Input";
 import { useEffect, useState } from "react";
 import styles from "./signup.module.css";
 import { FormattedMessage, useIntl } from "react-intl";
-import { getCities } from "@/app/Apis/HomeApis";
-import { signUp } from "@/app/Apis/AuthApis";
+import { getCities } from "../../app/Apis/HomeApis";
+import { signUp } from "../../app/Apis/AuthApis";
 import { useRouter } from "next/router";
-import store, { langAction } from "@/store";
+import store, { langAction } from "../../store";
 import { useSelector } from "react-redux";
 
 export default function SignUp() {
