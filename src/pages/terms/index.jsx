@@ -4,6 +4,7 @@ import styles from "./terms.module.css";
 export default function Terms() {
   return (
     <div className={styles.terms_container}>
+      <img src="/assets/Logo.png" alt="Logo" className={styles.logo} />
       <p className={styles.title}>
         <FormattedMessage id="home.termsAndConditions" />
       </p>

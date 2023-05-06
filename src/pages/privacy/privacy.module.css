@@ -3,6 +3,10 @@
     margin: 40px 80px 80px 80px;
 }
 
+.logo {
+    display: none;
+}
+
 .title {
     font-style: normal;
     font-weight: 700;
@@ -28,6 +32,20 @@
 
 @media screen and (max-width: 768px) {
     .privacy_container {
-        margin: 15px;
+        bottom: 0;
+        height: 100%;
+        left: 0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 999;
+        background: var(--white-color);
+        margin: 0;
+        padding: 16px;
+        overflow: auto;
+    }
+    .logo {
+        display: block;
+        margin-bottom: 20px;
     }
 }
