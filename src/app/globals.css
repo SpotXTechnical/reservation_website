@@ -22,6 +22,7 @@ body {
   --white-color: #ffffff;
   --orange-color: #ff6b00;
   --grey-color: #a2a2a2;
+  --dark-grey: #7B7B7B;
   --dark-grey-color: #404040;
   --background-grey: #F7F7F7;
   --light-grey-color: #7b7b7b;
@@ -35,6 +36,7 @@ body {
   --light-blue-color: #44bcb7;
   --dark-blue-color: #1a7873;
   --border-light-grey: #C4C4C4;
+  --border-ligther-grey:#E1E1E1;
   --border-bottom-grey: #D5D5D5;
 }
 
@@ -57,6 +59,13 @@ input:focus-visible {
 .text-grey {
   color: var(--grey-color);
 }
+
+.flex-center{
+  display: flex;
+  justify-content: space-between;
+}
+
+
 
 @media screen and (max-width: 1280px) {
   .container_wrapper {

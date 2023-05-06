@@ -64,6 +64,16 @@
     "profile.edit.fields.city.placeholder": "Your city",
     "profile.edit.fields.password.placeholder": "Your password",
 
+    "share": "Share",
+    "addToFav": "Add To Favorites",
+    "bathroom": "Bathroom",
+    "bedroom": "Bedroom",
+    "room": "Room",
+    "area": "Area",
+    "ft": "ft",
+    "day": "day",
+    "le": "LE",
+
 
     "home": "Home",
     "edit": "Edit",

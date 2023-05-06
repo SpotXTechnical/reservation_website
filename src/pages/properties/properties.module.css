@@ -1,0 +1,119 @@
+.properties_details_container{
+    margin: 40px 80px;
+}
+
+.bread_crumb :global(.breadcrumb-item) > *{
+    color: var(--light-blue-color);
+    text-decoration: none;
+    font-size: 16px;
+    font-family: var(--Montserrat-Semi-Bold);
+    font-weight: 500;
+}
+.bread_crumb :global(.breadcrumb-item):global(.active) span {
+    font-weight: 400 !important;
+    font-family: var(--Montserrat-Regular) !important;
+
+}
+
+.head .actions {
+    display: flex;
+    align-items: center;
+}
+
+.head .actions :global(.cursor-pointer):first-child{
+    margin-right: 35px;
+    color: var(--light-blue-color);
+    display: flex;
+    align-items: center;
+}
+
+.head .actions :global(.cursor-pointer):first-child img{
+    margin-right: 10px;
+}
+
+.head .actions :global(.cursor-pointer):last-child img{
+    margin-right: 10px;
+}
+
+.head .actions :global(.cursor-pointer):last-child span{
+    color: var(--grey-color);
+}
+
+.bread_crumb :global(.breadcrumb-item) + :global(.breadcrumb-item)::before{
+    content: url('../../../public/assets/arrow-right.png') !important;
+    padding-top: 3px;
+}
+
+.title{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+    text-transform: capitalize;
+    color: var(--light-grey-color);
+    font-family: var(--Montserrat-Regular);
+}
+
+.images img{
+    width: 100%;
+}
+
+.images :global(.flex-center):last-child{
+    gap: 20px;
+}
+
+.images :global(.flex-center):last-child img{
+    height: 207px;
+}
+
+.specs{
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid var(--border-ligther-grey);
+    padding: 25px 0;
+}
+.flex_column{
+    display: flex;
+    flex-direction: column;
+}
+.specs :global(.flex-center):nth-child(2)::after, .specs :global(.flex-center):nth-child(2)::before{
+    content: "";
+    bottom: 0;
+    height: 45px;
+    margin: 0 48px;
+    width: 1px;
+    background-color: var(--border-ligther-grey);
+}
+
+.specs img {
+    margin-right: 10px;
+}
+
+.specs .flex_column span:first-child {
+    color: var(--dark-grey);
+    font-family: var(--Montserrat-Regular);
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 8px;
+}
+
+.specs .flex_column span:last-child {
+    font-family: var(--Montserrat-Bold);
+    font-size: 14px;
+    line-height: 17px;
+}
+.price{
+    float: right;
+}
+.price span:first-child {
+    font-family: var(--Montserrat-Bold);
+    font-size: 24px;
+    line-height: 29px;
+}
+
+.price span:last-child {
+    font-family: var(--Montserrat-Regular);
+    font-size: 16px;
+    line-height: 17px;
+    color: var(--dark-grey);
+}
