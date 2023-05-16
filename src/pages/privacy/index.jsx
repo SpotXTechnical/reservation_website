@@ -4,6 +4,7 @@ import styles from "./privacy.module.css";
 export default function Privacy() {
   return (
     <div className={styles.privacy_container}>
+      <img src="/assets/Logo.png" alt="Logo" className={styles.logo} />
       <p className={styles.title}>
         <FormattedMessage id="home.privacy" />
       </p>
