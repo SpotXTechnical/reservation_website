@@ -46,7 +46,7 @@
     "home.search": "search",
     "home.Logout" : "Logout" ,
     "home.profile" : "Profile",
-    "home.privacy" : "Privacy",
+    "home.privacy" : "Privacy Policy",
     "home.cancellationPolicy" : "cancellation policy",
     
 
@@ -65,6 +65,13 @@
     "profile.edit.fields.password.placeholder": "Your password",
 
     "overview" : "overview",
+    "More Features" : "More Features",
+    "Cancellation Policy" : "Cancellation Policy",
+    "Free-free cancellation" : "free-free cancellation",
+    "Property Owner" : "Property Owner",
+    "Avaliability" : "Avaliability",
+    "Location": "Location",
+
 
 
     "share": "Share",

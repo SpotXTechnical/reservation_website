@@ -14,7 +14,7 @@ const Breadcrumb = ({ items }) => {
       <ol className="breadcrumb">
         {breadcrumbItems.map(({ label, url, isLast }, index) => (
           <li
-            className={`breadcrumb-item ${isLast ? 'active' : ''}`}
+            className={`breadcrumb-items ${isLast ? 'active' : ''}`}
             aria-current={isLast ? 'page' : null}
             key={index}
           >

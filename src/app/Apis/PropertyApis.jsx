@@ -5,9 +5,12 @@ const headers = {
 };
 
 export const getPropertyDetails = async (id) => {
+  if (typeof window !== "undefined" && localStorage.getItem("language")) {
+    headers["Accept-Language"] = localStorage.getItem("language");
+  }
   try {
     const res = await fetch(
-      `${BASEURL}/api/v1/user/units/${id}`,
+      `${BASEURL}/api/v1/user/units/${id}&with_sub=1`,
       { headers }
     );
     const data = await res.json();
