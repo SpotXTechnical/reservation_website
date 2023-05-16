@@ -14,15 +14,28 @@
     text-transform: capitalize;
     color: var(--dark-color);
     font-family: var(--Montserrat-Bold);
-    margin-bottom: 0px;
     margin-bottom: 30px;
+}
+
+.sub_title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 29px;
+    text-transform: capitalize;
+    color: var(--dark-color);
+    font-family: var(--Montserrat-Bold);
+    margin-bottom: 16px;
+}
+.terms_container ul p {
+    margin-inline: -2rem;
 }
 
 .title:first-letter {
     text-transform: uppercase;
 }
 
-.terms_content {
+.terms_content,  .terms_paragraph {
     font-weight: 400;
     font-size: 13px;
     opacity: 0.8;
