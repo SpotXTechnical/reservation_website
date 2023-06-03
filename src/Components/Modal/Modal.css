@@ -1,0 +1,12 @@
+ .close {
+    border: none;
+    background-color: var(--background-grey);
+    border-radius: 50%;
+    font-size: 22px;
+    padding-inline: 10px;
+ }
+
+ .modal-header {
+    border-bottom: unset;
+    padding-bottom: 0px;
+ }

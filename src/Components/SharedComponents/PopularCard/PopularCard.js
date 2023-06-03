@@ -2,6 +2,7 @@ import styles from "./PopularCard.module.css";
 import moment from "moment";
 const PopularCard = ({
   id,
+  key,
   image,
   title,
   type,
@@ -21,7 +22,11 @@ const PopularCard = ({
     });
   };
   return (
-    <div className={styles.popular_card} key={id}>
+    <div
+      className={styles.popular_card}
+      key={key}
+      onClick={() => (window.location.href = `/properties/${id}`)}
+    >
       <div className={styles.unit_type_wrapper}>
         <div className={styles.unit_type}>{type}</div>
         <div>

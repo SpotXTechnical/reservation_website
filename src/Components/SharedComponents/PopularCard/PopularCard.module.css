@@ -2,7 +2,7 @@
   width: 50%;
   position: relative;
   background: var(--white-color);
-  ;
+  cursor: pointer;
   box-shadow: 0px 0px 15px rgb(0 0 0 / 5%);
   border-radius: 12px;
   padding-inline: 24px;

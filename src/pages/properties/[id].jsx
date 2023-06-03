@@ -3,26 +3,83 @@ import styles from "./properties.module.css";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useRouter } from "next/router";
 import Breadcrumb from "../../Components/BreadCrumb";
-import { getPropertyDetails } from "../../app/Apis/PropertyApis";
+import { getPropertyDetails, reserveUnit } from "../../app/Apis/PropertyApis";
 import ReactStars from "react-rating-stars-component";
-import DateRangePicker from "react-daterange-picker";
 import "react-daterange-picker/dist/css/react-calendar.css";
 import GoogleMapReact from "google-map-react";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import ReviewsCard from "../../Components/ReviewsCard/ReviewsCard";
 import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
-import YourComponent from "../../Components/YourComponent/YourComponent";
-// import originalMoment from "moment";
-// import { extendMoment } from "moment-range";
-// const moment = extendMoment(originalMoment);
+import DateRangePicker from "../../Components/DateRangePicker/DateRangePicker";
+import moment from "moment";
+import ModalComponent from "../../Components/Modal/Modal";
 
 export default function propertyDetails() {
   const intl = useIntl();
   let { lang } = useSelector((state) => state.language);
+  const [selectedRange, setSelectedRange] = useState("");
+  const [daysCount, setDaysCount] = useState(0);
+  const [totalReservationMoney, setTotalReservationMoney] = useState(0);
   const router = useRouter();
   const { id } = router.query;
   const [data, setData] = useState({});
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleModal = () => setIsOpen(!isOpen);
+
+  function calculateNumberOfDays(startDate, endDate) {
+    const start = new Date(startDate.toUTCString());
+    const end = new Date(endDate.toUTCString());
+    const timeDiff = Math.abs(end - start);
+    const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+    return days;
+  }
+
+  function getPriceForDateRange(data, dateRange) {
+    const startDate = new Date(dateRange.startDate);
+    const endDate = new Date(dateRange.endDate);
+
+    let currentDate = new Date(startDate);
+    const result = [];
+
+    while (currentDate <= endDate) {
+      const matchingObject = data.find((obj) => {
+        const fromDate = new Date(obj.from);
+        const toDate = new Date(obj.to);
+
+        return fromDate <= currentDate && currentDate <= toDate;
+      });
+
+      const price = matchingObject ? matchingObject.price : 2000;
+
+      result.push({
+        date: currentDate.toDateString(),
+        price: price,
+      });
+
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return result;
+  }
+
+  const handleShowReservationModal = (selectedDateRange) => {
+    setSelectedRange(selectedDateRange);
+    const days = calculateNumberOfDays(
+      selectedDateRange.startDate,
+      selectedDateRange.endDate
+    );
+    setDaysCount(days);
+    const result = getPriceForDateRange(
+      data?.active_ranges,
+      selectedDateRange
+    ).reduce((total, item) => total + item.price, 0);
+    setIsOpen(true);
+    setTotalReservationMoney(result);
+  };
 
   useEffect(
     function () {
@@ -49,7 +106,10 @@ export default function propertyDetails() {
   ];
 
   return (
-    <div  dir={lang === "ar" ? "rtl" : "ltr"}  className={styles.properties_details_container}>
+    <div
+      dir={lang === "ar" ? "rtl" : "ltr"}
+      className={styles.properties_details_container}
+    >
       {/* Head */}
       <div className={`flex-center ${styles.head}`}>
         <div className={styles.bread_crumb}>
@@ -72,7 +132,7 @@ export default function propertyDetails() {
       </div>
 
       {data && (
-        <div className={`flex-center my-3`}>
+        <div className={`flex-center my-3 rating_mobile`}>
           <h2 className={styles.title}>{data?.title}</h2>
           <div>
             {data?.rate && (
@@ -88,7 +148,7 @@ export default function propertyDetails() {
         </div>
       )}
 
-      {data?.images?.length > 0  ? (
+      {data?.images?.length > 0 ? (
         <div className={styles.images}>
           <div className="flex-center mb-3">
             <img src={data?.images[0]?.url} alt="Feature image" />
@@ -111,18 +171,18 @@ export default function propertyDetails() {
             )}
           </div>
         </div>
-      ):  (
-          <>
-        <ShimmerThumbnail  height={500} rounded />
-        <div className={styles.shimmer_wrapper}>
-          {[...Array(3)].map((e, i) => (
-            <ShimmerThumbnail key={i} height={300} rounded />
+      ) : (
+        <>
+          <ShimmerThumbnail height={500} rounded />
+          <div className={styles.shimmer_wrapper}>
+            {[...Array(3)].map((e, i) => (
+              <ShimmerThumbnail key={i} height={300} rounded />
             ))}
-        </div>
-            </>
+          </div>
+        </>
       )}
 
-      <div className="d-flex gap-5 mb-5">
+      <div className="d-flex gap-5 mb-5 properties_mobile ">
         <div className="col-md-6">
           <div className="properties-details">
             <div className={styles.specs}>
@@ -180,27 +240,37 @@ export default function propertyDetails() {
             <div className={styles.title}>
               <FormattedMessage id="overview" />
             </div>
-            {Object.keys(data).length>0 ? <div className={styles.description}>{data?.title}</div>: <ShimmerThumbnail height={25} rounded />}
-            {Object.keys(data).length>0 ?<div className={styles.about}>{data?.description}</div>:<ShimmerThumbnail height={80} rounded />}
+            {data && Object.keys(data).length > 0 ? (
+              <div className={styles.description}>{data?.title}</div>
+            ) : (
+              <ShimmerThumbnail height={25} rounded />
+            )}
+            {data && Object.keys(data).length > 0 ? (
+              <div className={styles.about}>{data?.description}</div>
+            ) : (
+              <ShimmerThumbnail height={80} rounded />
+            )}
           </div>
           <div className={styles.features}>
             <div className={styles.title}></div>
             <div className={styles.features_wrapper}>
-              {data?.features?.length>0 ? data.features?.map((feature) => {
-                return (
-                  <div>
-                    <img
-                      width="34px"
-                      height="34px"
-                      src={feature.url}
-                      key={feature.id}
-                    />
-                    <p>{feature.name}</p>
-                  </div>
-                );
-              }): [...Array(3)].map((e, i) => (
-                <ShimmerThumbnail key={i} height={250} rounded />
-              ))}
+              {data?.features?.length > 0
+                ? data.features?.map((feature) => {
+                    return (
+                      <div>
+                        <img
+                          width="34px"
+                          height="34px"
+                          src={feature.url}
+                          key={feature.id}
+                        />
+                        <p>{feature.name}</p>
+                      </div>
+                    );
+                  })
+                : [...Array(3)].map((e, i) => (
+                    <ShimmerThumbnail key={i} height={250} rounded />
+                  ))}
             </div>
           </div>
 
@@ -222,11 +292,15 @@ export default function propertyDetails() {
               <FormattedMessage id="Property Owner" />
             </div>
 
-            {data?.owner?.name ? <div className={styles.owner}>
-              <img src={data?.owner?.image} alt="owner_img" />
-              <p>{data?.owner?.name} </p>
-              <p>{data?.owner?.phone} </p>
-            </div>:  <ShimmerThumbnail height={175} rounded />}
+            {data?.owner?.name ? (
+              <div className={styles.owner}>
+                <img src={data?.owner?.image} alt="owner_img" />
+                <p>{data?.owner?.name} </p>
+                <p>{data?.owner?.phone} </p>
+              </div>
+            ) : (
+              <ShimmerThumbnail height={175} rounded />
+            )}
           </div>
         </div>
         <div className="col-md-6">
@@ -238,57 +312,157 @@ export default function propertyDetails() {
                 <FormattedMessage id="Avaliability" />{" "}
               </span>
             </div>
-       
-            <YourComponent />
-            <DateRangePicker
-              // value={value}
-              // onSelect={onSelect}
-              singleDateRange={true}
-            />
+
+            {data && Object.keys(data).length > 0 && (
+              <DateRangePicker
+                activeRanges={data?.active_ranges}
+                activeReservations={data?.active_reservations}
+                handleShowReservationModal={handleShowReservationModal}
+              />
+            )}
           </div>
           <div className={styles.over_view}>
+            {/* <div className={styles.title}>
+              <FormattedMessage id="Location" />
+            </div> */}
 
-<div className={styles.title}>
-  <FormattedMessage id="Location" />
-  </div>
-
-          <div style={{ height: "400px", width: "100%" }}>
-            <GoogleMapReact
-              bootstrapURLKeys={{
-                key: "AIzaSyBM6oDJmN4CA3NbENg1IMDlK2KinpZOuLI",
-              }}
-              defaultCenter={{ lat: 37.7749, lng: -122.4194 }}
-              defaultZoom={12}
-            ></GoogleMapReact>
+            {/* <div style={{ height: "400px", width: "100%" }}>
+              <GoogleMapReact
+                bootstrapURLKeys={{
+                  key: "AIzaSyBM6oDJmN4CA3NbENg1IMDlK2KinpZOuLI",
+                }}
+                defaultCenter={{ lat: 37.7749, lng: -122.4194 }}
+                defaultZoom={12}
+              ></GoogleMapReact>
+            </div> */}
           </div>
-</div>
         </div>
       </div>
       <div className={styles.reviews}>
-        <div className={styles.title}>
-          <FormattedMessage id="Reviews" />
-        </div>
+        {data?.reviews?.length > 0 && (
+          <div className={styles.title}>
+            <FormattedMessage id="Reviews" />
+          </div>
+        )}
         <div className="row flex-wrap">
-          {data.reviews ? data.reviews.map((review) => (
-            <div className="col-sm-6 mb-4" key={review?.id}>
-              <ReviewsCard
-                imgSrc={review?.user?.image}
-                name={review?.user?.name}
-                review={review?.message}
-                subTitle={review?.user?.email}
-                rate={review?.unit_rate}
-              />
-            </div>
-          )):
-
-[...Array(4)].map((e, i) => (
-  <div className="col-sm-6 mb-4">
-            <ShimmerThumbnail key={i} height={170} rounded />
-            </div>
-          ))}
-          
+          {data?.reviews
+            ? data.reviews.map((review) => (
+                <div className="col-sm-6 mb-4" key={review?.id}>
+                  <ReviewsCard
+                    imgSrc={review?.user?.image}
+                    name={review?.user?.name}
+                    review={review?.message}
+                    subTitle={review?.user?.email}
+                    rate={review?.unit_rate}
+                  />
+                </div>
+              ))
+            : [...Array(4)].map((e, i) => (
+                <div className="col-sm-6 mb-4">
+                  <ShimmerThumbnail key={i} height={170} rounded />
+                </div>
+              ))}
         </div>
       </div>
+
+      <ModalComponent
+        isOpen={isOpen}
+        toggleModal={toggleModal}
+        className={styles.summary_modal}
+        modalBody={
+          <div className={styles.summary_container}>
+            <p className={styles.title}>
+              <FormattedMessage id="Summary" />{" "}
+            </p>
+            <div className={styles.summary_card}>
+              <div className={styles.unit_type_wrapper}>
+                <div className={styles.unit_type}>challet</div>
+                <div className={styles.rating_wrapper}>
+                  <img src="/assets/star.png" alt="star" />
+                  <span className={styles.rate}>{data?.rate}</span>
+                </div>
+              </div>
+              <img
+                className={styles.card_image}
+                src={data?.images?.[0]?.url}
+                alt="unit_image"
+              />
+              <p className={styles.unit_title}>{data?.title}</p>
+            </div>
+            <div className="d-flex align-items-center justify-content-between">
+              <div className="d-flex gap-2">
+                <img
+                  src="/assets/calendar.png"
+                  alt="calendar"
+                  width="20"
+                  height="20"
+                />
+                <p className={styles.reservation_date}>
+                  <FormattedMessage id="Reservation_date" />{" "}
+                </p>
+              </div>
+              <div className={styles.nights}>
+                {daysCount} <FormattedMessage id="nights" />
+              </div>
+            </div>
+            <div className={styles.from_to_wrapper}>
+              <p>
+                <span className={styles.label}>
+                  <FormattedMessage id="from" />
+                </span>
+                <span className={styles.date}>
+                  {moment(selectedRange.startDate).format("ddd, DD MMM")}
+                </span>
+              </p>
+              <p>
+                <span className={styles.label}>
+                  <FormattedMessage id="to" />
+                </span>
+                <span className={styles.date}>
+                  {moment(selectedRange.endDate).format("ddd, DD MMM")}
+                </span>
+              </p>
+            </div>
+            <hr className={styles.total_price_hr} />
+            <div className="d-flex align-items-center justify-content-between">
+              <div className="d-flex gap-2">
+                <img
+                  src="/assets/money.png"
+                  alt="money"
+                  width="30"
+                  height="20"
+                />
+                <p className={styles.reservation_date}>
+                  <FormattedMessage id="total_cost" />{" "}
+                </p>
+              </div>
+              <div className={styles.total_money}>
+                {totalReservationMoney} {" LE"}
+              </div>
+            </div>
+
+            <button
+              className={styles.submit_reservations}
+              onClick={() => {
+                const submitData = {
+                  from: moment(selectedRange.startDate).format("D-M-YYYY"),
+                  to: moment(selectedRange.endDate).format("D-M-YYYY"),
+                  unit_id: id,
+                  unit_type: data.type,
+                };
+                reserveUnit(submitData).then((res) => {
+                  getPropertyDetails(id).then((resp) => {
+                    setData(resp.data);
+                  });
+                  setIsOpen(false);
+                });
+              }}
+            >
+              <FormattedMessage id="submit" />{" "}
+            </button>
+          </div>
+        }
+      />
     </div>
   );
 }

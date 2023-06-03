@@ -43,3 +43,10 @@
     text-transform: capitalize;
     color: var(--dark-grey);
 }
+
+@media screen and (max-width: 768px) {
+    .reviews_container div:first-child {
+        flex-direction: column;
+
+    }
+}

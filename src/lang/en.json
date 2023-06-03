@@ -97,6 +97,18 @@
     "Property Owner" : "Property Owner",
     "Avaliability" : "Avaliability",
     "Location": "Location",
+    "Selected" : "Selected",
+    "Avaliable" : "Avaliable",
+    "Not_Avaliable" : "Not Avaliable",
+    "Reserve" : "Reserve",
+    "you_must_select_a_range" : "You must select a date range",
+    "Summary" : "Summary",
+    "Reservation_date" : "Reservation Date",
+    "nights" : "Nights",
+    "from" : "From",
+    "to" : "To",
+    "total_cost" : "Total Cost",
+    "submit": "Submit",
     
 
     "createAcc": "Create an account",

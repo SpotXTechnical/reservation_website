@@ -207,7 +207,6 @@ export default function SignIn() {
                 >
                   <FormattedMessage id="profile.edit.fields.name.label" />
                 </label>
-                {console.log("name", name)}
                 <Input
                   type="text"
                   id="nameField"

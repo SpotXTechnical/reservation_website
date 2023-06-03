@@ -14,7 +14,7 @@ const RegionsHomeList = () => {
   const [data, setData] = useState([]);
   let { lang } = useSelector((state) => state.language);
   useEffect(() => {
-    getRegions().then((res) => setData(res.data.slice(0, 4)));
+    getRegions().then((res) => setData(res.data?.slice(0, 4)));
   }, [lang]);
   return (
     <div className={styles.regionsList_container}>
@@ -24,9 +24,14 @@ const RegionsHomeList = () => {
       </div>
       <div className={styles.regionsList_wrapper}>
         <div className={styles.regionsList}>
-          {data.length > 0
+          {data?.length > 0
             ? data.map(({ name, images }, id) => (
-                <RegionsCard key={id} id={id} name={name} image={images[0]?.url} />
+                <RegionsCard
+                  key={id}
+                  id={id}
+                  name={name}
+                  image={images[0]?.url}
+                />
               ))
             : [...Array(4)].map((e, i) => (
                 <ShimmerThumbnail key={i} height={250} rounded />

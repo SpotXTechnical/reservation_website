@@ -10,7 +10,6 @@
 .regionsList {
   display: flex;
   gap: 15px;
-  justify-content: space-between;
 }
 .regionsList > div {
   width: 25%;
