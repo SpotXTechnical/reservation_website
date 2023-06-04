@@ -43,7 +43,7 @@ export default function SignIn() {
                 alt="signin"
               />
             </div>
-            <div className={styles.edit_profile} onClick={() => router.push("/profile/edit")}>
+            <div className={styles.edit_profile} onClick={() =>  window.location.href= "/profile/edit"}>
                 <div><span><img src={data.image ? data.image : "/assets/edit.png"} alt="callUs"/></span></div>
                 <div><span className="text-grey"><FormattedMessage id="edit"/></span></div>
               </div>

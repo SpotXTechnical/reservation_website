@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import styles from "./properties.module.css";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { useRouter } from "next/router";
 import Breadcrumb from "../../Components/BreadCrumb";
 import { getPropertyDetails, reserveUnit } from "../../app/Apis/PropertyApis";
 import ReactStars from "react-rating-stars-component";
-import "react-daterange-picker/dist/css/react-calendar.css";
 import GoogleMapReact from "google-map-react";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import ReviewsCard from "../../Components/ReviewsCard/ReviewsCard";
@@ -15,8 +14,7 @@ import DateRangePicker from "../../Components/DateRangePicker/DateRangePicker";
 import moment from "moment";
 import ModalComponent from "../../Components/Modal/Modal";
 
-export default function propertyDetails() {
-  const intl = useIntl();
+export default function PropertyDetails() {
   let { lang } = useSelector((state) => state.language);
   const [selectedRange, setSelectedRange] = useState("");
   const [daysCount, setDaysCount] = useState(0);
@@ -255,9 +253,9 @@ export default function propertyDetails() {
             <div className={styles.title}></div>
             <div className={styles.features_wrapper}>
               {data?.features?.length > 0
-                ? data.features?.map((feature) => {
+                ? data.features?.map((feature, i) => {
                     return (
-                      <div>
+                      <div key={i}>
                         <img
                           width="34px"
                           height="34px"
@@ -358,8 +356,8 @@ export default function propertyDetails() {
                 </div>
               ))
             : [...Array(4)].map((e, i) => (
-                <div className="col-sm-6 mb-4">
-                  <ShimmerThumbnail key={i} height={170} rounded />
+                <div  key={i} className="col-sm-6 mb-4">
+                  <ShimmerThumbnail height={170} rounded />
                 </div>
               ))}
         </div>

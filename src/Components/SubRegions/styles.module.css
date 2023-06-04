@@ -1,0 +1,10 @@
+.sub_regions_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 56px;
+    margin-bottom: 150px;
+}
+
+.sub_regions_container>div {
+    width: calc(50% - 28px);
+}

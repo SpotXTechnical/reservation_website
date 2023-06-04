@@ -16,6 +16,9 @@ const RegionsHomeList = () => {
   useEffect(() => {
     getRegions().then((res) => setData(res.data?.slice(0, 4)));
   }, [lang]);
+  const handleRedirectToRegionDetails = (id) => {
+    window.location.href = `/regions/${id}`
+  }
   return (
     <div className={styles.regionsList_container}>
       <div className={styles.regionsList_header}>
@@ -25,12 +28,13 @@ const RegionsHomeList = () => {
       <div className={styles.regionsList_wrapper}>
         <div className={styles.regionsList}>
           {data?.length > 0
-            ? data.map(({ name, images }, id) => (
+            ? data.map(({ name, images, id }, i) => (
                 <RegionsCard
                   key={id}
-                  id={id}
+                  id={i}
                   name={name}
                   image={images[0]?.url}
+                  handleClick={()=> handleRedirectToRegionDetails(id)}
                 />
               ))
             : [...Array(4)].map((e, i) => (

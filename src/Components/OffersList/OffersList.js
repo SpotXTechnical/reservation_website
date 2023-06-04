@@ -14,6 +14,13 @@ const OffersList = () => {
   useEffect(() => {
     getRegionsWithSubRegionsList().then((res) => setData(res));
   }, [lang]);
+
+  const handleClick = (id) => {
+    window.location.href = `/regions/${id}`;
+  };
+  const handleClickSubRegion = (id) => {
+    window.location.href = `/subRegions/${id}`;
+  };
   return (
     <div className={styles.recomended_regions_container}>
       <div className={styles.recommended_list_wrapper}>
@@ -23,7 +30,7 @@ const OffersList = () => {
               <div className="w-100" key={i}>
                 <div className={styles.recomended_regions_list_header}>
                   <Title text={region.name} />
-                  <ViewAll />
+                  <ViewAll handleClick={() => handleClick(region.id)} />
                 </div>
                 <div className={styles.recommended_regions_list_parent}>
                   <div className={styles.recommended_regions_list}>
@@ -35,6 +42,7 @@ const OffersList = () => {
                           key={id}
                           name={name}
                           image={images[0]?.url}
+                          handleClick={() => handleClickSubRegion(id)}
                         />
                       ))}
                   </div>
