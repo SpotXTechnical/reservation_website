@@ -1,7 +1,7 @@
 import { FormattedMessage } from "react-intl";
 import styles from "./styles.module.css";
 
-const ReservationCard = ({ data }) => {
+const ReservationCard = ({ data, key }) => {
   
   const getDayMonth = (fullDatetime) => {
     const month = fullDatetime.slice(5, 7);
@@ -10,7 +10,7 @@ const ReservationCard = ({ data }) => {
   };
 
   return (
-    <div className={`${styles.reservation_card} d-flex`} key={data.id}>
+    <div className={`${styles.reservation_card} d-flex`} key={key}>
       <div className={styles.main_image}>
         <img src={data.unit.main_image.url} alt="main image" />
       </div>

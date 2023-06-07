@@ -48,7 +48,7 @@ const Reservations = () => {
 			<div className={styles.reservations}>
 			{ data?.length >0 ? 
 					data.map((item, i) => {
-						return <ReservationCard data={item}/>
+						return <ReservationCard data={item} key={i}/>
 					}) 
 					: 
 					<p className="m-0 text-center"><FormattedMessage id="noDataFound"/></p>
