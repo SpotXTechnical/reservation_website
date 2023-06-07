@@ -42,7 +42,9 @@ export default function Header() {
               <FormattedMessage id="home.offers" />
             </span>
           </div>
-          <div className="d-flex align-items-center gap-1 cursor-pointer">
+          <div className="d-flex align-items-center gap-1 cursor-pointer"
+          onClick={()=>window.location.href="/reservations"}
+          >
             <img src="/assets/shopping-bag.png" alt="reservations" />
             <span className={styles.menu_item}>
               <FormattedMessage id="home.reservations" />

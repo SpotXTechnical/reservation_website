@@ -71,7 +71,7 @@ export default function SignIn() {
 
   return (
     <>
-      {Object.keys(validationErrors).length ? (
+      {Object.keys(validationErrors).length>0 ? (
         <div
           className="alert alert-danger alert-dismissible fade show"
           role="alert"

@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import store, { langAction } from "../../store"
-export default function SignIn() {
+export default function Profile() {
   let { lang } = useSelector((state) => state.language);
   const avatar = "/assets/avatar.png";
   const intl = useIntl();

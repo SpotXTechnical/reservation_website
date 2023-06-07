@@ -8,7 +8,7 @@ import { getCities } from "../../app/Apis/HomeApis";
 import { editProfile } from "../../app/Apis/AuthApis";
 import { useSelector } from "react-redux";
 
-export default function SignIn() {
+export default function EditProfile() {
   const intl = useIntl();
   const router = useRouter();
   const [data, setData] = useState({});
@@ -131,7 +131,7 @@ export default function SignIn() {
 
   return (
     <>
-      {Object.keys(validationErrors).length ? (
+      {Object.keys(validationErrors).length>0 ? (
         <div
           className="alert alert-danger alert-dismissible fade show"
           role="alert"

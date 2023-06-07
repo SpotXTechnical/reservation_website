@@ -1,0 +1,48 @@
+.container{
+    margin: 0 80px 80px 80px;
+}
+
+.container h2 {
+    font-family: var(--Montserrat-Regular);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+    text-transform: capitalize;
+    color: var(--dark-color);
+}
+
+.filter_btns{
+    width: 100%;
+    background-color:  rgba(0, 0, 0, 0.03);;
+    color: var(--light-grey-color);
+    border-radius: 12px;
+    padding: 12px 32px;
+}
+
+.filter_btns > p {
+    padding: 13px 90px;
+}
+
+.filter_btns > :global(p.active), .filter_btns > p:hover {
+    color: var(--dark-color);
+    background: #FFFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+}
+
+.reservations{
+    border: 0.5px solid #C4C4C4;
+    border-radius: 12px;
+    padding: 32px;
+}
+
+@media screen and (max-width: 768px) {
+     .filter_btns {
+     flex-direction: column;
+    }
+    .container {
+        margin: 16px;
+       }
+  
+ }

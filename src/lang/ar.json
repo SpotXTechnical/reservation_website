@@ -242,5 +242,13 @@
     "cartEmpty": "The cart is empty",
     "noReviews": "There is no reviews",
     "noAttachments": "There is no Attachments",
-    "ratingAndreviews": "Rating & Reviews"
+    "ratingAndreviews": "Rating & Reviews",
+    "reservations": "Reservations",
+    "current": "Current",
+    "past": "Past",
+    "days": "Days",
+    "totalCost": "Total Cost",
+    "reviewYourRent": "Review Your Rent",
+    "LE": "LE",
+    "noDataFound": "No Data Found!"
 }

@@ -1,0 +1,117 @@
+
+.reservation_card:not(:last-child){
+    margin-bottom: 32px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--border-light-grey);
+}
+
+.main_image{
+    margin-inline-end: 40px;
+}
+
+.main_image img{
+    width: 268px;
+    height: 209px;
+    border-radius: 12px;
+}
+
+.info{
+    flex: 2;
+}
+
+.total_cost{
+    gap: 70px;
+    align-items: center;
+}
+
+.total_cost span:first-child{
+    color: var(--dark-grey);
+    font-size: 18px;
+    font-family: var(--Montserrat-Regular);
+    text-transform: capitalize;
+}
+
+.details {
+    font-family: var(--Montserrat-Semi-Bold);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    text-transform: capitalize;
+}
+
+.details span:last-child {
+    color: var(--grey-color);
+}
+
+.details span:last-child :global(.date) {
+    color: var(--dark-color);
+}
+
+.total_cost span:last-child{
+    font-size: 20px;
+    font-family: var(--Montserrat-Regular);
+    text-transform: capitalize;
+}
+
+.title{
+    color: var(--dark-grey);
+    font-size: 20px;
+    text-transform: capitalize;
+    font-family: var(--Montserrat-Regular);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+
+}
+
+.unit_type{
+    background: rgba(68, 188, 183, 0.1);
+    border-radius: 22px;
+    color: var(--light-blue-color);
+    padding: 7px 20px;
+    width: fit-content;
+    font-family: var(--Montserrat-Regular);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    text-transform: capitalize;
+}
+
+.review{
+    background: rgba(252, 217, 92, 0.15);
+    border-radius: 8px;
+    padding: 15px 30px;
+    font-size: 18px;
+}
+
+.status {
+    text-transform: capitalize;
+    font-size: 16px;
+}
+.status:global(.pending) {
+    color: #FF9811;
+}
+.status:global(.reserved) {
+    color: #44BCB7;
+}
+.status:global(.cancelled) {
+    color: #FF0000;
+}
+
+
+@media screen and (max-width: 768px) {
+   .reservation_card {
+    flex-direction: column;
+   }
+
+   .main_image{
+    margin-inline-end: 0px;
+   }
+   .main_image img{
+    width: 100%;
+    margin-bottom: 20px;
+   }
+}
