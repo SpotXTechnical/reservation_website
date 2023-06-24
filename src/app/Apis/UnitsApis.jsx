@@ -20,3 +20,20 @@ export const getUnitsPerRegion = async (regionId) => {
     return err;
   }
 };
+
+export const getUnitsPerSubRegion = async (regionId) => {
+  if (typeof window !== "undefined" && localStorage.getItem("language")) {
+    headers["Accept-Language"] = localStorage.getItem("language");
+  }
+  try {
+    const res = await fetch(
+      `${BASEURL}/api/v1/user/units?regions[0]=${regionId}`,
+      { headers }
+    );
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};
