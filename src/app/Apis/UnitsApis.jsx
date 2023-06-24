@@ -27,7 +27,7 @@ export const getUnitsPerSubRegion = async (regionId) => {
   }
   try {
     const res = await fetch(
-      `${BASEURL}/api/v1/user/units?regions[0]=${regionId}`,
+      `${BASEURL}/api/v1/user/units?regions[0]=${regionId}&order_type=desc&order_by=default_price&page=1&most_popular=0`,
       { headers }
     );
     const data = await res.json();
