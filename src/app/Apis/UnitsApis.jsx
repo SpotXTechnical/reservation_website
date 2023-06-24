@@ -1,4 +1,4 @@
-const BASEURL = "https://api-stage.spotx.app";
+const BASEURL = "https://api.spotx.app";
 const headers = {
   "Content-Type": "application/json",
   Accept: "application/json",
