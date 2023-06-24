@@ -27,10 +27,11 @@ export default function Header() {
     <div
       className={`container_wrapper d-flex align-items-center justify-content-between ${styles.header_wrapper}`}
     >
-      <div className="col-sm-6 cursor-pointer" 
-       onClick={() => {
-        window.location.href = "/";
-      }}
+      <div
+        className="col-sm-6 cursor-pointer"
+        onClick={() => {
+          window.location.href = "/";
+        }}
       >
         <img src="/assets/Logo.png" alt="Logo" />
       </div>
@@ -42,8 +43,9 @@ export default function Header() {
               <FormattedMessage id="home.offers" />
             </span>
           </div>
-          <div className="d-flex align-items-center gap-1 cursor-pointer"
-          onClick={()=>window.location.href="/reservations"}
+          <div
+            className="d-flex align-items-center gap-1 cursor-pointer"
+            onClick={() => (window.location.href = "/reservations")}
           >
             <img src="/assets/shopping-bag.png" alt="reservations" />
             <span className={styles.menu_item}>

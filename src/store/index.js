@@ -16,7 +16,6 @@ export const langSlice = createSlice({
   },
 });
 
-
 // config the store
 const store = configureStore({
   reducer: {

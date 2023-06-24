@@ -68,7 +68,10 @@ export default function SubRegion() {
           </div>
         )}
         {Object.keys(data)?.length > 0 ? (
-          <RegionUnits regionId={id} className={styles.units_container} />
+          <RegionUnits
+            regionId={id}
+            className={`container_wrapper ${styles.units_container}`}
+          />
         ) : (
           <div className={styles.shimmer_wrapper}>
             {[...Array(4)].map((e, i) => (

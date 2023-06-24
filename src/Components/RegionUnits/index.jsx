@@ -1,4 +1,4 @@
-import { getUnitsPerRegion } from "../../app/Apis/UnitsApis";
+import { getUnitsPerRegion, getAllUnits } from "../../app/Apis/UnitsApis";
 import { useEffect, useState } from "react";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import PopularCard from "../SharedComponents/PopularCard/PopularCard";
@@ -7,11 +7,15 @@ const RegionUnits = ({ regionId, className }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    getUnitsPerRegion(regionId).then((res) => setData(res.data));
+    if (regionId) {
+      getUnitsPerRegion(regionId).then((res) => setData(res.data));
+    } else {
+      getAllUnits().then((res) => setData(res.data));
+    }
   }, [regionId]);
 
   return (
-    <div className={`container_wrapper ${className}`}>
+    <div className={`${className}`}>
       {Object.keys(data).length > 0 ? (
         data.map((unit, i) => {
           return (

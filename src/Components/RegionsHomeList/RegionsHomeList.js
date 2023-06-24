@@ -17,8 +17,8 @@ const RegionsHomeList = () => {
     getRegions().then((res) => setData(res.data?.slice(0, 4)));
   }, [lang]);
   const handleRedirectToRegionDetails = (id) => {
-    window.location.href = `/regions/${id}`
-  }
+    window.location.href = `/regions/${id}`;
+  };
   return (
     <div className={styles.regionsList_container}>
       <div className={styles.regionsList_header}>
@@ -34,7 +34,7 @@ const RegionsHomeList = () => {
                   id={i}
                   name={name}
                   image={images[0]?.url}
-                  handleClick={()=> handleRedirectToRegionDetails(id)}
+                  handleClick={() => handleRedirectToRegionDetails(id)}
                 />
               ))
             : [...Array(4)].map((e, i) => (

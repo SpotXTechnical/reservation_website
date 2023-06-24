@@ -1,5 +1,13 @@
+import { useEffect, useState } from "react";
+import {
+  addToFavourite,
+  removeFromFavourite,
+} from "../../../app/Apis/UnitsApis";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styles from "./PopularCard.module.css";
 import moment from "moment";
+import { useSelector } from "react-redux";
 const PopularCard = ({
   id,
   key,
@@ -9,10 +17,19 @@ const PopularCard = ({
   bathrooms,
   beds,
   default_price,
-  is_favourite,
+  updateFavList,
   active_ranges,
   nearest_active_ranges,
+  favouritesList,
 }) => {
+  const [isFav, setIsFav] = useState(false);
+  let { lang } = useSelector((state) => state.language);
+  useEffect(() => {
+    if (favouritesList?.length > 0) {
+      setIsFav(favouritesList?.some((item) => item.id === id));
+    }
+  }, [favouritesList]);
+
   const getOffers = () => {
     return active_ranges?.filter((date) => {
       const startDate = new Date(date.from);
@@ -21,6 +38,30 @@ const PopularCard = ({
       return currentDate >= startDate && currentDate <= endDate;
     });
   };
+  const handleAddToFavourite = (e, id) => {
+    e.stopPropagation();
+    //  isFav? removeFromFavourite(id) :  addToFavourite(id);
+    isFav
+      ? removeFromFavourite(id).then((res) => {
+          toast.success(
+            lang === "ar"
+              ? "تمت إزالة العنصر من المفضلة"
+              : "Item removed from favorites!",
+            { autoClose: 5000 }
+          );
+          updateFavList();
+        })
+      : addToFavourite(id).then((res) => {
+          toast.success(
+            lang === "ar"
+              ? "تمت إضافة العنصر إلي المفضلة"
+              : "Item added to favorites!",
+            { autoClose: 5000 }
+          );
+          updateFavList();
+        });
+  };
+
   return (
     <div
       className={styles.popular_card}
@@ -29,13 +70,11 @@ const PopularCard = ({
     >
       <div className={styles.unit_type_wrapper}>
         <div className={styles.unit_type}>{type}</div>
-        <div>
+        <div onClick={(e) => handleAddToFavourite(e, id)}>
           <img
             src="/assets/Heart.png"
             alt="favourite"
-            className={
-              is_favourite ? styles.fav_icon : styles.fav_icon_disabled
-            }
+            className={isFav ? styles.fav_icon : styles.fav_icon_disabled}
           />
         </div>
       </div>
@@ -84,6 +123,7 @@ const PopularCard = ({
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

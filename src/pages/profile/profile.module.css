@@ -1,287 +1,282 @@
 /* Profile */
 .inner_container {
-    display: flex;
+  display: flex;
 }
 
 .head_section {
-    background-color: var(--background-grey);
-    text-align: center;
-    padding: 10px;
-    margin-top: 100px;
-    margin-bottom: 40px;
+  background-color: var(--background-grey);
+  text-align: center;
+  padding: 10px;
+  margin-top: 100px;
+  margin-bottom: 40px;
 }
 
 .img_wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    top: 35px;
-    position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  top: 35px;
+  position: relative;
 }
 
 .edit_profile {
-    position: absolute;
-    right: 0;
-    top: 25%;
-    right: 25px;
-    display: flex;
-    align-items: start;
-    justify-content: start;
-    gap: 8px;
-    cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 25%;
+  right: 25px;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  gap: 8px;
+  cursor: pointer;
 }
 
 .main_img {
-    width: 140px;
-    height: 140px;
-    border: 4px solid var(--white-color);
-    ;
-    border-radius: 50%;
-    position: absolute;
-    /* bottom: 8%;
+  width: 140px;
+  height: 140px;
+  border: 4px solid var(--white-color);
+  border-radius: 50%;
+  position: absolute;
+  /* bottom: 8%;
     right: 40%; */
 }
 
 .img_wrapper {
-    display: flex;
+  display: flex;
 }
 
-.img_wrapper>div:first-child {
-    flex: 2;
-    position: relative;
-    height: 65px;
-    margin-bottom: 10px;
+.img_wrapper > div:first-child {
+  flex: 2;
+  position: relative;
+  height: 65px;
+  margin-bottom: 10px;
 }
 
-.img_wrapper>div:last-child {
-    display: flex;
-    gap: 5px;
-    padding: 12px;
+.img_wrapper > div:last-child {
+  display: flex;
+  gap: 5px;
+  padding: 12px;
 }
 
-.img_wrapper>div:last-child span:first-child {
-    font-size: 12px;
+.img_wrapper > div:last-child span:first-child {
+  font-size: 12px;
 }
 
 .contact_section p {
-    font-family: 'Montserrat Regular';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
-    color: var(--dark-color);
+  font-family: "Montserrat Regular";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--dark-color);
 }
 
 .contact_section {
-    margin-bottom: 150px;
+  margin-bottom: 150px;
 }
 
-.contact_section>div {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--border-bottom-grey);
-    padding: 25px 0;
+.contact_section > div {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-bottom-grey);
+  padding: 25px 0;
 }
 
-.contact_section>div:first-child img {
-    width: 23px;
-    margin-inline: 7px;
+.contact_section > div:first-child img {
+  width: 23px;
+  margin-inline: 7px;
 }
 
-.contact_section>div:first-child span {
-    color: var(--light-blue-color);
+.contact_section > div:first-child span {
+  color: var(--light-blue-color);
 }
 
-.contact_section>div:last-child {
-    border-bottom: unset;
+.contact_section > div:last-child {
+  border-bottom: unset;
 }
 
 .app_images img:first-child {
-    margin-inline: 10px;
+  margin-inline: 10px;
 }
 
 .contact_section p {
-    margin: 0;
+  margin: 0;
 }
 
 /* Edit Profile */
 .edit_profile_head_section {
-    border-bottom: 1px solid var(--border-bottom-grey);
+  border-bottom: 1px solid var(--border-bottom-grey);
 }
 
-
-.edit_profile_head_section>div:first-child {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.edit_profile_head_section > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.edit_profile_head_section>div:last-child {
-    display: flex;
-    justify-content: center;
-    margin: 24px 0;
+.edit_profile_head_section > div:last-child {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0;
 }
 
 .edit_profile_pic {
-    width: 140px;
-    height: 140px;
-    border: 4px solid var(--white-color);
-    border-radius: 50%;
+  width: 140px;
+  height: 140px;
+  border: 4px solid var(--white-color);
+  border-radius: 50%;
 }
 
 .input_container {
-    /* display: flex; */
-    border-bottom: 1px solid var(--border-bottom-grey);
-    /* gap: 20%; */
-    padding: 25px 0;
-    /* justify-content: space-between; */
+  /* display: flex; */
+  border-bottom: 1px solid var(--border-bottom-grey);
+  /* gap: 20%; */
+  padding: 25px 0;
+  /* justify-content: space-between; */
 }
 
 .input_container:last-child {
-    border: unset;
+  border: unset;
 }
 
 .profile_input {
-    color: var(--light-grey-color);
-    width: 50%;
-    padding: 10px 14px;
-    background: var(--white-color);
-    border: 1px solid #BFBFBF;
-    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
-    border-radius: 16px;
+  color: var(--light-grey-color);
+  width: 50%;
+  padding: 10px 14px;
+  background: var(--white-color);
+  border: 1px solid #bfbfbf;
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  border-radius: 16px;
 }
 
 .profile_input:focus {
-    border-color: unset;
-    box-shadow: none;
+  border-color: unset;
+  box-shadow: none;
 }
 
-.input_container>div {
-    flex: 2;
+.input_container > div {
+  flex: 2;
 }
 
 /* General */
 .container {
-    width: 80%;
-    margin: 0 auto;
-    position: relative;
+  width: 80%;
+  margin: 0 auto;
+  position: relative;
 }
 
 .title {
-    text-align: center;
-    font-weight: bold;
-    margin: 30px 0px 0px 0px;
-    font-family: 'Montserrat Semi Bold';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 26px;
-    line-height: 32px;
-    text-transform: capitalize;
-    margin-bottom: 32px;
+  text-align: center;
+  font-weight: bold;
+  margin: 30px 0px 0px 0px;
+  font-family: "Montserrat Semi Bold";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 32px;
+  text-transform: capitalize;
+  margin-bottom: 32px;
 }
 
 .container h3 {
-    font-family: 'Montserrat Semi Bold';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 28px;
-    color: var(--dark-color);
-    margin-bottom: 0px;
+  font-family: "Montserrat Semi Bold";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--dark-color);
+  margin-bottom: 0px;
 }
 
 .container label {
-    font-family: 'Montserrat Regular';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
-    color: var(--dark-grey-color);
-
+  font-family: "Montserrat Regular";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--dark-grey-color);
 }
 
-
 .helpText {
-    font-size: 12px;
-    color: var(--grey-color);
+  font-size: 12px;
+  color: var(--grey-color);
 }
 
 .alert-danger {
-    font-weight: 100;
-    font-size: 14px;
+  font-weight: 100;
+  font-size: 14px;
 }
 
 .calls {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .btns_wrapper button {
-    font-family: 'Montserrat Regular';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 20px;
-    padding: 10px 25px;
-    background: var(--white-color);
-    border: 0.5px solid var(--border-light-grey);
-    border-radius: 8px;
-    color: var(--dark-grey-color);
-
+  font-family: "Montserrat Regular";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 10px 25px;
+  background: var(--white-color);
+  border: 0.5px solid var(--border-light-grey);
+  border-radius: 8px;
+  color: var(--dark-grey-color);
 }
 
 .btns_wrapper .save_btn {
-    background-color: var(--light-blue-color);
-    color: var(--white-color);
-    margin-inline: 12px;
-
+  background-color: var(--light-blue-color);
+  color: var(--white-color);
+  margin-inline: 12px;
 }
 
 :global(div[dir="rtl"]) .calls {
-    display: flex;
-    flex-direction: row-reverse;
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 :global(div[dir="rtl"]) .rightArrow {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .file_input_container {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .file_input_container input[type="file"] {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-    z-index: 1; /* add a higher z-index value */
-  }
-  
-  .file_input_container:hover::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 4px solid var(--white-color);
-    background: rgba(218, 218, 218, 0.5) url("../../../public/assets/cameraIcon.png") no-repeat center center;
-    background-size: 20px 20px;
-  }
+  position: relative;
+  display: inline-block;
+}
+
+.file_input_container input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1; /* add a higher z-index value */
+}
+
+.file_input_container:hover::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 4px solid var(--white-color);
+  background: rgba(218, 218, 218, 0.5)
+    url("../../../public/assets/cameraIcon.png") no-repeat center center;
+  background-size: 20px 20px;
+}
 
 @media screen and (max-width: 1280px) {
-    .profile_input {
-        width: 100%;
-    }
+  .profile_input {
+    width: 100%;
+  }
 
-    .edit_profile_head_section>div:first-child {
-        flex-direction: column-reverse;
-        gap: 20px;
-    }
+  .edit_profile_head_section > div:first-child {
+    flex-direction: column-reverse;
+    gap: 20px;
+  }
 }

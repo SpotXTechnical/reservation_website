@@ -12,10 +12,9 @@ export const getReservations = async (status) => {
     if (typeof window !== "undefined" && localStorage.getItem("language")) {
       headers["Accept-Language"] = localStorage.getItem("language");
     }
-    const res = await fetch(
-      `${BASEURL}/api/v1/user/reservations?${status}=1`,
-      { headers }
-    );
+    const res = await fetch(`${BASEURL}/api/v1/user/reservations?${status}=1`, {
+      headers,
+    });
     const data = await res.json();
     return data;
   } catch (err) {

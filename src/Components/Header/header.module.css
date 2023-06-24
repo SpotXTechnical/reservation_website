@@ -71,7 +71,6 @@
 } */
 
 @media screen and (max-width: 1280px) {
-
   .offers,
   .menu_item {
     display: none;

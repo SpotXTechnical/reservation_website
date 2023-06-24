@@ -133,7 +133,7 @@ export default function PropertyDetails() {
         <div className={`flex-center my-3 rating_mobile`}>
           <h2 className={styles.title}>{data?.title}</h2>
           <div>
-            {data?.rate && (
+            {data?.rate > 0 && (
               <ReactStars
                 count={5}
                 edit={false}
@@ -356,7 +356,7 @@ export default function PropertyDetails() {
                 </div>
               ))
             : [...Array(4)].map((e, i) => (
-                <div  key={i} className="col-sm-6 mb-4">
+                <div key={i} className="col-sm-6 mb-4">
                   <ShimmerThumbnail height={170} rounded />
                 </div>
               ))}

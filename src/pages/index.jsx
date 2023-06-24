@@ -1,6 +1,6 @@
 "use client";
 import { Inter } from "@next/font/google";
-import HomeHeading from "../Components/HomeHeading/HomeHeading"
+import HomeHeading from "../Components/HomeHeading/HomeHeading";
 import RegionsHomeList from "../Components/RegionsHomeList/RegionsHomeList";
 import OffersList from "../Components/OffersList/OffersList";
 import SubscribeUs from "../Components/SubscribeUs/SubscribeUs";

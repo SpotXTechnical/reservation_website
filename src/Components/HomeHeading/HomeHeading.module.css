@@ -1,5 +1,6 @@
 .home_heading_bg {
-  background: url("../../../public/assets/vecteezy_kayak-floating-on-blue-sea_3823729\ 1.png") no-repeat center;
+  background: url("../../../public/assets/vecteezy_kayak-floating-on-blue-sea_3823729\ 1.png")
+    no-repeat center;
   background-size: cover;
   height: 390px;
   display: flex;

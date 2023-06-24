@@ -2,7 +2,6 @@ import { FormattedMessage } from "react-intl";
 import styles from "./styles.module.css";
 
 const ReservationCard = ({ data, key }) => {
-  
   const getDayMonth = (fullDatetime) => {
     const month = fullDatetime.slice(5, 7);
     const day = fullDatetime.slice(8, 10);
@@ -50,7 +49,9 @@ const ReservationCard = ({ data, key }) => {
         ) : (
           <p></p>
         )}
-        <p className={`align-self-end ${styles.status} ${data.status}`}>{data.status}</p>
+        <p className={`align-self-end ${styles.status} ${data.status}`}>
+          {data.status}
+        </p>
       </div>
     </div>
   );

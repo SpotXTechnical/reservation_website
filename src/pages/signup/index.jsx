@@ -133,7 +133,7 @@ export default function SignUp() {
   return (
     <>
       <div dir={lang === "ar" ? "rtl" : "ltr"} className={styles.container}>
-        {Object.keys(validationErrors).length>0 ? (
+        {Object.keys(validationErrors).length > 0 ? (
           <div class="alert alert-danger" role="alert">
             <ul>
               {Object.entries(validationErrors).map(([k, errors], i) => (

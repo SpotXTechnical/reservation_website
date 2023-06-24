@@ -1,52 +1,48 @@
 .reviews_container {
-    background: var(--white-color);
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 13px;
-    padding: 24px;
-
+  background: var(--white-color);
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 13px;
+  padding: 24px;
 }
 
 .name {
-    font-family: var(--Montserrat-Regular);
-    font-style: normal;
-    font-weight: 600;
-    font-size: 13px;
-    text-transform: capitalize;
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: capitalize;
 
-    color: var(--dark-color);
-    margin-bottom: 5px;
+  color: var(--dark-color);
+  margin-bottom: 5px;
 }
 
 .img {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
 }
 
-
 .sub_title {
-    font-family: var(--Montserrat-Regular);
-    font-style: normal;
-    font-weight: 500;
-    font-size: 13px;
-    text-transform: capitalize;
-    color: var(--dark-grey);
-
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: capitalize;
+  color: var(--dark-grey);
 }
 
 .review {
-    font-family: var(--Montserrat-Regular);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 20px;
-    text-transform: capitalize;
-    color: var(--dark-grey);
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+  text-transform: capitalize;
+  color: var(--dark-grey);
 }
 
 @media screen and (max-width: 768px) {
-    .reviews_container div:first-child {
-        flex-direction: column;
-
-    }
+  .reviews_container div:first-child {
+    flex-direction: column;
+  }
 }

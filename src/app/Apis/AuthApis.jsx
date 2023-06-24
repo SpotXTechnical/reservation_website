@@ -47,6 +47,10 @@ export const editProfile = async (data) => {
     headers["Accept-Language"] = localStorage.getItem("language");
     headers["Content-Type"] = "application/json, multipart/form-data";
   }
+
+  if (typeof window !== "undefined" && localStorage.getItem("access_token")) {
+    headers.Authorization = JSON.parse(localStorage.getItem("access_token"));
+  }
   try {
     let res = await fetch(`${BASEURL}/api/v1/user/register`, {
       headers,
