@@ -4,6 +4,7 @@ import styles from "./policy.module.css";
 export default function Policy() {
   return (
     <div className={styles.policy_container}>
+      <img src="/assets/Logo.png" alt="Logo" className={styles.logo} />
       <p className={styles.title}>
         <FormattedMessage id="home.cancellationPolicy" />
       </p>
