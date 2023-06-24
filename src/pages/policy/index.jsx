@@ -8,42 +8,42 @@ export default function Policy() {
       <p className={styles.title}>
         <FormattedMessage id="home.cancellationPolicy" />
       </p>
+      <p className={styles.main_titles}>
+        نحن في SpotX نلزم جميع الأعضاء من ملاك و مستأجرين بتطبيق سياسة الإلغاء
+        على اي حجز من خلال موقعنا او تطبيق الهواتف الذكية الخاص بنا. سياسة
+        الإلغاء توضح الشروط والقواعد التي تحكم العلاقة بين مالك العقار وبين
+        المستأجر في حالة الغاء المستأجر للحجز الذي قام به على الوحدة وذلك للحفاظ
+        على حقوق كل من المالك والمستأجر. سياسات الالغاء هي جزء من شروط الاستخدام
+        العامة لموقعنا الالكتروني أو تطبيق الهواتف الذكية الخاص بنا وقيام الزائر
+        بالحجز من خلال الموقع او التطبيق يعتبر موافقة ضمنية على شروط الموقع
+        وسياساته وعلى سياسة الالغاء المطبقة على الوحدة التي قام الزائر بحجزها.
+        باختصار إن سياسة الالغاء هي بمثابة الاتفاق القانوني الذي يوضح حقوق
+        والتزامات كل طرف.
+      </p>
+      <p> حالات سياسة الإلغاء:</p>
 
       <ul className={styles.policy_content}>
         <li>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum.
+          الغاء الحجز قبل موعده ب 15 يوم على الأقل يتم رد كامل المبلغ المدفوع.
         </li>
         <li>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum.
+          الغاء الحجز قبل موعده باقل من 15 يوم و اكثر من 5 ايام يتم رد نصف
+          المبلغ المدفوع.
         </li>
         <li>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum.
+          الغاء الحجز قبل موعده باقل من 5 ايام يتحمل المستأجر كامل مبلغ الحجز
+          بشكل منفرد ولا يسترد منه أي مبلغ ولو بشكل جزئي.
         </li>
       </ul>
+      <p>في جميع السياسات السابقة تطبق الشروط التالية:</p>
+      <ul className={styles.policy_content}>
+        <li>يتحمل المستأجر قيمة مصاريف تحويل النقود اليه مرة اخرى.</li>
+      </ul>
+      <p className={styles.main_titles}>
+        قد نقوم في أي وقت بإجراء تعديلات على سياسات الموقع بدون أي إنذار مسبق
+        واستمرار استخدامك للموقع هو بمثابة موافقة ضمنية على اي تغيرات تحدث في
+        سياسات الموقع.
+      </p>
     </div>
   );
 }

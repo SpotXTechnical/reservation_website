@@ -1,6 +1,12 @@
 .policy_container {
     min-height: 50vh;
     margin: 40px 80px 80px 80px;
+    direction: rtl;
+    text-align: right;
+}
+
+.main_titles {
+    font-weight: 500;
 }
 
 .logo {
