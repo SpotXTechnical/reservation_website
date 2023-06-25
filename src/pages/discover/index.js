@@ -282,6 +282,7 @@ const Reservations = () => {
           {sortFilters.map((item, index) => {
             return (
               <Radio
+                key={index}
                 value={item.value}
                 checked={item.checked}
                 handleChange={() => handleChange(index)}
@@ -314,6 +315,7 @@ const Reservations = () => {
             {filters.type?.map((item, index) => {
               return (
                 <Checkbox
+                  key={index}
                   value={item.value}
                   checked={item.checked}
                   handleChange={() => handleCheckboxChange(index, "type")}
@@ -335,6 +337,7 @@ const Reservations = () => {
             {filters.regions?.map((item, index) => {
               return (
                 <Checkbox
+                  key={index}
                   value={item.value}
                   checked={item.checked}
                   handleChange={() => handleCheckboxChange(index, "regions")}
@@ -372,6 +375,7 @@ const Reservations = () => {
               {filters.rooms?.map((item, index) => {
                 return (
                   <Checkbox
+                    key={index}
                     value={item.value}
                     checked={item.checked}
                     handleChange={() => handleCheckboxChange(index, "rooms")}
@@ -390,6 +394,7 @@ const Reservations = () => {
               {filters.beds?.map((item, index) => {
                 return (
                   <Checkbox
+                    key={index}
                     value={item.value}
                     checked={item.checked}
                     handleChange={() => handleCheckboxChange(index, "beds")}
@@ -454,7 +459,7 @@ const Reservations = () => {
             <div className={styles.shimmer_wrapper}>
               {" "}
               {[...Array(4)].map((e, i) => (
-                <div className={styles.shimmer}>
+                <div className={styles.shimmer}  key={i}>
                   <ShimmerThumbnail key={i} height={250} rounded />
                 </div>
               ))}
@@ -464,6 +469,7 @@ const Reservations = () => {
               {data.map((unit, i) => {
                 return (
                   <PopularCard
+                    key={i}
                     id={unit.id}
                     title={unit.title}
                     image={unit.images[0]?.url}
