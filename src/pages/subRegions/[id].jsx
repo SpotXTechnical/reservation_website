@@ -8,6 +8,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import RegionUnits from "../../Components/RegionUnits";
 import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
+import { FormattedMessage } from "react-intl";
 
 export default function SubRegion() {
   const router = useRouter();
@@ -31,6 +32,12 @@ export default function SubRegion() {
     },
     [id, lang]
   );
+
+  const handleShare = () => {
+    navigator.clipboard.writeText(
+      `${window.location.origin}?idKey=${id}&targetKey=subRegion`
+    );
+  };
 
   return (
     <div
@@ -65,10 +72,20 @@ export default function SubRegion() {
               className="mx-3"
             />
             <h2 className={styles.region_name}>{data.name}</h2>
+            <span className={styles.share} onClick={handleShare}>
+              <img src="/assets/share.png" alt="share" />
+              <span>
+                <FormattedMessage id="share" />
+              </span>
+            </span>
           </div>
         )}
         {Object.keys(data)?.length > 0 ? (
-          <RegionUnits isSub={true} regionId={id} className={styles.units_container} />
+          <RegionUnits
+            regionId={id}
+            isSub={true}
+            className={`container_wrapper ${styles.units_container}`}
+          />
         ) : (
           <div className={styles.shimmer_wrapper}>
             {[...Array(4)].map((e, i) => (

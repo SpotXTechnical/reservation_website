@@ -22,10 +22,10 @@ body {
   --white-color: #ffffff;
   --orange-color: #ff6b00;
   --grey-color: #a2a2a2;
-  --dark-grey: #7B7B7B;
-  --light-blue: #49B6FA ;
+  --dark-grey: #7b7b7b;
+  --light-blue: #49b6fa;
   --dark-grey-color: #404040;
-  --background-grey: #F7F7F7;
+  --background-grey: #f7f7f7;
   --light-grey-color: #7b7b7b;
   --Montserrat-Regular: "Montserrat Regular";
   --Montserrat-Semi-Bold: "Montserrat Semi Bold";
@@ -33,13 +33,13 @@ body {
   --blue-color: #2396cc;
   --dark-color: #0c0c0c;
   --yellow-color: #fcd95c;
-  --yellow-calendar-color: #FCD95C;
+  --yellow-calendar-color: #fcd95c;
   --mustard-color: #fda82a;
   --light-blue-color: #44bcb7;
   --dark-blue-color: #1a7873;
-  --border-light-grey: #C4C4C4;
-  --border-ligther-grey:#E1E1E1;
-  --border-bottom-grey: #D5D5D5;
+  --border-light-grey: #c4c4c4;
+  --border-ligther-grey: #e1e1e1;
+  --border-bottom-grey: #d5d5d5;
 }
 
 .container_wrapper {
@@ -62,12 +62,10 @@ input:focus-visible {
   color: var(--grey-color);
 }
 
-.flex-center{
+.flex-center {
   display: flex;
   justify-content: space-between;
 }
-
-
 
 @media screen and (max-width: 1280px) {
   .container_wrapper {

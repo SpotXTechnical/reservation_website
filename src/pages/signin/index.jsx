@@ -1,11 +1,13 @@
 import Input from "../../Components/SharedComponents/Input/Input";
 import { useState } from "react";
-import styles from "./signin.module.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { FormattedMessage, useIntl } from "react-intl";
 import { signIn } from "../../app/Apis/AuthApis";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
+import styles from "./signin.module.css";
 
 export default function SignIn() {
   if (typeof window !== "undefined") {
@@ -22,6 +24,8 @@ export default function SignIn() {
   const [emailErr, setEmailErr] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordErr, setPasswordErr] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [phoneErr, setPhoneErr] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
 
   const onEmailChange = ({ target }) => {
@@ -40,38 +44,50 @@ export default function SignIn() {
     !value ? setPasswordErr(true) : setPasswordErr(false);
   };
 
+  const onPhoneChange = ({ target }) => {
+    const { value } = target;
+    setPhone(value);
+    !value ? setPhoneErr(true) : setPhoneErr(false);
+  };
+
   const handleDismissAlret = () => setValidationErrors({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    !email && setEmailErr(true);
+    // !email && setEmailErr(true);
+    !phone && setPhone(true);
     !password && setPasswordErr(true);
-    if (email && password && !emailErr && !passwordErr) {
+    if (phone && password && !phoneErr && !passwordErr) {
       const data = {
-        identifier: email,
+        identifier: phone,
         password,
       };
-      signIn(data).then((res) => {
-        if (res.errors) {
-          setValidationErrors(res.errors);
-          setTimeout(() => {
-            handleDismissAlret();
-          }, 5000);
-        } else {
-          localStorage.setItem("user", JSON.stringify(res?.data?.user));
-          localStorage.setItem(
-            "access_token",
-            JSON.stringify(res?.data?.token?.access_token)
-          );
-          window.location.href = "/";
-        }
-      });
+      signIn(data)
+        .then((res) => {
+          if (res.errors) {
+            setValidationErrors(res.errors);
+            setTimeout(() => {
+              handleDismissAlret();
+            }, 5000);
+          } else {
+            localStorage.setItem("user", JSON.stringify(res?.data?.user));
+            localStorage.setItem(
+              "access_token",
+              JSON.stringify(res?.data?.token?.access_token)
+            );
+            window.location.href = "/";
+          }
+        })
+        .catch((err) => {
+          console.log("Err", err);
+          return toast.error(err?.response?.data?.message, { autoClose: 5000 });
+        });
     }
   };
 
   return (
     <>
-      {Object.keys(validationErrors).length>0 ? (
+      {Object.keys(validationErrors).length > 0 ? (
         <div
           className="alert alert-danger alert-dismissible fade show"
           role="alert"
@@ -94,6 +110,7 @@ export default function SignIn() {
         ""
       )}
       <div dir={lang === "ar" ? "rtl" : "ltr"} className={styles.container}>
+        <ToastContainer />
         <div className={styles.inner_container}>
           <div className={styles.form_container}>
             <h3 className={styles.signin_title}>
@@ -106,7 +123,7 @@ export default function SignIn() {
               <FormattedMessage id="signin.subtitle" />
             </p>
             <form autoComplete="off">
-              <div className="mb-3">
+              {/* <div className="mb-3">
                 <label htmlFor="emailField" className={styles.label}>
                   <FormattedMessage id="signin.fields.email.label" />
                 </label>
@@ -125,6 +142,21 @@ export default function SignIn() {
                       ? "invalidEmail"
                       : ""
                   }
+                />
+              </div> */}
+              <div className="mb-3">
+                <label htmlFor="phoneField" className={styles.label}>
+                  <FormattedMessage id="signup.fields.phone.label" />
+                </label>
+                <Input
+                  type="number"
+                  id="phoneField"
+                  className={styles.signin_input}
+                  placeholder={intl.formatMessage({
+                    id: "signup.fields.phone.placeholder",
+                  })}
+                  onChange={onPhoneChange}
+                  error={phoneErr && !phone ? "requiredField" : ""}
                 />
               </div>
               <div className="mb-3">

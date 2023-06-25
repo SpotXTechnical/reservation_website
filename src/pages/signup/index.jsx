@@ -84,20 +84,18 @@ export default function SignUp() {
     !name && setNameErr(true);
     !email && setEmailErr(true);
     !phone && setPhoneErr(true);
-    !city && setCityErr(true);
+    // !city && setCityErr(true);
     !password && setPasswordErr(true);
     !passwordConfirm && setPasswordConfirmErr(true);
     if (
       name &&
       email &&
       phone &&
-      city &&
       password &&
       passwordConfirm &&
       !nameErr &&
       !emailErr &&
       !phoneErr &&
-      !cityErr &&
       !passwordErr &&
       !passwordConfirmErr
     ) {
@@ -107,7 +105,7 @@ export default function SignUp() {
         phone,
         password,
         password_confirmation: passwordConfirm,
-        city_id: city,
+        // city_id: city,
       };
       console.log(data);
       signUp(data).then((res) => {
@@ -133,7 +131,7 @@ export default function SignUp() {
   return (
     <>
       <div dir={lang === "ar" ? "rtl" : "ltr"} className={styles.container}>
-        {Object.keys(validationErrors).length>0 ? (
+        {Object.keys(validationErrors).length > 0 ? (
           <div class="alert alert-danger" role="alert">
             <ul>
               {Object.entries(validationErrors).map(([k, errors], i) => (
@@ -235,7 +233,7 @@ export default function SignUp() {
               error={phoneErr && !phone ? "requiredField" : ""}
             />
           </div>
-          <div className="mb-3">
+          {/* <div className="mb-3">
             <label htmlFor="cityField" className={styles.label}>
               <FormattedMessage id="signup.fields.city.label" />
             </label>
@@ -256,7 +254,7 @@ export default function SignUp() {
                   </option>
                 ))}
             </select>
-          </div>
+          </div> */}
           <button
             type="submit"
             className={`${styles.button_wrapper}`}

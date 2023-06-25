@@ -5,7 +5,7 @@ import { editProfile } from "../../app/Apis/AuthApis";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import store, { langAction } from "../../store"
+import store, { langAction } from "../../store";
 export default function Profile() {
   let { lang } = useSelector((state) => state.language);
   const avatar = "/assets/avatar.png";
@@ -43,10 +43,24 @@ export default function Profile() {
                 alt="signin"
               />
             </div>
-            <div className={styles.edit_profile} onClick={() =>  window.location.href= "/profile/edit"}>
-                <div><span><img src={data.image ? data.image : "/assets/edit.png"} alt="callUs"/></span></div>
-                <div><span className="text-grey"><FormattedMessage id="edit"/></span></div>
+            <div
+              className={styles.edit_profile}
+              onClick={() => (window.location.href = "/profile/edit")}
+            >
+              <div>
+                <span>
+                  <img
+                    src={data.image ? data.image : "/assets/edit.png"}
+                    alt="callUs"
+                  />
+                </span>
               </div>
+              <div>
+                <span className="text-grey">
+                  <FormattedMessage id="edit" />
+                </span>
+              </div>
+            </div>
             <div className={styles.head_section}>
               <div className={styles.img_wrapper}>
                 <div></div>

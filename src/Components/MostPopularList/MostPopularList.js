@@ -8,21 +8,32 @@ import { ShimmerThumbnail } from "react-shimmer-effects";
 import { useIntl } from "react-intl";
 import styles from "./MostPopularList.module.css";
 import { useSelector } from "react-redux";
+import { getFavouriteList } from "../../app/Apis/UnitsApis";
 
 const MostPopularList = () => {
   const intl = useIntl();
   const [data, setData] = useState([]);
+  const [favourites, setFav] = useState([]);
   let { lang } = useSelector((state) => state.language);
   useEffect(() => {
     getMostPopularProperties().then((res) => setData(res.data?.slice(0, 4)));
   }, [lang]);
+  useEffect(() => {
+      getFavouriteList().then((res) => setFav(res?.data));
+  }, []);
+  const handleViewAll = () => {
+    // window.location.href = "/discover";
+  };
+  const handleUpdateFavList = () => {
+      getFavouriteList().then((res) => setFav(res?.data));
+  };
   return (
     <div className={styles.popularList_container}>
       <div className={styles.popularList_header}>
         <Title
           text={intl.formatMessage({ id: "home.mostPopularProperties" })}
         />
-        <ViewAll />
+        <ViewAll handleClick={handleViewAll} />
       </div>
       <div className={styles.popularList}>
         {data?.length > 0
@@ -54,6 +65,8 @@ const MostPopularList = () => {
                   is_favourite={is_favourite}
                   active_ranges={active_ranges}
                   nearest_active_ranges={nearest_active_ranges}
+                  favouritesList={favourites}
+                  updateFavList={handleUpdateFavList}
                 />
               )
             )

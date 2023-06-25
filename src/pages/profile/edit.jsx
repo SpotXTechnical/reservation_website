@@ -1,8 +1,9 @@
 import styles from "./profile.module.css";
 import { FormattedMessage, useIntl } from "react-intl";
-import { getProfile } from "../../app/Apis/HomeApis";
+import { getProfile } from "../../app/Apis/AuthApis";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import store, { langAction } from "../../store";
 import Input from "../../Components/SharedComponents/Input/Input";
 import { getCities } from "../../app/Apis/HomeApis";
 import { editProfile } from "../../app/Apis/AuthApis";
@@ -131,7 +132,7 @@ export default function EditProfile() {
 
   return (
     <>
-      {Object.keys(validationErrors).length>0 ? (
+      {Object.keys(validationErrors).length > 0 ? (
         <div
           className="alert alert-danger alert-dismissible fade show"
           role="alert"
@@ -306,7 +307,6 @@ export default function EditProfile() {
                   onChange={onPasswordChange}
                   error={passwordErr && !password ? "requiredField" : ""}
                 />
-
               </div>
             </div>
           </div>

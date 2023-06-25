@@ -1,13 +1,13 @@
 .calendar-day-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .rdrDefinedRangesWrapper,
 .rdrDateDisplay,
 .rdrMonthName {
-    display: none;
+  display: none;
 }
 
 .rdrCalendarWrapper,
@@ -15,32 +15,32 @@
 .rdrDefinedRangesWrapper,
 .rdrDateRangePickerWrapper,
 .rdrMonth {
-    width: 100%;
+  width: 100%;
 }
 
 .rdrDay {
-    height: 70px;
+  height: 70px;
 }
 
 .calendar-day-wrapper sub {
-    font-family: var(--Montserrat-Regular);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 16px;
-    text-transform: capitalize;
-    color: var(--light-grey-color) !important;
-    bottom: 0px;
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  text-transform: capitalize;
+  color: var(--light-grey-color) !important;
+  bottom: 0px;
 }
 
 .calendar-day-wrapper span {
-    font-family: var(--Montserrat-Semi-Bold);
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14.2857px;
-    line-height: 17px;
-    text-transform: capitalize;
-    color: var(--grey-color) !important;
+  font-family: var(--Montserrat-Semi-Bold);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14.2857px;
+  line-height: 17px;
+  text-transform: capitalize;
+  color: var(--grey-color) !important;
 }
 
 .rdrSelected,
@@ -51,55 +51,50 @@
 .rdrDayEndOfMonth .rdrStartEdge,
 .rdrDayEndOfWeek .rdrInRange,
 .rdrDayEndOfWeek .rdrStartEdge {
-    height: 100%;
-    top: 0;
-    border: unset;
-    right: 0 !important;
-    left: 0 !important;
-    border-top-right-radius: unset !important;
-    border-bottom-right-radius: unset !important;
-    border-top-left-radius: unset !important;
-    border-bottom-left-radius: unset !important;
-
+  height: 100%;
+  top: 0;
+  border: unset;
+  right: 0 !important;
+  left: 0 !important;
+  border-top-right-radius: unset !important;
+  border-bottom-right-radius: unset !important;
+  border-top-left-radius: unset !important;
+  border-bottom-left-radius: unset !important;
 }
 
 .rdrEndEdge {
-    border-top-right-radius: unset;
-    border-bottom-right-radius: unset
+  border-top-right-radius: unset;
+  border-bottom-right-radius: unset;
 }
-
 
 .rdrDay {
-    border: 0.297619px solid var(--border-ligther-grey);
+  border: 0.297619px solid var(--border-ligther-grey);
 }
 
-
-.rdrDayToday:not(.rdrDayPassive) .rdrInRange~.rdrDayNumber span:after,
-.rdrDayToday:not(.rdrDayPassive) .rdrStartEdge~.rdrDayNumber span:after,
-.rdrDayToday:not(.rdrDayPassive) .rdrEndEdge~.rdrDayNumber span:after,
-.rdrDayToday:not(.rdrDayPassive) .rdrSelected~.rdrDayNumber span:after,
+.rdrDayToday:not(.rdrDayPassive) .rdrInRange ~ .rdrDayNumber span:after,
+.rdrDayToday:not(.rdrDayPassive) .rdrStartEdge ~ .rdrDayNumber span:after,
+.rdrDayToday:not(.rdrDayPassive) .rdrEndEdge ~ .rdrDayNumber span:after,
+.rdrDayToday:not(.rdrDayPassive) .rdrSelected ~ .rdrDayNumber span:after,
 .rdrDayToday .rdrDayNumber span:after {
-    background: unset;
+  background: unset;
 }
-
 
 .rdrDayToday {
-    background-color: var(--yellow-calendar-color);
-    color: var(--dark-color);
+  background-color: var(--yellow-calendar-color);
+  color: var(--dark-color);
 }
 
 .rdrStartEdge,
 .rdrEndEdge,
 .rdrInRange {
-    background-color: var(--yellow-calendar-color);
+  background-color: var(--yellow-calendar-color);
 }
 
-.rdrDayToday~.rdrDayNumber span,
-.rdrStartEdge~.rdrDayNumber span,
-.rdrEndEdge~.rdrDayNumber span,
-.rdrInRange~.rdrDayNumber span {
-    color: var(--dark-color) !important;
-
+.rdrDayToday ~ .rdrDayNumber span,
+.rdrStartEdge ~ .rdrDayNumber span,
+.rdrEndEdge ~ .rdrDayNumber span,
+.rdrInRange ~ .rdrDayNumber span {
+  color: var(--dark-color) !important;
 }
 
 .rdrDayDisabled .rdrInRange,
@@ -109,142 +104,138 @@
 .rdrDayDisabled .rdrDayStartPreview,
 .rdrDayDisabled .rdrDayInPreview,
 .rdrDayDisabled .rdrDayEndPreview {
-    filter: unset !important;
+  filter: unset !important;
 }
 
 .rdrDayDisabled {
-    background-color: rgba(226, 226, 226, 0.6);
-    ;
-    color: var(--grey-color);
-    font-family: var(--Montserrat-Regular);
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 17px;
-    text-transform: capitalize;
+  background-color: rgba(226, 226, 226, 0.6);
+  color: var(--grey-color);
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  text-transform: capitalize;
 }
 
 .rdrDayDisabled sub {
-    font-family: var(--Montserrat-Regular);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
-    text-transform: capitalize;
-    color: var(--border-light-grey);
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  text-transform: capitalize;
+  color: var(--border-light-grey);
 }
 
 .rdrWeekDay {
-    font-family: var(--Montserrat-Semi-Bold);
-    font-style: normal;
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 17px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
+  font-family: var(--Montserrat-Semi-Bold);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 17px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
 
-
-    color: var(--dark-grey);
+  color: var(--dark-grey);
 }
 
 .rdrMonthAndYearWrapper,
 .rdrMonths {
-    background-color: rgba(241, 241, 241, 0.6);
+  background-color: rgba(241, 241, 241, 0.6);
 }
 
 .rdrMonthAndYearWrapper {
-    padding-bottom: 35px;
+  padding-bottom: 35px;
 }
 
-
-
-
 .rdrDay:not(.rdrDayDisabled) {
-    background-color: var(--white-color);
+  background-color: var(--white-color);
 }
 
 .rdrDayStartPreview,
 .rdrDayEndPreview,
 .rdrDayInPreview {
-    display: none;
+  display: none;
 }
 
 .rdrMonthAndYearPickers {
-    font-family: var(--Montserrat-Semi-Bold);
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16.6667px;
-    line-height: 20px;
-    text-transform: uppercase;
-    color: var(--dark-color);
+  font-family: var(--Montserrat-Semi-Bold);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16.6667px;
+  line-height: 20px;
+  text-transform: uppercase;
+  color: var(--dark-color);
 }
 
 .selection_days_wrapper {
-    padding-top: 25px;
-    padding-bottom: 55px;
+  padding-top: 25px;
+  padding-bottom: 55px;
 }
 
 .rdrMonth {
-    padding-inline: 0px !important;
+  padding-inline: 0px !important;
 }
 
 .selected_period {
-    width: 18px;
-    height: 18px;
-    background: var(--yellow-calendar-color);
-    border: 0.595238px solid var(--border-ligther-grey);
-    border-radius: 4.7619px;
-    padding: 0px;
+  width: 18px;
+  height: 18px;
+  background: var(--yellow-calendar-color);
+  border: 0.595238px solid var(--border-ligther-grey);
+  border-radius: 4.7619px;
+  padding: 0px;
 }
 
 .not_available {
-    background-color: rgba(226, 226, 226, 0.6);
+  background-color: rgba(226, 226, 226, 0.6);
 }
 
 .available_period {
-    background-color: var(--white-color);
+  background-color: var(--white-color);
 }
 
 .selected_labels {
-    font-family: var(--Montserrat-Regular);
-    font-style: normal;
-    font-weight: 500;
-    font-size: 15.4762px;
-    line-height: 19px;
-    text-transform: capitalize;
-    color: var(--dark-grey);
-
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15.4762px;
+  line-height: 19px;
+  text-transform: capitalize;
+  color: var(--dark-grey);
 }
 
 .reservation_btn {
-    background: linear-gradient(180deg, var(--light-blue-color) -16.5%, var(--blue-color) 54.7%);
-    box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-    outline: none;
-    border: none;
-    background: linear-gradient(180deg, #44BCB7 -16.5%, var(--blue-color) 54.7%);
-    box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-    font-family: var(--Montserrat-Regular);
-    font-style: normal;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 22px;
-    color: var(--white-color);
-    padding: 13px;
-    width: 100%;
-
+  background: linear-gradient(
+    180deg,
+    var(--light-blue-color) -16.5%,
+    var(--blue-color) 54.7%
+  );
+  box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  outline: none;
+  border: none;
+  background: linear-gradient(180deg, #44bcb7 -16.5%, var(--blue-color) 54.7%);
+  box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: var(--white-color);
+  padding: 13px;
+  width: 100%;
 }
 
 .rdrDayPassive {
-    display: none;
+  display: none;
 }
 
-
 .error_date_range {
-    font-family: var(--Montserrat-Semi-Bold);
-    font-style: normal;
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 19px;
+  font-family: var(--Montserrat-Semi-Bold);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 19px;
 }

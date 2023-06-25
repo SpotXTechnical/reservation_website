@@ -1,39 +1,37 @@
-const BASEURL = "https://api.spotx.app";
-const headers = {
-  "Content-Type": "application/json",
-  Accept: "application/json",
-};
+import { axiosInstance } from "./AxiosInstance";
 
-export const getRegions = async () => {
+export const getRegions = async (withSub) => {
   try {
-    if (typeof window !== "undefined" && localStorage.getItem("language")) {
-      headers["Accept-Language"] = localStorage.getItem("language");
-    }
-    const res = await fetch(
-      `${BASEURL}/api/v1/regions?per_page=20&subRegion_count=1`,
-      { headers }
+    const response = await axiosInstance.get(
+      `/api/v1/regions?per_page=20&subRegion_count=1&page=1&with_sub=${withSub}`
     );
-    const data = await res.json();
-    return data;
-  } catch (err) {
-    console.log(err);
-    return err;
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 };
 
-export const getRegionDetails = async (id,name) => {
+export const getMostPopularRegions = async () => {
   try {
-    if (typeof window !== "undefined" && localStorage.getItem("language")) {
-      headers["Accept-Language"] = localStorage.getItem("language");
-    }
-    const res = await fetch(
-      `${BASEURL}/api/v1/regions/${id}?search=${name}`,
-      { headers }
+    const response = await axiosInstance.get(
+      "/api/v1/most-popular/regions?per_page=100&page=1"
     );
-    const data = await res.json();
-    return data;
-  } catch (err) {
-    console.log(err);
-    return err;
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getRegionDetails = async (id, name) => {
+  try {
+    const response = await axiosInstance.get(
+      `/api/v1/regions/${id}?search=${name}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 };
