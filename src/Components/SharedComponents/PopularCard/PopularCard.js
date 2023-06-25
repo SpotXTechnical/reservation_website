@@ -70,13 +70,15 @@ const PopularCard = ({
     >
       <div className={styles.unit_type_wrapper}>
         <div className={styles.unit_type}>{type}</div>
-        <div onClick={(e) => handleAddToFavourite(e, id)}>
-          <img
-            src="/assets/Heart.png"
-            alt="favourite"
-            className={isFav ? styles.fav_icon : styles.fav_icon_disabled}
-          />
-        </div>
+        {typeof window !== "undefined" && (
+          <div onClick={(e) => handleAddToFavourite(e, id)}>
+            <img
+              src="/assets/Heart.png"
+              alt="favourite"
+              className={isFav ? styles.fav_icon : styles.fav_icon_disabled}
+            />
+          </div>
+        )}
       </div>
       <div>
         <img src={image} alt="popular_regions" className={styles.popular_img} />

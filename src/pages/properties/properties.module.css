@@ -136,6 +136,9 @@
 .over_view {
   margin-bottom: 48px;
 }
+.over_view .title {
+  cursor: pointer;
+}
 
 .features .title,
 .over_view .title,

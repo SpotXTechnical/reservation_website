@@ -122,6 +122,7 @@ export default function Header() {
                     onClick={() => {
                       window.location.href = "/signin";
                       localStorage.removeItem("user");
+                      localStorage.removeItem("access_token");
                     }}
                   >
                     <FormattedMessage id="home.Logout" />

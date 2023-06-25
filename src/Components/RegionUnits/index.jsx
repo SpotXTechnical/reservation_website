@@ -1,17 +1,19 @@
-import { getUnitsPerRegion, getAllUnits } from "../../app/Apis/UnitsApis";
+import {
+  getUnitsPerRegion,
+  getAllUnits,
+  getUnitsPerSubRegion,
+} from "../../app/Apis/UnitsApis";
 import { useEffect, useState } from "react";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import PopularCard from "../SharedComponents/PopularCard/PopularCard";
 
-const RegionUnits = ({ regionId, className }) => {
+const RegionUnits = ({ regionId, className, isSub }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    if (regionId) {
-      getUnitsPerRegion(regionId).then((res) => setData(res.data));
-    } else {
-      getAllUnits().then((res) => setData(res.data));
-    }
+    isSub
+      ? getUnitsPerSubRegion(regionId).then((res) => setData(res.data))
+      : getUnitsPerRegion(regionId).then((res) => setData(res.data));
   }, [regionId]);
 
   return (

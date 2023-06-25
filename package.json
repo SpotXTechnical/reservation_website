@@ -12,11 +12,13 @@
   "dependencies": {
     "@next/font": "13.1.5",
     "@reduxjs/toolkit": "^1.9.3",
+    "axios": "^1.4.0",
     "babel-loader": "^9.1.2",
     "bootstrap": "^5.2.3",
     "date-fns": "^2.30.0",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.5",
+    "firebase": "^9.23.0",
     "google-map-react": "^2.2.0",
     "install": "^0.13.0",
     "moment": "^2.29.4",

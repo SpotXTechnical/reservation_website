@@ -68,6 +68,13 @@
 .shimmer_wrapper > div {
   width: 48%;
 }
+.share {
+  color: var(--grey-color);
+  cursor: pointer;
+}
+.share img {
+  margin-inline: 10px;
+}
 
 @media screen and (max-width: 768px) {
   .head :global(.slider-wrapper) {

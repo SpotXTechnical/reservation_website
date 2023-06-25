@@ -13,6 +13,7 @@ import store, { langAction } from "../../store";
 import DateRangePicker from "../../Components/DateRangePicker/DateRangePicker";
 import moment from "moment";
 import ModalComponent from "../../Components/Modal/Modal";
+import firebase from "../../firebase";
 
 export default function PropertyDetails() {
   let { lang } = useSelector((state) => state.language);
@@ -26,6 +27,13 @@ export default function PropertyDetails() {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleModal = () => setIsOpen(!isOpen);
+  const [showComponent, setShowComponent] = useState(false);
+
+  useEffect(() => {
+    setShowComponent(
+      typeof window !== "undefined" && localStorage.getItem("access_token")
+    );
+  }, []);
 
   function calculateNumberOfDays(startDate, endDate) {
     const start = new Date(startDate.toUTCString());
@@ -103,6 +111,12 @@ export default function PropertyDetails() {
     { label: "Properties", url: "/properties" },
   ];
 
+  const handleShare = () => {
+    navigator.clipboard.writeText(
+      `${window.location.origin}?idKey=${id}&targetKey=unit`
+    );
+  };
+
   return (
     <div
       dir={lang === "ar" ? "rtl" : "ltr"}
@@ -114,13 +128,15 @@ export default function PropertyDetails() {
           <Breadcrumb items={items} />
         </div>
         <div className={styles.actions}>
-          <span className="cursor-pointer">
-            <img src="/assets/green-heart.png" alt="favorite" />
-            <span>
-              <FormattedMessage id="addToFav" />
+          {showComponent && (
+            <span className="cursor-pointer">
+              <img src="/assets/green-heart.png" alt="favorite" />
+              <span>
+                <FormattedMessage id="addToFav" />
+              </span>
             </span>
-          </span>
-          <span className="cursor-pointer">
+          )}
+          <span className="cursor-pointer" onClick={handleShare}>
             <img src="/assets/share.png" alt="share" />
             <span>
               <FormattedMessage id="share" />
@@ -273,16 +289,19 @@ export default function PropertyDetails() {
           </div>
 
           <div className={styles.over_view}>
-            <div className={styles.title}>
+            <div
+              className={styles.title}
+              onClick={() => (window.location = "/policy")}
+            >
               <FormattedMessage id="Cancellation Policy" />
             </div>
 
-            <div
+            {/* <div
               className={styles.link}
               onClick={() => (window.location = "/policy")}
             >
               <FormattedMessage id="Free-free cancellation" /> {" >>"}
-            </div>
+            </div> */}
           </div>
 
           <div className={styles.over_view}>
