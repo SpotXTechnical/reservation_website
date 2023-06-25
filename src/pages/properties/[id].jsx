@@ -313,7 +313,6 @@ export default function PropertyDetails() {
               <div className={styles.owner}>
                 <img src={data?.owner?.image} alt="owner_img" />
                 <p>{data?.owner?.name} </p>
-                <p>{data?.owner?.phone} </p>
               </div>
             ) : (
               <ShimmerThumbnail height={175} rounded />
