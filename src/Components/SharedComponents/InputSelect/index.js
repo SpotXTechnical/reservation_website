@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
 
-export default ({
+const  InputSelect =  ({
   options,
   className,
   placeholder,
@@ -40,3 +40,5 @@ export default ({
     </>
   );
 };
+
+export default InputSelect;
