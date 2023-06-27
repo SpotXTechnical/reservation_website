@@ -13,13 +13,14 @@ import store, { langAction } from "../../store";
 import DateRangePicker from "../../Components/DateRangePicker/DateRangePicker";
 import moment from "moment";
 import ModalComponent from "../../Components/Modal/Modal";
-import firebase from "../../firebase";
 
 export default function PropertyDetails() {
   let { lang } = useSelector((state) => state.language);
   const [selectedRange, setSelectedRange] = useState("");
   const [daysCount, setDaysCount] = useState(0);
   const [totalReservationMoney, setTotalReservationMoney] = useState(0);
+  const [modifiedReservedDays, setModifiedReservedDays] = useState([]);
+  const [extractedDates, setExtractedDates] = useState([]);
   const router = useRouter();
   const { id } = router.query;
   const [data, setData] = useState({});
@@ -71,6 +72,23 @@ export default function PropertyDetails() {
 
     return result;
   }
+  useEffect(()=> {
+    if(data?.active_reservations?.length >0) {
+      const extractedDates = [];
+
+      const modifiedData = data?.active_reservations?.map((obj) => {
+        const fromDate = new Date(obj.from);
+        extractedDates.push(fromDate.toISOString());
+        fromDate.setDate(fromDate.getDate() + 1);
+        const newObj = { ...obj, from: fromDate.toISOString() };
+        return newObj;
+      });
+      setModifiedReservedDays(setModifiedReservedDays);
+      setExtractedDates(extractedDates);
+
+    }
+  
+  },[data?.active_reservations])
 
   const handleShowReservationModal = (selectedDateRange) => {
     setSelectedRange(selectedDateRange);

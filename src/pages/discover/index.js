@@ -27,14 +27,14 @@ const Reservations = () => {
   const [mainRegions, setMainRegions] = useState([]);
   const [paginationLinks, setPaginationLinks] = useState([]);
   const [filters, setFilters] = useState({
-    type: [],
+    // type: [],
     regions: [],
     subRegions: [],
     rooms: [],
     beds: [],
   });
   const [filterValues, setFilterValues] = useState({
-    type: [],
+    // type: [],
     regions: [],
     subRegions: [],
     rooms: [],
@@ -91,7 +91,7 @@ const Reservations = () => {
             {
               value: "all",
               label: intl.formatMessage({ id: "all" }),
-              checked: false,
+              checked: true,
             },
             ...types,
           ],
@@ -99,7 +99,7 @@ const Reservations = () => {
             {
               value: "all",
               label: intl.formatMessage({ id: "all" }),
-              checked: false,
+              checked: true,
             },
             ...rooms,
           ],
@@ -107,7 +107,7 @@ const Reservations = () => {
             {
               value: "all",
               label: intl.formatMessage({ id: "all" }),
-              checked: false,
+              checked: true,
             },
             ...beds,
           ],
@@ -184,9 +184,16 @@ const Reservations = () => {
       }
     }
     const clonedFilterValues = { ...filterValues };
-    if (clonedFilterValues.type.includes("all")) {
-      clonedFilterValues.type = [];
-    }
+    // if (clonedFilterValues.type?.includes("all")) {
+    //   clonedFilterValues.type = [];
+    // }
+    // if (clonedFilterValues.rooms?.includes("all")) {
+    //   clonedFilterValues.rooms = [];
+    // }
+    // console.log("clonedFilterValues.bedsclonedFilterValues.bedsclonedFilterValues.beds",clonedFilterValues.beds)
+    // if (clonedFilterValues.beds?.includes("all") && clonedFilterValues.beds.length===1) {
+    //   clonedFilterValues.beds = [];
+    // }
     getAllUnits({ ...clonedFilterValues, order_type, order_by }).then((res) => {
       setData(res.data);
     });
@@ -236,11 +243,25 @@ const Reservations = () => {
     setPriceRange(newPriceRange);
   };
 
+  const handleResetFilters = () => {
+    
+  }
+
   const handleCheckboxChange = (index, filterKey) => {
     const updatedFilters = [...filters[filterKey]]; // Create a copy of the current filters array
     const checkbox = updatedFilters[index];
-    // console.log(checkbox, updatedFilters, "updatedFilters")
     checkbox.checked = !checkbox.checked;
+    if((filterKey==="rooms" || filterKey === "beds") && index!==0 &&  checkbox.checked) {
+      updatedFilters[0].checked = false;
+    } else {
+      if((filterKey==="rooms" || filterKey === "beds") && index ===0 &&  checkbox.checked) {
+        updatedFilters.map((filter,i)=> {
+          filter.checked = false
+        })
+      updatedFilters[0].checked = true;
+
+      }
+    }
 
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -252,7 +273,8 @@ const Reservations = () => {
 
   const handleFilterChange = (filterKey, checkbox) => {
     const values = filterValues[filterKey]; // Get the current filter values
-    const updatedValues = checkbox.checked
+  
+    const updatedValues = (checkbox.value === "all" && (filterKey === "rooms" || filterKey === "beds")) ?  checkbox.checked ? [] :[...values] : checkbox.checked
       ? [...values, checkbox.value] // Add the checkbox value
       : values.filter((value) => value !== checkbox.value); // Remove the checkbox value
 
@@ -260,11 +282,6 @@ const Reservations = () => {
       ...prevFilters,
       [filterKey]: updatedValues,
     }));
-
-    // getAllUnits(filterValues)
-    // 	.then(res => {
-    // 		setData(res.data)
-    // 	})
   };
 
   return (
@@ -272,7 +289,6 @@ const Reservations = () => {
       dir={lang === "ar" ? "rtl" : "ltr"}
       className={`d-flex ${styles.container}`}
     >
-      {/* {console.log(filters, filterValues)} */}
       <div className={`d-flex flex-column ${styles.filters}`}>
         <div className={`w-100 mb-5 ${styles.sort_section}`}>
           <h4 className="mb-4">
@@ -303,12 +319,12 @@ const Reservations = () => {
               <img src="assets/filter.png" alt="sort" className="me-2" />
               <FormattedMessage id="filter" />
             </span>
-            <span>
+            <span className="cursor-pointer" onClick={handleResetFilters}>
               <FormattedMessage id="reset" />
             </span>
           </h4>
 
-          <div className={`mb-3 ${styles.hometype}`}>
+          {/* <div className={`mb-3 ${styles.hometype}`}>
             <p className={`mb-2 subtitle`}>
               <FormattedMessage id="homeType" />
             </p>
@@ -323,12 +339,12 @@ const Reservations = () => {
                   label={item.label}
                 />
               );
-            })}
+            })} */}
             {/* <CheckboxList 
 							list={filters.hometype}
 							handleChange={() => handleCheckboxChange(index, "hometype")}
 							/> */}
-          </div>
+          {/* </div> */}
 
           <div className={`mb-3 ${styles.regions}`}>
             <p className={`mb-2 subtitle`}>
@@ -409,7 +425,6 @@ const Reservations = () => {
             <p className={`mb-2 subtitle`}>
               <FormattedMessage id="price" />
             </p>
-            {console.log("priceRangepriceRangepriceRange", priceRange)}
             <div className={`d-flex`}>
               <PriceRangeComponent
                 min={0}

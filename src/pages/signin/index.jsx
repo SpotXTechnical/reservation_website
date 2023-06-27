@@ -59,7 +59,7 @@ export default function SignIn() {
     !password && setPasswordErr(true);
     if (phone && password && !phoneErr && !passwordErr) {
       const data = {
-        identifier: phone,
+        identifier: phone.startsWith("+2") ? phone : `+2${phone}`,
         password,
       };
       signIn(data)
@@ -149,7 +149,7 @@ export default function SignIn() {
                   <FormattedMessage id="signup.fields.phone.label" />
                 </label>
                 <Input
-                  type="number"
+                  type="text"
                   id="phoneField"
                   className={styles.signin_input}
                   placeholder={intl.formatMessage({
