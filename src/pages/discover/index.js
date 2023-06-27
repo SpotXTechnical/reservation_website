@@ -243,23 +243,28 @@ const Reservations = () => {
     setPriceRange(newPriceRange);
   };
 
-  const handleResetFilters = () => {
-    
-  }
+  const handleResetFilters = () => {};
 
   const handleCheckboxChange = (index, filterKey) => {
     const updatedFilters = [...filters[filterKey]]; // Create a copy of the current filters array
     const checkbox = updatedFilters[index];
     checkbox.checked = !checkbox.checked;
-    if((filterKey==="rooms" || filterKey === "beds") && index!==0 &&  checkbox.checked) {
+    if (
+      (filterKey === "rooms" || filterKey === "beds") &&
+      index !== 0 &&
+      checkbox.checked
+    ) {
       updatedFilters[0].checked = false;
     } else {
-      if((filterKey==="rooms" || filterKey === "beds") && index ===0 &&  checkbox.checked) {
-        updatedFilters.map((filter,i)=> {
-          filter.checked = false
-        })
-      updatedFilters[0].checked = true;
-
+      if (
+        (filterKey === "rooms" || filterKey === "beds") &&
+        index === 0 &&
+        checkbox.checked
+      ) {
+        updatedFilters.map((filter, i) => {
+          filter.checked = false;
+        });
+        updatedFilters[0].checked = true;
       }
     }
 
@@ -273,10 +278,16 @@ const Reservations = () => {
 
   const handleFilterChange = (filterKey, checkbox) => {
     const values = filterValues[filterKey]; // Get the current filter values
-  
-    const updatedValues = (checkbox.value === "all" && (filterKey === "rooms" || filterKey === "beds")) ?  checkbox.checked ? [] :[...values] : checkbox.checked
-      ? [...values, checkbox.value] // Add the checkbox value
-      : values.filter((value) => value !== checkbox.value); // Remove the checkbox value
+
+    const updatedValues =
+      checkbox.value === "all" &&
+      (filterKey === "rooms" || filterKey === "beds")
+        ? checkbox.checked
+          ? []
+          : [...values]
+        : checkbox.checked
+        ? [...values, checkbox.value] // Add the checkbox value
+        : values.filter((value) => value !== checkbox.value); // Remove the checkbox value
 
     setFilterValues((prevFilters) => ({
       ...prevFilters,
@@ -340,7 +351,7 @@ const Reservations = () => {
                 />
               );
             })} */}
-            {/* <CheckboxList 
+          {/* <CheckboxList 
 							list={filters.hometype}
 							handleChange={() => handleCheckboxChange(index, "hometype")}
 							/> */}
@@ -474,7 +485,7 @@ const Reservations = () => {
             <div className={styles.shimmer_wrapper}>
               {" "}
               {[...Array(4)].map((e, i) => (
-                <div className={styles.shimmer}  key={i}>
+                <div className={styles.shimmer} key={i}>
                   <ShimmerThumbnail key={i} height={250} rounded />
                 </div>
               ))}

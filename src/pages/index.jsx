@@ -27,6 +27,7 @@ export default function Home() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const idKey = urlParams.get("idKey");
+    const propertyNumber = urlParams.get("from_unit");
 
     if (
       window.location.search.includes("idKey") ||
@@ -37,6 +38,9 @@ export default function Home() {
       }
     } else if (window.location.search.includes("subRegion")) {
       window.location.href = `/subRegion/${idKey}`;
+    }
+    if (propertyNumber) {
+      window.location.href = `/properties/${propertyNumber}`;
     }
   }, []);
 

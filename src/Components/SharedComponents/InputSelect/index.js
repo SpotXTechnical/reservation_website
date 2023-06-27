@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
 
-const  InputSelect =  ({
+const InputSelect = ({
   options,
   className,
   placeholder,

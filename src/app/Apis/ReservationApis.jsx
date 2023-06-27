@@ -1,3 +1,5 @@
+import { axiosInstance } from "./AxiosInstance";
+
 export const getReservations = async (status) => {
   try {
     const response = await axiosInstance.get(

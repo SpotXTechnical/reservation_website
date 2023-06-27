@@ -72,8 +72,8 @@ export default function PropertyDetails() {
 
     return result;
   }
-  useEffect(()=> {
-    if(data?.active_reservations?.length >0) {
+  useEffect(() => {
+    if (data?.active_reservations?.length > 0) {
       const extractedDates = [];
 
       const modifiedData = data?.active_reservations?.map((obj) => {
@@ -85,10 +85,8 @@ export default function PropertyDetails() {
       });
       setModifiedReservedDays(setModifiedReservedDays);
       setExtractedDates(extractedDates);
-
     }
-  
-  },[data?.active_reservations])
+  }, [data?.active_reservations]);
 
   const handleShowReservationModal = (selectedDateRange) => {
     setSelectedRange(selectedDateRange);
@@ -350,6 +348,7 @@ export default function PropertyDetails() {
             {data && Object.keys(data).length > 0 && (
               <DateRangePicker
                 activeRanges={data?.active_ranges}
+                defaultPrice={data?.default_price}
                 activeReservations={data?.active_reservations}
                 handleShowReservationModal={handleShowReservationModal}
               />
@@ -485,6 +484,9 @@ export default function PropertyDetails() {
                   unit_type: data.type,
                 };
                 reserveUnit(submitData).then((res) => {
+                  if (res) {
+                    window.location.href = "/reservations";
+                  }
                   getPropertyDetails(id).then((resp) => {
                     setData(resp.data);
                   });

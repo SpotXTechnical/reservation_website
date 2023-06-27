@@ -72,10 +72,9 @@ export const removeFromFavourite = async (unitId) => {
 
 export const getFavouriteList = async () => {
   let url = `/api/v1/user/favourites`;
-  if(typeof window !== "undefined" &&
-  localStorage.getItem("access_token") ) {
+  if (typeof window !== "undefined" && localStorage.getItem("access_token")) {
     try {
-      const response =  await axiosInstance.get(url);
+      const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {
       console.error(error);
