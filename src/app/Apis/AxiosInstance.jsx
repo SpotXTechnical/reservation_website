@@ -1,6 +1,6 @@
 import axios from "axios";
 export const axiosInstance = axios.create({
-  baseURL: "https://api-stage.spotx.app",
+  baseURL: "https://api.spotx.app",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
