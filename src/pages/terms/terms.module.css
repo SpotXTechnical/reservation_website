@@ -7,7 +7,7 @@
   display: none;
 }
 .logo {
-    display: none;
+  display: none;
 }
 
 .title {
@@ -23,17 +23,17 @@
 }
 
 .sub_title {
-    font-style: normal;
-    font-weight: 700;
-    font-size: 15px;
-    line-height: 29px;
-    text-transform: capitalize;
-    color: var(--dark-color);
-    font-family: var(--Montserrat-Bold);
-    margin-bottom: 16px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 29px;
+  text-transform: capitalize;
+  color: var(--dark-color);
+  font-family: var(--Montserrat-Bold);
+  margin-bottom: 16px;
 }
 .terms_container ul p {
-    margin-inline-start: -2rem;
+  margin-inline-start: -2rem;
 }
 
 .title:first-letter {

@@ -162,16 +162,16 @@ export default function Terms() {
         </li>
         <li>
           SpotX does not endorse any Member, Listing or Host Services. Any
-          references to a Member being &quot; verified &quot; (or similar language) only
-          indicate that the Member has completed a relevant verification or
-          identification process and nothing else. Any such description is not
-          an endorsement, certification or guarantee by SpotX about any Member,
-          including of the Member`s identity or background or whether the Member
-          is trustworthy, safe or suitable. You should always exercise due
-          diligence and care when deciding whether to stay in an Accommodation
-          or use other Host Services, accept a booking request from a Guest, or
-          communicate and interact with other Members, whether online or in
-          person.
+          references to a Member being &quot; verified &quot; (or similar
+          language) only indicate that the Member has completed a relevant
+          verification or identification process and nothing else. Any such
+          description is not an endorsement, certification or guarantee by SpotX
+          about any Member, including of the Member`s identity or background or
+          whether the Member is trustworthy, safe or suitable. You should always
+          exercise due diligence and care when deciding whether to stay in an
+          Accommodation or use other Host Services, accept a booking request
+          from a Guest, or communicate and interact with other Members, whether
+          online or in person.
         </li>
 
         <li>
@@ -426,11 +426,11 @@ export default function Terms() {
           two (2) times the average nightly Listing Fee originally paid by you
           to cover the inconvenience suffered by the Host, plus all applicable
           Guest Fees, Taxes, and any legal expenses incurred by the Host to make
-          you leave (collectively, &quot; Overstay Fees &quot;). Overstay Fees for late
-          checkouts on the checkout date that do not impact upcoming bookings
-          may be limited to the additional costs incurred by the Host as a
-          result of such Overstay. A Security Deposit, if required by a Host,
-          may be applied to any Overstay Fees due for a Guest`s Overstay.
+          you leave (collectively, &quot; Overstay Fees &quot;). Overstay Fees
+          for late checkouts on the checkout date that do not impact upcoming
+          bookings may be limited to the additional costs incurred by the Host
+          as a result of such Overstay. A Security Deposit, if required by a
+          Host, may be applied to any Overstay Fees due for a Guest`s Overstay.
         </li>
         <li>
           Cancellations are considered to be withdrawals before the planned
@@ -612,11 +612,11 @@ export default function Terms() {
           accordance with this provision.
         </li>
         <li>
-          You may terminate this Agreement at any time via the &quot; Delete Account &quot;
-          feature in the User Account on the SpotX platform. If you cancel your
-          SpotX Account as a Host, any confirmed booking(s) will be
-          automatically cancelled and your Guests will receive a full refund. If
-          you cancel your SpotX Account as a Guest, any confirmed booking(s)
+          You may terminate this Agreement at any time via the &quot; Delete
+          Account &quot; feature in the User Account on the SpotX platform. If
+          you cancel your SpotX Account as a Host, any confirmed booking(s) will
+          be automatically cancelled and your Guests will receive a full refund.
+          If you cancel your SpotX Account as a Guest, any confirmed booking(s)
           will be automatically cancelled and any refund will depend upon the
           terms of the Listing`s cancellation policy.
         </li>

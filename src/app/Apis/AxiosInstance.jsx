@@ -31,7 +31,13 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.status === 401) {
-      window.location.href = "/signin";
+      if (window.location.href.includes("properties")) {
+        const parts = window.location.href.split("/");
+        const propertyNumber = parts[parts.length - 1];
+        window.location.href = `/signin?from_unit=${propertyNumber}`;
+      } else {
+        window.location.href = "/signin";
+      }
     }
 
     console.error(error);

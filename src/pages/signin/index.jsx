@@ -75,7 +75,7 @@ export default function SignIn() {
               "access_token",
               JSON.stringify(res?.data?.token?.access_token)
             );
-            window.location.href = "/";
+            window.location.href = `/${window.location.search}`;
           }
         })
         .catch((err) => {

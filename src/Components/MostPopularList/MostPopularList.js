@@ -19,13 +19,13 @@ const MostPopularList = () => {
     getMostPopularProperties().then((res) => setData(res.data?.slice(0, 4)));
   }, [lang]);
   useEffect(() => {
-      getFavouriteList().then((res) => setFav(res?.data));
+    getFavouriteList().then((res) => setFav(res?.data));
   }, []);
   const handleViewAll = () => {
     // window.location.href = "/discover";
   };
   const handleUpdateFavList = () => {
-      getFavouriteList().then((res) => setFav(res?.data));
+    getFavouriteList().then((res) => setFav(res?.data));
   };
   return (
     <div className={styles.popularList_container}>

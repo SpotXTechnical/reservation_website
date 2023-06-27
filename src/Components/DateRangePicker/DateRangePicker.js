@@ -9,6 +9,7 @@ const DateRangeCalendarPicker = ({
   activeRanges,
   activeReservations,
   handleShowReservationModal,
+  defaultPrice,
 }) => {
   const [selectedDateRange, setSelectedDateRange] = useState({
     startDate: new Date(),
@@ -54,9 +55,7 @@ const DateRangeCalendarPicker = ({
     }
   };
 
-  function calculatePrice(date, activeRanges) {
-    const defaultPrice = 2000;
-
+  function calculatePrice(date, activeRanges, defaultPrice) {
     for (const range of activeRanges) {
       const fromDate = new Date(range.from);
       const toDate = new Date(range.to);
@@ -81,7 +80,7 @@ const DateRangeCalendarPicker = ({
         showPreview={true}
         minDate={new Date()}
         dayContentRenderer={(day) => {
-          const price = calculatePrice(day, activeRanges);
+          const price = calculatePrice(day, activeRanges, defaultPrice);
 
           return (
             <div className="calendar-day-wrapper">
