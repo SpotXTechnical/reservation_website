@@ -4,7 +4,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import {
   getAllUnits,
   getFilterConfig,
-  getUnitsPerRegion,
+  getAllSubRegions,
   getUnitsPerRegions,
 } from "../../app/Apis/UnitsApis";
 import { ShimmerThumbnail } from "react-shimmer-effects";
@@ -25,6 +25,9 @@ const Reservations = () => {
   const WITH_SUB_REGION = 1;
   const [data, setData] = useState("");
   const [mainRegions, setMainRegions] = useState([]);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
+  const [subRegions, setSubRegions] = useState([]);
   const [paginationLinks, setPaginationLinks] = useState([]);
   const [filters, setFilters] = useState({
     // type: [],
@@ -40,14 +43,14 @@ const Reservations = () => {
     rooms: [],
     beds: [],
     minPrice: 0,
-    maxPrice: 5000,
+    maxPrice: 50000,
   });
   const [sortFilters, setSortFilters] = useState([
     { value: "Option 1", checked: false },
     { value: "Option 2", checked: false },
     { value: "Option 3", checked: false },
   ]);
-  const [priceRange, setPriceRange] = useState([0, 5000]);
+  const [priceRange, setPriceRange] = useState([0, 0]);
 
   let { lang } = useSelector((state) => state.language);
   if (typeof window !== "undefined") {
@@ -65,7 +68,10 @@ const Reservations = () => {
       });
 
       getFilterConfig().then((res) => {
-        let { types, max_rooms, max_beds } = res.data;
+        let { types, max_rooms, max_beds, min_price, max_price } = res.data;
+        setMinPrice(min_price);
+        setMaxPrice(max_price);
+        setPriceRange([min_price, max_price]);
         types = types?.map((type, i) => ({
           value: type.value,
           label: type.name,
@@ -120,6 +126,19 @@ const Reservations = () => {
           label: region.name,
           checked: false,
         }));
+        const regionValues = regions?.map((region) => region.value);
+        getAllSubRegions(regionValues).then((res) => {
+          const subRegions = res.data?.map((region, i) => ({
+            value: region.id,
+            label: region.name,
+            checked: false,
+          }));
+          setFilters((prevFilters) => ({
+            ...prevFilters,
+            ["subRegions"]: subRegions,
+          }));
+        });
+
         setFilters((prevFilters) => ({
           ...prevFilters,
           ["regions"]: regions,
@@ -128,7 +147,6 @@ const Reservations = () => {
 
       // getMostPopularRegions()
       // 	.then(res => {
-      // 		console.log("eeeeeeeeeh",res)
       // 		const regions = res.data?.map((region, i) => ({ value: region.id, label: region.name, checked: false }))
       // 		setFilters(prevFilters => ({
       // 			...prevFilters,
@@ -183,6 +201,17 @@ const Reservations = () => {
           break;
       }
     }
+    if (filterValues?.regions?.length > 0) {
+      getAllSubRegions(filterValues?.regions).then((res) => {
+        let results = [];
+        res?.data?.map((subRegion) => {
+          results.push({ value: subRegion.id, label: subRegion.name });
+        });
+        setSubRegions(results);
+      });
+    } else {
+      setSubRegions([]);
+    }
     const clonedFilterValues = { ...filterValues };
     // if (clonedFilterValues.type?.includes("all")) {
     //   clonedFilterValues.type = [];
@@ -190,7 +219,6 @@ const Reservations = () => {
     // if (clonedFilterValues.rooms?.includes("all")) {
     //   clonedFilterValues.rooms = [];
     // }
-    // console.log("clonedFilterValues.bedsclonedFilterValues.bedsclonedFilterValues.beds",clonedFilterValues.beds)
     // if (clonedFilterValues.beds?.includes("all") && clonedFilterValues.beds.length===1) {
     //   clonedFilterValues.beds = [];
     // }
@@ -202,16 +230,64 @@ const Reservations = () => {
   const onSearch = (values) => {
     setData("");
     values = values.map((region, i) => region.value);
-    getUnitsPerRegions(values).then((res) => {
-      setData(res.data);
+    const updatedRegions = [...filters.regions]?.map((region) => {
+      if (values.includes(region.value)) {
+        return {
+          ...region,
+          checked: true,
+        };
+      }
+      return {
+        ...region,
+        checked: false,
+      };
     });
+    const updatedSubRegions = [...filters.subRegions]?.map((region) => {
+      if (values.includes(region.value)) {
+        return {
+          ...region,
+          checked: true,
+        };
+      }
+      return {
+        ...region,
+        checked: false,
+      };
+    });
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      ["regions"]: updatedRegions,
+      ["subRegions"]: updatedSubRegions,
+    }));
+    setFilterValues((prevFilters) => ({
+      ...prevFilters,
+      ["regions"]: [...new Set([...values])],
+      // ["regions"]: [...new Set( [...values, ...filterValues["regions"]])]
+    }));
+    // getUnitsPerRegions(values).then((res) => {
+    //   setData(res.data);
+    // });
   };
 
-  const onSubRegionSearch = ({ value }) => {
-    // getUnitsPerRegion(value)
-    // 	.then(res => {
-    // 		setData(res.data)
-    // 	})
+  const onSubRegionSearch = (values) => {
+    setData("");
+    values = values.map((region, i) => region.value);
+    const updatedSubRegions = [...filters.subRegions]?.map((region) => {
+      if (values.includes(region.value)) {
+        return {
+          ...region,
+          checked: true,
+        };
+      }
+      return {
+        ...region,
+        checked: false,
+      };
+    });
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      ["subRegions"]: updatedSubRegions,
+    }));
   };
 
   const handleChange = (index) => {
@@ -295,6 +371,26 @@ const Reservations = () => {
     }));
   };
 
+  const getSubRegionsValues = () => {
+    const results = [...filters.subRegions]?.filter((region) => {
+      if (region?.checked) {
+        return region;
+      }
+    });
+    return results;
+  };
+
+  const getRegionsValues = () => {
+    const results = [...filters.subRegions, ...filters?.regions]?.filter(
+      (region) => {
+        if (region?.checked) {
+          return region;
+        }
+      }
+    );
+    return results;
+  };
+
   return (
     <div
       dir={lang === "ar" ? "rtl" : "ltr"}
@@ -331,7 +427,7 @@ const Reservations = () => {
               <FormattedMessage id="filter" />
             </span>
             <span className="cursor-pointer" onClick={handleResetFilters}>
-              <FormattedMessage id="reset" />
+              {/* <FormattedMessage id="reset" /> */}
             </span>
           </h4>
 
@@ -359,7 +455,7 @@ const Reservations = () => {
 
           <div className={`mb-3 ${styles.regions}`}>
             <p className={`mb-2 subtitle`}>
-              <FormattedMessage id="regions" />
+              <FormattedMessage id="profile.edit.fields.city.label" />
             </p>
             {filters.regions?.map((item, index) => {
               return (
@@ -376,13 +472,15 @@ const Reservations = () => {
 
             <div className={`mb-3 mt-4 ${styles.sub_regions}`}>
               <p className={`mb-2 subtitle`}>
-                <FormattedMessage id="subRegions" />
+                <FormattedMessage id="Resort / Region" />
               </p>
               <div
                 className={`${styles.search_container} d-inline-block w-100`}
               >
                 <InputSelect
+                  value={getSubRegionsValues()}
                   isMulti={true}
+                  options={subRegions}
                   className={`${styles.search_input}`}
                   onChange={onSubRegionSearch}
                   hideIndecators={false}
@@ -438,8 +536,8 @@ const Reservations = () => {
             </p>
             <div className={`d-flex`}>
               <PriceRangeComponent
-                min={0}
-                max={5000}
+                min={minPrice}
+                max={maxPrice}
                 step={1}
                 priceRange={priceRange}
                 handlePriceChange={handlePriceChange}
@@ -457,6 +555,7 @@ const Reservations = () => {
           </p>
           <div className={`${styles.search_container} d-inline-block w-100`}>
             <InputSelect
+              value={getRegionsValues()}
               onChange={onSearch}
               hideIndecators={true}
               isMulti={true}

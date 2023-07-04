@@ -196,7 +196,65 @@
 .feature_images {
   width: calc(33.33% - 10px);
 }
+.feature_images_dark {
+  width: calc(33.33% - 10px);
+}
+.feature_images_dark img {
+  filter: brightness(0.5);
+}
 
+.top {
+  position: relative;
+}
+.top .overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--Montserrat-Semi-Bold);
+  color: var(--white-color);
+  font-size: 20px;
+}
+
+.image_gallery {
+  max-width: 80%;
+}
+
+.image_gallery :global(.carousel-root) {
+  width: 100%;
+  direction: initial;
+}
+
+.image_gallery :global(.carousel.carousel-slider) :global(.control-arrow) {
+  width: 60px;
+  height: 60px;
+  top: 50%;
+}
+.image_gallery :global(.modal-body),
+.image_gallery :global(.carousel-root),
+.image_gallery :global(.carousel-slider),
+.image_gallery :global(.slider-wrapper),
+.image_gallery :global(.slider),
+.image_gallery :global(.slide) div {
+  height: 650px;
+}
+.image_gallery :global(.slide) div > div {
+  height: 600px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.image_gallery :global(.carousel) :global(.control-next.control-arrow) {
+  right: 3%;
+  background: rgba(0, 0, 0, 1);
+  border-radius: 30px;
+}
+
+.image_gallery :global(.carousel) :global(.control-prev.control-arrow) {
+  left: 3%;
+  background: rgba(0, 0, 0, 1);
+  border-radius: 30px;
+}
 .over_view .description {
   font-family: var(--Montserrat-Semi-Bold);
   font-style: normal;

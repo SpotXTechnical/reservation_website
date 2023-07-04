@@ -13,6 +13,20 @@ export const getUnitsPerRegion = async (regionId) => {
   }
 };
 
+export const getAllSubRegions = async (regions) => {
+  try {
+    const response = await axiosInstance.get(`api/v1/sub-regions`, {
+      params: {
+        regions,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export const getFilterConfig = async (regionId) => {
   try {
     const response = await axiosInstance.get("/api/v1/units-filter-config");

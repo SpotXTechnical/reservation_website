@@ -62,6 +62,86 @@
   left: 0px;
 }
 
+.search_container {
+  position: relative;
+}
+
+.search_container input[type="text"] {
+  padding-left: 60px;
+}
+
+.search_container img {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  font-size: 18px;
+  margin-left: 10px;
+  z-index: 1000;
+}
+
+.search_input,
+.search_container :global(.select__input) {
+  border-radius: 40px !important;
+  border: unset !important;
+  width: 100%;
+  text-indent: 55px;
+  /* padding: 25px !important; */
+}
+
+.search_container :global(.select__control) {
+  background: var(--white-color);
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 20%);
+  border-radius: 12px 0px 0px 12px;
+  border: none;
+  height: 50px;
+  width: 44.5vw;
+  text-indent: 55px;
+}
+
+.search_container :global(.select__control):hover {
+  border-color: unset !important;
+}
+
+.search_input::placeholder,
+.search_container :global(.select__placeholder) {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--grey-color);
+}
+
+.search_container :global(.select__menu) {
+  background: var(--white-color);
+  box-shadow: 0px -2px 14px 1px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  width: 96%;
+  left: 2%;
+  margin-top: 0;
+  padding: 24px;
+  color: var(--grey-color);
+}
+
+.search_container :global(.select__option),
+.search_container :global(.select__option):hover {
+  display: flex !important;
+  align-items: center !important;
+  height: 67px;
+  border-radius: 8px !important;
+  margin-bottom: 10px;
+}
+
+.search_container :global(.select__option--is-focused) {
+  background: rgba(196, 196, 196, 0.15) !important;
+  border-radius: 8px;
+}
+
+.search_container :global(.select__option--is-selected) {
+  background: rgba(196, 196, 196, 0.15) !important;
+  color: var(--dark-color) !important;
+}
+
 @media screen and (max-width: 768px) {
   .heading_search_input {
     width: 70vw;
@@ -72,7 +152,20 @@
     height: 52px;
   }
 
+  .search_input::placeholder,
+  .search_container :global(.select__placeholder) {
+    display: none;
+  }
+
   .heading_search_input {
-    text-indent: 40px;
+    text-indent: 5px;
+  }
+  .search_container :global(.select__menu) {
+    font-size: 13px;
+    width: 100%;
+  }
+  .search_input,
+  .search_container :global(.select__input) {
+    text-indent: 5px;
   }
 }

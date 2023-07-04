@@ -7,6 +7,7 @@ const InputSelect = ({
   placeholder,
   hideIndecators,
   loading,
+  value,
   onChange,
   isMulti,
 }) => {
@@ -26,6 +27,7 @@ const InputSelect = ({
             ? { DropdownIndicator: () => null, IndicatorSeparator: () => null }
             : null
         }
+        value={value}
         // isLoading={true}
         // isClearable={true}
         // isRtl={isRtl}

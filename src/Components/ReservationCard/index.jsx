@@ -8,8 +8,16 @@ const ReservationCard = ({ data, key }) => {
     return `${month}-${day}`;
   };
 
+  const handleNavigateToDetails = (id) => {
+    window.location.href = `/reservations/${id}`;
+  };
+
   return (
-    <div className={`${styles.reservation_card} d-flex`} key={key}>
+    <div
+      className={`${styles.reservation_card} d-flex cursor-pointer`}
+      key={key}
+      onClick={() => handleNavigateToDetails(data.id)}
+    >
       <div className={styles.main_image}>
         <img src={data.unit.main_image.url} alt="main image" />
       </div>
@@ -20,7 +28,7 @@ const ReservationCard = ({ data, key }) => {
         <h3 className={`mb-3 ${styles.title}`}>{data.unit.title}</h3>
         <p className={`mb-5 ${styles.details}`}>
           <span className="me-3">
-            {data.days} <FormattedMessage id="days" />
+            {data.days} <FormattedMessage id="nights" />
           </span>
           <span>
             ( <FormattedMessage id="from" /> &nbsp;

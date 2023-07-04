@@ -79,7 +79,6 @@ export default function SignIn() {
           }
         })
         .catch((err) => {
-          console.log("Err", err);
           return toast.error(err?.response?.data?.message, { autoClose: 5000 });
         });
     }
