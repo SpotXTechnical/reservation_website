@@ -10,6 +10,8 @@ const DateRangeCalendarPicker = ({
   activeReservations,
   handleShowReservationModal,
   defaultPrice,
+  extractedDates,
+  modifiedReservedDays,
 }) => {
   const [selectedDateRange, setSelectedDateRange] = useState({
     startDate: new Date(),
@@ -36,7 +38,36 @@ const DateRangeCalendarPicker = ({
     return allDays;
   };
 
-  const allDaysArray = getAllDays(activeReservations);
+  // const checkBeforeDay = (days)=> {
+  //   let disabledDays = [...days]
+  //   extractedDates.map((date)=> {
+  //     const currentDate = new Date(date);
+  //     if( disabledDays.includes(currentDate.getDate() - 1)){
+  //       disabledDays.push(new Date(date))
+  //     }
+  //   })
+  //   return days
+  // }
+
+  const checkBeforeDay = (arr1, arr2) => {
+    let disabledDays = [...arr1];
+
+    const timestampSet = new Set(arr1.map((date) => date.getTime()));
+    for (let i = 0; i < arr2.length; i++) {
+      const currentDate = new Date(arr2[i]);
+      currentDate.setDate(currentDate.getDate() - 1);
+
+      if (timestampSet.has(currentDate.getTime())) {
+        disabledDays.push(new Date(arr2[i]));
+      }
+    }
+    return disabledDays;
+  };
+
+  const allDaysArray = checkBeforeDay(
+    getAllDays(modifiedReservedDays),
+    extractedDates
+  );
 
   const handleSelect = (ranges) => {
     setSelectedDateRange(ranges.selection);

@@ -92,10 +92,12 @@
 .status:global(.pending) {
   color: #ff9811;
 }
-.status:global(.reserved) {
+.status:global(.reserved),
+.status:global(.approved) {
   color: #44bcb7;
 }
-.status:global(.cancelled) {
+.status:global(.canceled),
+.status:global(.reject) {
   color: #ff0000;
 }
 

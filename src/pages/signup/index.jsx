@@ -107,7 +107,6 @@ export default function SignUp() {
         password_confirmation: passwordConfirm,
         // city_id: city,
       };
-      console.log(data);
       signUp(data).then((res) => {
         if (res.errors) {
           setValidationErrors(res.errors);
@@ -123,7 +122,6 @@ export default function SignUp() {
           // router.push('/')
           window.location.href = "/";
         }
-        console.log(res);
       });
     }
   };

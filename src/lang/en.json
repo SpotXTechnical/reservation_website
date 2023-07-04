@@ -88,6 +88,7 @@
   "ft": "ft",
   "day": "day",
   "le": "LE",
+  "Resort / Region": "Resort / Region",
 
   "overview": "overview",
   "More Features": "More Features",
@@ -109,6 +110,7 @@
   "total_cost": "Total Cost",
   "submit": "Submit",
   "searchIn": "Search in",
+  "viewDetais": "View details",
 
   "createAcc": "Create an account",
   "PhoneNumber": "Phone number",
@@ -246,7 +248,7 @@
   "noDataFound": "No Data Found!",
   "discoverAndbook": "Discover & Book",
   "dicover.search.placeholder": "Search for your destination",
-  "dicover.subRegions.search.placeholder": "Please select a subregion",
+  "dicover.subRegions.search.placeholder": "Please select a resort",
   "filters.sort.checkbox1.label": "Latest",
   "filters.sort.checkbox2.label": "Low To High Price",
   "filters.sort.checkbox3.label": "High To Low Price",

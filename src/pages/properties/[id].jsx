@@ -6,6 +6,8 @@ import Breadcrumb from "../../Components/BreadCrumb";
 import { getPropertyDetails, reserveUnit } from "../../app/Apis/PropertyApis";
 import ReactStars from "react-rating-stars-component";
 import GoogleMapReact from "google-map-react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import ReviewsCard from "../../Components/ReviewsCard/ReviewsCard";
 import { useSelector } from "react-redux";
@@ -26,8 +28,10 @@ export default function PropertyDetails() {
   const [data, setData] = useState({});
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
 
   const toggleModal = () => setIsOpen(!isOpen);
+  const toggleGalleryModal = () => setIsGalleryModalOpen(!isGalleryModalOpen);
   const [showComponent, setShowComponent] = useState(false);
 
   useEffect(() => {
@@ -83,7 +87,7 @@ export default function PropertyDetails() {
         const newObj = { ...obj, from: fromDate.toISOString() };
         return newObj;
       });
-      setModifiedReservedDays(setModifiedReservedDays);
+      setModifiedReservedDays(modifiedData);
       setExtractedDates(extractedDates);
     }
   }, [data?.active_reservations]);
@@ -133,6 +137,11 @@ export default function PropertyDetails() {
     );
   };
 
+  const handleImageGallery = () => {
+    console.log("handleImageGallery");
+    toggleGalleryModal();
+  };
+
   return (
     <div
       dir={lang === "ar" ? "rtl" : "ltr"}
@@ -179,25 +188,39 @@ export default function PropertyDetails() {
       )}
 
       {data?.images?.length > 0 ? (
-        <div className={styles.images}>
+        <div
+          className={`${styles.images} ${
+            data.images.length > 4 && "cursor-pointer"
+          }`}
+          onClick={() => {
+            data.images.length > 4 && handleImageGallery();
+          }}
+        >
           <div className="flex-center mb-3">
             <img src={data?.images[0]?.url} alt="Feature image" />
           </div>
           <div className="flex-center mb-5">
-            {data?.images[1]?.url && (
-              <div className={styles.feature_images}>
-                <img src={data?.images[1]?.url} alt="Feature image" />
-              </div>
-            )}
-            {data?.images[2]?.url && (
-              <div className={styles.feature_images}>
-                <img src={data?.images[2]?.url} alt="Feature image" />
-              </div>
-            )}
-            {data?.images[3]?.url && (
-              <div className={styles.feature_images}>
-                <img src={data?.images[3]?.url} alt="Feature image" />
-              </div>
+            {data.images.slice(1, 4).map(
+              (image, index) =>
+                image.url && (
+                  <div
+                    key={index}
+                    className={`${
+                      index === 2
+                        ? styles.feature_images_dark
+                        : styles.feature_images
+                    }`}
+                  >
+                    <div className={`${index === 2 ? styles.top : ""}`}>
+                      <img src={image.url} alt="Feature image" />
+                      {index === 2 && data.images.length > 4 && (
+                        <p className={styles.overlay}>
+                          +{data.images.length - 4}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )
             )}
           </div>
         </div>
@@ -351,6 +374,8 @@ export default function PropertyDetails() {
                 defaultPrice={data?.default_price}
                 activeReservations={data?.active_reservations}
                 handleShowReservationModal={handleShowReservationModal}
+                extractedDates={extractedDates}
+                modifiedReservedDays={modifiedReservedDays}
               />
             )}
           </div>
@@ -497,6 +522,24 @@ export default function PropertyDetails() {
               <FormattedMessage id="submit" />{" "}
             </button>
           </div>
+        }
+      />
+
+      <ModalComponent
+        isOpen={isGalleryModalOpen}
+        toggleModal={toggleGalleryModal}
+        className={styles.image_gallery}
+        modalBody={
+          <Carousel showThumbs={false} showStatus={false} emulateTouch={true}>
+            {data?.images?.map((slide) => (
+              <div key={slide.id}>
+                <div
+                  className={styles.carousel_img}
+                  style={{ backgroundImage: `url(${slide.url}` }}
+                ></div>
+              </div>
+            ))}
+          </Carousel>
         }
       />
     </div>
