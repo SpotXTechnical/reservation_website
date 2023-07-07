@@ -95,6 +95,10 @@
   background: unset;
 }
 
+.rdrDayPassive .half_day {
+  background: unset;
+}
+
 .rdrDayToday {
   background-color: var(--yellow-calendar-color);
   color: var(--dark-color);
