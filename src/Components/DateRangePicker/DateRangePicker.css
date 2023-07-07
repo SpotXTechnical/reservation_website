@@ -1,7 +1,9 @@
 .calendar-day-wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 10px;
+  height: 100%;
 }
 
 .rdrDefinedRangesWrapper,
@@ -20,6 +22,14 @@
 
 .rdrDay {
   height: 70px;
+  /* width: 70px; */
+}
+
+.half_day {
+  background: linear-gradient(135deg,  transparent 50%, rgba(226, 226, 226, 0.6) 50%);
+}
+.rdrDayDisabled .half_day {
+  background: inherit !important;
 }
 
 .calendar-day-wrapper sub {
@@ -69,6 +79,12 @@
 
 .rdrDay {
   border: 0.297619px solid var(--border-ligther-grey);
+}
+.rdrDayNumber {
+  height: 100%;
+  top: 0px !important;
+  bottom: 0px !important;
+  height: 100%;
 }
 
 .rdrDayToday:not(.rdrDayPassive) .rdrInRange ~ .rdrDayNumber span:after,
@@ -148,6 +164,7 @@
 .rdrMonthAndYearWrapper {
   padding-bottom: 35px;
 }
+
 
 .rdrDay:not(.rdrDayDisabled) {
   background-color: var(--white-color);
@@ -229,7 +246,15 @@
 }
 
 .rdrDayPassive {
-  display: none;
+  /* background-color: rgba(226, 226, 226, 0.6) !important; */
+  color: var(--grey-color) !important;
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  text-transform: capitalize;
+  opacity: 0.4;
 }
 
 .error_date_range {
@@ -238,4 +263,10 @@
   font-weight: 500;
   font-size: 13px;
   line-height: 19px;
+} 
+
+@media screen and (max-width: 1280px) {
+  .rdrDay {
+    width: calc(100% / 7);
+  }
 }

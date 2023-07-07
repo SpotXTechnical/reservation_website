@@ -4,6 +4,7 @@ import { FormattedMessage } from "react-intl";
 import "react-date-range/dist/theme/default.css";
 import "react-date-range/dist/styles.css";
 import "./DateRangePicker.css";
+import moment from "moment";
 
 const DateRangeCalendarPicker = ({
   activeRanges,
@@ -58,18 +59,19 @@ const DateRangeCalendarPicker = ({
       currentDate.setDate(currentDate.getDate() - 1);
 
       if (timestampSet.has(currentDate.getTime())) {
+        console.log("hehehheh", arr2[i]);
         disabledDays.push(new Date(arr2[i]));
       }
     }
     return disabledDays;
   };
-
   const allDaysArray = checkBeforeDay(
     getAllDays(modifiedReservedDays),
     extractedDates
   );
 
   const handleSelect = (ranges) => {
+    console.log("jjjjj");
     setSelectedDateRange(ranges.selection);
     setDateChanged(true);
     setDateError(false);
@@ -107,15 +109,29 @@ const DateRangeCalendarPicker = ({
         direction="horizontal"
         disabledDates={allDaysArray}
         showMonthAndYearPickers={false}
+        showSelectionPreview={true}
+        moveRangeOnFirstSelection={false}
         months={1}
         showPreview={true}
         minDate={new Date()}
         dayContentRenderer={(day) => {
           const price = calculatePrice(day, activeRanges, defaultPrice);
+          const date = new Date(day);
+          const dayOfMonth = date.getDate();
 
+          const isDateInArray = extractedDates.some((item) => {
+            const itemDate = new Date(item);
+            const formattedItemDate = moment(itemDate).format("DD-MM-YYYY");
+            const formattedCurrentDate = moment(date).format("DD-MM-YYYY");
+            return formattedItemDate === formattedCurrentDate;
+          });
           return (
-            <div className="calendar-day-wrapper">
-              <span>{day.getDate()}</span>
+            <div
+              className={`calendar-day-wrapper ${
+                isDateInArray ? "half_day" : ""
+              }`}
+            >
+              <span>{dayOfMonth}</span>
               <sub>{price}</sub>
             </div>
           );
