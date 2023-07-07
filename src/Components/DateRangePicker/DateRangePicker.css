@@ -94,6 +94,9 @@
 .rdrDayToday .rdrDayNumber span:after {
   background: unset;
 }
+.rdrDayPassive .half_day {
+  background: unset;
+}
 
 .rdrDayToday {
   background-color: var(--yellow-calendar-color);
