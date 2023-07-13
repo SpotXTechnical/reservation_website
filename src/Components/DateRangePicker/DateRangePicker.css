@@ -98,6 +98,10 @@
   background: unset;
 }
 
+.rdrDayPassive .half_day {
+  background: unset;
+}
+
 .rdrDayToday {
   background-color: var(--yellow-calendar-color);
   color: var(--dark-color);
@@ -209,6 +213,9 @@
 
 .not_available {
   background-color: rgba(226, 226, 226, 0.6);
+}
+.checkout {
+  background: linear-gradient(135deg, transparent 50%, rgba(226, 226, 226, 0.6) 50%);
 }
 
 .available_period {

@@ -1,50 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
+import { ChevronLeft, ChevronRight } from "react-feather";
+import ReactPaginate from "react-paginate";
+import "./pagination.css"
 
-const Pagination = ({ links }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-
-  // Handle page number click
-  const handleClick = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  // Handle next/previous button clicks
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
-
-  const handlePrevPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
-  };
-
+const Pagination = ({ handlePagination, meta }) => {
   return (
-    <div>
-      {/* Render paginated data */}
-      <ul>
-        {links[currentPage].map((item) => (
-          <li key={item.id}>{item.name}</li>
-        ))}
-      </ul>
-
-      {/* Render pagination controls */}
-      <div>
-        <button onClick={handlePrevPage} disabled={!links[currentPage - 1]}>
-          Previous
-        </button>
-        {Object.keys(links).map((pageNumber) => (
-          <button
-            key={pageNumber}
-            onClick={() => handleClick(pageNumber)}
-            disabled={currentPage === parseInt(pageNumber)}
-          >
-            {pageNumber}
-          </button>
-        ))}
-        <button onClick={handleNextPage} disabled={!links[currentPage + 1]}>
-          Next
-        </button>
-      </div>
-    </div>
+    <ReactPaginate
+      previousLabel={<ChevronLeft size={15} />}
+      nextLabel={<ChevronRight size={15} />}
+      breakLabel="..."
+      breakClassName="break-me"
+      pageCount={meta.last_page}
+      containerClassName="vx-pagination separated-pagination pagination-end pagination-sm mb-0 mt-2"
+      activeClassName="active"
+      forcePage={meta.current_page - 1}
+      onPageChange={(page) => handlePagination(page)}
+    />
   );
 };
 

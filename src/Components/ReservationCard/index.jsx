@@ -19,7 +19,7 @@ const ReservationCard = ({ data, key }) => {
       onClick={() => handleNavigateToDetails(data.id)}
     >
       <div className={styles.main_image}>
-        <img src={data.unit.main_image.url} alt="main image" />
+        <img src={data.unit.main_image?.url} alt="main image" />
       </div>
       <div className={`${styles.info}`}>
         <div>

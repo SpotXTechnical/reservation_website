@@ -6,6 +6,7 @@ import {
   getFilterConfig,
   getAllSubRegions,
   getUnitsPerRegions,
+  getFavouriteList,
 } from "../../app/Apis/UnitsApis";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import RegionUnits from "../../Components/RegionUnits";
@@ -24,11 +25,13 @@ const Reservations = () => {
   const intl = useIntl();
   const WITH_SUB_REGION = 1;
   const [data, setData] = useState("");
+  const [meta, setMeta] = useState("");
   const [mainRegions, setMainRegions] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const [subRegions, setSubRegions] = useState([]);
-  const [paginationLinks, setPaginationLinks] = useState([]);
+  const [page, setPage] = useState(1);
+  const [favourites, setFav] = useState([]);
   const [filters, setFilters] = useState({
     // type: [],
     regions: [],
@@ -60,11 +63,19 @@ const Reservations = () => {
       language === "ar" ? langAction.langAr() : langAction.langEn()
     );
   }
+  const handlePagination = (page) => {
+    const PAGE = page.selected + 1;
+    setPage(PAGE);
+  };
+  useEffect(() => {
+    getFavouriteList().then((res) => setFav(res?.data));
+  }, []);
 
   useEffect(
     function () {
-      getAllUnits().then((res) => {
+      getAllUnits(null , page).then((res) => {
         setData(res.data);
+        setMeta(res.meta);
       });
 
       getFilterConfig().then((res) => {
@@ -179,6 +190,9 @@ const Reservations = () => {
     }
     return null;
   }
+  const handleUpdateFavList = () => {
+    getFavouriteList().then((res) => setFav(res?.data));
+  };
 
   useEffect(() => {
     setData("");
@@ -213,19 +227,11 @@ const Reservations = () => {
       setSubRegions([]);
     }
     const clonedFilterValues = { ...filterValues };
-    // if (clonedFilterValues.type?.includes("all")) {
-    //   clonedFilterValues.type = [];
-    // }
-    // if (clonedFilterValues.rooms?.includes("all")) {
-    //   clonedFilterValues.rooms = [];
-    // }
-    // if (clonedFilterValues.beds?.includes("all") && clonedFilterValues.beds.length===1) {
-    //   clonedFilterValues.beds = [];
-    // }
-    getAllUnits({ ...clonedFilterValues, order_type, order_by }).then((res) => {
+    getAllUnits({ ...clonedFilterValues, order_type, order_by },page).then((res) => {
       setData(res.data);
+      setMeta(res.meta);
     });
-  }, [filterValues, sortFilters, lang]);
+  }, [filterValues, sortFilters, lang, page]);
 
   const onSearch = (values) => {
     setData("");
@@ -262,11 +268,7 @@ const Reservations = () => {
     setFilterValues((prevFilters) => ({
       ...prevFilters,
       ["regions"]: [...new Set([...values])],
-      // ["regions"]: [...new Set( [...values, ...filterValues["regions"]])]
     }));
-    // getUnitsPerRegions(values).then((res) => {
-    //   setData(res.data);
-    // });
   };
 
   const onSubRegionSearch = (values) => {
@@ -288,6 +290,22 @@ const Reservations = () => {
       ...prevFilters,
       ["subRegions"]: updatedSubRegions,
     }));
+    const getRegionsOnly = (prevRegions) => {
+        const uncheckedIds = updatedSubRegions
+        .filter((item) => item.checked === false && prevRegions?.includes(item.value))
+        .map((item) => item.value);
+  
+      const filteredRegions = prevRegions.filter((id) => !uncheckedIds.includes(id));
+  
+      return filteredRegions;
+    }
+
+    setFilterValues((prevFilters) => {
+      return ({
+        ...prevFilters,
+        ["regions"]: [...new Set(getRegionsOnly([...values,...prevFilters.regions]))],
+      })
+    });
   };
 
   const handleChange = (index) => {
@@ -605,6 +623,8 @@ const Reservations = () => {
                     is_favourite={unit.is_favourite}
                     active_ranges={unit.active_ranges}
                     nearest_active_ranges={unit.nearest_active_ranges}
+                    updateFavList={handleUpdateFavList}
+                    favouritesList={favourites}
                   />
                 );
               })}
@@ -615,8 +635,11 @@ const Reservations = () => {
             </p>
           )}
         </div>
+      {meta && <Pagination meta={meta} handlePagination={handlePagination}/>}
       </div>
-      {/* <Pagination links={}/> */}
+      <div>
+
+      </div>
     </div>
   );
 };

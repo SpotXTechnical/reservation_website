@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { DateRangePicker } from "react-date-range";
 import { FormattedMessage } from "react-intl";
+import moment from "moment";
 import "react-date-range/dist/theme/default.css";
 import "react-date-range/dist/styles.css";
 import "./DateRangePicker.css";
-import moment from "moment";
 
 const DateRangeCalendarPicker = ({
   activeRanges,
@@ -59,7 +59,6 @@ const DateRangeCalendarPicker = ({
       currentDate.setDate(currentDate.getDate() - 1);
 
       if (timestampSet.has(currentDate.getTime())) {
-        console.log("hehehheh", arr2[i]);
         disabledDays.push(new Date(arr2[i]));
       }
     }
@@ -71,7 +70,6 @@ const DateRangeCalendarPicker = ({
   );
 
   const handleSelect = (ranges) => {
-    console.log("jjjjj");
     setSelectedDateRange(ranges.selection);
     setDateChanged(true);
     setDateError(false);
@@ -159,6 +157,12 @@ const DateRangeCalendarPicker = ({
           <div className="selected_period not_available"></div>
           <div className="selected_labels">
             <FormattedMessage id="Not_Avaliable" />
+          </div>
+        </div>
+        <div className="flex gap-2 align-items-center">
+          <div className="selected_period checkout"></div>
+          <div className="selected_labels">
+            <FormattedMessage id="checkout" />
           </div>
         </div>
       </div>
