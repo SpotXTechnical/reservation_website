@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import styles from "./properties.module.css";
 import { FormattedMessage } from "react-intl";
 import { useRouter } from "next/router";
-import GoogleMapReact from "google-map-react"
 import Breadcrumb from "../../Components/BreadCrumb";
 import { getPropertyDetails, reserveUnit } from "../../app/Apis/PropertyApis";
 import ReactStars from "react-rating-stars-component";
@@ -15,7 +14,7 @@ import store, { langAction } from "../../store";
 import DateRangePicker from "../../Components/DateRangePicker/DateRangePicker";
 import moment from "moment";
 import ModalComponent from "../../Components/Modal/Modal";
-
+import MapContainer from "../../Components/Map/MapContainer";
 
 export default function PropertyDetails() {
   let { lang } = useSelector((state) => state.language);
@@ -40,7 +39,6 @@ export default function PropertyDetails() {
     setShowComponent(
       typeof window !== "undefined" && localStorage.getItem("access_token")
     );
-      // checkCalendarHalfDay();
   }, []);
 
   function calculateNumberOfDays(startDate, endDate) {
@@ -115,7 +113,12 @@ export default function PropertyDetails() {
       if (id) {
         getPropertyDetails(id).then((res) => {
           setData(res.data);
-          res?.data?.latitude && res?.data?.longitude && setMapPosition({lat: res?.data?.latitude,lng :res?.data?.longitude })
+          res?.data?.latitude &&
+            res?.data?.longitude &&
+            setMapPosition({
+              lat: res?.data?.latitude,
+              lng: res?.data?.longitude,
+            });
         });
       }
     },
@@ -144,20 +147,6 @@ export default function PropertyDetails() {
   const handleImageGallery = () => {
     toggleGalleryModal();
   };
-  // const Marker = ({ lat, lng, image }) => (
-  //   <div style={{ position: 'absolute', transform: 'translate(-50%, -100%)' }}>
-  //     <img src={image} alt="Marker" width="40" height="40" />
-  //   </div>
-  // );
-
-//  const renderMarkers = (map, maps) => {
-//     let marker = new maps.Marker({
-//       position: mapPosition,
-//       map
-//     });
-//     return marker;
-//   }
-
 
   return (
     <div
@@ -397,23 +386,16 @@ export default function PropertyDetails() {
             )}
           </div>
           <div className={styles.over_view}>
-            {/* {console.log("mapPosition",mapPosition,data)} */}
-            {/* {mapPosition && <div className={styles.title}>
-              <FormattedMessage id="Location" />
-            </div>} */}
-            {/* {mapPosition && <MapContainer mapPosition={mapPosition} />} */}
-
-            {/* {mapPosition &&<div style={{ height: "400px", width: "100%" }}>
-              <GoogleMapReact
-                bootstrapURLKeys={{
-                  key: "AIzaSyBf_LK1_yKWP7nq49NGLqpmwIIpwNS-PzI",
-                }}
-                defaultCenter={mapPosition}
-                defaultZoom={8}
-                onGoogleApiLoaded={({map, maps}) => renderMarkers(map, maps)}
-              >
-              </GoogleMapReact>
-            </div>} */}
+            {mapPosition && (
+              <div className={styles.title}>
+                <FormattedMessage id="Location" />
+              </div>
+            )}
+            {mapPosition && Object.keys(data).length > 0 && (
+              <MapContainer
+                mapPosition={{ lat: +mapPosition.lat, lng: +mapPosition.lng }}
+              />
+            )}
           </div>
         </div>
       </div>

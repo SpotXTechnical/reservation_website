@@ -1,0 +1,18 @@
+.vx-pagination {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px !important;
+}
+
+.vx-pagination li {
+    padding: 7px;
+}
+.vx-pagination .active {
+    color: var(--light-blue-color);
+    background-color:rgba(68, 188, 183, 0.1);
+    padding-inline: 14px;
+}

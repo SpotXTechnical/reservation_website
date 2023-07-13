@@ -211,6 +211,9 @@
 .not_available {
   background-color: rgba(226, 226, 226, 0.6);
 }
+.checkout {
+  background: linear-gradient(135deg, transparent 50%, rgba(226, 226, 226, 0.6) 50%);
+}
 
 .available_period {
   background-color: var(--white-color);

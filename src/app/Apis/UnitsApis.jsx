@@ -97,8 +97,8 @@ export const getFavouriteList = async () => {
   }
 };
 
-export const getAllUnits = async (filters) => {
-  let url = `/api/v1/user/units`;
+export const getAllUnits = async (filters, page) => {
+  let url = `/api/v1/user/units?page=${page}`;
   if (filters && Object.keys(filters).length > 0) {
     for (const [key, elem] of Object.entries(filters)) {
       if (elem.length > 0 && Array.isArray(elem)) {

@@ -4,7 +4,7 @@
 }
 
 .details_wrapper {
-  margin: 0 80px 0px 80px;
+  margin: 0 230px 0px 230px;
   min-height: 35.8vh;
 }
 .reservation_details :global(.carousel-root) {
