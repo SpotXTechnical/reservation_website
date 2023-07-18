@@ -73,7 +73,7 @@ const Reservations = () => {
 
   useEffect(
     function () {
-      getAllUnits(null , page).then((res) => {
+      getAllUnits(null, page).then((res) => {
         setData(res.data);
         setMeta(res.meta);
       });
@@ -227,10 +227,12 @@ const Reservations = () => {
       setSubRegions([]);
     }
     const clonedFilterValues = { ...filterValues };
-    getAllUnits({ ...clonedFilterValues, order_type, order_by },page).then((res) => {
-      setData(res.data);
-      setMeta(res.meta);
-    });
+    getAllUnits({ ...clonedFilterValues, order_type, order_by }, page).then(
+      (res) => {
+        setData(res.data);
+        setMeta(res.meta);
+      }
+    );
   }, [filterValues, sortFilters, lang, page]);
 
   const onSearch = (values) => {
@@ -291,20 +293,26 @@ const Reservations = () => {
       ["subRegions"]: updatedSubRegions,
     }));
     const getRegionsOnly = (prevRegions) => {
-        const uncheckedIds = updatedSubRegions
-        .filter((item) => item.checked === false && prevRegions?.includes(item.value))
+      const uncheckedIds = updatedSubRegions
+        .filter(
+          (item) => item.checked === false && prevRegions?.includes(item.value)
+        )
         .map((item) => item.value);
-  
-      const filteredRegions = prevRegions.filter((id) => !uncheckedIds.includes(id));
-  
+
+      const filteredRegions = prevRegions.filter(
+        (id) => !uncheckedIds.includes(id)
+      );
+
       return filteredRegions;
-    }
+    };
 
     setFilterValues((prevFilters) => {
-      return ({
+      return {
         ...prevFilters,
-        ["regions"]: [...new Set(getRegionsOnly([...values,...prevFilters.regions]))],
-      })
+        ["regions"]: [
+          ...new Set(getRegionsOnly([...values, ...prevFilters.regions])),
+        ],
+      };
     });
   };
 
@@ -635,11 +643,9 @@ const Reservations = () => {
             </p>
           )}
         </div>
-      {meta && <Pagination meta={meta} handlePagination={handlePagination}/>}
+        {meta && <Pagination meta={meta} handlePagination={handlePagination} />}
       </div>
-      <div>
-
-      </div>
+      <div></div>
     </div>
   );
 };

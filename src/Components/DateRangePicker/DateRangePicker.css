@@ -7,8 +7,8 @@
 }
 
 .rdrDefinedRangesWrapper,
-.rdrDateDisplay,
-.rdrMonthName {
+.rdrDateDisplay
+,.rdrMonthName  {
   display: none;
 }
 
@@ -22,11 +22,14 @@
 
 .rdrDay {
   height: 70px;
-  /* width: 70px; */
 }
 
 .half_day {
-  background: linear-gradient(135deg,  transparent 50%, rgba(226, 226, 226, 0.6) 50%);
+  background: linear-gradient(
+    135deg,
+    transparent 50%,
+    rgba(226, 226, 226, 0.6) 50%
+  );
 }
 .rdrDayDisabled .half_day {
   background: inherit !important;
@@ -172,7 +175,6 @@
   padding-bottom: 35px;
 }
 
-
 .rdrDay:not(.rdrDayDisabled) {
   background-color: var(--white-color);
 }
@@ -215,7 +217,11 @@
   background-color: rgba(226, 226, 226, 0.6);
 }
 .checkout {
-  background: linear-gradient(135deg, transparent 50%, rgba(226, 226, 226, 0.6) 50%);
+  background: linear-gradient(
+    135deg,
+    transparent 50%,
+    rgba(226, 226, 226, 0.6) 50%
+  );
 }
 
 .available_period {
@@ -264,7 +270,7 @@
   font-size: 14px;
   line-height: 17px;
   text-transform: capitalize;
-  opacity: 0.4;
+  opacity: 0;
 }
 
 .error_date_range {
@@ -273,7 +279,7 @@
   font-weight: 500;
   font-size: 13px;
   line-height: 19px;
-} 
+}
 
 @media screen and (max-width: 1280px) {
   .rdrDay {
