@@ -76,8 +76,10 @@ const DateRangeCalendarPicker = ({
   };
 
   const handleReserve = () => {
+    const startDate = moment(selectedDateRange.startDate).format("DD-MM-YYYY");
+    const endDate = moment(selectedDateRange.endDate).format("DD-MM-YYYY");
     if (
-      selectedDateRange.startDate !== selectedDateRange.endDate &&
+      startDate !== endDate &&
       dateChanged
     ) {
       handleShowReservationModal(selectedDateRange);
