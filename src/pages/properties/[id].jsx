@@ -50,7 +50,7 @@ export default function PropertyDetails() {
     return days;
   }
 
-  function getPriceForDateRange(data, dateRange) {
+  function getPriceForDateRange(data, dateRange , defaultPrice) {
     const startDate = new Date(dateRange.startDate);
     const endDate = new Date(dateRange.endDate);
 
@@ -65,7 +65,7 @@ export default function PropertyDetails() {
         return fromDate <= currentDate && currentDate <= toDate;
       });
 
-      const price = matchingObject ? matchingObject.price : 2000;
+      const price = matchingObject ? matchingObject.price : defaultPrice;
 
       result.push({
         date: currentDate.toDateString(),
@@ -102,7 +102,8 @@ export default function PropertyDetails() {
     setDaysCount(days);
     const result = getPriceForDateRange(
       data?.active_ranges,
-      selectedDateRange
+      selectedDateRange,
+      data?.default_price 
     ).reduce((total, item) => total + item.price, 0);
     setIsOpen(true);
     setTotalReservationMoney(result);
