@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
-import { getReservationDetails } from "../../app/Apis/ReservationApis";
+import {
+  cancelReservation,
+  getReservationDetails,
+} from "../../app/Apis/ReservationApis";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Carousel } from "react-responsive-carousel";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -22,6 +27,17 @@ export default function SubRegion() {
       language === "ar" ? langAction.langAr() : langAction.langEn()
     );
   }
+
+  const handleCancelReservation = (id) => {
+    cancelReservation(id).then((res) => {
+      res &&
+        toast.success(
+          lang === "ar" ? "تم الغاء الحجز" : "Reservation is cancelled",
+          { autoClose: 5000 }
+        );
+      window.location.href = "/reservations";
+    });
+  };
 
   useEffect(
     function () {
@@ -61,9 +77,16 @@ export default function SubRegion() {
       )}
       <div className={styles.details_wrapper}>
         <div className={styles.view_details_wrapper}>
-          <p className={`align-self-end ${styles.status} ${data.status}`}>
-            {data.status}
-          </p>
+          <div className={styles.statuses_wrapper}>
+            <p className={`align-self-end ${styles.status} ${data.status}`}>
+              {data.status}
+            </p>
+            {data.status === "pending" && (
+              <button onClick={() => handleCancelReservation(data.id)}>
+                <FormattedMessage id="cancel reservation" />
+              </button>
+            )}
+          </div>
           <p onClick={handleClick} className={styles.view_details}>
             <FormattedMessage id="viewDetais" />
           </p>
@@ -125,6 +148,7 @@ export default function SubRegion() {
           <ShimmerThumbnail height={175} rounded />
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 }

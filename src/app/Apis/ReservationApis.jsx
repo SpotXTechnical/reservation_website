@@ -21,3 +21,12 @@ export const getReservationDetails = async (id) => {
     throw error;
   }
 };
+
+export const cancelReservation = async (id) => {
+  try {
+    const response = await axiosInstance.put(`/user/reservations/${id}/cancel`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
