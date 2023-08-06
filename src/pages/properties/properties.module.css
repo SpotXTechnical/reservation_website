@@ -2,6 +2,10 @@
   margin: 40px 100px;
 }
 
+.copied_link {
+  color: var(--orange-color) !important;
+  margin-inline: 20px;
+}
 .bread_crumb :global(.breadcrumb-items) > * {
   color: var(--light-blue-color);
   text-decoration: none;
@@ -299,6 +303,7 @@
   flex-direction: column;
   gap: 10px;
   padding-block: 25px;
+  cursor: pointer;
 }
 
 .owner img {

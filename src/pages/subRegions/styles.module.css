@@ -76,6 +76,11 @@
   margin-inline: 10px;
 }
 
+.copied_link {
+  color: var(--orange-color);
+  margin-inline: 20px;
+}
+
 @media screen and (max-width: 768px) {
   .head :global(.slider-wrapper) {
     height: 387px;

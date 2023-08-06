@@ -27,7 +27,7 @@ const DateRangeCalendarPicker = ({
 
     activeReservations.forEach((range) => {
       const startDate = new Date(range.from);
-      const endDate = new Date(range.to)  - 1;
+      const endDate = new Date(range.to) - 1;
 
       const currentDate = new Date(startDate);
       while (currentDate <= endDate) {
@@ -78,10 +78,7 @@ const DateRangeCalendarPicker = ({
   const handleReserve = () => {
     const startDate = moment(selectedDateRange.startDate).format("DD-MM-YYYY");
     const endDate = moment(selectedDateRange.endDate).format("DD-MM-YYYY");
-    if (
-      startDate !== endDate &&
-      dateChanged
-    ) {
+    if (startDate !== endDate && dateChanged) {
       handleShowReservationModal(selectedDateRange);
     } else {
       setDateError(true);

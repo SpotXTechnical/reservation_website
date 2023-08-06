@@ -43,22 +43,22 @@ const PopularCard = ({
     //  isFav? removeFromFavourite(id) :  addToFavourite(id);
     isFav
       ? removeFromFavourite(id).then((res) => {
+          updateFavList();
           toast.success(
             lang === "ar"
               ? "تمت إزالة العنصر من المفضلة"
               : "Item removed from favorites!",
             { autoClose: 5000 }
           );
-          updateFavList();
         })
       : addToFavourite(id).then((res) => {
+          updateFavList();
           toast.success(
             lang === "ar"
               ? "تمت إضافة العنصر إلي المفضلة"
               : "Item added to favorites!",
             { autoClose: 5000 }
           );
-          updateFavList();
         });
   };
 
@@ -85,7 +85,7 @@ const PopularCard = ({
         <div className={styles.popular_header}>
           <div className={styles.popular_title}>{title}</div>
           <div className={styles.default_price}>
-            {getOffers().length > 0 ? getOffers()[0].price : default_price} LE
+            {getOffers()?.length > 0 ? getOffers()[0].price : default_price} LE
             <span className={styles.per_day}>/ day</span>
           </div>
         </div>
@@ -112,7 +112,7 @@ const PopularCard = ({
               </div>
             )}
           </div>
-          {nearest_active_ranges.length > 0 && getOffers().length === 0 && (
+          {nearest_active_ranges.length > 0 && getOffers()?.length === 0 && (
             <div className={styles.offers_wrapper}>
               <p className={styles.offer_title}>
                 Offer At {moment(nearest_active_ranges[0].from).format("D MMM")}

@@ -2,6 +2,7 @@ import {
   getUnitsPerRegion,
   getAllUnits,
   getUnitsPerSubRegion,
+  getFavouriteList,
 } from "../../app/Apis/UnitsApis";
 import { useEffect, useState } from "react";
 import { ShimmerThumbnail } from "react-shimmer-effects";
@@ -9,12 +10,21 @@ import PopularCard from "../SharedComponents/PopularCard/PopularCard";
 
 const RegionUnits = ({ regionId, className, isSub }) => {
   const [data, setData] = useState([]);
+  const [favourites, setFav] = useState([]);
 
   useEffect(() => {
     isSub
       ? getUnitsPerSubRegion(regionId).then((res) => setData(res.data))
       : getUnitsPerRegion(regionId).then((res) => setData(res.data));
   }, [regionId]);
+
+  useEffect(() => {
+    handleUpdateFavList();
+  }, []);
+
+  const handleUpdateFavList = () => {
+    getFavouriteList().then((res) => setFav(res?.data));
+  };
 
   return (
     <div className={`${className}`}>
@@ -33,6 +43,8 @@ const RegionUnits = ({ regionId, className, isSub }) => {
               is_favourite={unit.is_favourite}
               active_ranges={unit.active_ranges}
               nearest_active_ranges={unit.nearest_active_ranges}
+              favouritesList={favourites}
+              updateFavList={handleUpdateFavList}
             />
           );
         })

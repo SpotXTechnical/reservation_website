@@ -15,9 +15,13 @@ import DateRangePicker from "../../Components/DateRangePicker/DateRangePicker";
 import moment from "moment";
 import ModalComponent from "../../Components/Modal/Modal";
 import MapContainer from "../../Components/Map/MapContainer";
+import { addToFavourite, removeFromFavourite } from "../../app/Apis/UnitsApis";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function PropertyDetails() {
   let { lang } = useSelector((state) => state.language);
+  const [isCopied, setIsCopied] = useState(false);
   const [selectedRange, setSelectedRange] = useState("");
   const [daysCount, setDaysCount] = useState(0);
   const [totalReservationMoney, setTotalReservationMoney] = useState(0);
@@ -35,6 +39,10 @@ export default function PropertyDetails() {
   const [showComponent, setShowComponent] = useState(false);
   const [mapPosition, setMapPosition] = useState(null);
 
+  const handleRedirectToOwnerProfile = (id) => {
+    window.location.href = `/owner/${id}`;
+  };
+
   useEffect(() => {
     setShowComponent(
       typeof window !== "undefined" && localStorage.getItem("access_token")
@@ -50,7 +58,7 @@ export default function PropertyDetails() {
     return days;
   }
 
-  function getPriceForDateRange(data, dateRange , defaultPrice) {
+  function getPriceForDateRange(data, dateRange, defaultPrice) {
     const startDate = new Date(dateRange.startDate);
     const endDate = new Date(dateRange.endDate);
 
@@ -103,7 +111,7 @@ export default function PropertyDetails() {
     const result = getPriceForDateRange(
       data?.active_ranges,
       selectedDateRange,
-      data?.default_price 
+      data?.default_price
     ).reduce((total, item) => total + item.price, 0);
     setIsOpen(true);
     setTotalReservationMoney(result);
@@ -143,10 +151,41 @@ export default function PropertyDetails() {
     navigator.clipboard.writeText(
       `${window.location.origin}?idKey=${id}&targetKey=unit`
     );
+    setIsCopied(true);
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 2000);
   };
 
   const handleImageGallery = () => {
     toggleGalleryModal();
+  };
+
+  const handleAddToFavourite = (e, id) => {
+    e.stopPropagation();
+    data?.is_favourite
+      ? removeFromFavourite(id).then((res) => {
+          getPropertyDetails(id).then((resp) => {
+            setData(resp.data);
+          });
+          toast.success(
+            lang === "ar"
+              ? "تمت إزالة العنصر من المفضلة"
+              : "Item removed from favorites!",
+            { autoClose: 5000 }
+          );
+        })
+      : addToFavourite(id).then((res) => {
+          getPropertyDetails(id).then((resp) => {
+            setData(resp.data);
+          });
+          toast.success(
+            lang === "ar"
+              ? "تمت إضافة العنصر إلي المفضلة"
+              : "Item added to favorites!",
+            { autoClose: 5000 }
+          );
+        });
   };
 
   return (
@@ -160,8 +199,21 @@ export default function PropertyDetails() {
           <Breadcrumb items={items} />
         </div>
         <div className={styles.actions}>
-          {showComponent && (
-            <span className="cursor-pointer">
+          {showComponent && data?.is_favourite ? (
+            <span
+              className="cursor-pointer"
+              onClick={(e) => handleAddToFavourite(e, data?.id, "remove")}
+            >
+              <img src="/assets/green-heart.png" alt="favorite" />
+              <span>
+                <FormattedMessage id="removeFromFav" />
+              </span>
+            </span>
+          ) : (
+            <span
+              className="cursor-pointer"
+              onClick={(e) => handleAddToFavourite(e, id, "add")}
+            >
               <img src="/assets/green-heart.png" alt="favorite" />
               <span>
                 <FormattedMessage id="addToFav" />
@@ -169,9 +221,15 @@ export default function PropertyDetails() {
             </span>
           )}
           <span className="cursor-pointer" onClick={handleShare}>
-            <img src="/assets/share.png" alt="share" />
+            {!isCopied && <img src="/assets/share.png" alt="share" />}
             <span>
-              <FormattedMessage id="share" />
+              {isCopied ? (
+                <span className={styles.copied_link}>
+                  <FormattedMessage id="link copied" />{" "}
+                </span>
+              ) : (
+                <FormattedMessage id="share" />
+              )}
             </span>
           </span>
         </div>
@@ -356,7 +414,10 @@ export default function PropertyDetails() {
             </div>
 
             {data?.owner?.name ? (
-              <div className={styles.owner}>
+              <div
+                className={styles.owner}
+                onClick={() => handleRedirectToOwnerProfile(data?.owner?.id)}
+              >
                 <img src={data?.owner?.image} alt="owner_img" />
                 <p>{data?.owner?.name} </p>
               </div>
@@ -546,6 +607,7 @@ export default function PropertyDetails() {
           </Carousel>
         }
       />
+      <ToastContainer />
     </div>
   );
 }

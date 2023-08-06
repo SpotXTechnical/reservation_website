@@ -9,16 +9,16 @@ export default function Footer() {
           <p className={styles.about_spotx}>
             <FormattedMessage id="home.mostPopularProperties" />
           </p>
-          <span className={styles.about}>
+          {/* <span className={styles.about}>
             “Maecenas faucibus mollis interdum. Nullamion etaquis risus eget
             urna mollis ornare vel eu leonardifaucibus mollis interdum”...{" "}
-          </span>
+          </span> */}
         </div>
         <div className="col-sm-3">
           <ul>
-            <li>
+            {/* <li>
               <FormattedMessage id="home.rentYourProperty" />
-            </li>
+            </li> */}
             <li
               className="cursor-pointer"
               onClick={() => {
@@ -39,9 +39,9 @@ export default function Footer() {
         </div>
         <div className="col-sm-3">
           <ul>
-            <li>
+            {/* <li>
               <FormattedMessage id="home.contactUs" />
-            </li>
+            </li> */}
             <li>
               <FormattedMessage id="home.FAQ" />
             </li>

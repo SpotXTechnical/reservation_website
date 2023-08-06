@@ -12,6 +12,10 @@ export default function Header() {
   const [userData, setUserData] = useState("");
   const dispatcher = useDispatch();
 
+  const handleNavigateToOffers = () => {
+    window.location.href = "/offers";
+  };
+
   useEffect(() => {
     const data = localStorage.getItem("user")
       ? JSON.parse(localStorage.getItem("user"))
@@ -39,7 +43,7 @@ export default function Header() {
         <div className={styles.header_items_gap}>
           <div className="d-flex align-items-center gap-1 cursor-pointer">
             <img src="/assets/receipt-disscount.png" alt="offers" />
-            <span className={styles.offers}>
+            <span className={styles.offers} onClick={handleNavigateToOffers}>
               <FormattedMessage id="home.offers" />
             </span>
           </div>
