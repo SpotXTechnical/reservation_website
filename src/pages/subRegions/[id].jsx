@@ -14,6 +14,8 @@ export default function SubRegion() {
   const router = useRouter();
   const { id } = router.query;
   const [data, setData] = useState({});
+  const [isCopied, setIsCopied] = useState(false);
+
   let { lang } = useSelector((state) => state.language);
   if (typeof window !== "undefined") {
     const storedLanguage = localStorage.getItem("language");
@@ -37,6 +39,10 @@ export default function SubRegion() {
     navigator.clipboard.writeText(
       `${window.location.origin}?idKey=${id}&targetKey=subRegion`
     );
+    setIsCopied(true);
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 2000);
   };
 
   return (
@@ -73,9 +79,15 @@ export default function SubRegion() {
             />
             <h2 className={styles.region_name}>{data.name}</h2>
             <span className={styles.share} onClick={handleShare}>
-              <img src="/assets/share.png" alt="share" />
+              {!isCopied && <img src="/assets/share.png" alt="share" />}
               <span>
-                <FormattedMessage id="share" />
+                {isCopied ? (
+                  <span className={styles.copied_link}>
+                    <FormattedMessage id="link copied" />{" "}
+                  </span>
+                ) : (
+                  <FormattedMessage id="share" />
+                )}
               </span>
             </span>
           </div>

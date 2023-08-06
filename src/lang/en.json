@@ -80,7 +80,9 @@
   "profile.edit.fields.password.placeholder": "Your password",
 
   "share": "Share",
+  "link copied": "Link copied",
   "addToFav": "Add To Favorites",
+  "removeFromFav": "Remove From Favorites",
   "bathroom": "Bathroom",
   "bedroom": "Bedroom",
   "room": "Room",
@@ -264,5 +266,6 @@
   "bedsNum": "Beds Number",
   "price": "Price",
   "minimum": "Minimum",
-  "maximum": "Maximum"
+  "maximum": "Maximum",
+  "Other units": "Other units"
 }

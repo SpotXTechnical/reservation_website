@@ -23,7 +23,7 @@ const RegionsHomeList = () => {
     <div className={styles.regionsList_container}>
       <div className={styles.regionsList_header}>
         <Title text={intl.formatMessage({ id: "home.destinations" })} />
-        <ViewAll />
+        {/* <ViewAll /> */}
       </div>
       <div className={styles.regionsList_wrapper}>
         <div className={styles.regionsList}>
