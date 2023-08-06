@@ -6,6 +6,7 @@ import { ShimmerThumbnail } from "react-shimmer-effects";
 import styles from "./offers.module.css";
 import PopularCard from "../../Components/SharedComponents/PopularCard/PopularCard";
 import { getFavouriteList } from "../../app/Apis/UnitsApis";
+import { FormattedMessage } from "react-intl";
 
 export default function Offers() {
   let { lang } = useSelector((state) => state.language);

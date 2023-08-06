@@ -9,12 +9,15 @@ import RegionUnits from "../../Components/RegionUnits";
 import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
 import { FormattedMessage } from "react-intl";
+import Pagination from "../../Components/SharedComponents/Pagination";
 
 export default function SubRegion() {
   const router = useRouter();
+  const [meta, setMeta] = useState("");
   const { id } = router.query;
   const [data, setData] = useState({});
   const [isCopied, setIsCopied] = useState(false);
+  const [page, setPage] = useState(1);
 
   let { lang } = useSelector((state) => state.language);
   if (typeof window !== "undefined") {
@@ -27,12 +30,13 @@ export default function SubRegion() {
   useEffect(
     function () {
       if (id) {
-        getRegionDetails(id).then((res) => {
+        getRegionDetails(id, null, page).then((res) => {
           setData(res.data);
+          setMeta(res.meta);
         });
       }
     },
-    [id, lang]
+    [id, lang, page]
   );
 
   const handleShare = () => {
@@ -43,6 +47,11 @@ export default function SubRegion() {
     setTimeout(() => {
       setIsCopied(false);
     }, 2000);
+  };
+
+  const handlePagination = (page) => {
+    const PAGE = page.selected + 1;
+    setPage(PAGE);
   };
 
   return (
@@ -121,6 +130,7 @@ export default function SubRegion() {
           </div>
         )} */}
       </>
+      {meta && <Pagination meta={meta} handlePagination={handlePagination} />}
     </div>
   );
 }
