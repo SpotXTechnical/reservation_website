@@ -2,7 +2,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { getProfile } from "../app/Apis/AuthApis";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import store, { langAction } from "../../store";
+import store, { langAction } from "../store";
 import Input from "../Components/SharedComponents/Input/Input";
 import { getCities } from "../app/Apis/HomeApis";
 import { editProfile } from "../app/Apis/AuthApis";
