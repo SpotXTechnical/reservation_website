@@ -1,7 +1,9 @@
 import { FormattedMessage } from "react-intl";
-import styles from "./styles.module.css";
+import { useRouter } from "next/router";
+import styles from "./reservationCard.module.css";
 
 const ReservationCard = ({ data, key }) => {
+  const router = useRouter();
   const getDayMonth = (fullDatetime) => {
     const month = fullDatetime.slice(5, 7);
     const day = fullDatetime.slice(8, 10);
@@ -9,7 +11,7 @@ const ReservationCard = ({ data, key }) => {
   };
 
   const handleNavigateToDetails = (id) => {
-    window.location.href = `/reservations/${id}`;
+    router.push(`/reservations/${id}`);
   };
 
   return (

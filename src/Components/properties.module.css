@@ -50,7 +50,7 @@
 }
 
 .bread_crumb :global(.breadcrumb-items) + :global(.breadcrumb-items)::before {
-  content: url("../../../public/assets/arrow-right.png") !important;
+  content: url("../../public/assets/arrow-right.png") !important;
   padding-top: 3px;
 }
 
@@ -409,7 +409,7 @@
 :global(div[dir="rtl"])
   .bread_crumb
   :global(.breadcrumb-items):first-child:after {
-  content: url("../../../public/assets/arrow-right.png") !important;
+  content: url("../../public/assets/arrow-right.png") !important;
   transform: rotate(180deg);
   padding-top: 7px;
 }

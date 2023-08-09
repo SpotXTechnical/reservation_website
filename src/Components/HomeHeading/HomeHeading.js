@@ -7,9 +7,11 @@ import { useEffect, useState } from "react";
 import { getRegions } from "../../app/Apis/RegionsApis";
 import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
+import { useRouter } from "next/router";
 
 const HomeHeading = () => {
   const intl = useIntl();
+  const router = useRouter();
   const WITH_SUB_REGION = 1;
   const [mainRegions, setMainRegions] = useState([]);
 
@@ -23,7 +25,7 @@ const HomeHeading = () => {
   }
 
   const onSearch = () => {
-    window.location.href = "/discover";
+    router.push("/discover");
   };
 
   useEffect(

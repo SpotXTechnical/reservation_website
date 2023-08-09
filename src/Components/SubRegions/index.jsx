@@ -14,10 +14,7 @@ const SubRegions = ({ regionName, subRegions }) => {
             id={item.id}
             key={i}
             name={item.name}
-            // handleClick={() => router.push(`/subRegions/${item.id}`)}
-            handleClick={() =>
-              (window.location.href = `/subRegions/${item.id}`)
-            }
+            handleClick={() => router.push(`/subRegions/${item.id}`)}
             image={item.images.length ? item.images[0].url : ""}
           />
         ))}

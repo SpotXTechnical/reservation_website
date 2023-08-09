@@ -7,19 +7,21 @@ import ViewAll from "../SharedComponents/ViewAll/ViewAll";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import styles from "./OffersList.module.css";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 const OffersList = () => {
   const [data, setData] = useState({});
+  const router = useRouter();
   let { lang } = useSelector((state) => state.language);
   useEffect(() => {
     getRegionsWithSubRegionsList().then((res) => setData(res));
   }, [lang]);
 
   const handleClick = (id) => {
-    window.location.href = `/regions/${id}`;
+    router.push(`/regions/${id}`);
   };
   const handleClickSubRegion = (id) => {
-    window.location.href = `/subRegions/${id}`;
+    router.push(`/subRegions/${id}`);
   };
   return (
     <div className={styles.recomended_regions_container}>

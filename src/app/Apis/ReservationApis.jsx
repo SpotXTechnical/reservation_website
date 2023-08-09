@@ -24,7 +24,9 @@ export const getReservationDetails = async (id) => {
 
 export const cancelReservation = async (id) => {
   try {
-    const response = await axiosInstance.put(`/user/reservations/${id}/cancel`);
+    const response = await axiosInstance.put(
+      `api/v1/user/reservations/${id}/cancel`
+    );
     return response.data;
   } catch (error) {
     throw error;

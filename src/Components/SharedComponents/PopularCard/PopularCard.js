@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import styles from "./PopularCard.module.css";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 const PopularCard = ({
   id,
   key,
@@ -23,6 +24,7 @@ const PopularCard = ({
   favouritesList,
 }) => {
   const [isFav, setIsFav] = useState(false);
+  const router = useRouter();
   let { lang } = useSelector((state) => state.language);
   useEffect(() => {
     if (favouritesList?.length > 0) {
@@ -66,7 +68,7 @@ const PopularCard = ({
     <div
       className={styles.popular_card}
       key={key}
-      onClick={() => (window.location.href = `/properties/${id}`)}
+      onClick={() => router.push(`/properties/${id}`)}
     >
       <div className={styles.unit_type_wrapper}>
         <div className={styles.unit_type}>{type}</div>

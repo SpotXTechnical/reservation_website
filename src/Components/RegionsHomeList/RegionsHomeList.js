@@ -8,8 +8,10 @@ import { ShimmerThumbnail } from "react-shimmer-effects";
 import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 import styles from "./RegionsHomeList.module.css";
+import { useRouter } from "next/router";
 
 const RegionsHomeList = () => {
+  const router = useRouter();
   const intl = useIntl();
   const [data, setData] = useState([]);
   let { lang } = useSelector((state) => state.language);
@@ -17,7 +19,7 @@ const RegionsHomeList = () => {
     getRegions().then((res) => setData(res.data?.slice(0, 4)));
   }, [lang]);
   const handleRedirectToRegionDetails = (id) => {
-    window.location.href = `/regions/${id}`;
+    router.push(`/regions/${id}`);
   };
   return (
     <div className={styles.regionsList_container}>
