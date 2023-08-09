@@ -12,7 +12,7 @@ const DelayedOffers = () => {
   useEffect(() => {
     const delayTimeout = setTimeout(() => {
       setShowOffers(true);
-    }, 500);
+    }, 1500);
 
     return () => clearTimeout(delayTimeout);
   }, []);
