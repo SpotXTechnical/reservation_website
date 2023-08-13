@@ -8,7 +8,8 @@ const LoadableOffers = loadable(() => import("../../Components/Offers"), {
 });
 
 const OffersWrapper = () => {
-  return <LoadableOffers styles={styles} />;
+  const OffersComponent = LoadableOffers;
+  return <OffersComponent styles={styles} />;
 };
 
 export default OffersWrapper;
