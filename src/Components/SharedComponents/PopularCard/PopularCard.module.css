@@ -1,3 +1,7 @@
+:global(.units_container) .popular_card {
+  width: calc(50% - 24px);
+}
+
 .popular_card {
   width: 50%;
   position: relative;
@@ -137,5 +141,8 @@
 @media screen and (max-width: 1280px) {
   .popular_img {
     height: 200px;
+  }
+  :global(.units_container) .popular_card {
+      width: 100%;
   }
 }
