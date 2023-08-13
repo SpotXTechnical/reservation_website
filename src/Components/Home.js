@@ -5,7 +5,7 @@ import RegionsHomeList from "../Components/RegionsHomeList/RegionsHomeList";
 import OffersList from "../Components/OffersList/OffersList";
 import SubscribeUs from "../Components/SubscribeUs/SubscribeUs";
 import MostPopularList from "../Components/MostPopularList/MostPopularList";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import store, { langAction } from "../store";

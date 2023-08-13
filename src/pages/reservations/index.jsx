@@ -12,7 +12,7 @@ const DelayedReservations = () => {
   useEffect(() => {
     const delayTimeout = setTimeout(() => {
       setShowOffers(true);
-    }, 1400);
+    }, 1700);
 
     return () => clearTimeout(delayTimeout);
   }, []);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ShimmerThumbnail } from "react-shimmer-effects";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { getRegionDetails } from "../app/Apis/RegionsApis";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";

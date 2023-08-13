@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import { langAction } from "../../store";
 import styles from "./header.module.css";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 export default function Header() {
   let { lang } = useSelector((state) => state.language);

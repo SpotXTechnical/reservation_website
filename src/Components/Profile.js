@@ -1,6 +1,6 @@
 import { FormattedMessage, useIntl } from "react-intl";
 import { getProfile } from "../app/Apis/AuthApis";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import store, { langAction } from "../store";

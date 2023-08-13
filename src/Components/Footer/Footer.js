@@ -1,6 +1,6 @@
 import { FormattedMessage } from "react-intl";
 import styles from "./Footer.module.css";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 export default function Footer() {
   const router = useRouter();

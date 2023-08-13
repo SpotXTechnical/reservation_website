@@ -1,5 +1,5 @@
 import { FormattedMessage } from "react-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import styles from "./reservationCard.module.css";
 
 const ReservationCard = ({ data, key }) => {

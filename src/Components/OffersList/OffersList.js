@@ -7,7 +7,7 @@ import ViewAll from "../SharedComponents/ViewAll/ViewAll";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import styles from "./OffersList.module.css";
 import { useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 const OffersList = () => {
   const [data, setData] = useState({});

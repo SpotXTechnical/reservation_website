@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import styles from "./styles.module.css";
 import RegionsCard from "../SharedComponents/RegionsCard/RegionsCard";
 import { FormattedMessage } from "react-intl";
