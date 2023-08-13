@@ -12,7 +12,7 @@ const DelayedRegions = () => {
   useEffect(() => {
     const delayTimeout = setTimeout(() => {
       setShowOffers(true);
-    }, 1300);
+    }, 1400);
 
     return () => clearTimeout(delayTimeout);
   }, []);
