@@ -22,7 +22,7 @@ export const signIn = async (data) => {
 
 export const editProfile = async (data) => {
   try {
-    const response = await axiosInstance.post("/api/v1/user/register", data);
+    const response = await axiosInstance.post("/api/v1/user/profile", data);
     return response.data;
   } catch (error) {
     console.error(error);

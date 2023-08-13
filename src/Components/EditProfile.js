@@ -124,7 +124,7 @@ export default function EditProfile() {
             handleDismissAlret();
           }, 5000);
         } else {
-          router.push(`/properties/${id}`);
+          router.push(`/profile`);
         }
       });
     }

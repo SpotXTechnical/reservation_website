@@ -123,6 +123,7 @@ export default function Header() {
                   <li
                     onClick={() => {
                       router.push("/profile");
+                      setMenuOpen(false);
                     }}
                   >
                     <FormattedMessage id="home.profile" />
@@ -132,6 +133,7 @@ export default function Header() {
                       router.push("/signin");
                       localStorage.removeItem("user");
                       localStorage.removeItem("access_token");
+                      setMenuOpen(false);
                     }}
                   >
                     <FormattedMessage id="home.Logout" />

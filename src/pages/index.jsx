@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import ReactLoader from "../Components/ReactLoader/ReactLoader";
 
@@ -5,4 +6,18 @@ const Home = dynamic(() => import("../Components/Home"), {
   loading: () => <ReactLoader />,
 });
 
-export default Home;
+const DelayedHome = () => {
+  const [showOffers, setShowOffers] = useState(false);
+
+  useEffect(() => {
+    const delayTimeout = setTimeout(() => {
+      setShowOffers(true);
+    }, 1300);
+
+    return () => clearTimeout(delayTimeout);
+  }, []);
+
+  return <>{showOffers ? <Home /> : <ReactLoader />}</>;
+};
+
+export default DelayedHome;
