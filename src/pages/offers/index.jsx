@@ -1,15 +1,23 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import ReactLoader from "../../Components/ReactLoader/ReactLoader";
-import loadable from "@loadable/component";
-import Offers from "../../Components/Offers/Offers";
-import OffersComponent from "../../Components/Offers";
 
-// const LoadableOffers = loadable(() => import("../../Components/Offers/Offers"), {
-//   fallback: <ReactLoader />,
-// });
+const Offers = dynamic(() => import("../../Components/Offers"), {
+  loading: () => <ReactLoader />,
+});
 
-const OffersWrapper = () => {
-  return <OffersComponent />;
+const DelayedOffers = () => {
+  const [showOffers, setShowOffers] = useState(false);
+
+  useEffect(() => {
+    const delayTimeout = setTimeout(() => {
+      setShowOffers(true);
+    }, 1200);
+
+    return () => clearTimeout(delayTimeout);
+  }, []);
+
+  return <>{showOffers ? <Offers /> : <ReactLoader />}</>;
 };
 
-export default OffersWrapper;
+export default DelayedOffers;
