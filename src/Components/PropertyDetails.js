@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Breadcrumb from "../Components/BreadCrumb";
 import { getPropertyDetails, reserveUnit } from "../app/Apis/PropertyApis";
 import ReactStars from "react-rating-stars-component";

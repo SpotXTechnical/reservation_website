@@ -4,7 +4,7 @@ import styles from "./signup.module.css";
 import { FormattedMessage, useIntl } from "react-intl";
 import { getCities } from "../app/Apis/HomeApis";
 import { signUp } from "../app/Apis/AuthApis";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import store, { langAction } from "../store";
 import { useSelector } from "react-redux";
 

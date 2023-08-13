@@ -1,7 +1,7 @@
 import { FormattedMessage } from "react-intl";
 import { getOwnerDetails } from "../app/Apis/OwnerApis";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import store, { langAction } from "../store";

@@ -8,7 +8,7 @@ import { ShimmerThumbnail } from "react-shimmer-effects";
 import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 import styles from "./RegionsHomeList.module.css";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const RegionsHomeList = () => {
   const router = useRouter();

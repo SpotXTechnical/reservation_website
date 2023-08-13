@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { getRegions } from "../../app/Apis/RegionsApis";
 import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const HomeHeading = () => {
   const intl = useIntl();

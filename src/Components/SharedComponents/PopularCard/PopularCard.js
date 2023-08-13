@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import styles from "./PopularCard.module.css";
 import moment from "moment";
 import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 const PopularCard = ({
   id,
   key,
