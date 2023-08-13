@@ -6,6 +6,7 @@ import { ShimmerThumbnail } from "react-shimmer-effects";
 import PopularCard from "../../Components/SharedComponents/PopularCard/PopularCard";
 import { getFavouriteList } from "../../app/Apis/UnitsApis";
 import { FormattedMessage } from "react-intl";
+import "./offers.css"
 
 export default function Offers() {
   let { lang } = useSelector((state) => state.language);
@@ -72,42 +73,6 @@ export default function Offers() {
           <FormattedMessage id="noDataFound" />
         </p>
       )}
-
-      <style jsx>{`
-        .wrapper {
-          margin: 40px 100px;
-          min-height: 50vh;
-          padding: 0px;
-        }
-        .shimmer_wrapper {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 2%;
-          margin-bottom: 150px;
-        }
-
-        .shimmer_wrapper > div {
-          width: 48%;
-          margin-bottom: 50px;
-        }
-        .not_found {
-          text-align: center;
-          margin-top: 100px;
-        }
-
-        .units_container {
-          display: flex;
-          flex-wrap: wrap;
-          row-gap: 15px;
-          column-gap: 48px;
-        }
-
-        @media screen and (max-width: 1280px) {
-          .wrapper {
-            margin: 16px;
-          }
-        }
-      `}</style>
     </div>
   );
 }
