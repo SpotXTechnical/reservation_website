@@ -1,5 +1,5 @@
 .home_heading_bg {
-  background: url("../../../public/assets/vecteezy_kayak-floating-on-blue-sea_3823729\ 1.png")
+  background: url("../../public/assets/vecteezy_kayak-floating-on-blue-sea_3823729\ 1.png")
     no-repeat center;
   background-size: cover;
   height: 390px;
@@ -81,7 +81,7 @@
 }
 
 .search_input,
-.search_container :global(.select__input) {
+.search_container .select__input {
   border-radius: 40px !important;
   border: unset !important;
   width: 100%;
@@ -89,7 +89,7 @@
   /* padding: 25px !important; */
 }
 
-.search_container :global(.select__control) {
+.search_container .select__control {
   background: var(--white-color);
   box-shadow: 0px 4px 4px rgb(0 0 0 / 20%);
   border-radius: 12px 0px 0px 12px;
@@ -99,12 +99,12 @@
   text-indent: 55px;
 }
 
-.search_container :global(.select__control):hover {
+.search_container .select__control:hover {
   border-color: unset !important;
 }
 
 .search_input::placeholder,
-.search_container :global(.select__placeholder) {
+.search_container .select__placeholder {
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -112,7 +112,7 @@
   color: var(--grey-color);
 }
 
-.search_container :global(.select__menu) {
+.search_container .select__menu {
   background: var(--white-color);
   box-shadow: 0px -2px 14px 1px rgba(0, 0, 0, 0.08);
   border-radius: 16px;
@@ -123,8 +123,8 @@
   color: var(--grey-color);
 }
 
-.search_container :global(.select__option),
-.search_container :global(.select__option):hover {
+.search_container .select__option,
+.search_container .select__option:hover {
   display: flex !important;
   align-items: center !important;
   height: 67px;
@@ -132,12 +132,12 @@
   margin-bottom: 10px;
 }
 
-.search_container :global(.select__option--is-focused) {
+.search_container .select__option--is-focused {
   background: rgba(196, 196, 196, 0.15) !important;
   border-radius: 8px;
 }
 
-.search_container :global(.select__option--is-selected) {
+.search_container .select__option--is-selected {
   background: rgba(196, 196, 196, 0.15) !important;
   color: var(--dark-color) !important;
 }
@@ -153,19 +153,19 @@
   }
 
   .search_input::placeholder,
-  .search_container :global(.select__placeholder) {
+  .search_container .select__placeholder {
     display: none;
   }
 
   .heading_search_input {
     text-indent: 5px;
   }
-  .search_container :global(.select__menu) {
+  .search_container .select__menu {
     font-size: 13px;
     width: 100%;
   }
   .search_input,
-  .search_container :global(.select__input) {
+  .search_container .select__input {
     text-indent: 5px;
   }
 }

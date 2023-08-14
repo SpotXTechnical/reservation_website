@@ -1,4 +1,4 @@
-.container {
+.wrapper {
   margin: 40px 100px;
   min-height: 50vh;
 }
@@ -26,10 +26,11 @@
 
 .shimmer_wrapper > div {
   width: 48%;
+  margin-bottom: 60px;
 }
 
 @media screen and (max-width: 1280px) {
-  .container {
+  .wrapper {
     margin: 16px;
   }
   .units_container > div {
