@@ -3,14 +3,11 @@
   margin: 40px 80px 80px 80px;
 }
 
-.logo {
-  display: none;
-}
-.logo {
+.terms_container .logo {
   display: none;
 }
 
-.title {
+.terms_container .title {
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -22,7 +19,7 @@
   margin-bottom: 30px;
 }
 
-.sub_title {
+.terms_container .sub_title {
   font-style: normal;
   font-weight: 700;
   font-size: 15px;
@@ -36,18 +33,18 @@
   margin-inline-start: -2rem;
 }
 
-.title:first-letter {
+.terms_container .title:first-letter {
   text-transform: uppercase;
 }
 
-.terms_content {
+.terms_container .terms_content {
   font-weight: 400;
   font-size: 13px;
   opacity: 0.8;
   font-family: var(--Montserrat-Regular);
 }
 
-.terms_content li {
+.terms_container .terms_content li {
   margin-bottom: 16px;
 }
 
@@ -65,7 +62,7 @@
     padding: 16px;
     overflow: auto;
   }
-  .logo {
+  .terms_container .logo {
     display: block;
     margin-bottom: 20px;
   }

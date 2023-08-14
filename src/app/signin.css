@@ -1,12 +1,12 @@
-.container {
+.wrapper_sign_in {
   width: 65%;
   margin: 40px auto 80px auto;
   margin-top: 30px;
-  border: 1px so id var(--border-light-grey);
+  border: 1px solid var(--border-light-grey);
   border-radius: 12px;
 }
 
-.signin_title {
+.wrapper_sign_in .signin_title {
   font-family: var(--Montserrat-Regular);
   font-style: normal;
   font-weight: 600;
@@ -18,21 +18,21 @@
   margin-bottom: 24px;
 }
 
-.inner_container {
+.wrapper_sign_in .inner_container {
   display: flex;
 }
 
-.form_container {
+.wrapper_sign_in .form_container {
   padding: 30px 40px;
   flex: 1;
   margin-bottom: 0;
 }
 
-.main_img {
+.wrapper_sign_in .main_img {
   border-radius: 0 12px 12px 0;
 }
 
-.welcome_back {
+.wrapper_sign_in .welcome_back {
   color: var(--light-blue-color);
   font-family: var(--Montserrat-Regular);
   font-style: normal;
@@ -42,7 +42,7 @@
   font-weight: bold;
 }
 
-.welcome_back + p {
+.wrapper_sign_in .welcome_back + p {
   text-align: center;
   font-style: normal;
   font-weight: 500;
@@ -51,7 +51,7 @@
   margin-bottom: 48px;
 }
 
-.dont_have_account {
+.wrapper_sign_in .dont_have_account {
   text-align: center;
   margin: 15px;
   font-family: var(--Montserrat-Regular);
@@ -62,12 +62,12 @@
   color: var(--light-grey-color);
 }
 
-.signUp {
+.wrapper_sign_in .signUp {
   color: var(--light-blue-color);
   cursor: pointer;
 }
 
-.label {
+.wrapper_sign_in .label {
   font-family: var(--Montserrat-Regular);
   font-style: normal;
   font-weight: 700;
@@ -77,7 +77,7 @@
   color: var(--dark-color);
 }
 
-.signin_input {
+.wrapper_sign_in .signin_input {
   display: block;
   width: 100%;
   border: none;
@@ -93,7 +93,7 @@
   color: var(--light-grey-color);
 }
 
-.signin_input::placeholder {
+.wrapper_sign_in .signin_input::placeholder {
   font-family: var(--Montserrat-Regular);
   font-style: normal;
   font-weight: 400;
@@ -101,17 +101,17 @@
   color: var(--light-grey-color);
 }
 
-.signin_input:focus {
+.wrapper_sign_in .signin_input:focus {
   border-color: unset;
   box-shadow: none;
 }
 
-.alert-danger {
+.wrapper_sign_in .alert-danger {
   font-weight: 100;
   font-size: 14px;
 }
 
-.button_wrapper {
+.wrapper_sign_in .button_wrapper {
   background: linear-gradient(
     180deg,
     var(--light-blue-color) -16.5%,
@@ -127,15 +127,15 @@
 }
 
 @media screen and (max-width: 768px) {
-  .button_wrapper {
+  .wrapper_sign_in .button_wrapper {
     padding: 5px 15px;
   }
 
-  .image_container {
+  .wrapper_sign_in .image_container {
     display: none;
   }
 
-  .container {
+  .wrapper_sign_in {
     width: 90%;
   }
 }

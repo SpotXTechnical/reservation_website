@@ -6,7 +6,6 @@ import Title from "../SharedComponents/Title/Title";
 import ViewAll from "../SharedComponents/ViewAll/ViewAll";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import { useIntl } from "react-intl";
-import styles from "./MostPopularList.module.css";
 import { useSelector } from "react-redux";
 import { getFavouriteList } from "../../app/Apis/UnitsApis";
 
@@ -26,14 +25,14 @@ const MostPopularList = () => {
     getFavouriteList().then((res) => setFav(res?.data));
   };
   return (
-    <div className={styles.popularList_container}>
-      <div className={styles.popularList_header}>
+    <div className="popularList_container">
+      <div className="popularList_header">
         <Title
           text={intl.formatMessage({ id: "home.mostPopularProperties" })}
         />
         <ViewAll handleClick={handleViewAll} />
       </div>
-      <div className={styles.popularList}>
+      <div className="popularList">
         {data?.length > 0
           ? data.map(
               (

@@ -35,7 +35,7 @@ export default function Offers() {
     );
   }
   return (
-    <div dir={lang === "ar" ? "rtl" : "ltr"} className="wrapper">
+    <div dir={lang === "ar" ? "rtl" : "ltr"} className="offers_page_wrapper">
       {!data ? (
         <div className="shimmer_wrapper">
           {" "}

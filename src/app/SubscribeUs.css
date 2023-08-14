@@ -1,24 +1,24 @@
-.wrapper {
+.subscribe_us_wrapper {
   padding-inline: 100px;
   padding-block: 35px;
   display: flex;
   background-color: var(--yellow-color);
 }
 
-.subscribe_title {
+.subscribe_us_wrapper .subscribe_title {
   color: var(--dark-color);
   text-transform: capitalize;
   font-family: var(--Montserrat-Semi-Bold);
   margin-bottom: 10px;
 }
 
-.subscribe_sub_title {
+.subscribe_us_wrapper .subscribe_sub_title {
   color: var(--light-grey-color);
   font-size: 14px;
   text-transform: capitalize;
 }
 
-.subscribe_input {
+.subscribe_us_wrapper .subscribe_input {
   background: var(--white-color);
   box-shadow: 0px 4px 4px rgb(0 0 0 / 20%);
   border-radius: 12px 0px 0px 12px;
@@ -28,7 +28,7 @@
   text-indent: 24px;
 }
 
-.subscribe_btn {
+.subscribe_us_wrapper .subscribe_btn {
   height: 50px;
   color: var(--white-color);
   background: var(--light-blue-color);
@@ -39,14 +39,14 @@
   width: 100%;
 }
 
-:global(main.rtl) .subscribe_btn {
+main.rtl .subscribe_us_wrapper .subscribe_btn {
   border-radius: 12px 0px 0px 12px;
 }
 
-:global(main.rtl) .subscribe_input {
+main.rtl .subscribe_us_wrapper .subscribe_input {
   border-radius: 0px 12px 12px 0px;
 }
-.app_images {
+.subscribe_us_wrapper .app_images {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,13 +55,13 @@
 }
 
 @media screen and (max-width: 1280px) {
-  .wrapper {
+  .subscribe_us_wrapper {
     padding-inline: 60px;
   }
 }
 
 @media screen and (max-width: 768px) {
-  .wrapper {
+  .subscribe_us_wrapper {
     padding-inline: 15px;
     flex-direction: column;
     gap: 20px;
