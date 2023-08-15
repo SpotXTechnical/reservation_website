@@ -224,16 +224,15 @@
   font-size: 20px;
 }
 
-.properties_details_container .image_gallery {
+.image_gallery {
   max-width: 80%;
 }
 
-.properties_details_container .image_gallery .carousel-root {
+.image_gallery .carousel-root {
   width: 100%;
   direction: initial;
 }
 
-.properties_details_container
   .image_gallery
   .carousel.carousel-slider
   .control-arrow {
@@ -241,21 +240,21 @@
   height: 60px;
   top: 50%;
 }
-.properties_details_container .image_gallery .modal-body,
-.properties_details_container .image_gallery .carousel-root,
-.properties_details_container .image_gallery .carousel-slider,
-.properties_details_container .image_gallery .slider-wrapper,
-.properties_details_container .image_gallery .slider,
-.properties_details_container .image_gallery .slide div {
+ .image_gallery .modal-body,
+ .image_gallery .carousel-root,
+ .image_gallery .carousel-slider,
+ .image_gallery .slider-wrapper,
+ .image_gallery .slider,
+ .image_gallery .slide div {
   height: 650px;
 }
-.properties_details_container .image_gallery .slide div > div {
+ .image_gallery .slide div > div {
   height: 600px;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.properties_details_container
+
   .image_gallery
   .carousel
   .control-next.control-arrow {
@@ -264,7 +263,7 @@
   border-radius: 30px;
 }
 
-.properties_details_container
+
   .image_gallery
   .carousel
   .control-prev.control-arrow {
