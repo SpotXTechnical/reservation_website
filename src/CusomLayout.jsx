@@ -28,6 +28,7 @@ import "./app/privacy.css";
 import "./app/discover.css";
 import "react-date-range/dist/theme/default.css";
 import "react-date-range/dist/styles.css";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./app/DateRangePicker.css";
 import "./app/pagination.css";
 import "rc-slider/assets/index.css";

@@ -3,7 +3,6 @@ import { ShimmerThumbnail } from "react-shimmer-effects";
 import { useRouter } from "next/router";
 import { getRegionDetails } from "../../app/Apis/RegionsApis";
 import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import RegionUnits from "../../Components/RegionUnits";
 import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";

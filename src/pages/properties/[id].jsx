@@ -5,7 +5,6 @@ import Breadcrumb from "../../Components/BreadCrumb";
 import { getPropertyDetails, reserveUnit } from "../../app/Apis/PropertyApis";
 import ReactStars from "react-rating-stars-component";
 import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import ReviewsCard from "../../Components/ReviewsCard/ReviewsCard";
 import { useSelector } from "react-redux";

@@ -10,7 +10,6 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Carousel } from "react-responsive-carousel";
 import { ShimmerThumbnail } from "react-shimmer-effects";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import moment from "moment";
 import { FormattedMessage } from "react-intl";
 
