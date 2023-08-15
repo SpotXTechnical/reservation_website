@@ -23,6 +23,7 @@
   padding-block: 25px;
   width: 50%;
   margin: 40px 0;
+  cursor: pointer;
 }
 
 .reservation_container .owner img {

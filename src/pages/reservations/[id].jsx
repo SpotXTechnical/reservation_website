@@ -27,6 +27,10 @@ export default function SubRegion() {
     );
   }
 
+  const handleRedirectToOwnerProfile = (id) => {
+    router.push(`/owner/${id}`);
+  };
+
   const handleCancelReservation = (id) => {
     cancelReservation(id).then((res) => {
       res &&
@@ -136,7 +140,9 @@ export default function SubRegion() {
           </div>
         </div>
         {data?.unit?.owner?.name ? (
-          <div className="owner">
+          <div className="owner"
+          onClick={() => handleRedirectToOwnerProfile(data?.unit?.owner?.id)}
+          >
             <img src={data?.unit?.owner?.image} alt="owner_img" />
             <p>{data?.unit?.owner?.name} </p>
             <p>{data?.unit?.owner?.phone} </p>
