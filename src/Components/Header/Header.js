@@ -5,15 +5,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import { langAction } from "../../store";
 import styles from "./header.module.css";
+import { useRouter } from "next/router";
 
 export default function Header() {
   let { lang } = useSelector((state) => state.language);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [userData, setUserData] = useState("");
   const dispatcher = useDispatch();
+  const router = useRouter();
 
   const handleNavigateToOffers = () => {
-    window.location.href = "/offers";
+    router.push("/offers");
   };
 
   useEffect(() => {
@@ -34,22 +36,25 @@ export default function Header() {
       <div
         className="col-sm-6 cursor-pointer"
         onClick={() => {
-          window.location.href = "/";
+          router.push("/");
         }}
       >
         <img src="/assets/Logo.png" alt="Logo" />
       </div>
       <div className="col-sm-6 d-flex justify-content-end">
         <div className={styles.header_items_gap}>
-          <div className="d-flex align-items-center gap-1 cursor-pointer">
+          <div
+            className="d-flex align-items-center gap-1 cursor-pointer"
+            onClick={handleNavigateToOffers}
+          >
             <img src="/assets/receipt-disscount.png" alt="offers" />
-            <span className={styles.offers} onClick={handleNavigateToOffers}>
+            <span className={styles.offers}>
               <FormattedMessage id="home.offers" />
             </span>
           </div>
           <div
             className="d-flex align-items-center gap-1 cursor-pointer"
-            onClick={() => (window.location.href = "/reservations")}
+            onClick={() => router.push("/reservations")}
           >
             <img src="/assets/shopping-bag.png" alt="reservations" />
             <span className={styles.menu_item}>
@@ -117,16 +122,18 @@ export default function Header() {
                 <ul className={styles.logout_menu}>
                   <li
                     onClick={() => {
-                      window.location.href = "/profile";
+                      router.push("/profile");
+                      setMenuOpen(false);
                     }}
                   >
                     <FormattedMessage id="home.profile" />
                   </li>
                   <li
                     onClick={() => {
-                      window.location.href = "/signin";
+                      router.push("/signin");
                       localStorage.removeItem("user");
                       localStorage.removeItem("access_token");
+                      setMenuOpen(false);
                     }}
                   >
                     <FormattedMessage id="home.Logout" />
@@ -138,7 +145,7 @@ export default function Header() {
             <div>
               <div
                 onClick={() => {
-                  window.location.href = "/signin";
+                  router.push("/signin");
                 }}
               >
                 <Button text="SIGN IN" />

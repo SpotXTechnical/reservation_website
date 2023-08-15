@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import styles from "./styles.module.css";
 import { FormattedMessage } from "react-intl";
 import { getReservations } from "../../app/Apis/ReservationApis";
 import ReservationCard from "../../Components//ReservationCard";
@@ -35,12 +34,15 @@ const Reservations = () => {
   };
 
   return (
-    <div className={styles.container} dir={lang === "ar" ? "rtl" : "ltr"}>
+    <div
+      className="reservation_container list"
+      dir={lang === "ar" ? "rtl" : "ltr"}
+    >
       <h2 className="mb-3">
         <FormattedMessage id="reservations" />
       </h2>
 
-      <div className={`d-flex ${styles.filter_btns} mb-3`}>
+      <div className={`d-flex filter_btns mb-3`}>
         <p
           className={`m-0 text-center cursor-pointer ${
             filterState == "upcoming" && "active"
@@ -59,7 +61,7 @@ const Reservations = () => {
         </p>
       </div>
 
-      <div className={styles.reservations}>
+      <div className="reservations">
         {data?.length > 0 ? (
           data.map((item, i) => {
             return <ReservationCard data={item} key={i} />;

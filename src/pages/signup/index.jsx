@@ -1,6 +1,5 @@
 import Input from "../../Components/SharedComponents/Input/Input";
 import { useEffect, useState } from "react";
-import styles from "./signup.module.css";
 import { FormattedMessage, useIntl } from "react-intl";
 import { getCities } from "../../app/Apis/HomeApis";
 import { signUp } from "../../app/Apis/AuthApis";
@@ -119,8 +118,7 @@ export default function SignUp() {
             "access_token",
             JSON.stringify(res?.data?.token?.access_token)
           );
-          // router.push('/')
-          window.location.href = "/";
+          router.push("/");
         }
       });
     }
@@ -128,7 +126,7 @@ export default function SignUp() {
 
   return (
     <>
-      <div dir={lang === "ar" ? "rtl" : "ltr"} className={styles.container}>
+      <div dir={lang === "ar" ? "rtl" : "ltr"} className="wrapper_sign_up">
         {Object.keys(validationErrors).length > 0 ? (
           <div class="alert alert-danger" role="alert">
             <ul>
@@ -140,18 +138,18 @@ export default function SignUp() {
         ) : (
           ""
         )}
-        <h3 className={styles.title}>
+        <h3 className="title">
           <FormattedMessage id="signup.form.title" />
         </h3>
         <form autoComplete="off">
           <div className="mb-3">
-            <label htmlFor="nameField" className={styles.label}>
+            <label htmlFor="nameField" className="label">
               <FormattedMessage id="signup.fields.name.label" />
             </label>
             <Input
               type="text"
               id="nameField"
-              className={styles.signup_input}
+              className="signup_input"
               placeholder={intl.formatMessage({
                 id: "signup.fields.name.placeholder",
               })}
@@ -160,13 +158,13 @@ export default function SignUp() {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="emailField" className={styles.label}>
+            <label htmlFor="emailField" className="label">
               <FormattedMessage id="signup.fields.email.label" />
             </label>
             <Input
               type="email"
               id="emailField"
-              className={styles.signup_input}
+              className="signup_input"
               placeholder={intl.formatMessage({
                 id: "signup.fields.email.placeholder",
               })}
@@ -181,13 +179,13 @@ export default function SignUp() {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="passwordField" className={styles.label}>
+            <label htmlFor="passwordField" className="label">
               <FormattedMessage id="signup.fields.password.label" />
             </label>
             <Input
               type="password"
               id="passwordField"
-              className={styles.signup_input}
+              className="signup_input"
               placeholder={intl.formatMessage({
                 id: "signup.fields.password.placeholder",
               })}
@@ -196,13 +194,13 @@ export default function SignUp() {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="confirmPasswordField" className={styles.label}>
+            <label htmlFor="confirmPasswordField" className="label">
               <FormattedMessage id="signup.fields.confirmPassword.label" />
             </label>
             <Input
               type="password"
               id="confirmPasswordField"
-              className={styles.signup_input}
+              className="signup_input"
               placeholder={intl.formatMessage({
                 id: "signup.fields.confirmPassword.placeholder",
               })}
@@ -217,13 +215,13 @@ export default function SignUp() {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="phoneField" className={styles.label}>
+            <label htmlFor="phoneField" className="label">
               <FormattedMessage id="signup.fields.phone.label" />
             </label>
             <Input
               type="text"
               id="phoneField"
-              className={styles.signup_input}
+              className="signup_input"
               placeholder={intl.formatMessage({
                 id: "signup.fields.phone.placeholder",
               })}
@@ -255,19 +253,19 @@ export default function SignUp() {
           </div> */}
           <button
             type="submit"
-            className={`${styles.button_wrapper}`}
+            className="button_wrapper"
             onClick={handleSubmit}
           >
             <FormattedMessage id="signup.form.title" />
           </button>
         </form>
-        <div className={styles.already_have_account}>
+        <div className="already_have_account">
           <span>
             <FormattedMessage id="signup.haveAcc" />{" "}
             <span
-              className={styles.signIn}
+              className="signIn"
               onClick={() => {
-                window.location.href = "/signin";
+                router.push("/signin");
               }}
             >
               <FormattedMessage id="signup.signin" />

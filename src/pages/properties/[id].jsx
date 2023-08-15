@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import styles from "./properties.module.css";
 import { FormattedMessage } from "react-intl";
 import { useRouter } from "next/router";
 import Breadcrumb from "../../Components/BreadCrumb";
 import { getPropertyDetails, reserveUnit } from "../../app/Apis/PropertyApis";
 import ReactStars from "react-rating-stars-component";
 import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import ReviewsCard from "../../Components/ReviewsCard/ReviewsCard";
 import { useSelector } from "react-redux";
@@ -40,7 +38,7 @@ export default function PropertyDetails() {
   const [mapPosition, setMapPosition] = useState(null);
 
   const handleRedirectToOwnerProfile = (id) => {
-    window.location.href = `/owner/${id}`;
+    router.push(`/owner/${id}`);
   };
 
   useEffect(() => {
@@ -191,14 +189,14 @@ export default function PropertyDetails() {
   return (
     <div
       dir={lang === "ar" ? "rtl" : "ltr"}
-      className={styles.properties_details_container}
+      className="properties_details_container"
     >
       {/* Head */}
-      <div className={`flex-center ${styles.head}`}>
-        <div className={styles.bread_crumb}>
+      <div className={`flex-center head`}>
+        <div className="bread_crumb">
           <Breadcrumb items={items} />
         </div>
-        <div className={styles.actions}>
+        <div className="actions">
           {showComponent && data?.is_favourite ? (
             <span
               className="cursor-pointer"
@@ -224,7 +222,7 @@ export default function PropertyDetails() {
             {!isCopied && <img src="/assets/share.png" alt="share" />}
             <span>
               {isCopied ? (
-                <span className={styles.copied_link}>
+                <span className="copied_link">
                   <FormattedMessage id="link copied" />{" "}
                 </span>
               ) : (
@@ -237,7 +235,7 @@ export default function PropertyDetails() {
 
       {data && (
         <div className={`flex-center my-3 rating_mobile`}>
-          <h2 className={styles.title}>{data?.title}</h2>
+          <h2 className="title">{data?.title}</h2>
           <div>
             {data?.rate > 0 && (
               <ReactStars
@@ -254,9 +252,7 @@ export default function PropertyDetails() {
 
       {data?.images?.length > 0 ? (
         <div
-          className={`${styles.images} ${
-            data.images.length > 4 && "cursor-pointer"
-          }`}
+          className={`images ${data.images.length > 4 && "cursor-pointer"}`}
           onClick={() => {
             data.images.length > 4 && handleImageGallery();
           }}
@@ -271,17 +267,13 @@ export default function PropertyDetails() {
                   <div
                     key={index}
                     className={`${
-                      index === 2
-                        ? styles.feature_images_dark
-                        : styles.feature_images
+                      index === 2 ? "feature_images_dark" : "feature_images"
                     }`}
                   >
-                    <div className={`${index === 2 ? styles.top : ""}`}>
+                    <div className={`${index === 2 ? "top" : ""}`}>
                       <img src={image.url} alt="Feature image" />
                       {index === 2 && data.images.length > 4 && (
-                        <p className={styles.overlay}>
-                          +{data.images.length - 4}
-                        </p>
+                        <p className="overlay">+{data.images.length - 4}</p>
                       )}
                     </div>
                   </div>
@@ -292,7 +284,7 @@ export default function PropertyDetails() {
       ) : (
         <>
           <ShimmerThumbnail height={500} rounded />
-          <div className={styles.shimmer_wrapper}>
+          <div className="shimmer_wrapper">
             {[...Array(3)].map((e, i) => (
               <ShimmerThumbnail key={i} height={300} rounded />
             ))}
@@ -303,12 +295,12 @@ export default function PropertyDetails() {
       <div className="d-flex gap-5 mb-5 properties_mobile ">
         <div className="col-md-6">
           <div className="properties-details">
-            <div className={styles.specs}>
+            <div className="specs">
               <div className="flex-center">
                 <span>
                   <img src="/assets/bed.png" alt="bed" />
                 </span>
-                <span className={styles.flex_column}>
+                <span className="flex_column">
                   <span>
                     <FormattedMessage id="bedroom" />
                   </span>
@@ -321,7 +313,7 @@ export default function PropertyDetails() {
                 <span>
                   <img src="/assets/bath.png" alt="bed" />
                 </span>
-                <span className={styles.flex_column}>
+                <span className="flex_column">
                   <span>
                     <FormattedMessage id="bathroom" />
                   </span>
@@ -344,7 +336,7 @@ export default function PropertyDetails() {
                 </span>
               </div> */}
             </div>
-            <div className={styles.price}>
+            <div className="price">
               <span>
                 {data?.default_price} <FormattedMessage id="le" />
               </span>
@@ -354,24 +346,24 @@ export default function PropertyDetails() {
               </span>
             </div>
           </div>
-          <div className={styles.over_view}>
-            <div className={styles.title}>
+          <div className="over_view">
+            <div className="title">
               <FormattedMessage id="overview" />
             </div>
             {data && Object.keys(data).length > 0 ? (
-              <div className={styles.description}>{data?.title}</div>
+              <div className="description">{data?.title}</div>
             ) : (
               <ShimmerThumbnail height={25} rounded />
             )}
             {data && Object.keys(data).length > 0 ? (
-              <div className={styles.about}>{data?.description}</div>
+              <div className="about">{data?.description}</div>
             ) : (
               <ShimmerThumbnail height={80} rounded />
             )}
           </div>
-          <div className={styles.features}>
-            <div className={styles.title}></div>
-            <div className={styles.features_wrapper}>
+          <div className="features">
+            <div className="title"></div>
+            <div className="features_wrapper">
               {data?.features?.length > 0
                 ? data.features?.map((feature, i) => {
                     return (
@@ -392,9 +384,9 @@ export default function PropertyDetails() {
             </div>
           </div>
 
-          <div className={styles.over_view}>
+          <div className="over_view">
             <div
-              className={styles.title}
+              className="title"
               onClick={() => (window.location = "/policy")}
             >
               <FormattedMessage id="Cancellation Policy" />
@@ -408,18 +400,19 @@ export default function PropertyDetails() {
             </div> */}
           </div>
 
-          <div className={styles.over_view}>
-            <div className={styles.title}>
+          <div className="over_view">
+            <div className="title">
               <FormattedMessage id="Property Owner" />
             </div>
 
             {data?.owner?.name ? (
               <div
-                className={styles.owner}
+                className="owner"
                 onClick={() => handleRedirectToOwnerProfile(data?.owner?.id)}
               >
                 <img src={data?.owner?.image} alt="owner_img" />
                 <p>{data?.owner?.name} </p>
+                <p>{data?.owner?.phone} </p>
               </div>
             ) : (
               <ShimmerThumbnail height={175} rounded />
@@ -427,8 +420,8 @@ export default function PropertyDetails() {
           </div>
         </div>
         <div className="col-md-6">
-          <div className={styles.date_range_wrapper}>
-            <div className={styles.date_title}>
+          <div className="date_range_wrapper">
+            <div className="date_title">
               <img src="/assets/availability.png" alt="availability-icon" />
               <span>
                 {" "}
@@ -447,9 +440,9 @@ export default function PropertyDetails() {
               />
             )}
           </div>
-          <div className={styles.over_view}>
+          <div className="over_view">
             {mapPosition && (
-              <div className={styles.title}>
+              <div className="title">
                 <FormattedMessage id="Location" />
               </div>
             )}
@@ -461,9 +454,9 @@ export default function PropertyDetails() {
           </div>
         </div>
       </div>
-      <div className={styles.reviews}>
+      <div className="reviews">
         {data?.reviews?.length > 0 && (
-          <div className={styles.title}>
+          <div className="title">
             <FormattedMessage id="Reviews" />
           </div>
         )}
@@ -491,26 +484,26 @@ export default function PropertyDetails() {
       <ModalComponent
         isOpen={isOpen}
         toggleModal={toggleModal}
-        className={styles.summary_modal}
+        className="summary_modal"
         modalBody={
-          <div className={styles.summary_container}>
-            <p className={styles.title}>
+          <div className="summary_container">
+            <p className="title">
               <FormattedMessage id="Summary" />{" "}
             </p>
-            <div className={styles.summary_card}>
-              <div className={styles.unit_type_wrapper}>
-                <div className={styles.unit_type}>challet</div>
-                <div className={styles.rating_wrapper}>
+            <div className="summary_card">
+              <div className="unit_type_wrapper">
+                <div className="unit_type">challet</div>
+                <div className="rating_wrapper">
                   <img src="/assets/star.png" alt="star" />
-                  <span className={styles.rate}>{data?.rate}</span>
+                  <span className="rate">{data?.rate}</span>
                 </div>
               </div>
               <img
-                className={styles.card_image}
+                className="card_image"
                 src={data?.images?.[0]?.url}
                 alt="unit_image"
               />
-              <p className={styles.unit_title}>{data?.title}</p>
+              <p className="unit_title">{data?.title}</p>
             </div>
             <div className="d-flex align-items-center justify-content-between">
               <div className="d-flex gap-2">
@@ -520,33 +513,33 @@ export default function PropertyDetails() {
                   width="20"
                   height="20"
                 />
-                <p className={styles.reservation_date}>
+                <p className="reservation_date">
                   <FormattedMessage id="Reservation_date" />{" "}
                 </p>
               </div>
-              <div className={styles.nights}>
+              <div className="nights">
                 {daysCount} <FormattedMessage id="nights" />
               </div>
             </div>
-            <div className={styles.from_to_wrapper}>
+            <div className="from_to_wrapper">
               <p>
-                <span className={styles.label}>
+                <span className="label">
                   <FormattedMessage id="from" />
                 </span>
-                <span className={styles.date}>
+                <span className="date">
                   {moment(selectedRange.startDate).format("ddd, DD MMM")}
                 </span>
               </p>
               <p>
-                <span className={styles.label}>
+                <span className="label">
                   <FormattedMessage id="to" />
                 </span>
-                <span className={styles.date}>
+                <span className="date">
                   {moment(selectedRange.endDate).format("ddd, DD MMM")}
                 </span>
               </p>
             </div>
-            <hr className={styles.total_price_hr} />
+            <hr className="total_price_hr" />
             <div className="d-flex align-items-center justify-content-between">
               <div className="d-flex gap-2">
                 <img
@@ -555,17 +548,17 @@ export default function PropertyDetails() {
                   width="30"
                   height="20"
                 />
-                <p className={styles.reservation_date}>
+                <p className="reservation_date">
                   <FormattedMessage id="total_cost" />{" "}
                 </p>
               </div>
-              <div className={styles.total_money}>
+              <div className="total_money">
                 {totalReservationMoney} {" LE"}
               </div>
             </div>
 
             <button
-              className={styles.submit_reservations}
+              className="submit_reservations"
               onClick={() => {
                 const submitData = {
                   from: moment(selectedRange.startDate).format("D-M-YYYY"),
@@ -575,7 +568,7 @@ export default function PropertyDetails() {
                 };
                 reserveUnit(submitData).then((res) => {
                   if (res) {
-                    window.location.href = "/reservations";
+                    router.push("/reservations");
                   }
                   getPropertyDetails(id).then((resp) => {
                     setData(resp.data);
@@ -593,13 +586,13 @@ export default function PropertyDetails() {
       <ModalComponent
         isOpen={isGalleryModalOpen}
         toggleModal={toggleGalleryModal}
-        className={styles.image_gallery}
+        className="image_gallery"
         modalBody={
           <Carousel showThumbs={false} showStatus={false} emulateTouch={true}>
             {data?.images?.map((slide) => (
               <div key={slide.id}>
                 <div
-                  className={styles.carousel_img}
+                  className="carousel_img"
                   style={{ backgroundImage: `url(${slide.url}` }}
                 ></div>
               </div>

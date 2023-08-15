@@ -1,23 +1,18 @@
 "use client";
 import ReactStars from "react-rating-stars-component";
-import styles from "./ReviewsCard.module.css";
 
 const ReviewsCard = ({ imgSrc, name, subTitle, rate, review }) => {
   const avatar = "/assets/avatar.png";
   return (
-    <div className={styles.reviews_container}>
+    <div className="reviews_container">
       <div className="d-flex justify-content-between">
         <div className=" d-flex gap-3">
           <div>
-            <img
-              className={styles.img}
-              alt="Reviewer_img"
-              src={imgSrc || avatar}
-            />
+            <img className="img" alt="Reviewer_img" src={imgSrc || avatar} />
           </div>
           <div>
-            <p className={styles.name}>{name}</p>
-            <p className={styles.sub_title}> {subTitle}</p>
+            <p className="name">{name}</p>
+            <p className="sub_title"> {subTitle}</p>
           </div>
         </div>
         <div>
@@ -31,7 +26,7 @@ const ReviewsCard = ({ imgSrc, name, subTitle, rate, review }) => {
         </div>
       </div>
       <div>
-        <p className={styles.review}>{review}</p>
+        <p className="review">{review}</p>
       </div>
     </div>
   );

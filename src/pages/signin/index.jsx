@@ -7,7 +7,6 @@ import { signIn } from "../../app/Apis/AuthApis";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
-import styles from "./signin.module.css";
 
 export default function SignIn() {
   if (typeof window !== "undefined") {
@@ -75,7 +74,7 @@ export default function SignIn() {
               "access_token",
               JSON.stringify(res?.data?.token?.access_token)
             );
-            window.location.href = `/${window.location.search}`;
+            router.push(`/${window.location.search}`);
           }
         })
         .catch((err) => {
@@ -108,14 +107,14 @@ export default function SignIn() {
       ) : (
         ""
       )}
-      <div dir={lang === "ar" ? "rtl" : "ltr"} className={styles.container}>
+      <div dir={lang === "ar" ? "rtl" : "ltr"} className="wrapper_sign_in">
         <ToastContainer />
-        <div className={styles.inner_container}>
-          <div className={styles.form_container}>
-            <h3 className={styles.signin_title}>
+        <div className="inner_container">
+          <div className="form_container">
+            <h3 className="signin_title">
               <FormattedMessage id="signin.form.title" />
             </h3>
-            <h5 className={styles.welcome_back}>
+            <h5 className="welcome_back">
               <FormattedMessage id="signin.welcomeBack" />
             </h5>
             <p>
@@ -144,13 +143,13 @@ export default function SignIn() {
                 />
               </div> */}
               <div className="mb-3">
-                <label htmlFor="phoneField" className={styles.label}>
+                <label htmlFor="phoneField" className="label">
                   <FormattedMessage id="signup.fields.phone.label" />
                 </label>
                 <Input
                   type="text"
                   id="phoneField"
-                  className={styles.signin_input}
+                  className="signin_input"
                   placeholder={intl.formatMessage({
                     id: "signup.fields.phone.placeholder",
                   })}
@@ -159,13 +158,13 @@ export default function SignIn() {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="passwordField" className={styles.label}>
+                <label htmlFor="passwordField" className="label">
                   <FormattedMessage id="signin.fields.password.label" />
                 </label>
                 <Input
                   type="password"
                   id="passwordField"
-                  className={styles.signin_input}
+                  className="signin_input"
                   placeholder={intl.formatMessage({
                     id: "signin.fields.password.placeholder",
                   })}
@@ -175,19 +174,19 @@ export default function SignIn() {
               </div>
               <button
                 type="submit"
-                className={`${styles.button_wrapper}`}
+                className="button_wrapper"
                 onClick={handleSubmit}
               >
                 <FormattedMessage id="signin.form.title" />
               </button>
             </form>
-            <div className={styles.dont_have_account}>
+            <div className="dont_have_account">
               <span>
                 <FormattedMessage id="signin.dontHaveAcc" />{" "}
                 <span
-                  className={styles.signUp}
+                  className="signUp"
                   onClick={() => {
-                    window.location.href = "/signup";
+                    router.push("/signup");
                   }}
                 >
                   <FormattedMessage id="signin.signup" />
@@ -195,12 +194,8 @@ export default function SignIn() {
               </span>
             </div>
           </div>
-          <div className={styles.image_container}>
-            <img
-              className={styles.main_img}
-              src="/assets/signIn.png"
-              alt="signin"
-            />
+          <div className="image_container">
+            <img className="main_img" src="/assets/signIn.png" alt="signin" />
           </div>
         </div>
       </div>

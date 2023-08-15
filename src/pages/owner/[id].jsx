@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import store, { langAction } from "../../store";
 import PopularCard from "../../Components/SharedComponents/PopularCard/PopularCard";
-import styles from "./ownerprofile.module.css";
 import { getFavouriteList } from "../../app/Apis/UnitsApis";
 
 export default function OwnerProfile() {
@@ -42,33 +41,34 @@ export default function OwnerProfile() {
   }
 
   return (
-    <div dir={lang === "ar" ? "rtl" : "ltr"} className={styles.container}>
-      <div className={styles.over_view}>
+    <div dir={lang === "ar" ? "rtl" : "ltr"} className="owner_container">
+      <div className="over_view">
         {data?.name ? (
-          <div className={styles.owner}>
+          <div className="owner">
             <img src={data?.image} alt="owner_img" />
             <p>{data?.name} </p>
+            <p>{data?.phone} </p>
           </div>
         ) : (
           <ShimmerThumbnail height={175} rounded />
         )}
       </div>
-      <div className={styles.title}>
+      <div className="title">
         <p>
           <FormattedMessage id="Other units" />
         </p>
       </div>
       {!data ? (
-        <div className={styles.shimmer_wrapper}>
+        <div className="shimmer_wrapper">
           {" "}
           {[...Array(4)].map((e, i) => (
-            <div className={styles.shimmer} key={i}>
+            <div className="shimmer" key={i}>
               <ShimmerThumbnail key={i} height={250} rounded />
             </div>
           ))}
         </div>
       ) : data?.units?.length > 0 ? (
-        <div className={styles.units_container}>
+        <div className="units_container">
           {data?.units.map((unit, i) => {
             return (
               <PopularCard
@@ -90,7 +90,7 @@ export default function OwnerProfile() {
           })}
         </div>
       ) : (
-        <p className={styles.not_found}>
+        <p className="not_found">
           <FormattedMessage id="noDataFound" />
         </p>
       )}

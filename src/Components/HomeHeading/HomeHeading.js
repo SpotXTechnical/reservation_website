@@ -1,4 +1,3 @@
-import styles from "./HomeHeading.module.css";
 import Input from "../SharedComponents/Input/Input";
 import Button from "../SharedComponents/Button/Button";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -7,9 +6,11 @@ import { useEffect, useState } from "react";
 import { getRegions } from "../../app/Apis/RegionsApis";
 import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
+import { useRouter } from "next/router";
 
 const HomeHeading = () => {
   const intl = useIntl();
+  const router = useRouter();
   const WITH_SUB_REGION = 1;
   const [mainRegions, setMainRegions] = useState([]);
 
@@ -23,7 +24,7 @@ const HomeHeading = () => {
   }
 
   const onSearch = () => {
-    window.location.href = "/discover";
+    router.push("/discover");
   };
 
   useEffect(
@@ -45,17 +46,17 @@ const HomeHeading = () => {
     [lang]
   );
   return (
-    <div className={styles.home_heading_bg}>
-      <h1 className={styles.heading_main_title} style={{ fontWeight: 600 }}>
+    <div className="home_heading_bg">
+      <h1 className="heading_main_title" style={{ fontWeight: 600 }}>
         <FormattedMessage id="home.headingMainTitle" />
       </h1>
-      <div className={styles.heading_search_input_wrapper}>
+      <div className="heading_search_input_wrapper">
         {/* <img
           className={styles.heading_search_icon}
           src="/assets/search-normal.png"
           alt="search"
         ></img> */}
-        <div className={`${styles.search_container} d-inline-block`}>
+        <div className={`search_container d-inline-block`}>
           <InputSelect
             onChange={onSearch}
             hideIndecators={true}
@@ -65,7 +66,7 @@ const HomeHeading = () => {
             placeholder={
               <>
                 <img
-                  className={styles.heading_search_icon}
+                  className="heading_search_icon"
                   src="/assets/search-normal.png"
                   alt="search"
                 />
@@ -82,7 +83,7 @@ const HomeHeading = () => {
         /> */}
         <Button
           text={intl.formatMessage({ id: "home.search" })}
-          className={styles.heading_btn}
+          className="heading_btn"
         />
       </div>
     </div>

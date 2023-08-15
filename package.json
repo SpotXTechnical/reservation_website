@@ -10,6 +10,7 @@
     "pretty": "prettier src -w"
   },
   "dependencies": {
+    "@loadable/component": "^5.15.3",
     "@next/font": "13.1.5",
     "@reduxjs/toolkit": "^1.9.3",
     "axios": "^1.4.0",
@@ -32,6 +33,7 @@
     "react-dom": "18.2.0",
     "react-feather": "^2.0.10",
     "react-intl": "^6.2.10",
+    "react-loading": "^2.0.3",
     "react-paginate": "^8.2.0",
     "react-rating-stars-component": "^2.2.0",
     "react-redux": "^8.0.5",

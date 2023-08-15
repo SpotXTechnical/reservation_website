@@ -1,29 +1,29 @@
 .regionsList_container {
   margin: 0 80px 80px 80px;
 }
-.regionsList_header {
+.regionsList_container .regionsList_header {
   margin-bottom: 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.regionsList {
+.regionsList_container .regionsList {
   display: flex;
   gap: 15px;
 }
-.regionsList > div {
+.regionsList_container .regionsList > div {
   width: 25%;
 }
 
 @media screen and (max-width: 1280px) {
-  .regionsList {
+  .regionsList_container .regionsList {
     width: 200%;
   }
 
-  .regionsList_wrapper {
+  .regionsList_container .regionsList_wrapper {
     overflow-x: auto;
   }
-  .regionsList_wrapper::-webkit-scrollbar {
+  .regionsList_container .regionsList_wrapper::-webkit-scrollbar {
     display: none;
   }
 }
@@ -32,7 +32,7 @@
   .regionsList_container {
     margin: 0 15px 80px 15px;
   }
-  .regionsList {
+  .regionsList_container .regionsList {
     width: 300%;
   }
 }

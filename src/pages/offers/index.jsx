@@ -3,7 +3,6 @@ import { getOffers } from "../../app/Apis/OffersApis";
 import { useEffect, useState } from "react";
 import store, { langAction } from "../../store";
 import { ShimmerThumbnail } from "react-shimmer-effects";
-import styles from "./offers.module.css";
 import PopularCard from "../../Components/SharedComponents/PopularCard/PopularCard";
 import { getFavouriteList } from "../../app/Apis/UnitsApis";
 import { FormattedMessage } from "react-intl";
@@ -36,18 +35,18 @@ export default function Offers() {
     );
   }
   return (
-    <div dir={lang === "ar" ? "rtl" : "ltr"} className={styles.container}>
+    <div dir={lang === "ar" ? "rtl" : "ltr"} className="offers_page_wrapper">
       {!data ? (
-        <div className={styles.shimmer_wrapper}>
+        <div className="shimmer_wrapper">
           {" "}
           {[...Array(4)].map((e, i) => (
-            <div className={styles.shimmer} key={i}>
+            <div className="shimmer" key={i}>
               <ShimmerThumbnail key={i} height={250} rounded />
             </div>
           ))}
         </div>
       ) : data?.length > 0 ? (
-        <div className={styles.units_container}>
+        <div className="units_container">
           {data?.map(({ unit }, i) => {
             return (
               <PopularCard
@@ -69,7 +68,7 @@ export default function Offers() {
           })}
         </div>
       ) : (
-        <p className={styles.not_found}>
+        <p className="not_found">
           <FormattedMessage id="noDataFound" />
         </p>
       )}

@@ -5,7 +5,7 @@ import RegionsHomeList from "../Components/RegionsHomeList/RegionsHomeList";
 import OffersList from "../Components/OffersList/OffersList";
 import SubscribeUs from "../Components/SubscribeUs/SubscribeUs";
 import MostPopularList from "../Components/MostPopularList/MostPopularList";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import store, { langAction } from "../store";
@@ -34,13 +34,13 @@ export default function Home() {
       window.location.search.includes("targetKey")
     ) {
       if (window.location.search.includes("unit")) {
-        window.location.href = `/properties/${idKey}`;
+        router.push(`/properties/${idKey}`);
       }
     } else if (window.location.search.includes("subRegion")) {
-      window.location.href = `/subRegion/${idKey}`;
+      router.push(`/subRegion/${idKey}`);
     }
     if (propertyNumber) {
-      window.location.href = `/properties/${propertyNumber}`;
+      router.push(`/properties/${propertyNumber}`);
     }
   }, []);
 

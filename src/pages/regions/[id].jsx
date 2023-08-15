@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import styles from "./styles.module.css";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import { useRouter } from "next/router";
 import { getRegionDetails } from "../../app/Apis/RegionsApis";
 import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import SubRegions from "../../Components/SubRegions";
 import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
@@ -39,18 +37,15 @@ export default function Regions() {
   };
 
   return (
-    <div
-      dir={lang === "ar" ? "rtl" : "ltr"}
-      className={styles.regions_container}
-    >
+    <div dir={lang === "ar" ? "rtl" : "ltr"} className="regions_container">
       <>
         {data?.images ? (
-          <div className={`flex-center ${styles.head}`}>
+          <div className={`flex-center head`}>
             <Carousel showThumbs={false} showStatus={false} emulateTouch={true}>
               {data?.images?.map((slide) => (
                 <div key={slide.id}>
                   <div
-                    className={styles.carousel_img}
+                    className="carousel_img"
                     style={{ backgroundImage: `url(${slide.url}` }}
                   ></div>
                 </div>
@@ -70,7 +65,7 @@ export default function Regions() {
               height={"30px"}
               className="mx-3"
             />
-            <h2 className={styles.region_name}>{data.name}</h2>
+            <h2 className="region_name">{data.name}</h2>
           </div>
         )}
 
@@ -78,10 +73,10 @@ export default function Regions() {
           <span className="mx-3">
             <FormattedMessage id="searchIn" /> {data?.name}{" "}
           </span>
-          <div className={`${styles.search_container} d-inline-block`}>
+          <div className={`search_container d-inline-block`}>
             <input
               type="text"
-              className={styles.search_input}
+              className="search_input"
               onChange={handleSearch}
             />
             <img src="/assets/search-primary.png" alt="search-primary" />
@@ -115,7 +110,7 @@ export default function Regions() {
             handleSearch={handleSearch}
           />
         ) : (
-          <div className={styles.shimmer_wrapper}>
+          <div className="shimmer_wrapper">
             {[...Array(4)].map((e, i) => (
               <ShimmerThumbnail key={i} height={250} rounded />
             ))}

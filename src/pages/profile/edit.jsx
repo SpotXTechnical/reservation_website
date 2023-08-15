@@ -1,4 +1,3 @@
-import styles from "./profile.module.css";
 import { FormattedMessage, useIntl } from "react-intl";
 import { getProfile } from "../../app/Apis/AuthApis";
 import { useRouter } from "next/router";
@@ -124,7 +123,7 @@ export default function EditProfile() {
             handleDismissAlret();
           }, 5000);
         } else {
-          window.location.href = "/profile";
+          router.push(`/profile`);
         }
       });
     }
@@ -154,35 +153,35 @@ export default function EditProfile() {
       ) : (
         ""
       )}
-      <div className={styles.container}>
-        <h2 className={styles.title}>
+      <div className="container edit_profile_wrapper">
+        <h2 className="title">
           <FormattedMessage id="profile.edit.title" />
         </h2>
         {data && (
           <div>
-            <div className={styles.edit_profile_head_section}>
+            <div className="edit_profile_head_section">
               <div>
                 <h3>
                   <FormattedMessage id="profile.edit.profilePic" />
                 </h3>
-                <div className={styles.btns_wrapper}>
+                <div className="btns_wrapper">
                   <button
                     className="cursor_pointer"
                     onClick={() => {
-                      window.location.href = "/profile";
+                      router.push("/profile");
                     }}
                   >
                     <FormattedMessage id="cancel" />
                   </button>
-                  <button className={styles.save_btn} onClick={handleSubmit}>
+                  <button className="save_btn" onClick={handleSubmit}>
                     <FormattedMessage id="save" />
                   </button>
                 </div>
               </div>
               <div>
-                <div className={styles.file_input_container}>
+                <div className="file_input_container">
                   <img
-                    className={styles.edit_profile_pic}
+                    className="edit_profile_pic"
                     src={imagePreview ? imagePreview : "/assets/avatar.png"}
                     alt="preview"
                   />
@@ -202,7 +201,7 @@ export default function EditProfile() {
                   <FormattedMessage id="profile.edit.personalData" />
                 </h3>
               </div>
-              <div className={`row ${styles.input_container}`}>
+              <div className={`row input_container`}>
                 <label
                   htmlFor="nameField"
                   className={"form-label col-sm-2 col-md-3"}
@@ -212,7 +211,7 @@ export default function EditProfile() {
                 <Input
                   type="text"
                   id="nameField"
-                  className={`col-sm-9 ${styles.profile_input}`}
+                  className={`col-sm-9 profile_input`}
                   placeholder={intl.formatMessage({
                     id: "profile.edit.fields.name.placeholder",
                   })}
@@ -221,7 +220,7 @@ export default function EditProfile() {
                   error={nameErr && !name ? "requiredField" : ""}
                 />
               </div>
-              <div className={`row ${styles.input_container}`}>
+              <div className={`row input_container`}>
                 <label
                   htmlFor="emailField"
                   className="form-label col-sm-2 col-md-3"
@@ -231,7 +230,7 @@ export default function EditProfile() {
                 <Input
                   type="email"
                   id="emailField"
-                  className={`col-sm-9 ${styles.profile_input}`}
+                  className={`col-sm-9 profile_input`}
                   placeholder={intl.formatMessage({
                     id: "profile.edit.fields.email.placeholder",
                   })}
@@ -246,7 +245,7 @@ export default function EditProfile() {
                   }
                 />
               </div>
-              <div className={`row ${styles.input_container}`}>
+              <div className={`row input_container`}>
                 <label
                   htmlFor="phoneField"
                   className="form-label col-sm-2 col-md-3"
@@ -256,7 +255,7 @@ export default function EditProfile() {
                 <Input
                   type="text"
                   id="phoneField"
-                  className={`col-sm-9 ${styles.profile_input}`}
+                  className={`col-sm-9 profile_input`}
                   placeholder={intl.formatMessage({
                     id: "profile.edit.fields.phone.placeholder",
                   })}
@@ -265,7 +264,7 @@ export default function EditProfile() {
                   error={phoneErr && !phone ? "requiredField" : ""}
                 />
               </div>
-              <div className={`row ${styles.input_container}`}>
+              <div className={`row input_container`}>
                 <label
                   htmlFor="cityField"
                   className="form-label col-sm-2 col-md-3"
@@ -273,7 +272,7 @@ export default function EditProfile() {
                   <FormattedMessage id="profile.edit.fields.city.label" />
                 </label>
                 <select
-                  className={`col-sm-9 ${styles.profile_input} form-select`}
+                  className={`col-sm-9 profile_input form-select`}
                   name="city_id"
                   id="cityField"
                   value={city?.id}
@@ -290,7 +289,7 @@ export default function EditProfile() {
                     ))}
                 </select>
               </div>
-              <div className={`row ${styles.input_container}`}>
+              <div className={`row input_container`}>
                 <label
                   htmlFor="currPasswordField"
                   className="form-label col-sm-2 col-md-3"
@@ -300,7 +299,7 @@ export default function EditProfile() {
                 <Input
                   type="password"
                   id="currPasswordField"
-                  className={`${styles.profile_input}`}
+                  className="profile_input"
                   placeholder={intl.formatMessage({
                     id: "profile.edit.fields.password.placeholder",
                   })}

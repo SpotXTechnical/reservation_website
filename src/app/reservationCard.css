@@ -4,33 +4,33 @@
   border-bottom: 1px solid var(--border-light-grey);
 }
 
-.main_image {
+.reservation_card .main_image {
   margin-inline-end: 40px;
 }
 
-.main_image img {
+.reservation_card .main_image img {
   width: 268px;
   height: 209px;
   border-radius: 12px;
 }
 
-.info {
+.reservation_card .info {
   flex: 2;
 }
 
-.total_cost {
+.reservation_card .total_cost {
   gap: 70px;
   align-items: center;
 }
 
-.total_cost span:first-child {
+.reservation_card .total_cost span:first-child {
   color: var(--dark-grey);
   font-size: 18px;
   font-family: var(--Montserrat-Regular);
   text-transform: capitalize;
 }
 
-.details {
+.reservation_card .details {
   font-family: var(--Montserrat-Semi-Bold);
   font-style: normal;
   font-weight: 500;
@@ -39,21 +39,21 @@
   text-transform: capitalize;
 }
 
-.details span:last-child {
+.reservation_card .details span:last-child {
   color: var(--grey-color);
 }
 
-.details span:last-child :global(.date) {
+.reservation_card .details span:last-child .date {
   color: var(--dark-color);
 }
 
-.total_cost span:last-child {
+.reservation_card .total_cost span:last-child {
   font-size: 20px;
   font-family: var(--Montserrat-Regular);
   text-transform: capitalize;
 }
 
-.title {
+.reservation_card .title {
   color: var(--dark-grey);
   font-size: 20px;
   text-transform: capitalize;
@@ -64,7 +64,7 @@
   line-height: 24px;
 }
 
-.unit_type {
+.reservation_card .unit_type {
   background: rgba(68, 188, 183, 0.1);
   border-radius: 22px;
   color: var(--light-blue-color);
@@ -78,26 +78,26 @@
   text-transform: capitalize;
 }
 
-.review {
+.reservation_card .review {
   background: rgba(252, 217, 92, 0.15);
   border-radius: 8px;
   padding: 15px 30px;
   font-size: 18px;
 }
 
-.status {
+.reservation_card .status {
   text-transform: capitalize;
   font-size: 16px;
 }
-.status:global(.pending) {
+.reservation_card .status.pending {
   color: #ff9811;
 }
-.status:global(.reserved),
-.status:global(.approved) {
+.reservation_card .status.reserved,
+.reservation_card .status.approved {
   color: #44bcb7;
 }
-.status:global(.canceled),
-.status:global(.reject) {
+.reservation_card .status.canceled,
+.reservation_card .status.reject {
   color: #ff0000;
 }
 
@@ -106,10 +106,10 @@
     flex-direction: column;
   }
 
-  .main_image {
+  .reservation_card .main_image {
     margin-inline-end: 0px;
   }
-  .main_image img {
+  .reservation_card .main_image img {
     width: 100%;
     margin-bottom: 20px;
   }

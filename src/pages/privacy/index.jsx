@@ -1,15 +1,14 @@
 import { FormattedMessage } from "react-intl";
-import styles from "./privacy.module.css";
 
 export default function Privacy() {
   return (
-    <div className={styles.privacy_container}>
-      <img src="/assets/Logo.png" alt="Logo" className={styles.logo} />
-      <p className={styles.title}>
+    <div className="privacy_container">
+      <img src="/assets/Logo.png" alt="Logo" className="logo" />
+      <p className="title">
         <FormattedMessage id="home.privacy" />
       </p>
 
-      <ul className={styles.privacy_content}>
+      <ul className="privacy_content">
         <li>
           Our App takes your confidentiality seriously and we are keen on
           acquiring your confidence.

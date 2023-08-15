@@ -1,7 +1,9 @@
 import { FormattedMessage } from "react-intl";
 import styles from "./Footer.module.css";
+import { useRouter } from "next/router";
 
 export default function Footer() {
+  const router = useRouter();
   return (
     <div className={styles.footer_wrapper}>
       <div className="d-flex mb-4">
@@ -22,7 +24,7 @@ export default function Footer() {
             <li
               className="cursor-pointer"
               onClick={() => {
-                window.location.href = "/privacy";
+                router.push("/privacy");
               }}
             >
               <FormattedMessage id="home.privacyAndPolicy" />
@@ -30,7 +32,7 @@ export default function Footer() {
             <li
               className="cursor-pointer"
               onClick={() => {
-                window.location.href = "/terms";
+                router.push("/terms");
               }}
             >
               <FormattedMessage id="home.termsAndConditions" />

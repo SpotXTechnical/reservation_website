@@ -1,10 +1,9 @@
 "use client";
-import styles from "./SubscribeUs.module.css";
 
 const SubscribeUs = () => {
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.app_images}>
+    <div className="subscribe_us_wrapper">
+      <div className="app_images">
         <img
           src="/assets/app-store.png"
           alt="app-store"

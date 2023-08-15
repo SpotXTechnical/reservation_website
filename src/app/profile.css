@@ -1,9 +1,9 @@
 /* Profile */
-.inner_container {
+.profile_wrapper .inner_container {
   display: flex;
 }
 
-.head_section {
+.profile_wrapper .head_section {
   background-color: var(--background-grey);
   text-align: center;
   padding: 10px;
@@ -11,7 +11,7 @@
   margin-bottom: 40px;
 }
 
-.img_wrapper {
+.profile_wrapper .img_wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -19,7 +19,7 @@
   position: relative;
 }
 
-.edit_profile {
+.profile_wrapper .edit_profile {
   position: absolute;
   right: 0;
   top: 25%;
@@ -31,7 +31,7 @@
   cursor: pointer;
 }
 
-.main_img {
+.profile_wrapper .main_img {
   width: 140px;
   height: 140px;
   border: 4px solid var(--white-color);
@@ -41,28 +41,28 @@
     right: 40%; */
 }
 
-.img_wrapper {
+.profile_wrapper .img_wrapper {
   display: flex;
 }
 
-.img_wrapper > div:first-child {
+.profile_wrapper .img_wrapper > div:first-child {
   flex: 2;
   position: relative;
   height: 65px;
   margin-bottom: 10px;
 }
 
-.img_wrapper > div:last-child {
+.profile_wrapper .img_wrapper > div:last-child {
   display: flex;
   gap: 5px;
   padding: 12px;
 }
 
-.img_wrapper > div:last-child span:first-child {
+.profile_wrapper .img_wrapper > div:last-child span:first-child {
   font-size: 12px;
 }
 
-.contact_section p {
+.profile_wrapper .contact_section p {
   font-family: "Montserrat Regular";
   font-style: normal;
   font-weight: 600;
@@ -71,63 +71,63 @@
   color: var(--dark-color);
 }
 
-.contact_section {
+.profile_wrapper .contact_section {
   margin-bottom: 150px;
 }
 
-.contact_section > div {
+.profile_wrapper .contact_section > div {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid var(--border-bottom-grey);
   padding: 25px 0;
 }
 
-.contact_section > div:first-child img {
+.profile_wrapper .contact_section > div:first-child img {
   width: 23px;
   margin-inline: 7px;
 }
 
-.contact_section > div:first-child span {
+.profile_wrapper .contact_section > div:first-child span {
   color: var(--light-blue-color);
 }
 
-.contact_section > div:last-child {
+.profile_wrapper .contact_section > div:last-child {
   border-bottom: unset;
 }
 
-.app_images img:first-child {
+.profile_wrapper .app_images img:first-child {
   margin-inline: 10px;
 }
 
-.contact_section p {
+.profile_wrapper .contact_section p {
   margin: 0;
 }
 
 /* Edit Profile */
-.edit_profile_head_section {
+.edit_profile_wrapper .edit_profile_head_section {
   border-bottom: 1px solid var(--border-bottom-grey);
 }
 
-.edit_profile_head_section > div:first-child {
+.edit_profile_wrapper .edit_profile_head_section > div:first-child {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.edit_profile_head_section > div:last-child {
+.edit_profile_wrapper .edit_profile_head_section > div:last-child {
   display: flex;
   justify-content: center;
   margin: 24px 0;
 }
 
-.edit_profile_pic {
+.edit_profile_wrapper .edit_profile_pic {
   width: 140px;
   height: 140px;
   border: 4px solid var(--white-color);
   border-radius: 50%;
 }
 
-.input_container {
+.edit_profile_wrapper .input_container {
   /* display: flex; */
   border-bottom: 1px solid var(--border-bottom-grey);
   /* gap: 20%; */
@@ -135,11 +135,11 @@
   /* justify-content: space-between; */
 }
 
-.input_container:last-child {
+.edit_profile_wrapper .input_container:last-child {
   border: unset;
 }
 
-.profile_input {
+.edit_profile_wrapper .profile_input {
   color: var(--light-grey-color);
   width: 50%;
   padding: 10px 14px;
@@ -149,12 +149,12 @@
   border-radius: 16px;
 }
 
-.profile_input:focus {
+.edit_profile_wrapper .profile_input:focus {
   border-color: unset;
   box-shadow: none;
 }
 
-.input_container > div {
+.edit_profile_wrapper .input_container > div {
   flex: 2;
 }
 
@@ -165,7 +165,8 @@
   position: relative;
 }
 
-.title {
+.edit_profile_wrapper .title,
+.profile_wrapper .title {
   text-align: center;
   font-weight: bold;
   margin: 30px 0px 0px 0px;
@@ -178,7 +179,8 @@
   margin-bottom: 32px;
 }
 
-.container h3 {
+.edit_profile_wrapper .container h3,
+.profile_wrapper .container h3 {
   font-family: "Montserrat Semi Bold";
   font-style: normal;
   font-weight: 600;
@@ -188,7 +190,8 @@
   margin-bottom: 0px;
 }
 
-.container label {
+.edit_profile_wrapper .container label,
+.profile_wrapper .container label {
   font-family: "Montserrat Regular";
   font-style: normal;
   font-weight: 500;
@@ -197,21 +200,25 @@
   color: var(--dark-grey-color);
 }
 
-.helpText {
+.edit_profile_wrapper .helpText,
+.profile_wrapper .helpText {
   font-size: 12px;
   color: var(--grey-color);
 }
 
-.alert-danger {
+.edit_profile_wrapper .alert-danger,
+.profile_wrapper .alert-danger {
   font-weight: 100;
   font-size: 14px;
 }
 
-.calls {
+.edit_profile_wrapper .calls,
+.profile_wrapper .calls {
   cursor: pointer;
 }
 
-.btns_wrapper button {
+.edit_profile_wrapper .btns_wrapper button,
+.profile_wrapper .btns_wrapper button {
   font-family: "Montserrat Regular";
   font-style: normal;
   font-weight: 600;
@@ -224,27 +231,32 @@
   color: var(--dark-grey-color);
 }
 
-.btns_wrapper .save_btn {
+.edit_profile_wrapper .btns_wrapper .save_btn,
+.profile_wrapper .btns_wrapper .save_btn {
   background-color: var(--light-blue-color);
   color: var(--white-color);
   margin-inline: 12px;
 }
 
-:global(div[dir="rtl"]) .calls {
+div[dir="rtl"] .edit_profile_wrapper .calls,
+div[dir="rtl"] .profile_wrapper .calls {
   display: flex;
   flex-direction: row-reverse;
 }
 
-:global(div[dir="rtl"]) .rightArrow {
+div[dir="rtl"] .edit_profile_wrapper .rightArrow,
+div[dir="rtl"] .profile_wrapper .rightArrow {
   transform: rotate(180deg);
 }
 
-.file_input_container {
+.edit_profile_wrapper .file_input_container,
+.profile_wrapper .file_input_container {
   position: relative;
   display: inline-block;
 }
 
-.file_input_container input[type="file"] {
+.edit_profile_wrapper .file_input_container input[type="file"],
+.profile_wrapper .file_input_container input[type="file"] {
   position: absolute;
   top: 0;
   left: 0;
@@ -252,10 +264,11 @@
   height: 100%;
   opacity: 0;
   cursor: pointer;
-  z-index: 1; /* add a higher z-index value */
+  z-index: 1;
 }
 
-.file_input_container:hover::after {
+.edit_profile_wrapper .file_input_container:hover::after,
+.profile_wrapper .file_input_container:hover::after {
   content: "";
   display: block;
   position: absolute;
@@ -265,17 +278,17 @@
   height: 100%;
   border-radius: 50%;
   border: 4px solid var(--white-color);
-  background: rgba(218, 218, 218, 0.5)
-    url("../../../public/assets/cameraIcon.png") no-repeat center center;
+  background: rgba(218, 218, 218, 0.5) url("../../public/assets/cameraIcon.png")
+    no-repeat center center;
   background-size: 20px 20px;
 }
 
 @media screen and (max-width: 1280px) {
-  .profile_input {
+  .edit_profile_wrapper .profile_input {
     width: 100%;
   }
 
-  .edit_profile_head_section > div:first-child {
+  .edit_profile_wrapper .edit_profile_head_section > div:first-child {
     flex-direction: column-reverse;
     gap: 20px;
   }

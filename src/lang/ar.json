@@ -267,5 +267,6 @@
   "price": "Price",
   "minimum": "Minimum",
   "maximum": "Maximum",
-  "Other units": "Other units"
+  "Other units": "Other units",
+  "cancel reservation": "cancel reservation"
 }

@@ -2,13 +2,9 @@ import React, { useState } from "react";
 import { DateRangePicker } from "react-date-range";
 import { FormattedMessage } from "react-intl";
 import moment from "moment";
-import "react-date-range/dist/theme/default.css";
-import "react-date-range/dist/styles.css";
-import "./DateRangePicker.css";
 
 const DateRangeCalendarPicker = ({
   activeRanges,
-  activeReservations,
   handleShowReservationModal,
   defaultPrice,
   extractedDates,

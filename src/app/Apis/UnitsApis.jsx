@@ -18,6 +18,7 @@ export const getAllSubRegions = async (regions) => {
     const response = await axiosInstance.get(`api/v1/sub-regions`, {
       params: {
         regions,
+        per_page: 1000,
       },
     });
     return response.data;

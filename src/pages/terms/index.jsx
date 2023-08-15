@@ -1,15 +1,14 @@
 import { FormattedMessage } from "react-intl";
-import styles from "./terms.module.css";
 
 export default function Terms() {
   return (
-    <div className={styles.terms_container}>
-      <img src="/assets/Logo.png" alt="Logo" className={styles.logo} />
-      <p className={styles.title}>
+    <div className="terms_container">
+      <img src="/assets/Logo.png" alt="Logo" className="logo" />
+      <p className="title">
         <FormattedMessage id="home.termsAndConditions" />
       </p>
 
-      <p className={styles.terms_paragraph}>
+      <p className="terms_paragraph">
         By accessing the App and using it, you are accepting the Terms of Use,
         as indicated below, and agree to abide by them. These are the terms on
         which SpotX allows you to access and use the App. If you do not agree to
@@ -17,9 +16,9 @@ export default function Terms() {
         reserves the right to deny access to any user who do not abide by the
         Terms of Use stated below.
       </p>
-      <p className={styles.sub_title}>Scope of Service, General terms</p>
+      <p className="sub_title">Scope of Service, General terms</p>
 
-      <ul className={styles.terms_content}>
+      <ul className="terms_content">
         <li>
           By entering the App, the user accepts these terms and conditions and
           agrees to abide by them
@@ -180,7 +179,7 @@ export default function Terms() {
           property rental.
         </li>
 
-        <p className={styles.sub_title}>
+        <p className="sub_title">
           Account Registration, Contractual declarations
         </p>
         <li>
@@ -192,7 +191,7 @@ export default function Terms() {
           The user can receive contractual declarations at his stated e-mail
           address.
         </li>
-        <p className={styles.sub_title}>
+        <p className="sub_title">
           User obligations, user account, system integrity
         </p>
         <li>
@@ -262,7 +261,7 @@ export default function Terms() {
           such information.
         </li>
 
-        <p className={styles.sub_title}>Handling of content and rights</p>
+        <p className="sub_title">Handling of content and rights</p>
         <li>
           SpotX saves for the user the multimedia content uploaded by him
           (images, text, etc...). It merely arranges the necessary memory space
@@ -320,7 +319,7 @@ export default function Terms() {
           way.
         </li>
 
-        <p className={styles.sub_title}>Dispute Resolution</p>
+        <p className="sub_title">Dispute Resolution</p>
 
         <li>
           SpotX may mediate to resolve disputes between Users only at its only
@@ -350,9 +349,7 @@ export default function Terms() {
           terminate the membership of any member who does not abide by the
           proposed resolution for any given dispute.
         </li>
-        <p className={styles.sub_title}>
-          Availability and amendment of the App
-        </p>
+        <p className="sub_title">Availability and amendment of the App</p>
         <li>
           The service is available to all people from all parts of the world
           without any discrimination on the basis of nationality, gender,
@@ -370,7 +367,7 @@ export default function Terms() {
           security, integrity, capacity limits, or the performance of technical
           measures (maintenance work).
         </li>
-        <p className={styles.sub_title}>Liability for third-party sites</p>
+        <p className="sub_title">Liability for third-party sites</p>
         <li>
           The platform`s pages also include links to Apps on the Internet
           maintained by third parties, the content of which is not known to
@@ -396,7 +393,7 @@ export default function Terms() {
           discretion. The Host will be notified that this is a booking from a
           third party.
         </li>
-        <p className={styles.sub_title}>Booking process, payment, invoicing</p>
+        <p className="sub_title">Booking process, payment, invoicing</p>
         <li>
           By listing an accommodation on SpotX, the Host is issuing an
           invitation to submit offers. Another user can submit an offer to
@@ -504,7 +501,7 @@ export default function Terms() {
           taken into account in the calculation of the service fee. This also
           applies to any security deposit
         </li>
-        <p className={styles.sub_title}>Security Deposit</p>
+        <p className="sub_title">Security Deposit</p>
         <li>
           The Host is entitled to charge a security deposit in his offer. If a
           Host demands a security deposit from the Tenant on the day of arrival,
@@ -527,7 +524,7 @@ export default function Terms() {
           or for any claims asserted by the Host.
         </li>
 
-        <p className={styles.sub_title}>Review system</p>
+        <p className="sub_title">Review system</p>
         <li>
           The App allows users to review each other after the conclusion of the
           transaction. Reviews are intended to provide meaningful information on
@@ -604,7 +601,7 @@ export default function Terms() {
           included in the reviews profile.
         </li>
 
-        <p className={styles.sub_title}>Duration, termination</p>
+        <p className="sub_title">Duration, termination</p>
 
         <li>
           This Agreement shall be effective for an indefinite amount of time
@@ -694,7 +691,7 @@ export default function Terms() {
           effect.
         </li>
 
-        <p className={styles.sub_title}>
+        <p className="sub_title">
           Measures in the event of illegal conduct and/or conduct in breach of
           contract by the user
         </p>
@@ -729,7 +726,7 @@ export default function Terms() {
           received negative reviews.
         </li>
 
-        <p className={styles.sub_title}>SpotXs Liabiltiy</p>
+        <p className="sub_title">SpotXs Liabiltiy</p>
         <li>
           As SpotX does not participate in the contractual relationship between
           the Tenant and the Host, SpotX accepts no liability for contracts for
@@ -740,7 +737,7 @@ export default function Terms() {
           fees in situations where SpotX is not at fault or when SpotX is acting
           within it`s terms, conditions and policies.
         </li>
-        <p className={styles.sub_title}>Closing provisions</p>
+        <p className="sub_title">Closing provisions</p>
         <li>
           SpotX is authorised to transfer its rights and obligations under this
           agreement in full or in part to third parties.

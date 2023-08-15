@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import styles from "./styles.module.css";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import { useRouter } from "next/router";
 import { getRegionDetails } from "../../app/Apis/RegionsApis";
 import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import RegionUnits from "../../Components/RegionUnits";
 import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
@@ -55,18 +53,15 @@ export default function SubRegion() {
   };
 
   return (
-    <div
-      dir={lang === "ar" ? "rtl" : "ltr"}
-      className={styles.regions_container}
-    >
+    <div dir={lang === "ar" ? "rtl" : "ltr"} className="subregions_container">
       <>
         {data?.images ? (
-          <div className={`flex-center ${styles.head}`}>
+          <div className={`flex-center head`}>
             <Carousel showThumbs={false} showStatus={false} emulateTouch={true}>
               {data?.images?.map((slide) => (
                 <div key={slide.id}>
                   <div
-                    className={styles.carousel_img}
+                    className="carousel_img"
                     style={{ backgroundImage: `url(${slide.url}` }}
                   ></div>
                 </div>
@@ -86,12 +81,12 @@ export default function SubRegion() {
               height={"30px"}
               className="mx-3"
             />
-            <h2 className={styles.region_name}>{data.name}</h2>
-            <span className={styles.share} onClick={handleShare}>
+            <h2 className="region_name">{data.name}</h2>
+            <span className="share" onClick={handleShare}>
               {!isCopied && <img src="/assets/share.png" alt="share" />}
               <span>
                 {isCopied ? (
-                  <span className={styles.copied_link}>
+                  <span className="copied_link">
                     <FormattedMessage id="link copied" />{" "}
                   </span>
                 ) : (
@@ -105,10 +100,10 @@ export default function SubRegion() {
           <RegionUnits
             regionId={id}
             isSub={true}
-            className={`container_wrapper ${styles.units_container}`}
+            className={`container_wrapper units_container`}
           />
         ) : (
-          <div className={styles.shimmer_wrapper}>
+          <div className="shimmer_wrapper">
             {[...Array(4)].map((e, i) => (
               <ShimmerThumbnail key={i} height={250} rounded />
             ))}

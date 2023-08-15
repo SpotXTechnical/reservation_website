@@ -1,5 +1,5 @@
 .home_heading_bg {
-  background: url("../../../public/assets/vecteezy_kayak-floating-on-blue-sea_3823729\ 1.png")
+  background: url("../../public/assets/vecteezy_kayak-floating-on-blue-sea_3823729\ 1.png")
     no-repeat center;
   background-size: cover;
   height: 390px;
@@ -11,14 +11,14 @@
   margin-bottom: 80px;
 }
 
-.heading_main_title {
+.home_heading_bg .heading_main_title {
   font-size: 32px;
   text-transform: capitalize;
   margin-bottom: 40px;
   text-align: center;
 }
 
-.heading_search_input {
+.home_heading_bg .heading_search_input {
   background: var(--white-color);
   box-shadow: 0px 4px 4px rgb(0 0 0 / 20%);
   border-radius: 12px 0px 0px 12px;
@@ -28,7 +28,7 @@
   text-indent: 55px;
 }
 
-.heading_btn {
+.home_heading_bg .heading_btn {
   height: 50px;
   color: var(--dark-color);
   background: var(--yellow-color);
@@ -39,38 +39,42 @@
   width: 14vw;
 }
 
-.heading_search_input_wrapper {
+.home_heading_bg .heading_search_input_wrapper {
   position: relative;
 }
 
-.heading_search_icon {
+.home_heading_bg .heading_search_icon {
   position: absolute;
   top: 12px;
   left: 12px;
 }
 
-:global(main.rtl) .heading_btn {
+main.rtl .heading_btn {
   border-radius: 12px 0px 0px 12px;
 }
 
-:global(main.rtl) .heading_search_input {
+main.rtl .heading_search_input {
   border-radius: 0px 12px 12px 0px;
 }
 
-:global(main.rtl) .heading_search_icon {
+main.rtl .heading_search_icon {
   right: 20px;
   left: 0px;
 }
 
-.search_container {
+main.rtl .home_heading_bg .search_container .select__control {
+  border-radius: 0px 12px 12px 0px;
+}
+
+.home_heading_bg .search_container {
   position: relative;
 }
 
-.search_container input[type="text"] {
+.home_heading_bg .search_container input[type="text"] {
   padding-left: 60px;
 }
 
-.search_container img {
+.home_heading_bg .search_container img {
   position: absolute;
   top: 50%;
   left: 10px;
@@ -80,8 +84,8 @@
   z-index: 1000;
 }
 
-.search_input,
-.search_container :global(.select__input) {
+.home_heading_bg .search_input,
+.home_heading_bg .search_container .select__input {
   border-radius: 40px !important;
   border: unset !important;
   width: 100%;
@@ -89,7 +93,7 @@
   /* padding: 25px !important; */
 }
 
-.search_container :global(.select__control) {
+.home_heading_bg .search_container .select__control {
   background: var(--white-color);
   box-shadow: 0px 4px 4px rgb(0 0 0 / 20%);
   border-radius: 12px 0px 0px 12px;
@@ -99,12 +103,12 @@
   text-indent: 55px;
 }
 
-.search_container :global(.select__control):hover {
+.home_heading_bg .search_container .select__control:hover {
   border-color: unset !important;
 }
 
-.search_input::placeholder,
-.search_container :global(.select__placeholder) {
+.home_heading_bg .search_input::placeholder,
+.home_heading_bg .search_container .select__placeholder {
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -112,7 +116,7 @@
   color: var(--grey-color);
 }
 
-.search_container :global(.select__menu) {
+.home_heading_bg .search_container .select__menu {
   background: var(--white-color);
   box-shadow: 0px -2px 14px 1px rgba(0, 0, 0, 0.08);
   border-radius: 16px;
@@ -123,8 +127,8 @@
   color: var(--grey-color);
 }
 
-.search_container :global(.select__option),
-.search_container :global(.select__option):hover {
+.home_heading_bg .search_container .select__option,
+.home_heading_bg .search_container .select__option:hover {
   display: flex !important;
   align-items: center !important;
   height: 67px;
@@ -132,40 +136,40 @@
   margin-bottom: 10px;
 }
 
-.search_container :global(.select__option--is-focused) {
+.home_heading_bg .search_container .select__option--is-focused {
   background: rgba(196, 196, 196, 0.15) !important;
   border-radius: 8px;
 }
 
-.search_container :global(.select__option--is-selected) {
+.home_heading_bg .search_container .select__option--is-selected {
   background: rgba(196, 196, 196, 0.15) !important;
   color: var(--dark-color) !important;
 }
 
 @media screen and (max-width: 768px) {
-  .heading_search_input {
+  .home_heading_bg .heading_search_input {
     width: 70vw;
   }
 
-  .heading_btn {
+  .home_heading_bg .heading_btn {
     width: 28vw;
     height: 52px;
   }
 
-  .search_input::placeholder,
-  .search_container :global(.select__placeholder) {
+  .home_heading_bg .search_input::placeholder,
+  .home_heading_bg .search_container .select__placeholder {
     display: none;
   }
 
-  .heading_search_input {
+  .home_heading_bg .heading_search_input {
     text-indent: 5px;
   }
-  .search_container :global(.select__menu) {
+  .home_heading_bg .search_container .select__menu {
     font-size: 13px;
     width: 100%;
   }
-  .search_input,
-  .search_container :global(.select__input) {
+  .home_heading_bg .search_input,
+  .home_heading_bg .search_container .select__input {
     text-indent: 5px;
   }
 }

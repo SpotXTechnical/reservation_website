@@ -1,11 +1,10 @@
-import styles from "./profile.module.css";
 import { FormattedMessage, useIntl } from "react-intl";
 import { getProfile } from "../../app/Apis/AuthApis";
-import { editProfile } from "../../app/Apis/AuthApis";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import store, { langAction } from "../../store";
+
 export default function Profile() {
   let { lang } = useSelector((state) => state.language);
   const avatar = "/assets/avatar.png";
@@ -29,23 +28,26 @@ export default function Profile() {
 
   return (
     <>
-      <div dir={lang === "ar" ? "rtl" : "ltr"} className={styles.container}>
-        <h2 className={styles.title}>
+      <div
+        dir={lang === "ar" ? "rtl" : "ltr"}
+        className="profile_wrapper container"
+      >
+        <h2 className="title">
           <FormattedMessage id="profile.title" />
         </h2>
         {data && (
           <>
-            <div className={styles.img_wrapper}>
+            <div className="img_wrapper">
               {" "}
               <img
-                className={styles.main_img}
+                className="main_img"
                 src={data.image ? data.image : avatar}
                 alt="signin"
               />
             </div>
             <div
-              className={styles.edit_profile}
-              onClick={() => (window.location.href = "/profile/edit")}
+              className="edit_profile"
+              onClick={() => router.push("/profile/edit")}
             >
               <div>
                 <span>
@@ -61,8 +63,8 @@ export default function Profile() {
                 </span>
               </div>
             </div>
-            <div className={styles.head_section}>
-              <div className={styles.img_wrapper}>
+            <div className="head_section">
+              <div className="img_wrapper">
                 <div></div>
               </div>
               <h3>{data.name}</h3>
@@ -70,12 +72,12 @@ export default function Profile() {
             </div>
           </>
         )}
-        <div className={styles.contact_section}>
+        <div className="contact_section">
           <div>
             <p>
               <FormattedMessage id="contactUs" />
             </p>
-            <span className={styles.calls}>
+            <span className="calls">
               <img src="/assets/call.png" alt="callUs" />
               <span>
                 <FormattedMessage id="callNow" />
@@ -87,11 +89,11 @@ export default function Profile() {
               <p>
                 <FormattedMessage id="downloadApp" />
               </p>
-              <span className={styles.helpText}>
+              <span className="helpText">
                 <FormattedMessage id="downloadAppHelp" />
               </span>
             </div>
-            <div className={styles.app_images}>
+            <div className="app_images">
               <img
                 src="/assets/app-store.png"
                 alt="app-store"
@@ -108,7 +110,7 @@ export default function Profile() {
             <p>
               <FormattedMessage id="termsAndConds" />
             </p>
-            <span className={styles.rightArrow}>
+            <span className="rightArrow">
               <img
                 src="/assets/green-right-arrow.png"
                 alt="green-right-arrow"
@@ -119,7 +121,7 @@ export default function Profile() {
             <p>
               <FormattedMessage id="privacyPolicy" />
             </p>
-            <span className={styles.rightArrow}>
+            <span className="rightArrow">
               <img
                 src="/assets/green-right-arrow.png"
                 alt="green-right-arrow"

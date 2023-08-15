@@ -3,15 +3,15 @@
   margin: 40px 80px 80px 80px;
 }
 
-.logo {
+.privacy_container .logo {
   display: none;
 }
 
-.logo {
+.privacy_container .logo {
   display: none;
 }
 
-.title {
+.privacy_container .title {
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -23,14 +23,14 @@
   margin-bottom: 30px;
 }
 
-.privacy_content {
+.privacy_container .privacy_content {
   font-weight: 400;
   font-size: 13px;
   opacity: 0.8;
   font-family: var(--Montserrat-Regular);
 }
 
-.privacy_content li {
+.privacy_container .privacy_content li {
   margin-bottom: 16px;
 }
 
@@ -48,7 +48,7 @@
     padding: 16px;
     overflow: auto;
   }
-  .logo {
+  .privacy_container .logo {
     display: block;
     margin-bottom: 20px;
   }

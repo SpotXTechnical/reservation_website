@@ -1,4 +1,4 @@
-.container {
+.wrapper_sign_up {
   width: 56%;
   margin: 40px auto 80px auto;
   padding: 30px 70px;
@@ -7,7 +7,7 @@
   border-radius: 12px;
 }
 
-.title {
+.wrapper_sign_up .title {
   font-family: var(--Montserrat-Regular);
   font-style: normal;
   font-weight: 600;
@@ -19,7 +19,7 @@
   margin-bottom: 50px;
 }
 
-.label {
+.wrapper_sign_up .label {
   font-family: var(--Montserrat-Regular);
   font-style: normal;
   font-weight: 700;
@@ -29,7 +29,7 @@
   color: var(--dark-color);
 }
 
-.signup_input {
+.wrapper_sign_up .signup_input {
   display: block;
   width: 100%;
   border: none;
@@ -45,7 +45,7 @@
   color: var(--light-grey-color);
 }
 
-.signup_input::placeholder {
+.wrapper_sign_up .signup_input::placeholder {
   font-family: var(--Montserrat-Regular);
   font-style: normal;
   font-weight: 400;
@@ -53,12 +53,12 @@
   color: var(--light-grey-color);
 }
 
-.signup_input:focus {
+.wrapper_sign_up .signup_input:focus {
   border-color: unset;
   box-shadow: none;
 }
 
-.already_have_account {
+.wrapper_sign_up .already_have_account {
   text-align: center;
   margin: 15px;
   font-family: var(--Montserrat-Regular);
@@ -69,7 +69,7 @@
   color: var(--light-grey-color);
 }
 
-.signIn {
+.wrapper_sign_up .signIn {
   color: var(--light-blue-color);
   cursor: pointer;
 }
@@ -78,12 +78,12 @@
     letter-spacing: 20px;
 } */
 
-.alert-danger {
+.wrapper_sign_up .alert-danger {
   font-weight: 100;
   font-size: 14px;
 }
 
-.button_wrapper {
+.wrapper_sign_up .button_wrapper {
   background: linear-gradient(
     180deg,
     var(--light-blue-color) -16.5%,
@@ -99,12 +99,12 @@
 }
 
 @media screen and (max-width: 1280px) {
-  .container {
+  .wrapper_sign_up {
     width: 90%;
     padding: 20px 35px;
   }
 
-  .button_wrapper {
+  .wrapper_sign_up .button_wrapper {
     padding: 5px 15px;
   }
 }
