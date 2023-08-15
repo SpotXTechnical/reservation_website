@@ -1,7 +1,6 @@
 import React from "react";
 import { ChevronLeft, ChevronRight } from "react-feather";
 import ReactPaginate from "react-paginate";
-import "./pagination.css";
 
 const Pagination = ({ handlePagination, meta }) => {
   return (

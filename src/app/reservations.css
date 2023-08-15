@@ -70,7 +70,6 @@
 .reservation_container .status {
   text-transform: capitalize;
   font-size: 16px;
-  margin-bottom: 0px;
 }
 .reservation_container .status.pending {
   color: #ff9811;

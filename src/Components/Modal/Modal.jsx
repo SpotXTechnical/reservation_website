@@ -1,5 +1,4 @@
-import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
-import "./Modal.css";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
 const ModalComponent = ({ toggleModal, isOpen, modalBody, className }) => {
   const toggle = () => toggleModal();

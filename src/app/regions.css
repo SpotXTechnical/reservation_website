@@ -1,42 +1,38 @@
-.container {
-  margin: 0 80px 80px 80px;
-}
-
-.head :global(.slider-wrapper) {
+.regions_container .head .slider-wrapper {
   height: 470px;
 }
 
-.head :global(.carousel-root) {
+.regions_container .head .carousel-root {
   width: 100%;
   direction: initial;
 }
 
-.carousel_img {
+.regions_container .carousel_img {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   height: 700px;
 }
 
-.head :global(.carousel.carousel-slider) :global(.control-arrow) {
+.regions_container .head .carousel.carousel-slider .control-arrow {
   width: 60px;
   height: 60px;
   top: 50%;
 }
 
-.head :global(.carousel) :global(.control-next.control-arrow) {
+.regions_container .head .carousel .control-next.control-arrow {
   right: 3%;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 30px;
 }
 
-.head :global(.carousel) :global(.control-prev.control-arrow) {
+.regions_container .head .carousel .control-prev.control-arrow {
   left: 3%;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 30px;
 }
 
-.region_name {
+.regions_container .region_name {
   font-family: var(--Montserrat-Bold);
   font-style: normal;
   font-weight: 700;
@@ -47,37 +43,37 @@
   margin-bottom: 0px;
 }
 
-.units_container {
+.regions_container .units_container {
   display: flex;
   flex-wrap: wrap;
   gap: 72px;
   margin-bottom: 150px;
 }
 
-.units_container > div {
+.regions_container .units_container > div {
   width: calc(50% - 36px);
 }
 
-.shimmer_wrapper {
+.regions_container .shimmer_wrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 2%;
   margin-bottom: 150px;
 }
 
-.shimmer_wrapper > div {
+.regions_container .shimmer_wrapper > div {
   width: 48%;
 }
 
-.search_container {
+.regions_container .search_container {
   position: relative;
 }
 
-.search_container input[type="text"] {
+.regions_container .search_container input[type="text"] {
   padding: 5px 20px;
 }
 
-.search_container img {
+.regions_container .search_container img {
   position: absolute;
   top: 50%;
   right: 10px;
@@ -85,7 +81,7 @@
   font-size: 18px;
 }
 
-.search_input {
+.regions_container .search_input {
   background: #f8f8f8;
   border-radius: 6px;
   border: unset;
@@ -94,16 +90,16 @@
 }
 
 @media screen and (max-width: 768px) {
-  .head :global(.slider-wrapper) {
+  .regions_container .head .slider-wrapper {
     height: 387px;
   }
 
-  .units_container > div {
+  .regions_container .units_container > div {
     width: 100%;
   }
 }
 
-:global(div[dir="rtl"]) .search_container img {
+div[dir="rtl"] .regions_container .search_container img {
   right: unset;
   left: 10px;
 }

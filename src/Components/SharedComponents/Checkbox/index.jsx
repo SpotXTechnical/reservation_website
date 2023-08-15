@@ -1,9 +1,8 @@
 import React from "react";
-import styles from "./styles.module.css";
 
 const Checkbox = ({ value, checked, label, className, handleChange }) => {
   return (
-    <label className={`${styles.input_container}`}>
+    <label className="checkbox_input_container">
       <input
         type="checkbox"
         value={value}
@@ -11,8 +10,8 @@ const Checkbox = ({ value, checked, label, className, handleChange }) => {
         onChange={handleChange}
         className={className}
       />
-      <span className={`${styles.checkmark}`}></span>
-      <span className={`checkbox_label`}>{label}</span>
+      <span className="checkmark"></span>
+      <span className="checkbox_label">{label}</span>
     </label>
   );
 };

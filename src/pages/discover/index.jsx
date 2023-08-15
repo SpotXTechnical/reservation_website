@@ -5,18 +5,17 @@ import {
   getFilterConfig,
   getAllSubRegions,
   getFavouriteList,
-} from "../app/Apis/UnitsApis";
+} from "../../app/Apis/UnitsApis";
 import { ShimmerThumbnail } from "react-shimmer-effects";
-import InputSelect from "../Components/SharedComponents/InputSelect";
-import Radio from "../Components/SharedComponents/Radio";
-import { getRegions } from "../app/Apis/RegionsApis";
-import Checkbox from "../Components/SharedComponents/Checkbox";
-import PriceRangeComponent from "../Components/SharedComponents/InputRange";
-import Pagination from "../Components/SharedComponents/Pagination";
-import PopularCard from "../Components/SharedComponents/PopularCard/PopularCard";
+import InputSelect from "../../Components/SharedComponents/InputSelect";
+import Radio from "../../Components/SharedComponents/Radio";
+import { getRegions } from "../../app/Apis/RegionsApis";
+import Checkbox from "../../Components/SharedComponents/Checkbox";
+import PriceRangeComponent from "../../Components/SharedComponents/InputRange";
+import Pagination from "../../Components/SharedComponents/Pagination";
+import PopularCard from "../../Components/SharedComponents/PopularCard/PopularCard";
 import { useSelector } from "react-redux";
-import store, { langAction } from "../store";
-import styles from "./discover.module.css";
+import store, { langAction } from "../../store";
 
 const Reservations = () => {
   const intl = useIntl();
@@ -456,10 +455,10 @@ const Reservations = () => {
   return (
     <div
       dir={lang === "ar" ? "rtl" : "ltr"}
-      className={`d-flex ${styles.container}`}
+      className={`d-flex discover_wrapper`}
     >
-      <div className={`d-flex flex-column ${styles.filters}`}>
-        <div className={`w-100 mb-5 ${styles.sort_section}`}>
+      <div className={`d-flex flex-column filters`}>
+        <div className={`w-100 mb-5 sort_section`}>
           <h4 className="mb-4">
             <img src="assets/sortIcon.png" alt="sort" className="me-2" />
             <FormattedMessage id="sort" />
@@ -482,7 +481,7 @@ const Reservations = () => {
           })}
         </div>
 
-        <div className={`w-100 ${styles.filter_section}`}>
+        <div className={`w-100 filter_section`}>
           <h4 className="mb-4 d-flex justify-content-between">
             <span>
               <img src="assets/filter.png" alt="sort" className="me-2" />
@@ -515,7 +514,7 @@ const Reservations = () => {
 							/> */}
           {/* </div> */}
 
-          <div className={`mb-3 ${styles.regions}`}>
+          <div className={`mb-3 regions`}>
             <p className={`mb-2 subtitle`}>
               <FormattedMessage id="profile.edit.fields.city.label" />
             </p>
@@ -532,18 +531,16 @@ const Reservations = () => {
               );
             })}
 
-            <div className={`mb-3 mt-4 ${styles.sub_regions}`}>
+            <div className={`mb-3 mt-4 sub_regions`}>
               <p className={`mb-2 subtitle`}>
                 <FormattedMessage id="Resort / Region" />
               </p>
-              <div
-                className={`${styles.search_container} d-inline-block w-100`}
-              >
+              <div className={`search_container d-inline-block w-100`}>
                 <InputSelect
                   value={getSubRegionsValues()}
                   isMulti={true}
                   options={subRegions}
-                  className={`${styles.search_input}`}
+                  className="search_input"
                   onChange={onSubRegionSearch}
                   hideIndecators={false}
                   placeholder={
@@ -554,7 +551,7 @@ const Reservations = () => {
             </div>
           </div>
 
-          <div className={`mb-3 ${styles.rooms}`}>
+          <div className={`mb-3 rooms`}>
             <p className={`mb-2 subtitle`}>
               <FormattedMessage id="roomsNum" />
             </p>
@@ -573,7 +570,7 @@ const Reservations = () => {
             </div>
           </div>
 
-          <div className={`mb-3 ${styles.beds}`}>
+          <div className={`mb-3 beds`}>
             <p className={`mb-2 subtitle`}>
               <FormattedMessage id="bedsNum" />
             </p>
@@ -592,7 +589,7 @@ const Reservations = () => {
             </div>
           </div>
 
-          <div className={`mb-3 ${styles.price_range}`}>
+          <div className={`mb-3 price_range`}>
             <p className={`mb-2 subtitle`}>
               <FormattedMessage id="price" />
             </p>
@@ -610,12 +607,12 @@ const Reservations = () => {
         </div>
       </div>
 
-      <div className={`${styles.discover_container}`}>
-        <div className={`${styles.discover}`}>
-          <p className={`text-center ${styles.heading_title}`}>
+      <div className="discover_container">
+        <div className="discover">
+          <p className={`text-center heading_title`}>
             <FormattedMessage id="discoverAndbook" />
           </p>
-          <div className={`${styles.search_container} d-inline-block w-100`}>
+          <div className={`search_container d-inline-block w-100`}>
             <InputSelect
               value={getRegionsValues()}
               onChange={onSearch}
@@ -625,7 +622,7 @@ const Reservations = () => {
               placeholder={
                 <>
                   <img
-                    className={styles.heading_search_icon}
+                    className="heading_search_icon"
                     src="/assets/search-normal.png"
                     alt="search"
                   />
@@ -635,7 +632,7 @@ const Reservations = () => {
             />
           </div>
         </div>
-        <div className={`mt-3 ${styles.units_list}`}>
+        <div className={`mt-3 units_list`}>
           <p className="head">
             <FormattedMessage id="discoverAndbook" />
           </p>
@@ -643,16 +640,16 @@ const Reservations = () => {
 						data && <RegionUnits className={styles.units_container} />
 					} */}
           {!data ? (
-            <div className={styles.shimmer_wrapper}>
+            <div className="shimmer_wrapper">
               {" "}
               {[...Array(4)].map((e, i) => (
-                <div className={styles.shimmer} key={i}>
+                <div className="shimmer" key={i}>
                   <ShimmerThumbnail key={i} height={250} rounded />
                 </div>
               ))}
             </div>
           ) : data.length > 0 ? (
-            <div className={styles.units_container}>
+            <div className="units_container">
               {data.map((unit, i) => {
                 return (
                   <PopularCard
@@ -674,7 +671,7 @@ const Reservations = () => {
               })}
             </div>
           ) : (
-            <p className={styles.not_found}>
+            <p className="not_found">
               <FormattedMessage id="noDataFound" />
             </p>
           )}

@@ -13,6 +13,28 @@ import "./app/SubscribeUs.css";
 import "./app/signin.css";
 import "./app/signup.css";
 import "./app/reservations.css";
+import "./app/RegionsCard.css";
+import "./app/ImportantRegionsCard.css";
+import "./app/PopularCard.css";
+import "./app/reservationCard.css";
+import "./app/subReg.css";
+import "./app/properties.css";
+import "./app/Modal.css";
+import "./app/ReviewsCard.css";
+import "./app/Title.css";
+import "./app/ViewAll.css";
+import "./app/profile.css";
+import "./app/privacy.css";
+import "./app/discover.css";
+import "react-date-range/dist/theme/default.css";
+import "react-date-range/dist/styles.css";
+import "./app/DateRangePicker.css";
+import "./app/pagination.css";
+import "rc-slider/assets/index.css";
+import "./app/radio.css";
+import "./app/regions.css";
+import "./app/checkbox.css";
+import "./app/ownerprofile.css";
 
 export default function Layout({ children }) {
   return (
