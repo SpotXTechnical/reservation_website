@@ -1,28 +1,32 @@
 import Button from "../SharedComponents/Button/Button";
 import Select from "react-select";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import { langAction } from "../../store";
 import styles from "./header.module.css";
 import { useRouter } from "next/router";
+import { logOut, setAccessToken } from "../../store/Auth/authSlice";
+
 
 export default function Header() {
   let { lang } = useSelector((state) => state.language);
+  const { user } = useSelector((state) => state.auth);
+
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [userData, setUserData] = useState("");
   const dispatcher = useDispatch();
   const router = useRouter();
-
+  console.log(userData);
   const handleNavigateToOffers = () => {
     router.push("/offers");
   };
-
+  console.log("user", user);
   useEffect(() => {
-    const data = localStorage.getItem("user")
-      ? JSON.parse(localStorage.getItem("user"))
-      : "";
-    setUserData(data);
+    // const data = localStorage.getItem("user")
+    //   ? JSON.parse(localStorage.getItem("user"))
+    //   : "";
+    // setUserData(data);
   }, []);
   const avatar = "/assets/avatar.png";
 
@@ -67,6 +71,8 @@ export default function Header() {
             <Select
               className={styles.language_select}
               classNamePrefix="select"
+              instanceId="long-value-select"
+              id="long-value-select"
               onChange={(e) => {
                 localStorage.setItem("language", e.value);
                 e.value === "ar"
@@ -111,10 +117,10 @@ export default function Header() {
             <img src="/assets/notification.png" alt="notifications" />
             <div className={styles.notification_number}>2</div>
           </div> */}
-          {userData ? (
+          {user ? (
             <div className={styles.profile_img_wrapper}>
               <img
-                src={userData.image || avatar}
+                src={user.image || avatar}
                 alt="profile-img"
                 onClick={handleImageClick}
               ></img>
@@ -133,6 +139,8 @@ export default function Header() {
                       router.push("/signin");
                       localStorage.removeItem("user");
                       localStorage.removeItem("access_token");
+                      dispatcher(logOut(null));
+                      dispatcher(setAccessToken(null));
                       setMenuOpen(false);
                     }}
                   >

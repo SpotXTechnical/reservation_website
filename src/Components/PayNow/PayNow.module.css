@@ -1,0 +1,51 @@
+.paynow {
+  display: inline-flex;
+  padding: 24px 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  border-radius: 16px;
+  background: linear-gradient(106deg, #008000 58%, #019f01 80.78%);
+  width: 100%;
+}
+
+.CTA p {
+  width: 70%;
+  color: #fff;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  text-transform: capitalize;
+}
+.paynow_heading {
+  color: #fff;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.CTABtn {
+  display: flex;
+  width: 338px;
+  padding: 13px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 24px;
+  border: none;
+  background: #161616;
+  box-shadow: 0px 2px 30px 0px rgba(0, 0, 0, 0.1);
+  outline: none;
+  color: white;
+  color: #fff;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.CTABtn:hover {
+    color: #161616;
+    background-color: white;
+}  

@@ -282,7 +282,28 @@ div[dir="rtl"] .profile_wrapper .rightArrow {
     no-repeat center center;
   background-size: 20px 20px;
 }
-
+/* transactions */
+.transactions-btn {
+  border-radius: 12px;
+  background-color: #44bcb7;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+  outline: none;
+  padding: 10px 20px;
+  flex-shrink: 0;
+  border: none;
+  color: var(--Color-Base-White, #fff);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.transactions-btn:hover {
+  background: var(
+    --liner,
+    linear-gradient(180deg, #44bcb7 -16.5%, #2396cc 54.7%)
+  );
+}
 @media screen and (max-width: 1280px) {
   .edit_profile_wrapper .profile_input {
     width: 100%;

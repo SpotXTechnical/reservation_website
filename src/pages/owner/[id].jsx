@@ -47,7 +47,7 @@ export default function OwnerProfile() {
           <div className="owner">
             <img src={data?.image} alt="owner_img" />
             <p>{data?.name} </p>
-            <p>{data?.phone} </p>
+            {/* <p>{data?.phone} </p> */}
           </div>
         ) : (
           <ShimmerThumbnail height={175} rounded />

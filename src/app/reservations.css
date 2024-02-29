@@ -13,19 +13,74 @@
 }
 
 .reservation_container .owner {
-  background: var(--background-grey);
-  border-radius: 12px;
+  background: #e8e8e8;
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 10px;
   padding-block: 25px;
-  width: 50%;
-  margin: 40px 0;
+  width: 25%;
+  margin: 20px 0;
   cursor: pointer;
 }
-
+.owner_heading {
+  color: #424242;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.cancellation_policy {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  width: 100%;
+  margin-bottom: 40px;
+}
+.cancellation_policy h3 {
+  color: #424242;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.free_cancellation {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+.free_cancellation p {
+  color: #7b7b7b;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  text-transform: capitalize;
+}
+.free_cancellation button {
+  display: flex;
+  width: 263px;
+  height: 56px;
+  padding: 14px 21px;
+  justify-content: center;
+  background-color: white;
+  align-items: center;
+  gap: 8px;
+  border-radius: 28px;
+  border: 1px solid #156b68;
+  color: #156b68;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
+}
 .reservation_container .owner img {
   width: 40px;
   height: 40px;
@@ -70,7 +125,11 @@
 
 .reservation_container .status {
   text-transform: capitalize;
-  font-size: 16px;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: capitalize;
 }
 .reservation_container .status.pending {
   color: #ff9811;
@@ -84,11 +143,64 @@
   color: #ff0000;
 }
 .reservation_container .view_details {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--light-blue-color);
-  cursor: pointer;
+  display: flex;
+  color: #156b68;
+  width: 188px;
+  height: 56px;
+  padding: 14px 21px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 0px;
+  border-radius: 28px;
+  border: 1px solid #156b68;
+}
+.reservation_container .view_details:hover,
+.free_cancellation button:hover {
+  background-color: #156b68;
+  color: #fff;
+  cursor: pointer;
+}
+.location_details {
+  margin-top: 16px;
+  color: #7b7b7b;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: capitalize;
+  margin-bottom: 24px;
+}
+.feedback {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+.feedback h3 {
+  color: #424242;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.feedback p {
+  color: #7b7b7b;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  text-transform: capitalize;
+}
+.financial_summary {
+  color: #424242;
+  margin-bottom: 24px;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: capitalize;
 }
 .reservation_container .view_details_wrapper {
   display: flex;
@@ -231,7 +343,196 @@
   background-repeat: no-repeat;
   height: 500px;
 }
+.icon-text {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 0;
+}
+.reservation-success {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+.reservation-success__header {
+  color: #008000;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.negotiation-heading {
+  color: #424242;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.negotiation-paragraph {
+  color: #7b7b7b;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 25.2px */
+  text-transform: capitalize;
+}
+.offers-container {
+  display: flex;
+  padding: 16px;
+  align-items: center;
+  gap: 32px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.16);
+  margin-bottom: 20px;
+}
+.image-container {
+  width: 268px;
+  height: 209px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+.image-container img {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+}
+.offer-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+.offer-details .date {
+  display: flex;
+  align-items: flex-start;
+  gap: 380px;
+}
+.offer-details .date p {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  margin-bottom: 0;
+}
+.offer-details .date,
+.offer-details .cost p {
+  margin-bottom: 0;
+}
+.offer-details .cost {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.offer-details .cost .title {
+  color: #424242;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.offer-details .cost .value {
+  color: #424242;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+}
 
+.offer-details .date p span {
+  color: #838383;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.offer-details .CTA-btns {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  justify-content: space-between;
+}
+.offer-details .CTA-btns .decline {
+  display: flex;
+  width: 48%;
+  padding: 13px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 12px;
+  border: 1px solid #f00;
+  box-shadow: 0px 2px 30px 0px rgba(0, 0, 0, 0.1);
+  color: #f00;
+  background: #fff;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.offer-details .CTA-btns .decline:hover {
+  color: #fff;
+  background: #f00;
+}
+.offer-details .CTA-btns .accept {
+  display: flex;
+  width: 48%;
+  padding: 13px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 12px;
+  background: #008000;
+  color: #fff;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.offer-details .CTA-btns .accept:hover {
+  color: #008000;
+  background: #fff;
+}
+.offer-duration {
+  color: #38aebf;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.reservation-success__description {
+  display: flex;
+  padding: 24px 32px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 0px 24px 24px 24px;
+  border: 1px solid #d7d7d7;
+  background: #fff;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.12);
+  color: #7b7b7b;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 25.2px */
+  text-transform: capitalize;
+}
+.loader_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: red;
+  padding: 50px;
+}
+.loader_container .spinner-border {
+  color: black;
+}
 @media screen and (max-width: 768px) {
   .reservation_container .filter_btns {
     flex-direction: column;

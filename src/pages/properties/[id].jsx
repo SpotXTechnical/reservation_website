@@ -22,6 +22,7 @@ export default function PropertyDetails() {
   const [isCopied, setIsCopied] = useState(false);
   const [selectedRange, setSelectedRange] = useState("");
   const [daysCount, setDaysCount] = useState(0);
+  const [modalData, setModalData] = useState();
   const [totalReservationMoney, setTotalReservationMoney] = useState(0);
   const [modifiedReservedDays, setModifiedReservedDays] = useState([]);
   const [extractedDates, setExtractedDates] = useState([]);
@@ -54,6 +55,22 @@ export default function PropertyDetails() {
     const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 
     return days;
+  }
+  function parseTime(timeToParse) {
+    const time = new Date("2000-01-01 " + timeToParse);
+
+    const hours = time.getHours();
+    const minutes = time.getMinutes();
+
+    const period = hours < 12 ? "AM" : "PM";
+
+    const formattedHours = hours % 12 || 12;
+
+    const formattedTime = `${formattedHours}:${minutes
+      .toString()
+      .padStart(2, "0")} ${period}`;
+
+    return formattedTime;
   }
 
   function getPriceForDateRange(data, dateRange, defaultPrice) {
@@ -99,20 +116,13 @@ export default function PropertyDetails() {
     }
   }, [data?.active_reservations]);
 
-  const handleShowReservationModal = (selectedDateRange) => {
-    setSelectedRange(selectedDateRange);
-    const days = calculateNumberOfDays(
-      selectedDateRange.startDate,
-      selectedDateRange.endDate
-    );
-    setDaysCount(days);
-    const result = getPriceForDateRange(
-      data?.active_ranges,
-      selectedDateRange,
-      data?.default_price
-    ).reduce((total, item) => total + item.price, 0);
+  const handleShowReservationModal = (reservaionSummary) => {
+    setModalData(reservaionSummary);
+
+    setDaysCount(reservaionSummary?.nights);
+
     setIsOpen(true);
-    setTotalReservationMoney(result);
+    setTotalReservationMoney(reservaionSummary?.total_price);
   };
 
   useEffect(
@@ -185,7 +195,6 @@ export default function PropertyDetails() {
           );
         });
   };
-
   return (
     <div
       dir={lang === "ar" ? "rtl" : "ltr"}
@@ -412,7 +421,7 @@ export default function PropertyDetails() {
               >
                 <img src={data?.owner?.image} alt="owner_img" />
                 <p>{data?.owner?.name} </p>
-                <p>{data?.owner?.phone} </p>
+                {/* <p>{data?.owner?.phone} </p> */}
               </div>
             ) : (
               <ShimmerThumbnail height={175} rounded />
@@ -437,6 +446,7 @@ export default function PropertyDetails() {
                 handleShowReservationModal={handleShowReservationModal}
                 extractedDates={extractedDates}
                 modifiedReservedDays={modifiedReservedDays}
+                unitType={data?.type}
               />
             )}
           </div>
@@ -505,8 +515,8 @@ export default function PropertyDetails() {
               />
               <p className="unit_title">{data?.title}</p>
             </div>
-            <div className="d-flex align-items-center justify-content-between">
-              <div className="d-flex gap-2">
+            <div className="d-flex align-items-start justify-content-between">
+              <div className="d-flex gap-2 ">
                 <img
                   src="/assets/calendar.png"
                   alt="calendar"
@@ -522,20 +532,30 @@ export default function PropertyDetails() {
               </div>
             </div>
             <div className="from_to_wrapper">
-              <p>
-                <span className="label">
-                  <FormattedMessage id="from" />
+            <p className="d-flex justify-content-between">
+                <span>
+                  <span className="label">
+                    <FormattedMessage id="from" />
+                  </span>
+                  <span className="date">
+                    {moment(modalData?.from).format("ddd, DD MMM")}
+                  </span>
                 </span>
-                <span className="date">
-                  {moment(selectedRange.startDate).format("ddd, DD MMM")}
+                <span>
+                  <span>{parseTime(modalData?.check_in)}</span>
                 </span>
               </p>
-              <p>
-                <span className="label">
-                  <FormattedMessage id="to" />
+              <p className="d-flex justify-content-between">
+                <span>
+                  <span className="label">
+                    <FormattedMessage id="to" />
+                  </span>
+                  <span className="date">
+                    {moment(modalData?.to).format("ddd, DD MMM")}
+                  </span>
                 </span>
-                <span className="date">
-                  {moment(selectedRange.endDate).format("ddd, DD MMM")}
+                <span>
+                  <span>{parseTime(modalData?.check_out)}</span>
                 </span>
               </p>
             </div>
@@ -561,8 +581,8 @@ export default function PropertyDetails() {
               className="submit_reservations"
               onClick={() => {
                 const submitData = {
-                  from: moment(selectedRange.startDate).format("D-M-YYYY"),
-                  to: moment(selectedRange.endDate).format("D-M-YYYY"),
+                  from: moment(modalData?.from).format("D-M-YYYY"),
+                  to: moment(modalData?.to).format("D-M-YYYY"),
                   unit_id: id,
                   unit_type: data.type,
                 };

@@ -15,16 +15,25 @@ const Reservations = () => {
     );
   }
   const [data, setData] = useState({});
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [filterState, setFilterState] = useState("upcoming");
-
-  useEffect(
-    function () {
-      getReservations("upcoming").then((res) => {
+  console.log(data);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const res = await getReservations();
         setData(res.data);
-      });
-    },
-    [lang]
-  );
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [lang]);
 
   const handleFilterChange = (val) => {
     setFilterState(val);
@@ -61,16 +70,22 @@ const Reservations = () => {
         </p>
       </div>
 
-      <div className="reservations">
-        {data?.length > 0 ? (
-          data.map((item, i) => {
-            return <ReservationCard data={item} key={i} />;
-          })
-        ) : (
-          <p className="m-0 text-center">
-            <FormattedMessage id="noDataFound" />
-          </p>
+      <div
+        className={`${
+          Object.keys(data).length !== 0 ? "reservations" : "loader_container"
+        }`}
+      >
+        {loading && Object.keys(data).length === 0 && (
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
         )}
+        {error && <FormattedMessage id={error} />}
+
+        {Object.keys(data).length !== 0 &&
+          data.map((item, i) => {
+            return <ReservationCard data={item} key={item.id} />;
+          })}
       </div>
     </div>
   );

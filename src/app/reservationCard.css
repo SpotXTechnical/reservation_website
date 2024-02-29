@@ -84,10 +84,17 @@
   padding: 15px 30px;
   font-size: 18px;
 }
-
+.reservation_card .icon-text-alignment {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 .reservation_card .status {
   text-transform: capitalize;
   font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .reservation_card .status.pending {
   color: #ff9811;
@@ -99,6 +106,20 @@
 .reservation_card .status.canceled,
 .reservation_card .status.reject {
   color: #ff0000;
+}
+.negotiation-msg {
+  text-align: center;
+  border-top: 1px solid #c4c4c4;
+  width: 60%;
+  padding: 20px 50px;
+  align-self: flex-end;
+  margin-right: 80px;
+  color: #008000;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: capitalize;
 }
 
 @media screen and (max-width: 768px) {

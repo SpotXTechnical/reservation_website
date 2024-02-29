@@ -2,12 +2,14 @@
 const nextConfig = {
   experimental: {
     appDir: true,
-    reactStrictMode: false
+    reactStrictMode: false,
   },
   i18n: {
-    locales: ['en', 'ar'],
-    defaultLocale: 'en',
+    locales: ["en", "ar"],
+    defaultLocale: "en",
   },
-}
+  cssModules: true,
 
-module.exports = nextConfig
+};
+
+module.exports = nextConfig;

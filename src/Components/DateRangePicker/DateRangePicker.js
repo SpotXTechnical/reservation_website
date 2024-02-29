@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { DateRangePicker } from "react-date-range";
 import { FormattedMessage } from "react-intl";
 import moment from "moment";
+import { useRouter } from "next/router";
+import { getSummary } from "../../app/Apis/PropertyApis";
 
 const DateRangeCalendarPicker = ({
   activeRanges,
@@ -9,13 +11,16 @@ const DateRangeCalendarPicker = ({
   defaultPrice,
   extractedDates,
   modifiedReservedDays,
+  unitType,
 }) => {
   const [selectedDateRange, setSelectedDateRange] = useState({
     startDate: new Date(),
     endDate: new Date(),
     key: "selection",
   });
-
+  const router = useRouter();
+  const { id } = router.query;
+  console.log(id);
   const [dateError, setDateError] = useState(false);
   const [dateChanged, setDateChanged] = useState(false);
   const getAllDays = (activeReservations) => {
@@ -30,8 +35,8 @@ const DateRangeCalendarPicker = ({
         allDays.push(new Date(currentDate.toISOString().split("T")[0]));
         currentDate.setDate(currentDate.getDate() + 1);
       }
+      console.log("currentDate", currentDate.getDate());
     });
-
     return allDays;
   };
 
@@ -75,7 +80,24 @@ const DateRangeCalendarPicker = ({
     const startDate = moment(selectedDateRange.startDate).format("DD-MM-YYYY");
     const endDate = moment(selectedDateRange.endDate).format("DD-MM-YYYY");
     if (startDate !== endDate && dateChanged) {
-      handleShowReservationModal(selectedDateRange);
+      const summaryData = new FormData();
+      summaryData.append(
+        "from",
+        moment(selectedDateRange.startDate).format("YYYY-MM-DD")
+      );
+      summaryData.append(
+        "to",
+        moment(selectedDateRange.endDate).format("YYYY-MM-DD")
+      );
+      summaryData.append("unit_id", id);
+      summaryData.append("unit_type", unitType);
+      getSummary(summaryData)
+        .then((res) => {
+          handleShowReservationModal(res?.data);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
     } else {
       setDateError(true);
     }
@@ -83,10 +105,13 @@ const DateRangeCalendarPicker = ({
 
   function calculatePrice(date, activeRanges, defaultPrice) {
     for (const range of activeRanges) {
-      const fromDate = new Date(range.from);
-      const toDate = new Date(range.to);
-
-      if (date >= fromDate && date <= toDate) {
+      const fromDate = new Date(range.from + " GMT+0200");
+      const toDate = new Date(range.to + " GMT+0200");
+      if (
+        date.getTime() >= fromDate.getTime() &&
+        date.getTime() < toDate.getTime()
+      ) {
+        console.log("here");
         return range.price;
       }
     }
@@ -167,7 +192,7 @@ const DateRangeCalendarPicker = ({
           handleReserve();
         }}
       >
-        <FormattedMessage id="Reserve" />{" "}
+        <FormattedMessage id="Summary" />{" "}
       </button>
     </div>
   );

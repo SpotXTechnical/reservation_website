@@ -5,8 +5,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { FormattedMessage, useIntl } from "react-intl";
 import { signIn } from "../../app/Apis/AuthApis";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import store, { langAction } from "../../store";
+import { logIn, setAccessToken } from "../../store/Auth/authSlice";
 
 export default function SignIn() {
   if (typeof window !== "undefined") {
@@ -26,6 +27,7 @@ export default function SignIn() {
   const [phone, setPhone] = useState("");
   const [phoneErr, setPhoneErr] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
+  const dispatch = useDispatch()
 
   const onEmailChange = ({ target }) => {
     setEmail(target.value);
@@ -70,11 +72,14 @@ export default function SignIn() {
             }, 5000);
           } else {
             localStorage.setItem("user", JSON.stringify(res?.data?.user));
+            dispatch(logIn(res?.data?.user))
             localStorage.setItem(
               "access_token",
               JSON.stringify(res?.data?.token?.access_token)
             );
-            router.push(`/${window.location.search}`);
+            dispatch(setAccessToken(res?.data?.token?.access_token))
+            router.back()
+            // router.push(`/${window.location.search}`);
           }
         })
         .catch((err) => {

@@ -36,7 +36,6 @@ import "./app/radio.css";
 import "./app/regions.css";
 import "./app/checkbox.css";
 import "./app/ownerprofile.css";
-
 export default function Layout({ children }) {
   return (
     <div>
