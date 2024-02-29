@@ -1,0 +1,137 @@
+.reservation_card:not(:last-child) {
+  margin-bottom: 32px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid var(--border-light-grey);
+}
+
+.reservation_card .main_image {
+  margin-inline-end: 40px;
+}
+
+.reservation_card .main_image img {
+  width: 268px;
+  height: 209px;
+  border-radius: 12px;
+}
+
+.reservation_card .info {
+  flex: 2;
+}
+
+.reservation_card .total_cost {
+  gap: 70px;
+  align-items: center;
+}
+
+.reservation_card .total_cost span:first-child {
+  color: var(--dark-grey);
+  font-size: 18px;
+  font-family: var(--Montserrat-Regular);
+  text-transform: capitalize;
+}
+
+.reservation_card .details {
+  font-family: var(--Montserrat-Semi-Bold);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 25px;
+  text-transform: capitalize;
+}
+
+.reservation_card .details span:last-child {
+  color: var(--grey-color);
+}
+
+.reservation_card .details span:last-child .date {
+  color: var(--dark-color);
+}
+
+.reservation_card .total_cost span:last-child {
+  font-size: 20px;
+  font-family: var(--Montserrat-Regular);
+  text-transform: capitalize;
+}
+
+.reservation_card .title {
+  color: var(--dark-grey);
+  font-size: 20px;
+  text-transform: capitalize;
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.reservation_card .unit_type {
+  background: rgba(68, 188, 183, 0.1);
+  border-radius: 22px;
+  color: var(--light-blue-color);
+  padding: 7px 20px;
+  width: fit-content;
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  text-transform: capitalize;
+}
+
+.reservation_card .review {
+  background: rgba(252, 217, 92, 0.15);
+  border-radius: 8px;
+  padding: 15px 30px;
+  font-size: 18px;
+}
+.reservation_card .icon-text-alignment {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.reservation_card .status {
+  text-transform: capitalize;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.reservation_card .status.pending {
+  color: #ff9811;
+}
+.reservation_card .status.reserved,
+.reservation_card .status.approved {
+  color: #44bcb7;
+}
+.reservation_card .status.canceled,
+.reservation_card .status.reject {
+  color: #ff0000;
+}
+.negotiation-msg {
+  text-align: center;
+  border-top: 1px solid #c4c4c4;
+  width: 60%;
+  padding: 20px 50px;
+  align-self: flex-end;
+  margin-right: 80px;
+  color: #008000;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+@media screen and (max-width: 768px) {
+  .reservation_card {
+    flex-direction: column;
+  }
+
+  .reservation_card .main_image {
+    margin-inline-end: 0px;
+  }
+  .reservation_card .main_image img {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}

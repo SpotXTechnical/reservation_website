@@ -1,6 +1,9 @@
-import styles from "./ViewAll.module.css";
-const ViewAll = () => {
-  return <p className={styles.view_all}>View All</p>;
+const ViewAll = ({ handleClick }) => {
+  return (
+    <p onClick={handleClick} className="view_all">
+      View All
+    </p>
+  );
 };
 
 export default ViewAll;

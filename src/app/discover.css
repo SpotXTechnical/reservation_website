@@ -1,0 +1,301 @@
+.discover_wrapper {
+  font-family: var(--Montserrat-Regular);
+  margin: 0 80px 80px 80px;
+  gap: 40px;
+}
+
+.discover_wrapper .filters {
+  border: 0.5px solid var(--grey-color);
+  border-radius: 12px;
+  padding: 12px;
+  width: 25%;
+  height: fit-content;
+}
+
+.discover_wrapper .discover_container {
+  flex: 2;
+}
+
+.discover_wrapper .not_found {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.discover_wrapper .discover {
+  background: #fff5e5;
+  border-radius: 20px 20px 0px 0px;
+  padding: 32px 84px 24px 84px;
+}
+
+.discover_wrapper .heading_title {
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 26px;
+  text-transform: capitalize;
+}
+
+.discover_wrapper .search_container {
+  position: relative;
+}
+
+.discover_wrapper .search_container input[type="text"] {
+  padding-left: 60px;
+}
+
+.discover_wrapper .search_container img {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  font-size: 18px;
+  margin-left: 10px;
+  z-index: 1000;
+}
+
+.discover_wrapper .search_input,
+.discover_wrapper .search_container .select__input {
+  border-radius: 40px !important;
+  border: unset !important;
+  width: 100%;
+  /* padding: 25px !important; */
+}
+
+.discover_wrapper .search_container .select__control {
+  border-radius: 40px !important;
+  border: unset !important;
+  height: 60px;
+}
+
+.discover_wrapper .search_container .select__control:hover {
+  border-color: unset !important;
+}
+
+.discover_wrapper .search_input::placeholder,
+.discover_wrapper .search_container .select__placeholder {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--grey-color);
+  margin-left: 50px;
+}
+
+.discover_wrapper .search_container .select__menu {
+  background: #ffffff;
+  box-shadow: 0px -2px 14px 1px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  width: 96%;
+  left: 2%;
+  margin-top: 0;
+  padding: 24px;
+}
+
+.discover_wrapper .search_container .select__option,
+.discover_wrapper .search_container .select__option:hover {
+  display: flex !important;
+  align-items: center !important;
+  height: 67px;
+  border-radius: 8px !important;
+  margin-bottom: 10px;
+}
+
+.discover_wrapper .search_container .select__option--is-focused {
+  background: rgba(196, 196, 196, 0.15) !important;
+  border-radius: 8px;
+}
+
+.discover_wrapper .search_container .select__option--is-selected {
+  background: rgba(196, 196, 196, 0.15) !important;
+  color: var(--dark-color) !important;
+}
+
+.discover_wrapper .sub_regions .search_container .select__placeholder {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--grey-color);
+}
+
+.discover_wrapper .sub_regions .search_container .select__indicator-separator {
+  display: none;
+}
+
+.discover_wrapper .sub_regions .search_input {
+  border-radius: 40px !important;
+  border: 0.5px solid #c4c4c4 !important;
+  padding: 0 !important;
+}
+
+.discover_wrapper .sub_regions .search_container .select__control {
+  height: fit-content;
+}
+
+.discover_wrapper .search_input::placeholder,
+.discover_wrapper .sub_regions .search_container .select__placeholder {
+  margin-left: 5px;
+}
+
+.discover_wrapper .search_container .select__menu {
+  margin-top: 2px;
+  padding: 10px;
+}
+
+.discover_wrapper .sub_regions .search_container .select__option,
+.discover_wrapper .sub_regions .search_container .select__option:hover {
+  height: 34px;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+/* .units_list{
+    
+} */
+
+.discover_wrapper .units_list .head {
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  text-transform: capitalize;
+  margin-bottom: 30px;
+}
+
+.discover_wrapper .units_container {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 15px;
+  column-gap: 48px;
+}
+
+.discover_wrapper .units_container > div {
+  width: calc(50% - 24px);
+}
+
+.discover_wrapper .sort_section label {
+  width: 100%;
+  padding-bottom: 16px;
+  border-bottom: 0.5px solid var(--border-light-grey);
+}
+
+.discover_wrapper .sort_section .checkbox_label {
+  font-weight: 500;
+  font-size: 16px;
+  text-transform: capitalize;
+  color: var(--grey-color);
+}
+
+.discover_wrapper .sort_section h4 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  text-transform: capitalize;
+  color: var(--dark-color);
+}
+
+/* Sort Section */
+
+.discover_wrapper .filters label {
+  width: 100%;
+}
+
+.discover_wrapper .sort_section label {
+  border-bottom: 0.5px solid var(--border-light-grey);
+  padding-bottom: 16px;
+}
+
+.discover_wrapper .filters .checkbox_label {
+  font-weight: 500;
+  font-size: 16px;
+  text-transform: capitalize;
+  color: var(--grey-color);
+  margin-right: 7px;
+}
+
+.discover_wrapper .filters h4 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  text-transform: capitalize;
+  color: var(--dark-color);
+}
+
+.discover_wrapper .filters h4 span:last-child {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  text-transform: capitalize;
+  color: var(--light-blue-color);
+}
+
+.discover_wrapper .filters .subtitle {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  text-transform: capitalize;
+  color: var(--light-grey-color);
+}
+
+.discover_wrapper .filter_section > div:not(.price_range) {
+  border-bottom: 0.5px solid var(--border-light-grey);
+}
+
+.discover_wrapper .filter_section div.beds label,
+.discover_wrapper .filter_section div.rooms label {
+  flex-basis: 20%;
+}
+
+.discover_wrapper .price_range .price-range-info > div {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  text-transform: capitalize;
+  color: var(--light-grey-color);
+}
+
+.discover_wrapper .price_range .price-range-info > div span:first-child {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.discover_wrapper .price_range .price-range-info > div span:last-child {
+  font-weight: 600;
+  color: var(--light-blue-color);
+}
+
+.discover_wrapper .price_range .rc-slider-track {
+  background-color: var(--light-blue-color);
+}
+
+.discover_wrapper .price_range .rc-slider-handle {
+  background-color: var(--light-blue-color);
+  border: solid 2px #ffffff;
+}
+
+.discover_wrapper .shimmer_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2%;
+}
+.discover_wrapper .shimmer_wrapper .shimmer {
+  width: 48%;
+}
+
+@media screen and (max-width: 1280px) {
+  .discover_wrapper {
+    margin: 16px;
+    flex-direction: column;
+  }
+  .discover_wrapper .filters {
+    width: 100%;
+  }
+
+  .discover_wrapper .discover {
+    padding: 16px;
+  }
+  .discover_wrapper .units_container > div {
+    width: 100%;
+  }
+}

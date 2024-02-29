@@ -1,0 +1,114 @@
+.info_container {
+  display: flex;
+  padding: 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.16);
+}
+.date {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  width: 100%;
+}
+.summary_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+.reservation_date {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+.total_cost {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+.reservation_date h4 {
+  color: #424242;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.reservation_date p {
+  color: #38aebf;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.range {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+.full_width {
+  width: 100%;
+  
+}
+.range p {
+  margin-bottom: 0;
+}
+
+.horizontal_divider {
+  margin: 0 auto;
+  width: 100%;
+  border: 1px solid #c4c4c4;
+}
+
+.payment_container {
+  margin-top: 16px;
+  display: flex;
+  padding: 24px 220px;
+  align-items: center;
+  gap: 340px;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.16);
+}
+
+.down_payment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.down_payment p {
+  margin-bottom: 0;
+}
+
+.bold {
+  color: #424242;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+.format_date {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+
+}
+.format_date span {
+    color: #838383;
+font-size: 18px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+text-transform: capitalize;
+}

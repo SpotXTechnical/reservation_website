@@ -1,0 +1,316 @@
+/* Profile */
+.profile_wrapper .inner_container {
+  display: flex;
+}
+
+.profile_wrapper .head_section {
+  background-color: var(--background-grey);
+  text-align: center;
+  padding: 10px;
+  margin-top: 100px;
+  margin-bottom: 40px;
+}
+
+.profile_wrapper .img_wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  top: 35px;
+  position: relative;
+}
+
+.profile_wrapper .edit_profile {
+  position: absolute;
+  right: 0;
+  top: 25%;
+  right: 25px;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.profile_wrapper .main_img {
+  width: 140px;
+  height: 140px;
+  border: 4px solid var(--white-color);
+  border-radius: 50%;
+  position: absolute;
+  /* bottom: 8%;
+    right: 40%; */
+}
+
+.profile_wrapper .img_wrapper {
+  display: flex;
+}
+
+.profile_wrapper .img_wrapper > div:first-child {
+  flex: 2;
+  position: relative;
+  height: 65px;
+  margin-bottom: 10px;
+}
+
+.profile_wrapper .img_wrapper > div:last-child {
+  display: flex;
+  gap: 5px;
+  padding: 12px;
+}
+
+.profile_wrapper .img_wrapper > div:last-child span:first-child {
+  font-size: 12px;
+}
+
+.profile_wrapper .contact_section p {
+  font-family: "Montserrat Regular";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--dark-color);
+}
+
+.profile_wrapper .contact_section {
+  margin-bottom: 150px;
+}
+
+.profile_wrapper .contact_section > div {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-bottom-grey);
+  padding: 25px 0;
+}
+
+.profile_wrapper .contact_section > div:first-child img {
+  width: 23px;
+  margin-inline: 7px;
+}
+
+.profile_wrapper .contact_section > div:first-child span {
+  color: var(--light-blue-color);
+}
+
+.profile_wrapper .contact_section > div:last-child {
+  border-bottom: unset;
+}
+
+.profile_wrapper .app_images img:first-child {
+  margin-inline: 10px;
+}
+
+.profile_wrapper .contact_section p {
+  margin: 0;
+}
+
+/* Edit Profile */
+.edit_profile_wrapper .edit_profile_head_section {
+  border-bottom: 1px solid var(--border-bottom-grey);
+}
+
+.edit_profile_wrapper .edit_profile_head_section > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit_profile_wrapper .edit_profile_head_section > div:last-child {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0;
+}
+
+.edit_profile_wrapper .edit_profile_pic {
+  width: 140px;
+  height: 140px;
+  border: 4px solid var(--white-color);
+  border-radius: 50%;
+}
+
+.edit_profile_wrapper .input_container {
+  /* display: flex; */
+  border-bottom: 1px solid var(--border-bottom-grey);
+  /* gap: 20%; */
+  padding: 25px 0;
+  /* justify-content: space-between; */
+}
+
+.edit_profile_wrapper .input_container:last-child {
+  border: unset;
+}
+
+.edit_profile_wrapper .profile_input {
+  color: var(--light-grey-color);
+  width: 50%;
+  padding: 10px 14px;
+  background: var(--white-color);
+  border: 1px solid #bfbfbf;
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  border-radius: 16px;
+}
+
+.edit_profile_wrapper .profile_input:focus {
+  border-color: unset;
+  box-shadow: none;
+}
+
+.edit_profile_wrapper .input_container > div {
+  flex: 2;
+}
+
+/* General */
+.container {
+  width: 80%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.edit_profile_wrapper .title,
+.profile_wrapper .title {
+  text-align: center;
+  font-weight: bold;
+  margin: 30px 0px 0px 0px;
+  font-family: "Montserrat Semi Bold";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 32px;
+  text-transform: capitalize;
+  margin-bottom: 32px;
+}
+
+.edit_profile_wrapper .container h3,
+.profile_wrapper .container h3 {
+  font-family: "Montserrat Semi Bold";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--dark-color);
+  margin-bottom: 0px;
+}
+
+.edit_profile_wrapper .container label,
+.profile_wrapper .container label {
+  font-family: "Montserrat Regular";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--dark-grey-color);
+}
+
+.edit_profile_wrapper .helpText,
+.profile_wrapper .helpText {
+  font-size: 12px;
+  color: var(--grey-color);
+}
+
+.edit_profile_wrapper .alert-danger,
+.profile_wrapper .alert-danger {
+  font-weight: 100;
+  font-size: 14px;
+}
+
+.edit_profile_wrapper .calls,
+.profile_wrapper .calls {
+  cursor: pointer;
+}
+
+.edit_profile_wrapper .btns_wrapper button,
+.profile_wrapper .btns_wrapper button {
+  font-family: "Montserrat Regular";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 10px 25px;
+  background: var(--white-color);
+  border: 0.5px solid var(--border-light-grey);
+  border-radius: 8px;
+  color: var(--dark-grey-color);
+}
+
+.edit_profile_wrapper .btns_wrapper .save_btn,
+.profile_wrapper .btns_wrapper .save_btn {
+  background-color: var(--light-blue-color);
+  color: var(--white-color);
+  margin-inline: 12px;
+}
+
+div[dir="rtl"] .edit_profile_wrapper .calls,
+div[dir="rtl"] .profile_wrapper .calls {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+div[dir="rtl"] .edit_profile_wrapper .rightArrow,
+div[dir="rtl"] .profile_wrapper .rightArrow {
+  transform: rotate(180deg);
+}
+
+.edit_profile_wrapper .file_input_container,
+.profile_wrapper .file_input_container {
+  position: relative;
+  display: inline-block;
+}
+
+.edit_profile_wrapper .file_input_container input[type="file"],
+.profile_wrapper .file_input_container input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.edit_profile_wrapper .file_input_container:hover::after,
+.profile_wrapper .file_input_container:hover::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 4px solid var(--white-color);
+  background: rgba(218, 218, 218, 0.5) url("../../public/assets/cameraIcon.png")
+    no-repeat center center;
+  background-size: 20px 20px;
+}
+/* transactions */
+.transactions-btn {
+  border-radius: 12px;
+  background-color: #44bcb7;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+  outline: none;
+  padding: 10px 20px;
+  flex-shrink: 0;
+  border: none;
+  color: var(--Color-Base-White, #fff);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.transactions-btn:hover {
+  background: var(
+    --liner,
+    linear-gradient(180deg, #44bcb7 -16.5%, #2396cc 54.7%)
+  );
+}
+@media screen and (max-width: 1280px) {
+  .edit_profile_wrapper .profile_input {
+    width: 100%;
+  }
+
+  .edit_profile_wrapper .edit_profile_head_section > div:first-child {
+    flex-direction: column-reverse;
+    gap: 20px;
+  }
+}

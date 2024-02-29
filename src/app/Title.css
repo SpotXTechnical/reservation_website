@@ -1,0 +1,10 @@
+.title_component {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 29px;
+  text-transform: capitalize;
+  color: var(--dark-color);
+  font-family: var(--Montserrat-Bold);
+  margin-bottom: 0px;
+}
