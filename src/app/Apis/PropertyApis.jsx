@@ -24,3 +24,16 @@ export const reserveUnit = async (data) => {
     throw error;
   }
 };
+
+export const getSummary = async (data) => {
+  try {
+    const response = await axiosInstance.post(
+      "/api/v1/user/reservations/summary",
+      data,
+      { headers: { "Content-Type": "multipart/form-data" } }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};

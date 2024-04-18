@@ -490,7 +490,7 @@ div[dir="rtl"]
 }
 
 .summary_modal .from_to_wrapper {
-  margin-inline: 30px;
+  /* margin-inline: 30px; */
 }
 
 .summary_modal .from_to_wrapper .label {

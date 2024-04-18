@@ -69,6 +69,12 @@ export default function Profile() {
               </div>
               <h3>{data.name}</h3>
               <p className="mt-3 text-grey">{data.phone}</p>
+              <button
+                className="transactions-btn"
+                onClick={() => router.push("/transactions")}
+              >
+                <FormattedMessage id="transactions" />
+              </button>
             </div>
           </>
         )}

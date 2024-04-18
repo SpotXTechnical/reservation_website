@@ -42,7 +42,7 @@ export default function Home() {
     if (propertyNumber) {
       router.push(`/properties/${propertyNumber}`);
     }
-  }, []);
+  }, [router]);
 
   return (
     <main

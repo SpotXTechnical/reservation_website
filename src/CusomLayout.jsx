@@ -36,12 +36,11 @@ import "./app/radio.css";
 import "./app/regions.css";
 import "./app/checkbox.css";
 import "./app/ownerprofile.css";
-
 export default function Layout({ children }) {
   return (
-    <div>
+    <div className="d-flex flex-column" style={{ minHeight: "100vh" }}>
       <Header />
-      {children}
+      <div className="flex-grow-1 ">{children}</div>
       <Footer />
     </div>
   );

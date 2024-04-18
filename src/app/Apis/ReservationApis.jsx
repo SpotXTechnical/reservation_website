@@ -1,9 +1,9 @@
 import { axiosInstance } from "./AxiosInstance";
 
-export const getReservations = async (status) => {
+export const getReservations = async (headers = "") => {
   try {
     const response = await axiosInstance.get(
-      `/api/v1/user/reservations?${status}=1`
+      `/api/v1/user/reservations?${headers}`
     );
     return response.data;
   } catch (error) {
@@ -17,8 +17,7 @@ export const getReservationDetails = async (id) => {
     const response = await axiosInstance.get(`/api/v1/user/reservations/${id}`);
     return response.data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    throw new Error(error.message);
   }
 };
 
@@ -30,5 +29,26 @@ export const cancelReservation = async (id) => {
     return response.data;
   } catch (error) {
     throw error;
+  }
+};
+
+export const rejectOffer = async (id) => {
+  try {
+    const response = await axiosInstance.put(
+      `api/v1/user/reservations/offers/${id}/reject`
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+export const acceptOffer = async (id) => {
+  try {
+    const response = await axiosInstance.put(
+      `api/v1/user/reservations/offers/${id}/accept`
+    );
+  } catch (error) {
+    throw new Error(error.message);
   }
 };

@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 const PopularCard = ({
   id,
-  key,
   image,
   title,
   type,
@@ -29,7 +28,7 @@ const PopularCard = ({
     if (favouritesList?.length > 0) {
       setIsFav(favouritesList?.some((item) => item.id === id));
     }
-  }, [favouritesList]);
+  }, [favouritesList, id]);
 
   const getOffers = () => {
     return active_ranges?.filter((date) => {
@@ -66,7 +65,6 @@ const PopularCard = ({
   return (
     <div
       className="popular_card"
-      key={key}
       onClick={() => router.push(`/properties/${id}`)}
     >
       <div className="unit_type_wrapper">

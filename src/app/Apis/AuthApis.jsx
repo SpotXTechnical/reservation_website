@@ -1,3 +1,4 @@
+import Router from "next/router";
 import { axiosInstance } from "./AxiosInstance";
 
 export const signUp = async (data) => {
