@@ -18,7 +18,7 @@ const ReservationCard = ({ data }) => {
   return (
     <div className="reservation_card d-flex flex-column">
       <div
-        className={` d-flex cursor-pointer`}
+        className={` d-flex cursor-pointer flex-column flex-lg-row`}
         onClick={() => handleNavigateToDetails(data.id)}
       >
         <div className="main_image">
@@ -29,7 +29,7 @@ const ReservationCard = ({ data }) => {
             <p className="unit_type">{data.unit.type}</p>
           </div>
           <h3 className={`mb-3 title`}>{data.unit.title}</h3>
-          <p className={`mb-5 details`}>
+          <p className={`mb-3 details d-flex flex-column d-lg-block`}>
             <span className="me-3">
               {data.days} <FormattedMessage id="nights" />
             </span>
@@ -40,7 +40,7 @@ const ReservationCard = ({ data }) => {
               <span className="date">{getDayMonth(data.to)}</span> )
             </span>
           </p>
-          <p className={`d-flex total_cost`}>
+          <p className={`d-flex gap-3 gap-md-5  total_cost`}>
             <span>
               <FormattedMessage id="totalCost" />
             </span>
