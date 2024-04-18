@@ -56,7 +56,6 @@
 }
 .full_width {
   width: 100%;
-  
 }
 .range p {
   margin-bottom: 0;
@@ -71,12 +70,14 @@
 .payment_container {
   margin-top: 16px;
   display: flex;
-  padding: 24px 220px;
+  /* padding: 24px 115px; */
+  padding: 40px;
   align-items: center;
-  gap: 340px;
+  /* gap: 278px; */
   border-radius: 24px;
   background: #fff;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.16);
+  justify-content: space-around;
 }
 
 .down_payment {
@@ -99,16 +100,25 @@
 }
 
 .format_date {
-    display: flex;
-    gap: 32px;
-    align-items: center;
-
+  display: flex;
+  gap: 32px;
+  align-items: center;
 }
 .format_date span {
-    color: #838383;
-font-size: 18px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-text-transform: capitalize;
+  color: #838383;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+@media (max-width: 500px) {
+  .date {
+    flex-direction: column;
+  }
+  .payment_container {
+    flex-direction: column;
+    gap: 30px;
+  }
 }

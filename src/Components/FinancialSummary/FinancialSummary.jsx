@@ -1,5 +1,6 @@
 import Image from "next/image";
 import CalendarImage from "../../../public/assets/ic_calendar.svg";
+import Money from "../../../public/assets/money.svg";
 import VerifiedIcon from "../../../public/assets/check-verified.svg";
 import { FormattedMessage } from "react-intl";
 import styles from "./FinancialSummary.module.css";
@@ -8,20 +9,48 @@ export const FinancialSummary = ({
   to,
   nights,
   totalCost,
-  walletBalance,
+  PayFromWallet,
   downPayment,
   cashToOwner,
   subTotal,
+  status,
 }) => {
   return (
     <>
-      <div className={styles.info_container}>
+      <div className={`${styles.payment_container} mb-4`}>
+        <div className={styles.down_payment}>
+          <p className={styles.bold}>
+            <FormattedMessage id="Total Cost" />
+          </p>
+          <p>{totalCost ? `${totalCost} LE` : 0}</p>
+        </div>
+        <div className={styles.down_payment}>
+          <p className={styles.bold}>
+            <FormattedMessage id="Down Payment" />
+          </p>
+          <p className="flex align-items-center gap-1">
+            {status === "reserved" ? (
+              <Image {...VerifiedIcon} alt="verified" />
+            ) : (
+              ""
+            )}
+            {downPayment ? `${downPayment} LE` : "N/A"}
+          </p>
+        </div>
+        <div className={styles.down_payment}>
+          <p className={styles.bold}>
+            <FormattedMessage id="Cash To Owner" />
+          </p>
+          <p>{cashToOwner ? `${cashToOwner} LE` : 0}</p>
+        </div>
+      </div>
+      <div className={`${styles.info_container} mb-4`}>
         <div className={styles.date}>
           <Image {...CalendarImage} alt="calendar" />
-          <div className={styles.summary_wrapper}>  
+          <div className={styles.summary_wrapper}>
             <div className={styles.reservation_date}>
               <FormattedMessage id="Reservation_date" />
-              <p>{nights} Nights</p> 
+              <p>{nights} Nights</p>
             </div>
             <div className={styles.range}>
               <p className={styles.format_date}>
@@ -34,42 +63,34 @@ export const FinancialSummary = ({
           </div>
         </div>
         <hr className={styles.horizontal_divider} />
-        <div className={styles.date}>
-          <Image {...CalendarImage} alt="calendar" />
+        <div className={`${styles.date}`}>
+          <Image {...Money} alt="calendar" />
           <div className={styles.summary_wrapper}>
             <div className={styles.total_cost}>
               <FormattedMessage id="total_cost" />
-              <p>{totalCost}</p>
+              <p>{totalCost ? `${totalCost} LE` : "0 LE"}</p>
             </div>
+            <hr className={`${styles.horizontal_divider} mb-3`} />
             <div className={`${styles.full_width} ${styles.range}`}>
               <p className={styles.total_cost}>
-                <FormattedMessage id="Wallet Balance" />
-                <span>{walletBalance}</span>
+                <FormattedMessage id="Down Payment" />
+                <span>{downPayment ? `${downPayment} LE` : "N/A"}</span>
+              </p>
+              <p className={styles.total_cost}>
+                <FormattedMessage id="Pay from wallet" />
+                <span>
+                  {PayFromWallet && PayFromWallet > 0
+                    ? `-${PayFromWallet} LE`
+                    : "0 LE"}{" "}
+                </span>
               </p>
               <hr className={styles.horizontal_divider} />
               <p className={styles.total_cost}>
-                <FormattedMessage id="Sub total" />
-                <span>{subTotal}</span>
+                <FormattedMessage id="Deposit" />
+                <span>{subTotal} LE</span>
               </p>
             </div>
           </div>
-        </div>
-      </div>
-      <div className={styles.payment_container}>
-        <div className={styles.down_payment}>
-          <p className={styles.bold}>
-            <FormattedMessage id="Down Payment" />
-          </p>
-          <p className="flex align-items-center gap-1">
-            <Image {...VerifiedIcon} alt="verified" />{" "}
-            {downPayment ? `${downPayment} LE` : "N/A"}
-          </p>
-        </div>
-        <div className={styles.down_payment}>
-          <p className={styles.bold}>
-            <FormattedMessage id="Cash To Owner" />
-          </p>
-          <p>{cashToOwner ? `${cashToOwner} LE` : "N/A"}</p>
         </div>
       </div>
     </>

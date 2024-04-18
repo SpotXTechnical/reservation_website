@@ -19,10 +19,14 @@ import PayNow from "../../Components/PayNow/PayNow";
 import Check from "../../../public/assets/check-square-broken.svg";
 import { NegotiationStatement } from "../../Components/NegotiationStatement/NegotiationStatement";
 import { Offer } from "../../Components/Offer/Offer";
+import ModalComponent from "../../Components/Modal/Modal";
+import { current } from "@reduxjs/toolkit";
+import { verifyTransacion } from "../../app/Apis/VerifyTransaction";
+import PaymentStatusModal from "../../Components/PaymentStatusModal/PaymentStatusModal";
 
 export default function SubRegion() {
   const router = useRouter();
-  const { id } = router.query;
+  const { id, q } = router.query;
   const [data, setData] = useState({});
   const [refetch, setRefetch] = useState(false);
   const icon = getIcon(data.status);
@@ -32,11 +36,14 @@ export default function SubRegion() {
     from: moment(data?.from).format("ddd, DD MMM"),
     nights: data?.days,
     totalCost: data?.total_price,
-    walletBalance: data?.wallet_balance,
+    PayFromWallet: data?.pay_from_wallet,
     downPayment: data?.down_payment,
     cashToOwner: data?.cash_to_owner,
-    subTotal: data?.sub_total,
+    subTotal: data?.amount_to_pay,
+    status: data?.status,
   };
+  const [paymentStatusModal, setPaymentStatusModal] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState(null);
   let { lang } = useSelector((state) => state.language);
   if (typeof window !== "undefined") {
     const storedLanguage = localStorage.getItem("language");
@@ -60,7 +67,11 @@ export default function SubRegion() {
       router.push("/reservations");
     });
   };
-  console.log(financialObj);
+
+  const togglePaymentModal = () => {
+    setPaymentStatusModal((current) => !current);
+  };
+
   useEffect(
     function () {
       if (id) {
@@ -76,6 +87,19 @@ export default function SubRegion() {
     },
     [id, lang, refetch]
   );
+
+  useEffect(() => {
+    if (q === "pay" && localStorage.getItem("tran_ref")) {
+      verifyTransacion(JSON.parse(localStorage.getItem("tran_ref")))
+        .then((res) => {
+          setPaymentStatus(res.data.status);
+          togglePaymentModal();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [q]);
 
   const handleClick = () => {
     router.push(`/properties/${data?.unit?.id}`);
@@ -181,8 +205,11 @@ export default function SubRegion() {
 
         {data.status === "accepted" && (
           <>
-            <hr className="total_price_hr" />
-            <PayNow downPayment={data.down_payment} />
+            <PayNow
+              downPayment={data.down_payment}
+              amountToPay={data.amount_to_pay}
+              Refetch={setRefetch}
+            />
           </>
         )}
         <hr className="total_price_hr" />
@@ -228,6 +255,16 @@ export default function SubRegion() {
           </>
         )}
       </div>
+      <ModalComponent
+        isOpen={paymentStatusModal}
+        toggleModal={togglePaymentModal}
+        modalBody={
+          <PaymentStatusModal
+            status={paymentStatus}
+            toggle={togglePaymentModal}
+          />
+        }
+      />
       <ToastContainer />
     </div>
   );

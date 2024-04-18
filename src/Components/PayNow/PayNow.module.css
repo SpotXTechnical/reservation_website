@@ -46,6 +46,16 @@
   line-height: normal;
 }
 .CTABtn:hover {
-    color: #161616;
-    background-color: white;
-}  
+  color: #161616;
+  background-color: white;
+}
+
+@media (max-width: 500px) {
+  .CTABtn_media {
+    flex-direction: column;
+  }
+  .CTABtn_media button {
+    width: auto;
+    padding: 10px 20px;
+  }
+}

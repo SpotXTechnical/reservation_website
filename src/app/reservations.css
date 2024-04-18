@@ -551,3 +551,35 @@
     display: none;
   }
 }
+
+@media (max-width: 500px) {
+  .cancellation_policy h3 {
+    margin: 0 auto;
+  }
+  .free_cancellation {
+    flex-direction: column;
+  }
+  .reservation_container .view_details {
+    /* flex-direction: column; */
+    width: auto;
+    height: auto;
+    padding: 8px 12px;
+    gap: 10px;
+  }
+}
+
+.pagination_active_link {
+  background-color: #44bcb7 !important;
+  border-color: transparent !important;
+}
+.pagination_not_active_link {
+  color: #44bcb7;
+}
+
+.reservation_container .pagination .page-item {
+  cursor: pointer;
+}
+.reservation_container .pagination .page-item span:hover {
+  color: #44bcb7 !important;
+  background-color: #e9e9e9 !important;
+}

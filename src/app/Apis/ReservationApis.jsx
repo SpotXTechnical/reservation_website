@@ -1,8 +1,10 @@
 import { axiosInstance } from "./AxiosInstance";
 
-export const getReservations = async () => {
+export const getReservations = async (headers = "") => {
   try {
-    const response = await axiosInstance.get(`/api/v1/user/reservations`);
+    const response = await axiosInstance.get(
+      `/api/v1/user/reservations?${headers}`
+    );
     return response.data;
   } catch (error) {
     console.error(error);
