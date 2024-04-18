@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@loadable/component": "^5.15.3",
+    "@lottiefiles/react-lottie-player": "^3.5.3",
     "@next/font": "13.1.5",
     "@reduxjs/toolkit": "^1.9.3",
     "axios": "^1.4.0",
@@ -24,7 +25,7 @@
     "install": "^0.13.0",
     "moment": "^2.29.4",
     "moment-range": "^4.0.2",
-    "next": "13.1.5",
+    "next": "13.4",
     "popper.js": "^1.16.1",
     "prettier": "^2.8.8",
     "rc-slider": "^10.2.1",
