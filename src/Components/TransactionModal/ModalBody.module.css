@@ -1,0 +1,117 @@
+.fine {
+  width: fit-content;
+
+  flex-shrink: 0;
+}
+.gift_card {
+  width: fit-content;
+
+  flex-shrink: 0;
+}
+
+.reason_placeholder {
+  color: #707070;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  text-transform: capitalize;
+}
+.fine_amount {
+  color: #f00;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.gift_amount {
+  color: #008000;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.ok {
+  display: flex;
+  width: 392px;
+  padding: 13px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 12px;
+  background: var(
+    --liner,
+    linear-gradient(180deg, #44bcb7 -16.5%, #2396cc 54.7%)
+  );
+  box-shadow: 0px 2px 30px 0px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+}
+.ok:hover {
+  color: black;
+  transition: all 800ms;
+}
+
+.modal-body {
+  max-width: 60%;
+  padding-left: 0;
+}
+.modal-content {
+  min-width: min-content;
+  margin-inline: -60px;
+}
+.transaction_image {
+  width: 300px;
+  height: 400px;
+}
+
+.card {
+  display: inline-flex;
+  padding: 8px 10px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.16);
+}
+.image_card {
+  display: flex;
+  padding: 6px;
+  align-items: flex-start;
+  gap: 8px;
+  border-radius: 8px;
+  border: 1px solid #38aebf;
+}
+.faded {
+  color: #838383;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.add {
+  color: #008000;
+  text-align: right;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.deduct {
+  color: #f00;
+  text-align: right;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: capitalize;
+}

@@ -2,8 +2,8 @@
   border-radius: 24px;
   background: linear-gradient(96deg, #299dc7 13%, #3fb6b6 109.38%);
   margin: auto;
-  padding: 2rem 1rem;
-  width: 60%;
+  padding: 1rem 1rem;
+  width: 80%;
   align-items: center;
 }
 
@@ -18,7 +18,7 @@
 
 .amount {
   color: var(--Color-Base-White, #fff);
-  font-size: 64px;
+  font-size: 50px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;

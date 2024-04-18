@@ -25,8 +25,8 @@
   top: 25%;
   right: 25px;
   display: flex;
-  align-items: start;
-  justify-content: start;
+  align-items: flex-start;
+  justify-content: flex-start;
   gap: 8px;
   cursor: pointer;
 }
