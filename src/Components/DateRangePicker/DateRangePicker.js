@@ -105,11 +105,11 @@ const DateRangeCalendarPicker = ({
 
   function calculatePrice(date, activeRanges, defaultPrice) {
     for (const range of activeRanges) {
-      const fromDate = new Date(range.from + " GMT+0200");
-      const toDate = new Date(range.to + " GMT+0200");
+      const fromDate = new Date(range.from);
+      const toDate = new Date(range.to);
       if (
-        date.getTime() >= fromDate.getTime() &&
-        date.getTime() < toDate.getTime()
+        resetTime(date).getTime() >= resetTime(fromDate).getTime() &&
+        resetTime(date).getTime() <= resetTime(toDate).getTime()
       ) {
         console.log("here");
         return range.price;
@@ -117,6 +117,11 @@ const DateRangeCalendarPicker = ({
     }
 
     return defaultPrice;
+  }
+
+  // function to reset time
+  function resetTime(date) {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   }
 
   return (
