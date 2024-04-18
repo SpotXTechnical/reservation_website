@@ -1,13 +1,12 @@
 import Button from "../SharedComponents/Button/Button";
 import Select from "react-select";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import { langAction } from "../../store";
 import styles from "./header.module.css";
 import { useRouter } from "next/router";
 import { logOut, setAccessToken } from "../../store/Auth/authSlice";
-
 
 export default function Header() {
   let { lang } = useSelector((state) => state.language);
@@ -17,16 +16,25 @@ export default function Header() {
   const [userData, setUserData] = useState("");
   const dispatcher = useDispatch();
   const router = useRouter();
-  console.log(userData);
+  const menuRef = useRef(null);
+
   const handleNavigateToOffers = () => {
     router.push("/offers");
   };
-  console.log("user", user);
   useEffect(() => {
     // const data = localStorage.getItem("user")
     //   ? JSON.parse(localStorage.getItem("user"))
     //   : "";
     // setUserData(data);
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
   }, []);
   const avatar = "/assets/avatar.png";
 
@@ -118,7 +126,7 @@ export default function Header() {
             <div className={styles.notification_number}>2</div>
           </div> */}
           {user ? (
-            <div className={styles.profile_img_wrapper}>
+            <div className={styles.profile_img_wrapper} ref={menuRef}>
               <img
                 src={user.image || avatar}
                 alt="profile-img"
