@@ -1,6 +1,5 @@
-import styles from "./Title.module.css";
 const Title = ({ text }) => {
-  return <p className={styles.title}>{text}</p>;
+  return <p className="title_component">{text}</p>;
 };
 
 export default Title;

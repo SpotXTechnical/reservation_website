@@ -1,0 +1,38 @@
+.regionsList_container {
+  margin: 0 80px 80px 80px;
+}
+.regionsList_container .regionsList_header {
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.regionsList_container .regionsList {
+  display: flex;
+  gap: 15px;
+}
+.regionsList_container .regionsList > div {
+  width: 25%;
+}
+
+@media screen and (max-width: 1280px) {
+  .regionsList_container .regionsList {
+    width: 200%;
+  }
+
+  .regionsList_container .regionsList_wrapper {
+    overflow-x: auto;
+  }
+  .regionsList_container .regionsList_wrapper::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .regionsList_container {
+    margin: 0 15px 80px 15px;
+  }
+  .regionsList_container .regionsList {
+    width: 300%;
+  }
+}

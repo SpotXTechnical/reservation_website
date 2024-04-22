@@ -1,11 +1,13 @@
-import Input from "@/Components/SharedComponents/Input/Input";
+import Input from "../../Components/SharedComponents/Input/Input";
 import { useState } from "react";
-import styles from "./signin.module.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { FormattedMessage, useIntl } from "react-intl";
-import { signIn } from "@/app/Apis/AuthApis";
+import { signIn } from "../../app/Apis/AuthApis";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import store, { langAction } from "@/store";
+import { useDispatch, useSelector } from "react-redux";
+import store, { langAction } from "../../store";
+import { logIn, setAccessToken } from "../../store/Auth/authSlice";
 
 export default function SignIn() {
   if (typeof window !== "undefined") {
@@ -22,7 +24,10 @@ export default function SignIn() {
   const [emailErr, setEmailErr] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordErr, setPasswordErr] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [phoneErr, setPhoneErr] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
+  const dispatch = useDispatch()
 
   const onEmailChange = ({ target }) => {
     setEmail(target.value);
@@ -40,38 +45,52 @@ export default function SignIn() {
     !value ? setPasswordErr(true) : setPasswordErr(false);
   };
 
+  const onPhoneChange = ({ target }) => {
+    const { value } = target;
+    setPhone(value);
+    !value ? setPhoneErr(true) : setPhoneErr(false);
+  };
+
   const handleDismissAlret = () => setValidationErrors({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    !email && setEmailErr(true);
+    // !email && setEmailErr(true);
+    !phone && setPhone(true);
     !password && setPasswordErr(true);
-    if (email && password && !emailErr && !passwordErr) {
+    if (phone && password && !phoneErr && !passwordErr) {
       const data = {
-        identifier: email,
+        identifier: phone.startsWith("+2") ? phone : `+2${phone}`,
         password,
       };
-      signIn(data).then((res) => {
-        if (res.errors) {
-          setValidationErrors(res.errors);
-          setTimeout(() => {
-            handleDismissAlret();
-          }, 5000);
-        } else {
-          localStorage.setItem("user", JSON.stringify(res?.data?.user));
-          localStorage.setItem(
-            "access_token",
-            JSON.stringify(res?.data?.token?.access_token)
-          );
-          window.location.href = "/";
-        }
-      });
+      signIn(data)
+        .then((res) => {
+          if (res.errors) {
+            setValidationErrors(res.errors);
+            setTimeout(() => {
+              handleDismissAlret();
+            }, 5000);
+          } else {
+            localStorage.setItem("user", JSON.stringify(res?.data?.user));
+            dispatch(logIn(res?.data?.user))
+            localStorage.setItem(
+              "access_token",
+              JSON.stringify(res?.data?.token?.access_token)
+            );
+            dispatch(setAccessToken(res?.data?.token?.access_token))
+            router.back()
+            // router.push(`/${window.location.search}`);
+          }
+        })
+        .catch((err) => {
+          return toast.error(err?.response?.data?.message, { autoClose: 5000 });
+        });
     }
   };
 
   return (
     <>
-      {Object.keys(validationErrors).length ? (
+      {Object.keys(validationErrors).length > 0 ? (
         <div
           className="alert alert-danger alert-dismissible fade show"
           role="alert"
@@ -93,20 +112,21 @@ export default function SignIn() {
       ) : (
         ""
       )}
-      <div dir={lang === "ar" ? "rtl" : "ltr"} className={styles.container}>
-        <div className={styles.inner_container}>
-          <div className={styles.form_container}>
-            <h3 className={styles.signin_title}>
+      <div dir={lang === "ar" ? "rtl" : "ltr"} className="wrapper_sign_in">
+        <ToastContainer />
+        <div className="inner_container">
+          <div className="form_container">
+            <h3 className="signin_title">
               <FormattedMessage id="signin.form.title" />
             </h3>
-            <h5 className={styles.welcome_back}>
+            <h5 className="welcome_back">
               <FormattedMessage id="signin.welcomeBack" />
             </h5>
             <p>
               <FormattedMessage id="signin.subtitle" />
             </p>
             <form autoComplete="off">
-              <div className="mb-3">
+              {/* <div className="mb-3">
                 <label htmlFor="emailField" className={styles.label}>
                   <FormattedMessage id="signin.fields.email.label" />
                 </label>
@@ -126,15 +146,30 @@ export default function SignIn() {
                       : ""
                   }
                 />
+              </div> */}
+              <div className="mb-3">
+                <label htmlFor="phoneField" className="label">
+                  <FormattedMessage id="signup.fields.phone.label" />
+                </label>
+                <Input
+                  type="text"
+                  id="phoneField"
+                  className="signin_input"
+                  placeholder={intl.formatMessage({
+                    id: "signup.fields.phone.placeholder",
+                  })}
+                  onChange={onPhoneChange}
+                  error={phoneErr && !phone ? "requiredField" : ""}
+                />
               </div>
               <div className="mb-3">
-                <label htmlFor="passwordField" className={styles.label}>
+                <label htmlFor="passwordField" className="label">
                   <FormattedMessage id="signin.fields.password.label" />
                 </label>
                 <Input
                   type="password"
                   id="passwordField"
-                  className={styles.signin_input}
+                  className="signin_input"
                   placeholder={intl.formatMessage({
                     id: "signin.fields.password.placeholder",
                   })}
@@ -144,27 +179,28 @@ export default function SignIn() {
               </div>
               <button
                 type="submit"
-                className={`${styles.button_wrapper}`}
+                className="button_wrapper"
                 onClick={handleSubmit}
               >
                 <FormattedMessage id="signin.form.title" />
               </button>
             </form>
-            <div className={styles.dont_have_account}>
+            <div className="dont_have_account">
               <span>
-                <FormattedMessage id="signin.dontHaveAcc" />
-                <div onClick={()=> {window.location.href="/signup"}}>
+                <FormattedMessage id="signin.dontHaveAcc" />{" "}
+                <span
+                  className="signUp"
+                  onClick={() => {
+                    router.push("/signup");
+                  }}
+                >
                   <FormattedMessage id="signin.signup" />
-                </div>
+                </span>
               </span>
             </div>
           </div>
-          <div className={styles.image_container}>
-            <img
-              className={styles.main_img}
-              src="/assets/signIn.png"
-              alt="signin"
-            />
+          <div className="image_container">
+            <img className="main_img" src="/assets/signIn.png" alt="signin" />
           </div>
         </div>
       </div>

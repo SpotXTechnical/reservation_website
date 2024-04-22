@@ -1,0 +1,61 @@
+.policy_container {
+  min-height: 50vh;
+  margin: 40px 80px 80px 80px;
+  direction: rtl;
+  text-align: right;
+}
+
+.main_titles {
+  font-weight: 500;
+}
+
+.logo {
+  display: none;
+}
+
+.title {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 29px;
+  text-transform: capitalize;
+  color: var(--dark-color);
+  font-family: var(--Montserrat-Bold);
+  margin-bottom: 0px;
+  margin-bottom: 30px;
+}
+
+.title:first-letter {
+  text-transform: uppercase;
+}
+
+.policy_content {
+  font-weight: 400;
+  font-size: 13px;
+  opacity: 0.8;
+  font-family: var(--Montserrat-Regular);
+}
+
+.policy_content li {
+  margin-bottom: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  .policy_container {
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    background: var(--white-color);
+    margin: 0;
+    padding: 16px;
+    overflow: auto;
+  }
+  .logo {
+    display: block;
+    margin-bottom: 20px;
+  }
+}
