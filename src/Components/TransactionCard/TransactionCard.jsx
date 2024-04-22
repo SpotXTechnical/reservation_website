@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useState } from "react";
 import ModalComponent from "../../Components/Modal/Modal";
 import Add from "../../../public/assets/Add.svg";
@@ -7,7 +8,7 @@ import Gift from "../../../public/assets/SpotXGift.svg";
 import Refund from "../../../public/assets/refund-2-line.svg";
 import Compensation from "../../../public/assets/compensation.svg";
 import Fine from "../../../public/assets/Minusfine.svg";
-import Image from "next/image";
+import Dashboard from "../../../public/assets/dash.svg";
 import "./ModalBody.css";
 import moment from "moment";
 import styles from "./TransactionCard.module.css";
@@ -34,6 +35,11 @@ export default function TransactionCard({ card }) {
     case "reservation":
       reason.img = Reservation;
       reason.type = "Reservation";
+      break;
+    case "manual":
+      reason.img = Dashboard;
+      reason.type = "manual";
+      break;
     default:
       break;
   }
@@ -68,6 +74,8 @@ export default function TransactionCard({ card }) {
             >
               {card.type === "in"
                 ? `${card.amount.toFixed(2)} LE`
+                : card.amount === 0
+                ? `${card.amount.toFixed(2)} LE`
                 : `-${card.amount.toFixed(2)} LE`}
             </p>
           </div>
@@ -89,7 +97,9 @@ export default function TransactionCard({ card }) {
       <ModalComponent
         isOpen={isOpen}
         toggleModal={toggleModal}
-        modalBody={<ModalBody card={card} toggle={toggleModal} icon={reason.img} />}
+        modalBody={
+          <ModalBody card={card} toggle={toggleModal} icon={reason.img} />
+        }
         className="transaction_summary"
       />
     </div>
