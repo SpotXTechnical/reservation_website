@@ -13,6 +13,7 @@ import moment from "moment";
 
 export default function ModalBody({ card, toggle, icon }) {
   const { transactionData, loading, error } = useTransaction(card);
+  console.log(transactionData);
   if (loading) {
     return <Loading />;
   }
@@ -49,6 +50,7 @@ export default function ModalBody({ card, toggle, icon }) {
         "Congratulations! You've earned a special bonus for your loyalty and engagement with our platform. We've added a bonus amount to your wallet as a token of appreciation. Enjoy investing with us!";
       reason.amount = card.amount;
       break;
+
     default:
       break;
   }
@@ -94,7 +96,7 @@ export default function ModalBody({ card, toggle, icon }) {
           </div>
         </>
       )}
-      {card.reason !== "fine" && card.reason !== "gift_card" && (
+      {(card.reason === "reservation" || card.reason === "refund") && (
         <>
           <div className={`d-flex gap-3 ${styles.transaction_image}`}>
             <Image
@@ -112,7 +114,7 @@ export default function ModalBody({ card, toggle, icon }) {
           <div className="d-flex flex-column gap-3 flex-grow-1 pt-4">
             <div className="d-flex gap-2">
               <Image src={icon} alt="icon" />
-              <p>{transactionData?.reservation?.status?.toUpperCase()}</p>
+              <p>{transactionData?.reason?.toUpperCase()}</p>
             </div>
             <div className={styles.card}>
               <div className={styles.image_card}>
@@ -164,6 +166,74 @@ export default function ModalBody({ card, toggle, icon }) {
                 } mb-0`}
               >
                 {card.type === "in"
+                  ? `${card.amount.toFixed(2)} LE`
+                  : card.amount === 0
+                  ? `${card.amount.toFixed(2)} LE`
+                  : `-${card.amount.toFixed(2)} LE`}
+              </p>
+            </div>
+            <button className={`${styles.ok} mx-auto`} onClick={() => toggle()}>
+              OK
+            </button>
+          </div>
+        </>
+      )}
+      {card.reason === "manual" && (
+        <>
+          <div className={`d-flex gap-3 ${styles.transaction_image}`}>
+            <Image
+              src={Unit}
+              alt="icon"
+              style={{
+                backgroundPosition: "center",
+                borderRadius: "20px 0 0 20px",
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          </div>
+          <div className="d-flex flex-column gap-3 flex-grow-1 pt-4">
+            <div className="d-flex gap-2">
+              <Image src={icon} alt="icon" />
+              <p>{transactionData?.reason?.toUpperCase()}</p>
+            </div>
+            <div className={styles.card}>
+              <div className={styles.image_card}>
+                <Image src={Calendar} alt="calendar" />
+              </div>
+              <div className="d-flex flex-grow-1 gap-2 flex-column justify-content-center">
+                <div className="d-flex justify-content-between">
+                  <p className="mb-0">
+                    Due Date:{" "}
+                    <span className={styles.faded}>
+                      {moment(transactionData?.created_at).format(
+                        "dddd, D MMMM"
+                      )}
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className={styles.card}>
+              <div className={styles.image_card}>
+                <Image src={Calendar} alt="calendar" />
+              </div>
+              <div className="d-flex justify-content-between align-items-center flex-grow-1">
+                <p className="mb-0">Total Amount</p>
+                <p className="mb-0">{transactionData?.amount} LE</p>
+              </div>
+            </div>
+            <div className={`${styles.card} flex-column gap-1`}>
+              <p className="mb-0">{transactionData?.notes}</p>
+              <p
+                className={`${
+                  card.type === "in" ? styles.add : styles.deduct
+                } mb-0`}
+              >
+                {card.type === "in"
+                  ? `${card.amount.toFixed(2)} LE`
+                  : card.amount === 0
                   ? `${card.amount.toFixed(2)} LE`
                   : `-${card.amount.toFixed(2)} LE`}
               </p>
