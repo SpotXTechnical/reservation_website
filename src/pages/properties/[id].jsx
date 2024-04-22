@@ -503,10 +503,12 @@ export default function PropertyDetails() {
             <div className="summary_card">
               <div className="unit_type_wrapper">
                 <div className="unit_type">challet</div>
-                <div className="rating_wrapper">
-                  <img src="/assets/star.png" alt="star" />
-                  <span className="rate">{data?.rate}</span>
-                </div>
+                {data?.rate > 0 && (
+                  <div className="rating_wrapper">
+                    <img src="/assets/star.png" alt="star" />
+                    <span className="rate">{data?.rate}</span>
+                  </div>
+                )}
               </div>
               <img
                 className="card_image"
@@ -532,7 +534,7 @@ export default function PropertyDetails() {
               </div>
             </div>
             <div className="from_to_wrapper">
-            <p className="d-flex justify-content-between">
+              <p className="d-flex justify-content-between">
                 <span>
                   <span className="label">
                     <FormattedMessage id="from" />
