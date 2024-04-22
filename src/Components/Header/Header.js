@@ -21,6 +21,13 @@ export default function Header() {
   const handleNavigateToOffers = () => {
     router.push("/offers");
   };
+  const handleReservationRouting = () => {
+    if (localStorage.getItem("access_token")) {
+      router.push("/reservations");
+    } else {
+      router.push("/signin");
+    }
+  };
   useEffect(() => {
     // const data = localStorage.getItem("user")
     //   ? JSON.parse(localStorage.getItem("user"))
@@ -66,7 +73,7 @@ export default function Header() {
           </div>
           <div
             className="d-flex align-items-center gap-1 cursor-pointer"
-            onClick={() => router.push("/reservations")}
+            onClick={handleReservationRouting}
           >
             <img src="/assets/shopping-bag.png" alt="reservations" />
             <span className={styles.menu_item}>
