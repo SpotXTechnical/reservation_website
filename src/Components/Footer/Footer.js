@@ -37,6 +37,14 @@ export default function Footer() {
             >
               <FormattedMessage id="home.termsAndConditions" />
             </li>
+            <li
+              className="cursor-pointer"
+              onClick={() => {
+                router.push("/policy");
+              }}
+            >
+              <FormattedMessage id="Refund Policy" />
+            </li>
           </ul>
         </div>
         <div className="col-sm-3">
