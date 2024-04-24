@@ -7,9 +7,18 @@
   font-size: 14px;
   width: 100%;
 }
+.contact_row img {
+  width: 20px;
+  height: 20px;
+}
+.contact_row a {
+  text-decoration: none;
+  color: #fff;
+}
 .about_spotx {
   margin-bottom: 12px;
   color: var(--yellow-color);
+  font-size: 1.6rem;
 }
 .about {
   font-weight: 400;
