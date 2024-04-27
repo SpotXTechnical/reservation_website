@@ -1,0 +1,22 @@
+.policy_container {
+  min-height: 50vh;
+  margin: 40px 80px 80px 80px;
+  font-weight: normal;
+  line-height: 25px;
+}
+.header {
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+.policy_container h2 {
+  font-weight: 600;
+  font-size: 1.6rem;
+}
+.policy_container p {
+  font-size: 1.1rem;
+}
+.policy_container a {
+  color: rgba(0, 0, 0, 0.87);
+  border-bottom: 1.5px solid #7baaf7;
+  text-decoration: none;
+}
