@@ -12,7 +12,10 @@ export const ModalBody = ({ paymentMethods }) => {
   const { id } = router.query;
   const handleGeneratePaymentURL = () => {
     setLoading(true);
-    getPaymentURL(id, `http://localhost:3000/reservations/${id}?q=pay`)
+    getPaymentURL(
+      id,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/reservations/${id}?q=pay`
+    )
       .then((res) => {
         localStorage.setItem("tran_ref", JSON.stringify(res.data.tran_ref));
         const url = res.data.redirect_url;

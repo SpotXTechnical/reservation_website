@@ -653,11 +653,11 @@ const Reservations = () => {
               {data.map((unit, i) => {
                 return (
                   <PopularCard
-                    key={i}
+                    key={unit.id}
                     id={unit.id}
                     title={unit.title}
                     image={unit.images[0]?.url}
-                    default_price={unit.default_price}
+                    default_price={unit.current_price}
                     bathrooms={unit.bathrooms}
                     beds={unit.beds}
                     type={unit.type}

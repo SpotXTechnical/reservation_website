@@ -15,7 +15,7 @@ const RegionsHomeList = () => {
   const [data, setData] = useState([]);
   let { lang } = useSelector((state) => state.language);
   useEffect(() => {
-    getRegions().then((res) => setData(res.data?.slice(0, 4)));
+    getRegions().then((res) => setData(res.data));
   }, [lang]);
   const handleRedirectToRegionDetails = (id) => {
     router.push(`/regions/${id}`);
@@ -27,7 +27,7 @@ const RegionsHomeList = () => {
         {/* <ViewAll /> */}
       </div>
       <div className="regionsList_wrapper">
-        <div className="regionsList">
+        <div className="regionsList overflow-auto">
           {data?.length > 0
             ? data.map(({ name, images, id }, i) => (
                 <RegionsCard

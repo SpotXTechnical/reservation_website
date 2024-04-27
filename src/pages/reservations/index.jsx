@@ -8,6 +8,7 @@ import ReservationsPagination from "../../Components/ReservationsPagination/Rese
 
 const Reservations = () => {
   let { lang } = useSelector((state) => state.language);
+
   if (typeof window !== "undefined") {
     const storedLanguage = localStorage.getItem("language");
     const language = storedLanguage ? storedLanguage : "en";

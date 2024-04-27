@@ -11,6 +11,7 @@ export default function Profile() {
   const intl = useIntl();
   const router = useRouter();
   const [data, setData] = useState({});
+  const { user } = useSelector((state) => state.auth);
 
   if (typeof window !== "undefined") {
     const storedLanguage = localStorage.getItem("language");
@@ -21,10 +22,12 @@ export default function Profile() {
   }
 
   useEffect(() => {
-    getProfile().then((res) => {
-      setData(res.data);
-    });
-  }, []);
+    if (user) {
+      getProfile().then((res) => {
+        setData(res.data);
+      });
+    }
+  }, [user]);
 
   return (
     <>
