@@ -9,6 +9,7 @@ import { AuthInitializer } from "../Components/AuthInitializer/AuthInitializer";
 
 export default function MyApp({ Component, pageProps }) {
   const [lang, setLang] = useState("en");
+  const getLayout = Component.getLayout;
 
   useEffect(() => {
     if (localStorage.getItem("language")) {
@@ -23,9 +24,13 @@ export default function MyApp({ Component, pageProps }) {
     <Provider store={store}>
       <IntlProvider locale={lang} messages={messages} onError={() => null}>
         <AuthInitializer>
-          <Layout>
-            <Component {...pageProps} locale={lang} />
-          </Layout>
+          {getLayout ? (
+            getLayout(<Component {...pageProps} />)
+          ) : (
+            <Layout>
+              <Component {...pageProps} locale={lang} />
+            </Layout>
+          )}
         </AuthInitializer>
       </IntlProvider>
     </Provider>

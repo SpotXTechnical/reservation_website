@@ -71,10 +71,34 @@ input:focus-visible {
   .container_wrapper {
     padding-inline: 50px;
   }
+  .small_screen_on {
+    left: -100% !important;
+  }
 }
 
 @media screen and (max-width: 768px) {
   .container_wrapper {
-    padding-inline: 5px;
+    padding-inline: 0px;
   }
+  .small_screen_on {
+    left: 0 !important;
+  }
+}
+
+.small_screen {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(96deg, #299dc7 13%, #3fb6b6 109.38%);
+  position: fixed;
+  top: 0;
+  left: -100%;
+  z-index: 10000;
+  transition: all 0.5s;
+}
+.small_screen ul {
+  padding: 0;
+}
+
+.small_screen_on {
+  left: 0;
 }

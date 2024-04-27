@@ -347,7 +347,7 @@ export default function PropertyDetails() {
             </div>
             <div className="price">
               <span>
-                {data?.default_price} <FormattedMessage id="le" />
+                {data?.current_price} <FormattedMessage id="le" />
               </span>
               <span>
                 {" "}

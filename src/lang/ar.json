@@ -269,5 +269,37 @@
   "maximum": "Maximum",
   "Other units": "Other units",
   "cancel reservation": "Cancel Reservation",
-  "transactions": "تحويلات"
+  "transactions": "تحويلات",
+  "cancellationAndRefundPolicy": {
+    "title": "Cancellation and Refund Policy",
+    "sections": [
+      {
+        "title": "Cancellation and Refund",
+        "content": [
+          "The tenant can cancel the reservation before the start of the stay under the following conditions:",
+          "- The cancellation must be officially communicated to the host through the app.",
+          "- Cancellation fees may apply according to the policy specified during the booking process.",
+          "- If the reservation is canceled 7 days prior to the booking date, the full amount will be refunded.",
+          "- If the reservation is canceled 4 days prior to the booking date, a 50% cancellation fee will be deducted.",
+          "- If the reservation is canceled 2 days or less before the booking date, no refund will be issued.",
+          "The cancellation and refund policy may be clearly specified during the booking process, including the allowable cancellation period and applicable fees."
+        ]
+      },
+      {
+        "title": "Cancellation by the Host",
+        "content": [
+          "The host reserves the right to cancel the reservation in exceptional circumstances, such as unavailability of the accommodation or emergencies.",
+          "In case of cancellation by the host, a full refund will be issued to the tenant without any cancellation fees."
+        ]
+      },
+      {
+        "title": "Communication and Inquiries",
+        "content": [
+          "For any inquiries regarding the cancellation and refund policy, please directly contact the host through the app.",
+          "For disputes or additional inquiries, please contact the customer support team via email at support@spotx.app."
+        ]
+      }
+    ],
+    "note": "Note: The terms and conditions outlined in the cancellation and refund policy apply to all bookings, tenants, and hosts on the app."
+  }
 }
