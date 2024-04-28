@@ -4,7 +4,9 @@
   font-weight: normal;
   line-height: 25px;
 }
-
+.policy_container h2 {
+  text-align: inherit;
+}
 .main_titles {
   font-weight: 500;
 }
@@ -52,17 +54,7 @@
 
 @media screen and (max-width: 768px) {
   .policy_container {
-    bottom: 0;
-    height: 100%;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 999;
-    background: var(--white-color);
-    margin: 0;
-    padding: 16px;
-    overflow: auto;
+    margin: 10px 20px 20px 20px;
   }
   .logo {
     display: block;

@@ -23,6 +23,7 @@ import ModalComponent from "../../Components/Modal/Modal";
 import { current } from "@reduxjs/toolkit";
 import { verifyTransacion } from "../../app/Apis/VerifyTransaction";
 import PaymentStatusModal from "../../Components/PaymentStatusModal/PaymentStatusModal";
+import Link from "next/link";
 
 export default function SubRegion() {
   const router = useRouter();
@@ -239,7 +240,8 @@ export default function SubRegion() {
               <h3>Cancellation policy</h3>
               <div className="free_cancellation">
                 <p>
-                  <FormattedMessage id="Free-free cancellation" />
+                  Please read our <Link href="/policy">Refund Policy</Link>{" "}
+                  before cancellation.
                 </p>
                 <button
                   onClick={() =>

@@ -63,6 +63,11 @@
   line-height: 140%;
   text-transform: capitalize;
 }
+.free_cancellation a {
+  color: rgba(0, 0, 0, 0.87);
+  border-bottom: 1.5px solid #7baaf7;
+  text-decoration: none;
+}
 .free_cancellation button {
   display: flex;
   width: 263px;
