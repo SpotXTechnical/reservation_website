@@ -16,6 +16,7 @@ import MapContainer from "../../Components/Map/MapContainer";
 import { addToFavourite, removeFromFavourite } from "../../app/Apis/UnitsApis";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
 
 export default function PropertyDetails() {
   let { lang } = useSelector((state) => state.language);
@@ -401,12 +402,10 @@ export default function PropertyDetails() {
               <FormattedMessage id="Cancellation Policy" />
             </div>
 
-            {/* <div
-              className={styles.link}
-              onClick={() => (window.location = "/policy")}
-            >
-              <FormattedMessage id="Free-free cancellation" /> {" >>"}
-            </div> */}
+            <p className="cancellation">
+              Please read our <Link href="/policy">Refund Policy</Link> before
+              cancellation.
+            </p>
           </div>
 
           <div className="over_view">
