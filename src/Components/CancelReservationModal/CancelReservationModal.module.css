@@ -1,0 +1,39 @@
+.header {
+  font-weight: 700;
+  text-align: center;
+}
+
+.cancellation {
+  color: #7b7b7b;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  text-transform: capitalize;
+  margin-top: 20px;
+}
+.cancellation a {
+  color: rgba(0, 0, 0, 0.87);
+  border-bottom: 1.5px solid #7baaf7;
+  text-decoration: none;
+}
+.CTA_yes {
+  background: #e74c3c;
+  color: white;
+  padding: 8px 40px;
+}
+.CTA_yes:hover {
+  background: white;
+  color: #e74c3c;
+  border: 1px solid #e74c3c;
+}
+.CTA_no {
+  background: #156b68;
+  color: white;
+  padding: 8px 40px;
+}
+.CTA_no:hover {
+  background: white;
+  color: #156b68;
+  border: 1px solid #156b68;
+}
