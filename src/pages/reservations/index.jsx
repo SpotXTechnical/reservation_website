@@ -5,6 +5,7 @@ import ReservationCard from "../../Components//ReservationCard";
 import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
 import ReservationsPagination from "../../Components/ReservationsPagination/ReservationsPagination";
+import { ToastContainer } from "react-toastify";
 
 const Reservations = () => {
   let { lang } = useSelector((state) => state.language);
@@ -110,6 +111,7 @@ const Reservations = () => {
           callBack={getPageNumberAndFetch}
         />
       )}
+      <ToastContainer />
     </div>
   );
 };
