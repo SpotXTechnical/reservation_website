@@ -123,8 +123,8 @@ export default function PrivacyContent() {
           <h2>Contact Us</h2>
           <p>
             If you have any questions or concerns about this Privacy Policy or
-            our practices, please contact us at
-            <a href="mailto:support@spotx.app">support@spotx.app</a>
+            our practices, please contact us at{" "}
+            <a href="mailto:info@spotx.app">info@spotx.app</a>
           </p>
         </section>
       </div>
@@ -238,7 +238,7 @@ export default function PrivacyContent() {
           <p>
             إذا كان لديك أي أسئلة أو استفسارات حول هذه السياسة الخصوصية أو
             ممارساتنا، يرجى الاتصال بنا على{" "}
-            <a href="mailto:support@spotx.app">support@spotx.app</a>
+            <a href="mailto:info@spotx.app">info@spotx.app</a>
           </p>
         </section>
       </div>

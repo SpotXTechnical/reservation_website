@@ -68,7 +68,7 @@ export default function PolicyContent() {
             <li>
               For disputes or additional inquiries, please contact the customer
               support team via email at{" "}
-              <a href="mailto:support@spotx.app">support@spotx.app</a>
+              <a href="mailto:info@spotx.app">info@spotx.app</a>
             </li>
           </ul>
           <p>
@@ -132,7 +132,7 @@ export default function PolicyContent() {
             <li>
               في حالة وجود خلافات أو استفسارات إضافية، يرجى الاتصال بفريق الدعم
               الفني عبر البريد الإلكتروني{" "}
-              <a href="mailto:support@spotx.app">support@spotx.app</a>
+              <a href="mailto:info@spotx.app">info@spotx.app</a>
             </li>
           </ul>
           <p>
