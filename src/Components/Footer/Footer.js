@@ -34,7 +34,7 @@ export default function Footer() {
           </p>
         </address>
         <div className="col-sm-3">
-          <ul>
+          <ul className={styles.list}>
             {/* <li>
               <FormattedMessage id="home.rentYourProperty" />
             </li> */}

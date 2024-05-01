@@ -6,7 +6,7 @@ const SubRegions = ({ regionName, subRegions }) => {
   const router = useRouter();
 
   return (
-    <div className={`container_wrapper`}>
+    <div className={`container_wrapper p-3`}>
       <div className={`sub_regions_container cursor-pointer`}>
         {subRegions.map((item, i) => (
           <RegionsCard

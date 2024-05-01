@@ -33,7 +33,7 @@ const ReservationCard = ({ data }) => {
             <span className="me-3">
               {data.days} <FormattedMessage id="nights" />
             </span>
-            <span>
+            <span className="fs-6">
               ( <FormattedMessage id="from" /> &nbsp;
               <span className="date">{getDayMonth(data.from)}</span> &nbsp;
               <FormattedMessage id="to" /> &nbsp;
@@ -57,11 +57,8 @@ const ReservationCard = ({ data }) => {
               </span>
               <Image {...Like} alt="like" />
             </p>
-          ) : (
-            <p></p>
-          )}
+          ) : null}
           <p className={`align-self-end status ${data.status}`}>
-            {" "}
             <Image {...icon} alt="pending" />
             {data.status}
           </p>

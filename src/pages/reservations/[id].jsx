@@ -23,6 +23,8 @@ import ModalComponent from "../../Components/Modal/Modal";
 import { current } from "@reduxjs/toolkit";
 import { verifyTransacion } from "../../app/Apis/VerifyTransaction";
 import PaymentStatusModal from "../../Components/PaymentStatusModal/PaymentStatusModal";
+import Link from "next/link";
+import CancelReservationModal from "../../Components/CancelReservationModal/CancelReservationModal";
 
 export default function SubRegion() {
   const router = useRouter();
@@ -43,6 +45,7 @@ export default function SubRegion() {
     status: data?.status,
   };
   const [paymentStatusModal, setPaymentStatusModal] = useState(false);
+  const [cancellationModal, setCancellationModal] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState(null);
   let { lang } = useSelector((state) => state.language);
   if (typeof window !== "undefined") {
@@ -58,16 +61,11 @@ export default function SubRegion() {
   };
 
   const handleCancelReservation = (id) => {
-    cancelReservation(id).then((res) => {
-      res &&
-        toast.success(
-          lang === "ar" ? "تم الغاء الحجز" : "Reservation is cancelled",
-          { autoClose: 5000 }
-        );
-      router.push("/reservations");
-    });
+    toggleCancellationModal();
   };
-
+  const toggleCancellationModal = () => {
+    setCancellationModal((current) => !current);
+  };
   const togglePaymentModal = () => {
     setPaymentStatusModal((current) => !current);
   };
@@ -239,15 +237,21 @@ export default function SubRegion() {
               <h3>Cancellation policy</h3>
               <div className="free_cancellation">
                 <p>
-                  <FormattedMessage id="Free-free cancellation" />
+                  Please read our <Link href="/policy">Refund Policy</Link>{" "}
+                  before cancellation.
                 </p>
-                <button
-                  onClick={() =>
-                    data.status !== "reserved"
-                      ? handleCancelReservation(data.id)
-                      : null
+                <ModalComponent
+                  isOpen={cancellationModal}
+                  toggleModal={toggleCancellationModal}
+                  modalBody={
+                    <CancelReservationModal
+                      reservationStatus={data.status}
+                      closeModalCb={toggleCancellationModal}
+                      reservationId={id}
+                    />
                   }
-                >
+                />
+                <button onClick={() => handleCancelReservation(data.id)}>
                   <FormattedMessage id="cancel reservation" />
                 </button>
               </div>
