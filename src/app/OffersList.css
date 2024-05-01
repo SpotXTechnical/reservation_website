@@ -1,0 +1,48 @@
+.recomended_regions_container {
+  margin: 0 80px 80px 80px;
+}
+.recomended_regions_container .recomended_regions_list_header {
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.recomended_regions_container .recommended_list_wrapper {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+}
+.recomended_regions_container .recommended_regions_list {
+  display: flex;
+  gap: 15px;
+}
+.recomended_regions_container .shimmer_wrapper {
+  width: 100%;
+  display: flex;
+  gap: 15px;
+}
+.recomended_regions_container .shimmer_wrapper > div {
+  width: 25%;
+}
+
+@media screen and (max-width: 1280px) {
+  .recommended_regions_list {
+    width: 200%;
+  }
+  .recomended_regions_container .recommended_regions_list_parent {
+    overflow-x: auto;
+  }
+  .recomended_regions_container
+    .recommended_regions_list_parent::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .recomended_regions_container {
+    margin: 0 15px 80px 15px;
+  }
+  .recomended_regions_container .recommended_regions_list {
+    width: 300%;
+  }
+}

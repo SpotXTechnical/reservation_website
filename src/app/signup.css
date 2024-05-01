@@ -1,0 +1,110 @@
+.wrapper_sign_up {
+  width: 56%;
+  margin: 40px auto 80px auto;
+  padding: 30px 70px;
+  margin-top: 30px;
+  border: 1px solid var(--border-light-grey);
+  border-radius: 12px;
+}
+
+.wrapper_sign_up .title {
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 20px;
+  text-transform: capitalize;
+  color: var(--dark-color);
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.wrapper_sign_up .label {
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  margin-bottom: 14px;
+  color: var(--dark-color);
+}
+
+.wrapper_sign_up .signup_input {
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--border-light-grey);
+  border-radius: 0;
+  padding: 0;
+  padding-bottom: 6px;
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  color: var(--light-grey-color);
+}
+
+.wrapper_sign_up .signup_input::placeholder {
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--light-grey-color);
+}
+
+.wrapper_sign_up .signup_input:focus {
+  border-color: unset;
+  box-shadow: none;
+}
+
+.wrapper_sign_up .already_have_account {
+  text-align: center;
+  margin: 15px;
+  font-family: var(--Montserrat-Regular);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 15px;
+  color: var(--light-grey-color);
+}
+
+.wrapper_sign_up .signIn {
+  color: var(--light-blue-color);
+  cursor: pointer;
+}
+
+/* #passwordInput, #confirmPasswordInput{
+    letter-spacing: 20px;
+} */
+
+.wrapper_sign_up .alert-danger {
+  font-weight: 100;
+  font-size: 14px;
+}
+
+.wrapper_sign_up .button_wrapper {
+  background: linear-gradient(
+    180deg,
+    var(--light-blue-color) -16.5%,
+    var(--blue-color) 54.7%
+  );
+  box-shadow: 0px 2px 30px rgb(0 0 0 / 10%);
+  border-radius: 12px;
+  padding: 10px 25px;
+  border: none;
+  color: var(--white-color);
+  width: 100%;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 1280px) {
+  .wrapper_sign_up {
+    width: 90%;
+    padding: 20px 35px;
+  }
+
+  .wrapper_sign_up .button_wrapper {
+    padding: 5px 15px;
+  }
+}

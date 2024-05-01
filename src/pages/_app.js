@@ -5,9 +5,11 @@ import ar from "../lang/ar.json";
 import store from "../store/index";
 import { Provider } from "react-redux";
 import { useEffect, useState, useMemo } from "react";
+import { AuthInitializer } from "../Components/AuthInitializer/AuthInitializer";
 
 export default function MyApp({ Component, pageProps }) {
   const [lang, setLang] = useState("en");
+  const getLayout = Component.getLayout;
 
   useEffect(() => {
     if (localStorage.getItem("language")) {
@@ -21,9 +23,15 @@ export default function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <IntlProvider locale={lang} messages={messages} onError={() => null}>
-        <Layout>
-          <Component {...pageProps} locale={lang} />
-        </Layout>
+        <AuthInitializer>
+          {getLayout ? (
+            getLayout(<Component {...pageProps} />)
+          ) : (
+            <Layout>
+              <Component {...pageProps} locale={lang} />
+            </Layout>
+          )}
+        </AuthInitializer>
       </IntlProvider>
     </Provider>
   );
