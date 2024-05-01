@@ -82,18 +82,15 @@ export default function Header() {
               <FormattedMessage id="home.offers" />
             </span>
           </Link>
-          <Link
+          <div
             className="d-flex align-items-center gap-1 cursor-pointer"
             onClick={handleReservationRouting}
-            href={
-              localStorage.getItem("access_token") ? "/reservations" : "/signin"
-            }
           >
             <img src="/assets/shopping-bag.png" alt="reservations" />
             <span className={styles.menu_item}>
               <FormattedMessage id="home.reservations" />
             </span>
-          </Link>
+          </div>
           <div className="d-flex align-items-center gap-1 cursor-pointer">
             <img src="/assets/global.png" alt="Language" />
 
