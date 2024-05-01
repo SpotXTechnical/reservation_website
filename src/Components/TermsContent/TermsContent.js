@@ -171,7 +171,7 @@ export default function TermsContent() {
           <p>
             For any questions or concerns regarding these Terms and Conditions,
             please contact us at{" "}
-            <a href="mailto:support@spotx.app">support@spotx.app</a>
+            <a href="mailto:info@spotx.app">info@spotx.app</a>
           </p>
         </section>
       </div>
@@ -335,7 +335,7 @@ export default function TermsContent() {
           <h2>اتصل بنا</h2>
           <p>
             لأية أسئلة أو استفسارات حول هذه البنود والشروط، يرجى الاتصال بنا على{" "}
-            <a href="mailto:support@spotx.app">support@spotx.app</a>
+            <a href="mailto:info@spotx.app">info@spotx.app</a>
           </p>
         </section>
       </div>

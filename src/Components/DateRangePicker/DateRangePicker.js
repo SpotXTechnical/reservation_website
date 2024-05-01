@@ -12,6 +12,8 @@ const DateRangeCalendarPicker = ({
   extractedDates,
   modifiedReservedDays,
   unitType,
+  setModalLoadingState,
+  showModal,
 }) => {
   const [selectedDateRange, setSelectedDateRange] = useState({
     startDate: new Date(),
@@ -91,8 +93,11 @@ const DateRangeCalendarPicker = ({
       );
       summaryData.append("unit_id", id);
       summaryData.append("unit_type", unitType);
+      showModal(true);
+      setModalLoadingState((prev) => !prev);
       getSummary(summaryData)
         .then((res) => {
+          setModalLoadingState((prev) => !prev);
           handleShowReservationModal(res?.data);
         })
         .catch((error) => {

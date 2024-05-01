@@ -69,14 +69,14 @@ export default function Regions() {
           </div>
         )}
 
-        <div className="mb-4 container_wrapper">
+        <div className="mb-4 container_wrapper gap-3 d-flex flex-column flex-md-row align-items-center justify-content-center col-12 ">
           <span className="mx-3">
             <FormattedMessage id="searchIn" /> {data?.name}{" "}
           </span>
           <div className={`search_container d-inline-block`}>
             <input
               type="text"
-              className="search_input"
+              className="search_input col-12 "
               onChange={handleSearch}
             />
             <img src="/assets/search-primary.png" alt="search-primary" />
