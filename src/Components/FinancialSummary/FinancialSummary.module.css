@@ -112,7 +112,9 @@
   line-height: normal;
   text-transform: capitalize;
 }
-
+.amount {
+  color: #38aebf;
+}
 @media (max-width: 500px) {
   .date {
     flex-direction: column;

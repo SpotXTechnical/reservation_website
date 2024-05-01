@@ -22,13 +22,13 @@ export const FinancialSummary = ({
           <p className={styles.bold}>
             <FormattedMessage id="Total Cost" />
           </p>
-          <p>{totalCost ? `${totalCost} LE` : 0}</p>
+          <p className={styles.amount}>{totalCost ? `${totalCost} LE` : 0}</p>
         </div>
         <div className={styles.down_payment}>
           <p className={styles.bold}>
             <FormattedMessage id="Down Payment" />
           </p>
-          <p className="flex align-items-center gap-1">
+          <p className={`flex align-items-center gap-1 ${styles.amount}`}>
             {status === "reserved" ? (
               <Image {...VerifiedIcon} alt="verified" />
             ) : (
@@ -41,7 +41,9 @@ export const FinancialSummary = ({
           <p className={styles.bold}>
             <FormattedMessage id="Cash To Owner" />
           </p>
-          <p>{cashToOwner ? `${cashToOwner} LE` : 0}</p>
+          <p className={styles.amount}>
+            {cashToOwner ? `${cashToOwner} LE` : 0}
+          </p>
         </div>
       </div>
       <div className={`${styles.info_container} mb-4`}>
