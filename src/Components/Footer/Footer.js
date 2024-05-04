@@ -9,7 +9,7 @@ export default function Footer() {
   const router = useRouter();
   return (
     <div className={styles.footer_wrapper}>
-      <div className="d-flex mb-4">
+      <div className="d-flex mb-4 align-items-end">
         <address className="col-sm-6 d-flex flex-column">
           <p className={styles.about_spotx}>
             <FormattedMessage id="SpotX" />
@@ -64,16 +64,16 @@ export default function Footer() {
             </li>
           </ul>
         </div>
-        <div className="col-sm-3">
+        {/* <div className="col-sm-3">
           <ul>
-            {/* <li>
+            <li>
               <FormattedMessage id="home.contactUs" />
-            </li> */}
+            </li>
             <li>
               <FormattedMessage id="home.FAQ" />
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
       <div>
         <hr />
