@@ -1,4 +1,4 @@
-import { handleQueryParams } from "..";
+import { handleQueryParams } from "../index";
 import { axiosInstance } from "../../Apis/AxiosInstance";
 import * as constants from "./constants";
 export const getUiBuilders = async () => {
