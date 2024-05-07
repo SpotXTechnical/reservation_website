@@ -78,6 +78,7 @@ export default function SignIn() {
               JSON.stringify(res?.data?.token?.access_token)
             );
             dispatch(setAccessToken(res?.data?.token?.access_token));
+            router.push("/");
           }
         })
         .catch((err) => {
