@@ -19,6 +19,7 @@ export function appendParamToUrl(url, paramName, paramValue) {
   return `${url}${queryPrefix}${param}`;
 }
 
+
 export const handleQueryparams = (filters) => {
   const params = Object.keys(filters)
     .filter((key) => filters[key] !== null && filters[key] !== "")
@@ -29,6 +30,7 @@ export const handleQueryparams = (filters) => {
     });
   return params.join("&");
 };
+
 
 // dynamic icon based on the status
 export function getIcon(status) {

@@ -22,6 +22,7 @@ const InputSelect = ({
       <Select
         className={className}
         classNamePrefix="select"
+        instanceId="inputSelect"
         components={
           hideIndecators
             ? { DropdownIndicator: () => null, IndicatorSeparator: () => null }
