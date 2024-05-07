@@ -65,28 +65,23 @@ export default function Header() {
       className={`container_wrapper d-flex align-items-center justify-content-between ${styles.header_wrapper}`}
     >
       <div className="col-sm-6">
-        <div
-          className="col-1  cursor-pointer"
-          onClick={() => {
-            router.push("/");
-          }}
-        >
+        <Link className="col-1  cursor-pointer" href="/">
           <img src="/assets/Logo.png" alt="Logo" />
-        </div>
+        </Link>
       </div>
       <div
         className={`col-sm-6 d-flex justify-content-end ${styles.hide_navbar}`}
       >
         <div className={styles.header_items_gap}>
-          <div
+          <Link
             className="d-flex align-items-center gap-1 cursor-pointer"
-            onClick={handleNavigateToOffers}
+            href="/offers"
           >
             <img src="/assets/receipt-disscount.png" alt="offers" />
             <span className={styles.offers}>
               <FormattedMessage id="home.offers" />
             </span>
-          </div>
+          </Link>
           <div
             className="d-flex align-items-center gap-1 cursor-pointer"
             onClick={handleReservationRouting}

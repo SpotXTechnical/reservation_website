@@ -6,6 +6,7 @@ import store from "../store/index";
 import { Provider } from "react-redux";
 import { useEffect, useState, useMemo } from "react";
 import { AuthInitializer } from "../Components/AuthInitializer/AuthInitializer";
+import BootStrapClient from "../Components/BootStrapClient/BootStrapClient";
 
 export default function MyApp({ Component, pageProps }) {
   const [lang, setLang] = useState("en");
@@ -31,6 +32,7 @@ export default function MyApp({ Component, pageProps }) {
               <Component {...pageProps} locale={lang} />
             </Layout>
           )}
+          <BootStrapClient />
         </AuthInitializer>
       </IntlProvider>
     </Provider>
