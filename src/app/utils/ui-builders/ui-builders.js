@@ -1,4 +1,4 @@
-import { handleQueryParams } from "..";
+import { handleQueryparams } from "../index";
 import { axiosInstance } from "../../Apis/AxiosInstance";
 import * as constants from "./constants";
 export const getUiBuilders = async () => {
@@ -16,7 +16,7 @@ export const getUiBuilders = async () => {
 
 export const getUnitsWithFilters = async (paramsObj, page = 1) => {
   try {
-    const params = handleQueryParams({ ...paramsObj, page });
+    const params = handleQueryparams({ ...paramsObj, page });
     const response = await axiosInstance.get(`/api/v1/user/units?${params}`);
     return response.data;
   } catch (error) {
@@ -27,7 +27,7 @@ export const getUnitsWithFilters = async (paramsObj, page = 1) => {
 export const getsubRegionWithFilters = async (paramsObj) => {
   try {
     const { main_region } = paramsObj;
-    const params = handleQueryParams({
+    const params = handleQueryparams({
       [constants.WITH_SUB]: main_region,
     });
     const response = await axiosInstance.get(
