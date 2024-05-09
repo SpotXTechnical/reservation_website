@@ -10,7 +10,7 @@ const ModalComponent = ({ toggleModal, isOpen, modalBody, className }) => {
   );
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} className={className}>
+    <Modal isOpen={Boolean(isOpen)} toggle={toggle} className={className}>
       <ModalHeader toggle={toggle} close={closeBtn}></ModalHeader>
       <ModalBody>{modalBody}</ModalBody>
     </Modal>
