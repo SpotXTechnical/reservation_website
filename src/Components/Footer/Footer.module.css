@@ -20,10 +20,16 @@
   color: #fcd95c;
   transition: all 0.5s;
 }
+.list li {
+  width: max-content;
+}
 .about_spotx {
   margin-bottom: 12px;
   color: var(--yellow-color);
   font-size: 1.6rem;
+}
+.yellow_color {
+  color: #fcd95c;
 }
 .about {
   font-weight: 400;
@@ -39,6 +45,14 @@
 .footer_wrapper ul li {
   margin-bottom: 20px;
 }
+.link {
+  color: white;
+  text-decoration: none;
+}
+.link:hover {
+  color: #fcd95c;
+  transition: color 0.5s;
+}
 .footer_wrapper hr {
   margin-bottom: 32px;
   margin-inline: -100px;
@@ -49,6 +63,11 @@
   font-size: 13px;
   opacity: 0.8;
   text-align: center;
+}
+
+.facebook_icon:hover {
+  transform: scale(1.2);
+  transition: all 0.5s;
 }
 
 @media screen and (max-width: 1280px) {
@@ -65,7 +84,8 @@
     padding-inline: 15px;
   }
   .footer_wrapper > div {
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: start;
     gap: 10px;
   }
   .footer_wrapper hr {
