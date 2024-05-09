@@ -97,6 +97,9 @@
 .rdrDayToday .rdrDayNumber span:after {
   background: unset;
 }
+.rdrDayPassive .half_day {
+  background: unset;
+}
 
 .rdrDayPassive .half_day {
   background: unset;
