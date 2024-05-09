@@ -2,7 +2,7 @@ import axios from "axios";
 import Router from "next/router";
 
 export const axiosInstance = axios.create({
-  baseURL: "https://api-stage.spotx.app",
+  baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}`,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
