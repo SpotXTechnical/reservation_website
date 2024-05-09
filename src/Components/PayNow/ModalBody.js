@@ -21,10 +21,7 @@ export const ModalBody = ({ paymentMethods }) => {
     setLoading(true);
     switch (method.provider) {
       case PAYTABS:
-        getPaymentURL(
-          id,
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/paytabs?q=${id}`
-        )
+        getPaymentURL(id, `${process.env.WEBSITE_BASE_URL}/api/paytabs?q=${id}`)
           .then((res) => {
             const url = res.data.redirect_url;
             if (url) {
