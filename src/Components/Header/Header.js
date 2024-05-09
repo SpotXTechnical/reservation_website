@@ -21,7 +21,6 @@ import Image from "next/image";
 export default function Header() {
   let { lang } = useSelector((state) => state.language);
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
 
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [sideBarStatus, setSideBarStatus] = useState(false);

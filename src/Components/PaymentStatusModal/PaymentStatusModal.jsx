@@ -10,12 +10,12 @@ export default function PaymentStatusModal({ status, toggle }) {
     icon: null,
   };
   switch (status) {
-    case "failed":
+    case "false":
       cardStatus.icon = failed;
       cardStatus.message =
         "It looks like your transaction wasn't successful. Please try again";
       break;
-    case "success":
+    case "true":
       cardStatus.icon = CreditAdd;
       cardStatus.message = "Success! Your transaction has been completed.";
   }
