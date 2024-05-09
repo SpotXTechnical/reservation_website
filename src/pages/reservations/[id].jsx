@@ -1,11 +1,8 @@
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
-import {
-  cancelReservation,
-  getReservationDetails,
-} from "../../app/Apis/ReservationApis";
+import { getReservationDetails } from "../../app/Apis/ReservationApis";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Carousel } from "react-responsive-carousel";
@@ -20,15 +17,16 @@ import Check from "../../../public/assets/check-square-broken.svg";
 import { NegotiationStatement } from "../../Components/NegotiationStatement/NegotiationStatement";
 import { Offer } from "../../Components/Offer/Offer";
 import ModalComponent from "../../Components/Modal/Modal";
-import { current } from "@reduxjs/toolkit";
 import { verifyTransacion } from "../../app/Apis/VerifyTransaction";
 import PaymentStatusModal from "../../Components/PaymentStatusModal/PaymentStatusModal";
 import Link from "next/link";
 import CancelReservationModal from "../../Components/CancelReservationModal/CancelReservationModal";
 
+// Reservation Context
+export const ReservationContext = createContext();
 export default function SubRegion() {
   const router = useRouter();
-  const { id, q } = router.query;
+  const { id, success } = router.query;
   const [data, setData] = useState({});
   const [refetch, setRefetch] = useState(false);
   const icon = getIcon(data.status);
@@ -87,17 +85,11 @@ export default function SubRegion() {
   );
 
   useEffect(() => {
-    if (q === "pay" && localStorage.getItem("tran_ref")) {
-      verifyTransacion(JSON.parse(localStorage.getItem("tran_ref")))
-        .then((res) => {
-          setPaymentStatus(res.data.status);
-          togglePaymentModal();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    if (success) {
+      setPaymentStatus(success);
+      togglePaymentModal();
     }
-  }, [q]);
+  }, [success]);
 
   const handleClick = () => {
     router.push(`/properties/${data?.unit?.id}`);
@@ -202,13 +194,13 @@ export default function SubRegion() {
         )}
 
         {data.status === "accepted" && (
-          <>
+          <ReservationContext.Provider value={data}>
             <PayNow
               downPayment={data.down_payment}
               amountToPay={data.amount_to_pay}
               Refetch={setRefetch}
             />
-          </>
+          </ReservationContext.Provider>
         )}
         <hr className="total_price_hr" />
         {data?.unit?.owner?.name ? (

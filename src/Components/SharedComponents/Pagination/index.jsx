@@ -9,10 +9,10 @@ const Pagination = ({ handlePagination, meta }) => {
       nextLabel={<ChevronRight size={15} />}
       breakLabel="..."
       breakClassName="break-me"
-      pageCount={meta.last_page}
+      pageCount={meta?.last_page}
       containerClassName="vx-pagination separated-pagination pagination-end pagination-sm mb-0 mt-2"
       activeClassName="active"
-      forcePage={meta.current_page - 1}
+      forcePage={meta?.current_page - 1}
       onPageChange={(page) => handlePagination(page)}
     />
   );

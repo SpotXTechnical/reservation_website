@@ -582,6 +582,10 @@ div[dir="rtl"]
 
   color: var(--dark-color);
 }
+.faq_emptyMessage {
+  background-color: #2396cc;
+  font-size: 18px;
+}
 
 .summary_modal .submit_reservations {
   background: linear-gradient(

@@ -27,7 +27,7 @@ export default function SignIn() {
   const [phone, setPhone] = useState("");
   const [phoneErr, setPhoneErr] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const onEmailChange = ({ target }) => {
     setEmail(target.value);
@@ -72,14 +72,13 @@ export default function SignIn() {
             }, 5000);
           } else {
             localStorage.setItem("user", JSON.stringify(res?.data?.user));
-            dispatch(logIn(res?.data?.user))
+            dispatch(logIn(res?.data?.user));
             localStorage.setItem(
               "access_token",
               JSON.stringify(res?.data?.token?.access_token)
             );
-            dispatch(setAccessToken(res?.data?.token?.access_token))
-            router.back()
-            // router.push(`/${window.location.search}`);
+            dispatch(setAccessToken(res?.data?.token?.access_token));
+            router.push("/");
           }
         })
         .catch((err) => {

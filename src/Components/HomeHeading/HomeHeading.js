@@ -29,19 +29,23 @@ const HomeHeading = () => {
 
   useEffect(
     function () {
-      getRegions(WITH_SUB_REGION).then((res) => {
-        let results = [];
-        res.data?.map((region, i) => {
-          results.push({ value: region.id, label: region.name });
+      getRegions(WITH_SUB_REGION)
+        .then((res) => {
+          let results = [];
+          res.data?.map((region, i) => {
+            results.push({ value: region.id, label: region.name });
 
-          if (region?.sub_regions && region?.sub_regions.length > 0) {
-            region?.sub_regions.forEach((subRegion) => {
-              results.push({ value: subRegion.id, label: subRegion.name });
-            });
-          }
+            if (region?.sub_regions && region?.sub_regions.length > 0) {
+              region?.sub_regions.forEach((subRegion) => {
+                results.push({ value: subRegion.id, label: subRegion.name });
+              });
+            }
+          });
+          setMainRegions(results);
+        })
+        .catch((error) => {
+          return new Error(error);
         });
-        setMainRegions(results);
-      });
     },
     [lang]
   );

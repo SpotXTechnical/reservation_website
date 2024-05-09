@@ -18,6 +18,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import Loading from "../../Components/Loading/Loading";
+import { getFaqs } from "../../app/Apis/Faqs";
 
 export default function PropertyDetails() {
   let { lang } = useSelector((state) => state.language);
@@ -28,6 +29,7 @@ export default function PropertyDetails() {
   const [totalReservationMoney, setTotalReservationMoney] = useState(0);
   const [modifiedReservedDays, setModifiedReservedDays] = useState([]);
   const [extractedDates, setExtractedDates] = useState([]);
+  const [faqs, setFaqs] = useState(null);
   const router = useRouter();
   const { id } = router.query;
   const [data, setData] = useState({});
@@ -49,6 +51,17 @@ export default function PropertyDetails() {
       typeof window !== "undefined" && localStorage.getItem("access_token")
     );
   }, []);
+
+  useEffect(() => {
+    if (id) {
+      getFaqs({
+        questionable_id: id,
+        questionable_type: "unit",
+      }).then((response) => {
+        setFaqs(response.data);
+      });
+    }
+  }, [id]);
 
   function calculateNumberOfDays(startDate, endDate) {
     const start = new Date(startDate.toUTCString());
@@ -423,6 +436,45 @@ export default function PropertyDetails() {
             ) : (
               <ShimmerThumbnail height={175} rounded />
             )}
+          </div>
+          {/* FAQ SECTION */}
+          <div className="faq">
+            <div className="accordion" id="accordionExample">
+              <h3 className="mb-3">FAQs</h3>
+              {faqs && faqs.length > 0 ? (
+                faqs.map((faq) => {
+                  return (
+                    <div className="accordion-item" key={faq.id}>
+                      <h2 className="accordion-header">
+                        <button
+                          className="accordion-button collapsed"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target={`#collapse${faq.id}`}
+                          aria-expanded="true"
+                          aria-controls={`collapse${faq.id}`}
+                        >
+                          {faq.question}
+                        </button>
+                      </h2>
+                      <div
+                        id={`collapse${faq.id}`}
+                        className="accordion-collapse collapse"
+                        data-bs-parent="#accordionExample"
+                      >
+                        <div className="accordion-body">{faq.answer}</div>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="d-felx flex-column">
+                  <h3 class="badge faq_emptyMessage">
+                    There&apos;s no FAQs for this unit.
+                  </h3>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className="col-md-6">

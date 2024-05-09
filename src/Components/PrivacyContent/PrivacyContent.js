@@ -5,7 +5,6 @@ export default function PrivacyContent() {
     <>
       <div className={styles.privacy_container}>
         <section>
-          <img src="/assets/Logo.png" alt="Logo" className={styles.logo} />
           <h1 className={styles.header}>Privacy Policy</h1>
           <p>
             Thank you for choosing SpotX! Your privacy and trust are important

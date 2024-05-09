@@ -16,7 +16,10 @@ export const PaymentCard = ({ cardData, onGeneratePaymentURL }) => {
   }
 
   return (
-    <div className={styles.paymentCard} onClick={onGeneratePaymentURL}>
+    <div
+      className={`${styles.paymentCard} mb-3`}
+      onClick={onGeneratePaymentURL}
+    >
       <div className={styles.imageContainer}>
         <img src={`${provider.icon}`} alt="paytabs" width={30} height={30} />
       </div>
