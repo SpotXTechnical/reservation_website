@@ -4,7 +4,6 @@ export default function TermsContent() {
   return (
     <>
       <div className={styles.policy_container}>
-        <img src="/assets/Logo.png" alt="Logo" className={styles.logo} />
         <h1 className={styles.header}>Terms And Conditions</h1>
         <section>
           <h2>Introduction</h2>

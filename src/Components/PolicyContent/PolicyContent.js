@@ -6,7 +6,6 @@ export default function PolicyContent() {
   return (
     <>
       <div className={styles.policy_container}>
-        <img src="/assets/Logo.png" alt="Logo" className={styles.logo} />
         <h1 className={styles.title}>Cancellation and Refund Policy</h1>
         <section>
           <h2>Cancellation and Refund</h2>

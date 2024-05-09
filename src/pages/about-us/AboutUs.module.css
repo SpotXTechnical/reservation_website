@@ -1,0 +1,52 @@
+.aboutus_container {
+  min-height: 50vh;
+  margin: 40px 80px 80px 80px;
+  font-weight: normal;
+  line-height: 25px;
+}
+.aboutus_container h2 {
+  text-align: inherit;
+}
+
+.logo {
+  display: none;
+}
+.aboutus_container p {
+  font-weight: 300;
+  font-size: 18px;
+}
+.aboutus_container a {
+  color: rgba(0, 0, 0, 0.87);
+  border-bottom: 1.5px solid #7baaf7;
+  text-decoration: none;
+}
+.title {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 29px;
+  text-transform: capitalize;
+  color: var(--dark-color);
+  font-family: var(--Montserrat-Bold);
+  margin-bottom: 0px;
+  margin-bottom: 30px;
+}
+.aboutus_container h2 {
+  font-size: 20px;
+  font-weight: 700;
+}
+.title:first-letter {
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 768px) {
+  .aboutus_container {
+    margin: 10px 20px 20px 20px;
+  }
+  .logo {
+    margin-bottom: 20px;
+  }
+  .aboutus_container p {
+    text-align: left;
+  }
+}
