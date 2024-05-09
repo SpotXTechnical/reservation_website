@@ -8,33 +8,41 @@ import { ShimmerThumbnail } from "react-shimmer-effects";
 import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 import { getFavouriteList } from "../../app/Apis/UnitsApis";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
-const MostPopularList = () => {
+const MostPopularList = ({ unitsData }) => {
   const intl = useIntl();
-  const [data, setData] = useState([]);
+  const router = useRouter();
+  // const [data, setData] = useState([]);
   const [favourites, setFav] = useState([]);
   let { lang } = useSelector((state) => state.language);
-  useEffect(() => {
-    getMostPopularProperties().then((res) => setData(res.data?.slice(0, 4)));
-  }, [lang]);
+  let sizeLimitedData = null;
+  // useEffect(() => {
+  //   getMostPopularProperties().then((res) => setData(res.data?.slice(0, 4)));
+  // }, [lang]);
   useEffect(() => {
     getFavouriteList().then((res) => setFav(res?.data));
   }, []);
-  const handleViewAll = () => {};
+  const handleViewAll = () => {
+    router.push;
+  };
   const handleUpdateFavList = () => {
     getFavouriteList().then((res) => setFav(res?.data));
   };
+
   return (
     <div className="popularList_container">
       <div className="popularList_header">
-        <Title
-          text={intl.formatMessage({ id: "home.mostPopularProperties" })}
-        />
-        <ViewAll handleClick={handleViewAll} />
+        <Title text={unitsData.title} />
+        {/* <ViewAll handleClick={handleViewAll} /> */}
+        <Link href={`show-all/${unitsData.id}`} className="view_all">
+          Show All
+        </Link>
       </div>
       <div className="popularList">
-        {data?.length > 0
-          ? data.map(
+        {unitsData.sectionData?.length > 0 && unitsData.sectionData.length < 4
+          ? unitsData.sectionData.map(
               (
                 {
                   images,
@@ -67,9 +75,41 @@ const MostPopularList = () => {
                 />
               )
             )
-          : [...Array(4)].map((e, i) => (
-              <ShimmerThumbnail key={i} height={250} rounded />
-            ))}
+          : unitsData.sectionData
+              .slice(0, 4)
+              .map(
+                (
+                  {
+                    images,
+                    title,
+                    type,
+                    bathrooms,
+                    beds,
+                    default_price,
+                    is_favourite,
+                    active_ranges,
+                    nearest_active_ranges,
+                    id,
+                  },
+                  i
+                ) => (
+                  <PopularCard
+                    id={id}
+                    key={i}
+                    title={title}
+                    image={images[0]?.url}
+                    default_price={default_price}
+                    bathrooms={bathrooms}
+                    beds={beds}
+                    type={type}
+                    is_favourite={is_favourite}
+                    active_ranges={active_ranges}
+                    nearest_active_ranges={nearest_active_ranges}
+                    favouritesList={favourites}
+                    updateFavList={handleUpdateFavList}
+                  />
+                )
+              )}
       </div>
     </div>
   );

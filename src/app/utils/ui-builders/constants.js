@@ -1,0 +1,16 @@
+export const UNITS = "units";
+export const SUB_REGION = "subregion";
+export const AVAILABILITY = "availability";
+export const AVAILABILITY_START = "availability_start";
+export const AVAILABILITY_END = "availability_end";
+export const DATE_RANGE_START = "date_range_start";
+export const DATE_RANGE_END = "date_range_end";
+export const PRICE_TO = "to";
+export const PRICE_FROM = "from";
+export const TOTAL_PRICE = "total_price";
+export const MAIN_REGIONS = "main_region";
+export const WITH_SUB = "with_sub";
+export const CONTENT = "content";
+export const TITLE = "title";
+export const SUBREGIONS = "sub_regions";
+export const FILTERS = "filters";

@@ -4,9 +4,12 @@ import { getReservations } from "../../app/Apis/ReservationApis";
 import ReservationCard from "../../Components//ReservationCard";
 import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
+import ReservationsPagination from "../../Components/ReservationsPagination/ReservationsPagination";
+import { ToastContainer } from "react-toastify";
 
 const Reservations = () => {
   let { lang } = useSelector((state) => state.language);
+
   if (typeof window !== "undefined") {
     const storedLanguage = localStorage.getItem("language");
     const language = storedLanguage ? storedLanguage : "en";
@@ -15,22 +18,45 @@ const Reservations = () => {
     );
   }
   const [data, setData] = useState({});
+  const [metaData, setMetaData] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [filterState, setFilterState] = useState("upcoming");
-
-  useEffect(
-    function () {
-      getReservations("upcoming").then((res) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const res = await getReservations();
         setData(res.data);
-      });
-    },
-    [lang]
-  );
+        setMetaData(res.meta);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [lang]);
 
   const handleFilterChange = (val) => {
     setFilterState(val);
     getReservations(val).then((res) => {
       setData(res.data);
     });
+  };
+
+  const getPageNumberAndFetch = async (pageNumber) => {
+    try {
+      setData({});
+      setLoading(true);
+      const response = await getReservations(`page=${pageNumber}`);
+      setData(response.data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -61,17 +87,31 @@ const Reservations = () => {
         </p>
       </div>
 
-      <div className="reservations">
-        {data?.length > 0 ? (
-          data.map((item, i) => {
-            return <ReservationCard data={item} key={i} />;
-          })
-        ) : (
-          <p className="m-0 text-center">
-            <FormattedMessage id="noDataFound" />
-          </p>
+      <div
+        className={`${
+          Object.keys(data).length !== 0 ? "reservations" : "loader_container"
+        }`}
+      >
+        {loading && Object.keys(data).length === 0 && (
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
         )}
+        {error && <FormattedMessage id={error} />}
+
+        {Object.keys(data).length !== 0 &&
+          data.map((item, i) => {
+            return <ReservationCard data={item} key={item.id} />;
+          })}
       </div>
+      {/* Pagination */}
+      {metaData && (
+        <ReservationsPagination
+          lastPage={metaData?.last_page}
+          callBack={getPageNumberAndFetch}
+        />
+      )}
+      <ToastContainer />
     </div>
   );
 };

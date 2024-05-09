@@ -16,22 +16,27 @@ import MapContainer from "../../Components/Map/MapContainer";
 import { addToFavourite, removeFromFavourite } from "../../app/Apis/UnitsApis";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
+import Loading from "../../Components/Loading/Loading";
+import { getFaqs } from "../../app/Apis/Faqs";
 
 export default function PropertyDetails() {
   let { lang } = useSelector((state) => state.language);
   const [isCopied, setIsCopied] = useState(false);
   const [selectedRange, setSelectedRange] = useState("");
   const [daysCount, setDaysCount] = useState(0);
+  const [modalData, setModalData] = useState();
   const [totalReservationMoney, setTotalReservationMoney] = useState(0);
   const [modifiedReservedDays, setModifiedReservedDays] = useState([]);
   const [extractedDates, setExtractedDates] = useState([]);
+  const [faqs, setFaqs] = useState(null);
   const router = useRouter();
   const { id } = router.query;
   const [data, setData] = useState({});
 
   const [isOpen, setIsOpen] = useState(false);
   const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
-
+  const [summaryModalLoading, setSummaryModalLoading] = useState(false);
   const toggleModal = () => setIsOpen(!isOpen);
   const toggleGalleryModal = () => setIsGalleryModalOpen(!isGalleryModalOpen);
   const [showComponent, setShowComponent] = useState(false);
@@ -47,6 +52,17 @@ export default function PropertyDetails() {
     );
   }, []);
 
+  useEffect(() => {
+    if (id) {
+      getFaqs({
+        questionable_id: id,
+        questionable_type: "unit",
+      }).then((response) => {
+        setFaqs(response.data);
+      });
+    }
+  }, [id]);
+
   function calculateNumberOfDays(startDate, endDate) {
     const start = new Date(startDate.toUTCString());
     const end = new Date(endDate.toUTCString());
@@ -54,6 +70,22 @@ export default function PropertyDetails() {
     const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 
     return days;
+  }
+  function parseTime(timeToParse) {
+    const time = new Date("2000-01-01 " + timeToParse);
+
+    const hours = time.getHours();
+    const minutes = time.getMinutes();
+
+    const period = hours < 12 ? "AM" : "PM";
+
+    const formattedHours = hours % 12 || 12;
+
+    const formattedTime = `${formattedHours}:${minutes
+      .toString()
+      .padStart(2, "0")} ${period}`;
+
+    return formattedTime;
   }
 
   function getPriceForDateRange(data, dateRange, defaultPrice) {
@@ -99,20 +131,10 @@ export default function PropertyDetails() {
     }
   }, [data?.active_reservations]);
 
-  const handleShowReservationModal = (selectedDateRange) => {
-    setSelectedRange(selectedDateRange);
-    const days = calculateNumberOfDays(
-      selectedDateRange.startDate,
-      selectedDateRange.endDate
-    );
-    setDaysCount(days);
-    const result = getPriceForDateRange(
-      data?.active_ranges,
-      selectedDateRange,
-      data?.default_price
-    ).reduce((total, item) => total + item.price, 0);
-    setIsOpen(true);
-    setTotalReservationMoney(result);
+  const handleShowReservationModal = (reservaionSummary) => {
+    setModalData(reservaionSummary);
+    setDaysCount(reservaionSummary?.nights);
+    setTotalReservationMoney(reservaionSummary?.total_price);
   };
 
   useEffect(
@@ -185,7 +207,6 @@ export default function PropertyDetails() {
           );
         });
   };
-
   return (
     <div
       dir={lang === "ar" ? "rtl" : "ltr"}
@@ -338,7 +359,7 @@ export default function PropertyDetails() {
             </div>
             <div className="price">
               <span>
-                {data?.default_price} <FormattedMessage id="le" />
+                {data?.current_price} <FormattedMessage id="le" />
               </span>
               <span>
                 {" "}
@@ -392,12 +413,10 @@ export default function PropertyDetails() {
               <FormattedMessage id="Cancellation Policy" />
             </div>
 
-            {/* <div
-              className={styles.link}
-              onClick={() => (window.location = "/policy")}
-            >
-              <FormattedMessage id="Free-free cancellation" /> {" >>"}
-            </div> */}
+            <p className="cancellation">
+              Please read our <Link href="/policy">Refund Policy</Link> before
+              cancellation.
+            </p>
           </div>
 
           <div className="over_view">
@@ -412,11 +431,50 @@ export default function PropertyDetails() {
               >
                 <img src={data?.owner?.image} alt="owner_img" />
                 <p>{data?.owner?.name} </p>
-                <p>{data?.owner?.phone} </p>
+                {/* <p>{data?.owner?.phone} </p> */}
               </div>
             ) : (
               <ShimmerThumbnail height={175} rounded />
             )}
+          </div>
+          {/* FAQ SECTION */}
+          <div className="faq">
+            <div className="accordion" id="accordionExample">
+              <h3 className="mb-3">FAQs</h3>
+              {faqs && faqs.length > 0 ? (
+                faqs.map((faq) => {
+                  return (
+                    <div className="accordion-item" key={faq.id}>
+                      <h2 className="accordion-header">
+                        <button
+                          className="accordion-button collapsed"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target={`#collapse${faq.id}`}
+                          aria-expanded="true"
+                          aria-controls={`collapse${faq.id}`}
+                        >
+                          {faq.question}
+                        </button>
+                      </h2>
+                      <div
+                        id={`collapse${faq.id}`}
+                        className="accordion-collapse collapse"
+                        data-bs-parent="#accordionExample"
+                      >
+                        <div className="accordion-body">{faq.answer}</div>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="d-felx flex-column">
+                  <h3 class="badge faq_emptyMessage">
+                    There&apos;s no FAQs for this unit.
+                  </h3>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className="col-md-6">
@@ -435,8 +493,11 @@ export default function PropertyDetails() {
                 defaultPrice={data?.default_price}
                 activeReservations={data?.active_reservations}
                 handleShowReservationModal={handleShowReservationModal}
+                showModal={setIsOpen}
                 extractedDates={extractedDates}
                 modifiedReservedDays={modifiedReservedDays}
+                unitType={data?.type}
+                setModalLoadingState={setSummaryModalLoading}
               />
             )}
           </div>
@@ -487,98 +548,116 @@ export default function PropertyDetails() {
         className="summary_modal"
         modalBody={
           <div className="summary_container">
-            <p className="title">
-              <FormattedMessage id="Summary" />{" "}
-            </p>
-            <div className="summary_card">
-              <div className="unit_type_wrapper">
-                <div className="unit_type">challet</div>
-                <div className="rating_wrapper">
-                  <img src="/assets/star.png" alt="star" />
-                  <span className="rate">{data?.rate}</span>
+            {/* Loading */}
+            {summaryModalLoading && <Loading />}
+            {!summaryModalLoading && (
+              <>
+                <p className="title">
+                  <FormattedMessage id="Summary" />{" "}
+                </p>
+                <div className="summary_card">
+                  <div className="unit_type_wrapper">
+                    <div className="unit_type">challet</div>
+                    {data?.rate > 0 && (
+                      <div className="rating_wrapper">
+                        <img src="/assets/star.png" alt="star" />
+                        <span className="rate">{data?.rate}</span>
+                      </div>
+                    )}
+                  </div>
+                  <img
+                    className="card_image"
+                    src={data?.images?.[0]?.url}
+                    alt="unit_image"
+                  />
+                  <p className="unit_title">{data?.title}</p>
                 </div>
-              </div>
-              <img
-                className="card_image"
-                src={data?.images?.[0]?.url}
-                alt="unit_image"
-              />
-              <p className="unit_title">{data?.title}</p>
-            </div>
-            <div className="d-flex align-items-center justify-content-between">
-              <div className="d-flex gap-2">
-                <img
-                  src="/assets/calendar.png"
-                  alt="calendar"
-                  width="20"
-                  height="20"
-                />
-                <p className="reservation_date">
-                  <FormattedMessage id="Reservation_date" />{" "}
-                </p>
-              </div>
-              <div className="nights">
-                {daysCount} <FormattedMessage id="nights" />
-              </div>
-            </div>
-            <div className="from_to_wrapper">
-              <p>
-                <span className="label">
-                  <FormattedMessage id="from" />
-                </span>
-                <span className="date">
-                  {moment(selectedRange.startDate).format("ddd, DD MMM")}
-                </span>
-              </p>
-              <p>
-                <span className="label">
-                  <FormattedMessage id="to" />
-                </span>
-                <span className="date">
-                  {moment(selectedRange.endDate).format("ddd, DD MMM")}
-                </span>
-              </p>
-            </div>
-            <hr className="total_price_hr" />
-            <div className="d-flex align-items-center justify-content-between">
-              <div className="d-flex gap-2">
-                <img
-                  src="/assets/money.png"
-                  alt="money"
-                  width="30"
-                  height="20"
-                />
-                <p className="reservation_date">
-                  <FormattedMessage id="total_cost" />{" "}
-                </p>
-              </div>
-              <div className="total_money">
-                {totalReservationMoney} {" LE"}
-              </div>
-            </div>
+                <div className="d-flex align-items-center justify-content-between">
+                  <div className="d-flex gap-2 align-items-center">
+                    <img
+                      src="/assets/ic_calendar.svg"
+                      alt="calendar"
+                      width="40"
+                      height="40"
+                    />
+                    <p className="reservation_date mb-0">
+                      <FormattedMessage id="Reservation_date" />{" "}
+                    </p>
+                  </div>
+                  <div className="nights">
+                    {daysCount} <FormattedMessage id="nights" />
+                  </div>
+                </div>
+                <div className="from_to_wrapper mt-3">
+                  <p className="d-flex justify-content-between">
+                    <span>
+                      <span className="label">
+                        <FormattedMessage id="from" />
+                      </span>
+                      <span className="date">
+                        {moment(modalData?.from).format("ddd, DD MMM")}
+                      </span>
+                    </span>
+                    <span>
+                      <span>{parseTime(modalData?.check_in)}</span>
+                    </span>
+                  </p>
+                  <p className="d-flex justify-content-between">
+                    <span>
+                      <span className="label">
+                        <FormattedMessage id="to" />
+                      </span>
+                      <span className="date">
+                        {moment(modalData?.to).format("ddd, DD MMM")}
+                      </span>
+                    </span>
+                    <span>
+                      <span>{parseTime(modalData?.check_out)}</span>
+                    </span>
+                  </p>
+                </div>
+                <hr className="total_price_hr" />
+                <div className="d-flex align-items-center justify-content-between">
+                  <div className="d-flex gap-2 align-items-center">
+                    <img
+                      src="/assets/money.svg"
+                      alt="money"
+                      width="40"
+                      height="40"
+                    />
+                    <p className="reservation_date mb-0">
+                      <FormattedMessage id="total_cost" />{" "}
+                    </p>
+                  </div>
+                  <div className="total_money">
+                    {totalReservationMoney} {" LE"}
+                  </div>
+                </div>
 
-            <button
-              className="submit_reservations"
-              onClick={() => {
-                const submitData = {
-                  from: moment(selectedRange.startDate).format("D-M-YYYY"),
-                  to: moment(selectedRange.endDate).format("D-M-YYYY"),
-                  unit_id: id,
-                  unit_type: data.type,
-                };
-                reserveUnit(submitData).then((res) => {
-                  if (res) {
-                    router.push("/reservations");
-                  }
-                  getPropertyDetails(id).then((resp) => {
-                    setData(resp.data);
-                  });
-                  setIsOpen(false);
-                });
-              }}
-            >
-              <FormattedMessage id="submit" />{" "}
-            </button>
+                <button
+                  className="submit_reservations"
+                  onClick={() => {
+                    const submitData = {
+                      from: moment(modalData?.from).format("D-M-YYYY"),
+                      to: moment(modalData?.to).format("D-M-YYYY"),
+                      unit_id: id,
+                      unit_type: data.type,
+                    };
+                    reserveUnit(submitData).then((res) => {
+                      if (res) {
+                        router.push("/reservations");
+                      }
+                      getPropertyDetails(id).then((resp) => {
+                        setData(resp.data);
+                      });
+                      setIsOpen(false);
+                    });
+                  }}
+                >
+                  <FormattedMessage id="submit" />{" "}
+                </button>
+              </>
+            )}
           </div>
         }
       />

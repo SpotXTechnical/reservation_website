@@ -8,11 +8,14 @@ import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
 import { FormattedMessage } from "react-intl";
 import Pagination from "../../Components/SharedComponents/Pagination";
+import { getFaqs } from "../../app/Apis/Faqs";
 
 export default function SubRegion() {
   const router = useRouter();
   const [meta, setMeta] = useState("");
   const { id } = router.query;
+  const [faqs, setFaqs] = useState(null);
+
   const [data, setData] = useState({});
   const [isCopied, setIsCopied] = useState(false);
   const [page, setPage] = useState(1);
@@ -36,7 +39,16 @@ export default function SubRegion() {
     },
     [id, lang, page]
   );
-
+  useEffect(() => {
+    if (id) {
+      getFaqs({
+        questionable_id: id,
+        questionable_type: "sub_region",
+      }).then((response) => {
+        setFaqs(response.data);
+      });
+    }
+  }, [id]);
   const handleShare = () => {
     navigator.clipboard.writeText(
       `${window.location.origin}?idKey=${id}&targetKey=subRegion`
@@ -100,10 +112,10 @@ export default function SubRegion() {
           <RegionUnits
             regionId={id}
             isSub={true}
-            className={`container_wrapper units_container`}
+            className={`container_wrapper units_container mb-5 p-3`}
           />
         ) : (
-          <div className="shimmer_wrapper">
+          <div className="shimmer_wrapper ">
             {[...Array(4)].map((e, i) => (
               <ShimmerThumbnail key={i} height={250} rounded />
             ))}
@@ -126,6 +138,46 @@ export default function SubRegion() {
         )} */}
       </>
       {meta && <Pagination meta={meta} handlePagination={handlePagination} />}
+
+      {/* FAQ SECTION */}
+      <div className="col-md-12 container_wrapper mb-5 p-3">
+        <div className="accordion" id="accordionExample">
+          <h3 className="mb-3">FAQs</h3>
+          {faqs && faqs.length > 0 ? (
+            faqs.map((faq) => {
+              return (
+                <div className="accordion-item" key={faq.id}>
+                  <h2 className="accordion-header">
+                    <button
+                      className="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target={`#collapse${faq.id}`}
+                      aria-expanded="true"
+                      aria-controls={`collapse${faq.id}`}
+                    >
+                      {faq.question}
+                    </button>
+                  </h2>
+                  <div
+                    id={`collapse${faq.id}`}
+                    className="accordion-collapse collapse"
+                    data-bs-parent="#accordionExample"
+                  >
+                    <div className="accordion-body">{faq.answer}</div>
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <div className="d-felx flex-column">
+              <h3 class="badge faq_emptyMessage">
+                There&apos;s no FAQs for this Sub-region.
+              </h3>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

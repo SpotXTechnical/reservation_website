@@ -1,0 +1,38 @@
+.policy_container {
+  min-height: 50vh;
+  margin: 40px 80px 80px 80px;
+  font-weight: normal;
+  line-height: 25px;
+}
+.policy_container h2 {
+  text-align: inherit;
+}
+.header {
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+.policy_container h2 {
+  font-weight: 600;
+  font-size: 1.6rem;
+}
+.policy_container p {
+  font-size: 1.1rem;
+}
+.policy_container a {
+  color: rgba(0, 0, 0, 0.87);
+  border-bottom: 1.5px solid #7baaf7;
+  text-decoration: none;
+}
+.logo {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .policy_container {
+    margin: 10px 20px 20px 20px;
+  }
+  .logo {
+    display: block;
+    margin-bottom: 20px;
+  }
+}

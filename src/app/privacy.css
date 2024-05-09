@@ -1,4 +1,4 @@
-.privacy_container {
+/* .privacy_container {
   min-height: 50vh;
   margin: 40px 80px 80px 80px;
 }
@@ -32,9 +32,9 @@
 
 .privacy_container .privacy_content li {
   margin-bottom: 16px;
-}
+} */
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
   .privacy_container {
     bottom: 0;
     height: 100%;
@@ -52,4 +52,4 @@
     display: block;
     margin-bottom: 20px;
   }
-}
+} */

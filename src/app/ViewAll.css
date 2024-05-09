@@ -4,4 +4,9 @@
   color: var(--light-blue-color);
   cursor: pointer;
   margin-bottom: 0px;
+  text-decoration: none;
+}
+
+.view_all:hover {
+  color: #04dfd4;
 }
