@@ -43,7 +43,6 @@ axiosInstance.interceptors.response.use(
       }
     }
 
-    console.error(error);
     return Promise.reject(error);
   }
 );
