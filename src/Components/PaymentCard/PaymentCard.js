@@ -6,14 +6,9 @@ import styles from "./PaymentCard.module.css";
 export const PaymentCard = ({ cardData, onGeneratePaymentURL }) => {
   const [redirectURL, setRedirectURL] = useState(null);
   const provider = {
-    name: "",
+    name: cardData.name,
     icon: cardData.image,
   };
-  switch (cardData.name) {
-    case "Card payment":
-      provider.name = "Card payment";
-      break;
-  }
 
   return (
     <div
