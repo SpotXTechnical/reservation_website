@@ -5,7 +5,8 @@ import { getCities } from "../../app/Apis/HomeApis";
 import { signUp } from "../../app/Apis/AuthApis";
 import { useRouter } from "next/router";
 import store, { langAction } from "../../store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logIn } from "../../store/Auth/authSlice";
 
 export default function SignUp() {
   if (typeof window !== "undefined") {
@@ -16,6 +17,8 @@ export default function SignUp() {
     );
   }
   let { lang } = useSelector((state) => state.language);
+  const { user } = useSelector((state) => state.auth);
+
   const intl = useIntl();
   const router = useRouter();
   const [cityList, setCityList] = useState([]);
@@ -34,6 +37,7 @@ export default function SignUp() {
   const [city, setCity] = useState("");
   const [cityErr, setCityErr] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getCities().then((res) => setCityList(res.data));
@@ -101,7 +105,7 @@ export default function SignUp() {
       const data = {
         name,
         email,
-        phone,
+        phone: `+2${phone}`,
         password,
         password_confirmation: passwordConfirm,
         // city_id: city,
@@ -114,6 +118,7 @@ export default function SignUp() {
           }, 5000);
         } else {
           localStorage.setItem("user", JSON.stringify(res?.data?.user));
+          dispatch(logIn(res?.data?.user));
           localStorage.setItem(
             "access_token",
             JSON.stringify(res?.data?.token?.access_token)

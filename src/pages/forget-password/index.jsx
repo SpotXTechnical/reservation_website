@@ -11,10 +11,12 @@ import { useRouter } from "next/router";
 const initialState = {
   userSentOTPLoading: false,
   otpCodeSent: false,
+  userPhoneNumber: "",
 };
 const OTP_CODE_SENT = "OTP_CODE_SENT";
 const OTP_SENT_LOADING = "OTP_SENT_LOADING";
 const CLOSE_OTP_MODAL = "CLOSE_OTP_MODAL";
+const SET_PHONE_NUMBER = "SET_PHONE_NUMBER";
 const reducer = (state, action) => {
   switch (action.type) {
     case OTP_CODE_SENT:
@@ -32,6 +34,13 @@ const reducer = (state, action) => {
         ...state,
         otpCodeSent: false,
       };
+    case SET_PHONE_NUMBER:
+      console.log(action.payload);
+      localStorage.setItem("userPhoneNumber", action.payload);
+      return {
+        ...state,
+        userPhoneNumber: action.payload,
+      };
     default:
       return initialState;
   }
@@ -48,6 +57,7 @@ export default function ForgetPassword() {
   } = useForm();
 
   const onSubmit = (data) => {
+    dispatch({ type: SET_PHONE_NUMBER, payload: data.phoneNumber });
     const { phoneNumber } = data;
     let appVerifier;
     if (!appVerifier) {
@@ -72,7 +82,6 @@ export default function ForgetPassword() {
   };
 
   const checkVerification = (code) => {
-    console.log("inside", code);
     window.confirmationResult
       .confirm(code)
       .then((res) => {

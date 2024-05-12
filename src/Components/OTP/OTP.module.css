@@ -3,3 +3,7 @@
   color: white;
   padding: 8px 20px;
 }
+.CTA_confirm:hover {
+  background: #0c5855;
+  color: white;
+}
