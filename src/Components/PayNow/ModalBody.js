@@ -6,7 +6,6 @@ import Error from "../Error/Error";
 import "./PaymentModal.css";
 import { getPaymentURL } from "../../app/Apis/getPaymentURL";
 import { PAYMOB, PAYTABS } from "../../app/Contstants/paymentProviders";
-import { getToken } from "../../app/Apis/paymobPayment";
 import { ReservationContext } from "../../pages/reservations/[id]";
 import { useSelector } from "react-redux";
 
@@ -21,10 +20,10 @@ export const ModalBody = ({ paymentMethods }) => {
     setLoading(true);
     switch (method.provider) {
       case PAYTABS:
-        getPaymentURL(
-          id,
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/paytabs?q=${id}`
-        )
+        getPaymentURL(id, {
+          return_url: `${process.env.NEXT_PUBLIC_WEBSITE_BASE_URL}/api/paytabs?q=${id}`,
+          payment_method_id: method.id,
+        })
           .then((res) => {
             const url = res.data.redirect_url;
             if (url) {
@@ -37,10 +36,15 @@ export const ModalBody = ({ paymentMethods }) => {
             setError(error.message);
           });
       case PAYMOB:
-        getToken(reservationData, user)
+        getPaymentURL(id, {
+          payment_method_id: method.id,
+        })
           .then((response) => {
             setLoading(false);
-            console.log(response);
+            const url = response.data.redirect_url;
+            if (url) {
+              window.open(url, "_self");
+            }
           })
           .catch((error) => {
             setLoading(false);

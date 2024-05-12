@@ -1,10 +1,11 @@
+import { handleQueryparams } from "../utils";
 import { axiosInstance } from "./AxiosInstance";
 
-export const getPaymentURL = async (reservationId, return_url) => {
-  console.log(reservationId);
+export const getPaymentURL = async (reservationId, qParams) => {
+  const params = handleQueryparams(qParams);
   try {
     const response = await axiosInstance.get(
-      `/api/v1/user/payments/${reservationId}/link?return_url=${return_url}`
+      `/api/v1/user/payments/${reservationId}/link?${params}`
     );
     return response.data;
   } catch (error) {
