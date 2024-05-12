@@ -31,12 +31,13 @@ export default function ResetPassword() {
 
   const onSubmit = async (data) => {
     const userData = new FormData();
-    userData.append("phone", data.phoneNumber);
+    userData.append("phone", `+2${localStorage.getItem("userPhoneNumber")}`);
     userData.append("password", data.password);
     userData.append("password_confirmation", data.confirmPass);
     try {
       const response = await resetPassword(userData);
       setIsPasswordReset((prev) => !prev);
+      localStorage.removeItem("userPhoneNumber");
     } catch (error) {
       toast.error(`${error.message}`, {
         autoClose: 5000,
@@ -55,33 +56,6 @@ export default function ResetPassword() {
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="p-3 d-flex flex-column align-items-center gap-2  col-12">
-              <label
-                className="fw-bold  fs-6 col-12"
-                style={{ color: "#44bcb7" }}
-                htmlFor="phone"
-              >
-                Please enter your phone number
-              </label>
-              <input
-                id="phone"
-                type="tel"
-                className="d-block border rounded focus-ring col-12 col-md-8 py-2 px-2"
-                autoFocus
-                {...register("phoneNumber", {
-                  required: true,
-                  pattern: /^01([0-2]|5)\d{1,8}$/,
-                })}
-              />
-              {errors.phoneNumber?.type === "required" && (
-                <p className={`${styles.error} mb-1 `}>
-                  Phone number is required
-                </p>
-              )}
-              {errors.phoneNumber?.type === "pattern" && (
-                <p className={`${styles.error} mb-1`}>
-                  Please enter a valid phone number
-                </p>
-              )}
               <label
                 className="fw-bold  fs-6 col-12"
                 style={{ color: "#44bcb7" }}
