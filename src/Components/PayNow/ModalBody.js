@@ -6,7 +6,6 @@ import Error from "../Error/Error";
 import "./PaymentModal.css";
 import { getPaymentURL } from "../../app/Apis/getPaymentURL";
 import { PAYMOB, PAYTABS } from "../../app/Contstants/paymentProviders";
-import { getToken } from "../../app/Apis/paymobPayment";
 import { ReservationContext } from "../../pages/reservations/[id]";
 import { useSelector } from "react-redux";
 
