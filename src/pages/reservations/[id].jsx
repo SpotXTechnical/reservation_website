@@ -117,7 +117,7 @@ export default function SubRegion() {
         <div className="view_details_wrapper">
           <div className="statuses_wrapper">
             <p className={`align-self-end status ${data.status} icon-text`}>
-              {icon?.src && <Image {...icon} alt="pending" />}
+              {icon?.src && <Image src={icon} alt="pending" />}
               {data.status}
             </p>
           </div>
@@ -140,7 +140,7 @@ export default function SubRegion() {
             <hr className="total_price_hr" />
             <div className="reservation-success">
               <h3 className="reservation-success__header">
-                <Image {...Check} alt="checkIcon" /> Reservation Confirmed!
+                <Image src={Check} alt="checkIcon" /> Reservation Confirmed!
               </h3>
               <p className="reservation-success__description">
                 Great news, Your down payment for this {data?.unit?.type} has
