@@ -10,6 +10,7 @@
 .regionsList_container .regionsList {
   display: flex;
   gap: 15px;
+  padding: 10px !important;
 }
 .regionsList_container .regionsList > div {
   width: 25%;
@@ -34,5 +35,9 @@
   }
   .regionsList_container .regionsList {
     width: 300%;
+    padding: 10px !important;
+  }
+  .regions_card {
+    min-width: inherit !important;
   }
 }

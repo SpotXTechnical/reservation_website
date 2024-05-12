@@ -33,6 +33,7 @@
     "react-date-range": "^1.4.0",
     "react-dom": "18.2.0",
     "react-feather": "^2.0.10",
+    "react-hook-form": "^7.51.4",
     "react-intl": "^6.2.10",
     "react-loading": "^2.0.3",
     "react-paginate": "^8.2.0",

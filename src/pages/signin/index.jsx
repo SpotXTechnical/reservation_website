@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import store, { langAction } from "../../store";
 import { logIn, setAccessToken } from "../../store/Auth/authSlice";
+import Link from "next/link";
 
 export default function SignIn() {
   if (typeof window !== "undefined") {
@@ -196,6 +197,14 @@ export default function SignIn() {
                   <FormattedMessage id="signin.signup" />
                 </span>
               </span>
+            </div>
+            <div>
+              <Link
+                href="/forget-password"
+                className="forget_password  d-flex justify-content-center"
+              >
+                Forgot your password?
+              </Link>
             </div>
           </div>
           <div className="image_container">
