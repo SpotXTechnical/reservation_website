@@ -154,7 +154,10 @@ export default function Regions() {
         {subRegionState?.subregionData?.sub_regions?.length === 0 &&
           !subRegionState.loading && (
             <section className="d-flex align-items-center justify-content-center pt-4 mb-5">
-              <div class="alert alert-primary w-50 text-center" role="alert">
+              <div
+                className="alert alert-primary w-50 text-center"
+                role="alert"
+              >
                 No Sub-Regions were found!
               </div>
             </section>
