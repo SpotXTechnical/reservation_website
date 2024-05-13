@@ -26,7 +26,7 @@ const RegionsHomeList = ({ subRegionData }) => {
             subRegionData.sectionData.map(({ name, images, id }, i) => (
               <RegionsCard
                 key={id}
-                id={i}
+                id={id}
                 name={name}
                 image={images[0]?.url}
                 handleClick={() => handleRedirectToRegionDetails(id)}

@@ -1,3 +1,4 @@
+import { handleQueryparams } from "../utils";
 import { axiosInstance } from "./AxiosInstance";
 
 export const getRegions = async (withSub) => {
@@ -24,10 +25,11 @@ export const getMostPopularRegions = async () => {
   }
 };
 
-export const getRegionDetails = async (id, name, page) => {
+export const getRegionDetails = async (id, name, qParams) => {
+  const params = handleQueryparams(qParams);
   try {
     const response = await axiosInstance.get(
-      `/api/v1/regions/${id}?page=${page}&search=${name}`
+      `/api/v1/regions/${id}?search=${name}&${params}`
     );
     return response.data;
   } catch (error) {
