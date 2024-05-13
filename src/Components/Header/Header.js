@@ -191,7 +191,7 @@ export default function Header() {
       </div>
       <div>
         <Image
-          {...Menu}
+          src={Menu}
           alt="menu icon"
           className={`${styles.menu_icon}`}
           onClick={handleOpenSideBar}
@@ -199,7 +199,7 @@ export default function Header() {
       </div>
       <div className={`small_screen ${sideBarStatus ? "small_screen_on" : ""}`}>
         <Image
-          {...Close}
+          src={Close}
           alt="close"
           className={styles.close_btn}
           onClick={handleOpenSideBar}
@@ -213,7 +213,7 @@ export default function Header() {
               className={`d-flex align-items-center gap-2`}
               onClick={handleOpenSideBar}
             >
-              <Image {...Discount} alt="disount image" />
+              <Image src={Discount} alt="disount image" />
               Offers
             </Link>
           </li>
@@ -223,7 +223,7 @@ export default function Header() {
               className={`d-flex align-items-center gap-2`}
               onClick={handleOpenSideBar}
             >
-              <Image {...Shopping} alt="reservation image" />
+              <Image src={Shopping} alt="reservation image" />
               Reservations
             </Link>
           </li>
@@ -234,7 +234,7 @@ export default function Header() {
                 className={`d-flex align-items-center gap-2`}
                 onClick={handleOpenSideBar}
               >
-                <Image {...Account} alt="account image" />
+                <Image src={Account} alt="account image" />
                 Profile
               </Link>
             </li>
@@ -245,13 +245,13 @@ export default function Header() {
                 onClick={handleOpenSideBar}
                 className={`d-flex align-items-center gap-2`}
               >
-                <Image {...Login} alt="account image" />
+                <Image src={Login} alt="account image" />
                 Sign In
               </Link>
             </li>
           )}
           <li className="d-flex gap-3">
-            <Image {...Glob} alt="account image" />
+            <Image src={Glob} alt="account image" />
 
             <Select
               className={styles.language_select}

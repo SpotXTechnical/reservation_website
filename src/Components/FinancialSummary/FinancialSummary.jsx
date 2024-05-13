@@ -30,7 +30,7 @@ export const FinancialSummary = ({
           </p>
           <p className={`flex align-items-center gap-1 ${styles.amount}`}>
             {status === "reserved" ? (
-              <Image {...VerifiedIcon} alt="verified" />
+              <Image src={VerifiedIcon} alt="verified" />
             ) : (
               ""
             )}
@@ -48,7 +48,7 @@ export const FinancialSummary = ({
       </div>
       <div className={`${styles.info_container} mb-4`}>
         <div className={styles.date}>
-          <Image {...CalendarImage} alt="calendar" />
+          <Image src={CalendarImage} alt="calendar" />
           <div className={styles.summary_wrapper}>
             <div className={styles.reservation_date}>
               <FormattedMessage id="Reservation_date" />
@@ -66,7 +66,7 @@ export const FinancialSummary = ({
         </div>
         <hr className={styles.horizontal_divider} />
         <div className={`${styles.date}`}>
-          <Image {...Money} alt="calendar" />
+          <Image src={Money} alt="calendar" />
           <div className={styles.summary_wrapper}>
             <div className={styles.total_cost}>
               <FormattedMessage id="total_cost" />

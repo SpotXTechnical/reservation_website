@@ -55,11 +55,11 @@ const ReservationCard = ({ data }) => {
               <span>
                 <FormattedMessage id="reviewYourRent" />
               </span>
-              <Image {...Like} alt="like" />
+              <Image src={Like} alt="like" />
             </p>
           ) : null}
           <p className={`align-self-end status ${data.status}`}>
-            <Image {...icon} alt="pending" />
+            <Image src={icon} alt="pending" />
             {data.status}
           </p>
         </div>
