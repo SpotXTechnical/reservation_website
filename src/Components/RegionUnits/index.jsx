@@ -64,6 +64,8 @@ const RegionUnits = ({ regionId, className, isSub }) => {
                 nearest_active_ranges={unit.nearest_active_ranges}
                 favouritesList={favourites}
                 updateFavList={handleUpdateFavList}
+                total_price={unit.total_price}
+                current_price={unit.current_price}
               />
             );
           })

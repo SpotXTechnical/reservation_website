@@ -110,6 +110,8 @@ export default function ShowAll() {
                   active_ranges,
                   nearest_active_ranges,
                   id,
+                  current_price,
+                  total_price,
                 },
                 i
               ) => (
@@ -127,6 +129,8 @@ export default function ShowAll() {
                   nearest_active_ranges={nearest_active_ranges}
                   favouritesList={favourites}
                   updateFavList={handleUpdateFavList}
+                  total_price={total_price}
+                  current_price={current_price}
                 />
               )
             )}
