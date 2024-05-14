@@ -122,7 +122,7 @@ export default function PropertyDetails() {
       const modifiedData = data?.active_reservations?.map((obj) => {
         const fromDate = new Date(obj.from);
         extractedDates.push(fromDate.toISOString());
-        fromDate.setDate(fromDate.getDate() + 1);
+        fromDate.setDate(fromDate.getDate());
         const newObj = { ...obj, from: fromDate.toISOString() };
         return newObj;
       });
@@ -469,7 +469,7 @@ export default function PropertyDetails() {
                 })
               ) : (
                 <div className="d-felx flex-column">
-                  <h3 class="badge faq_emptyMessage">
+                  <h3 className="badge faq_emptyMessage">
                     There&apos;s no FAQs for this unit.
                   </h3>
                 </div>
