@@ -106,7 +106,7 @@ export default function SubRegion() {
             className={`container_wrapper gap-4 justify-content-center units_container mb-0 p-3`}
           />
         ) : (
-          <div className="shimmer_wrapper">
+          <div className="container_wrapper gap-4 justify-content-center units_container mb-0 p-3`">
             {[...Array(4)].map((e, i) => (
               <ShimmerThumbnail key={i} height={250} rounded />
             ))}
@@ -162,10 +162,13 @@ export default function SubRegion() {
             })}
         </div>
         {faqs && faqs.length === 0 && (
-          <section className="d-felx   flex-column ">
-            <h3 className="badge faq_emptyMessage text-break fs-7">
+          <section className="d-felx   flex-column">
+            <p
+              className="badge faq_emptyMessage text-break"
+              style={{ fontSize: "12px" }}
+            >
               There&apos;s no FAQs for this Sub-region.
-            </h3>
+            </p>
           </section>
         )}
       </div>
