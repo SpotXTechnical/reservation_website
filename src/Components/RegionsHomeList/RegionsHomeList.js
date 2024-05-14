@@ -12,8 +12,13 @@ const RegionsHomeList = ({ subRegionData }) => {
   const [data, setData] = useState([]);
   let { lang } = useSelector((state) => state.language);
   const handleRedirectToRegionDetails = (id) => {
-    router.push(`/regions/${id}`);
+    if (subRegionData.type === "subregion") {
+      router.push(`/subRegions/${id}`);
+    } else {
+      router.push(`/regions/${id}`);
+    }
   };
+
   return (
     <div className="regionsList_container">
       <div className="regionsList_header">

@@ -171,7 +171,7 @@ export default function SubRegion() {
             })
           ) : (
             <div className="d-felx flex-column">
-              <h3 class="badge faq_emptyMessage">
+              <h3 className="badge faq_emptyMessage">
                 There&apos;s no FAQs for this Sub-region.
               </h3>
             </div>
