@@ -76,9 +76,7 @@ export default function SubRegion() {
             setData(res.data);
             setOffers(res.data?.offers);
           })
-          .catch((error) => {
-            console.log("error", error);
-          });
+          .catch((error) => {});
       }
     },
     [id, lang, refetch]

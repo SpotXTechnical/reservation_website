@@ -217,7 +217,7 @@ export default function PropertyDetails() {
         <div className="bread_crumb">
           <Breadcrumb items={items} />
         </div>
-        <div className="actions">
+        <div className="actions justify-content-between">
           {showComponent && data?.is_favourite ? (
             <span
               className="cursor-pointer"
@@ -314,7 +314,7 @@ export default function PropertyDetails() {
       )}
 
       <div className="d-flex gap-5 mb-5 properties_mobile ">
-        <div className="col-md-6">
+        <div className="col-lg-6">
           <div className="properties-details">
             <div className="specs">
               <div className="flex-center">
@@ -477,7 +477,7 @@ export default function PropertyDetails() {
             </div>
           </div>
         </div>
-        <div className="col-md-6">
+        <div className="col-lg-6">
           <div className="date_range_wrapper">
             <div className="date_title">
               <img src="/assets/availability.png" alt="availability-icon" />

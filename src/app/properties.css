@@ -164,7 +164,7 @@
 .properties_details_container .features_wrapper {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
   margin-bottom: 48px;
 }
 
@@ -644,7 +644,20 @@ div[dir="rtl"]
   .properties_details_container .images .flex-center:last-child img {
     height: 105px;
   }
-  .properties_details_container .rdrDay {
+  /* .properties_details_container .rdrDay {
     width: unset;
+  } */
+}
+
+@media screen and (max-width: 425px) {
+  .selection_days_wrapper {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .flex-center::before {
+    display: none;
+  }
+  .properties_details_container .head .actions .cursor-pointer:first-child {
+    margin-right: 0;
   }
 }

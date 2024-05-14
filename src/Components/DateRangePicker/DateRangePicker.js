@@ -80,7 +80,6 @@ const DateRangeCalendarPicker = ({
 
   const checkBeforeDay = (arr1, arr2) => {
     let disabledDays = [...arr1];
-    console.log("arr1", arr1);
     const timestampSet = new Set(arr1.map((date) => date.getTime()));
     for (let i = 0; i < arr2.length; i++) {
       const currentDate = new Date(arr2[i]);
@@ -125,9 +124,7 @@ const DateRangeCalendarPicker = ({
           setModalLoadingState((prev) => !prev);
           handleShowReservationModal(res?.data);
         })
-        .catch((error) => {
-          console.log(error.message);
-        });
+        .catch((error) => {});
     } else {
       setDateError(true);
     }
