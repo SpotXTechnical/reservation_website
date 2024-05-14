@@ -24,9 +24,7 @@ const MostPopularList = ({ unitsData }) => {
   useEffect(() => {
     getFavouriteList().then((res) => setFav(res?.data));
   }, []);
-  const handleViewAll = () => {
-    router.push;
-  };
+
   const handleUpdateFavList = () => {
     getFavouriteList().then((res) => setFav(res?.data));
   };
@@ -43,27 +41,24 @@ const MostPopularList = ({ unitsData }) => {
       <div className="popularList">
         {unitsData.sectionData?.length > 0 && unitsData.sectionData.length < 4
           ? unitsData.sectionData.map(
-              (
-                {
-                  images,
-                  title,
-                  type,
-                  bathrooms,
-                  beds,
-                  default_price,
-                  is_favourite,
-                  active_ranges,
-                  nearest_active_ranges,
-                  id,
-                },
-                i
-              ) => (
+              ({
+                images,
+                title,
+                type,
+                bathrooms,
+                beds,
+                is_favourite,
+                active_ranges,
+                nearest_active_ranges,
+                id,
+                total_price,
+                current_price,
+              }) => (
                 <PopularCard
                   id={id}
-                  key={i}
+                  key={id}
                   title={title}
                   image={images[0]?.url}
-                  default_price={default_price}
                   bathrooms={bathrooms}
                   beds={beds}
                   type={type}
@@ -72,6 +67,8 @@ const MostPopularList = ({ unitsData }) => {
                   nearest_active_ranges={nearest_active_ranges}
                   favouritesList={favourites}
                   updateFavList={handleUpdateFavList}
+                  total_price={total_price}
+                  current_price={current_price}
                 />
               )
             )
@@ -85,20 +82,20 @@ const MostPopularList = ({ unitsData }) => {
                     type,
                     bathrooms,
                     beds,
-                    default_price,
                     is_favourite,
                     active_ranges,
                     nearest_active_ranges,
                     id,
+                    total_price,
+                    current_price,
                   },
                   i
                 ) => (
                   <PopularCard
                     id={id}
-                    key={i}
+                    key={id}
                     title={title}
                     image={images[0]?.url}
-                    default_price={default_price}
                     bathrooms={bathrooms}
                     beds={beds}
                     type={type}
@@ -107,6 +104,8 @@ const MostPopularList = ({ unitsData }) => {
                     nearest_active_ranges={nearest_active_ranges}
                     favouritesList={favourites}
                     updateFavList={handleUpdateFavList}
+                    total_price={total_price}
+                    current_price={current_price}
                   />
                 )
               )}
