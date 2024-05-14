@@ -60,7 +60,6 @@ export default function ShowAll() {
         try {
           const response = await getUiBuilder(id);
           dispatch({ type: SUCCESS_STATE, payload: response });
-          console.log(response);
         } catch (error) {
           dispatch({ type: ERROR_STATE, payload: error.message });
         }

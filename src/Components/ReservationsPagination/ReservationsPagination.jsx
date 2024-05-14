@@ -11,7 +11,6 @@ const ReservationsPagination = ({ lastPage, callBack }) => {
     setCurrentPage(pageNumber);
     callBack(pageNumber);
   };
-  console.log(currentPage);
   return (
     <nav aria-label="..." className="pt-4 ">
       <ul className="pagination pagination-lg justify-content-center">

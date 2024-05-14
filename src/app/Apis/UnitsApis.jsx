@@ -1,4 +1,8 @@
-import { appendArrayToUrl, appendParamToUrl } from "../utils";
+import {
+  appendArrayToUrl,
+  appendParamToUrl,
+  handleQueryparams,
+} from "../utils";
 import { axiosInstance } from "./AxiosInstance";
 
 export const getUnitsPerRegion = async (regionId) => {
@@ -38,10 +42,11 @@ export const getFilterConfig = async (regionId) => {
   }
 };
 
-export const getUnitsPerSubRegion = async (regionId) => {
+export const getUnitsPerSubRegion = async (regionId, qparams = {}) => {
+  const params = handleQueryparams(qparams);
   try {
     const response = await axiosInstance.get(
-      `/api/v1/user/units?regions[0]=${regionId}&order_type=desc&order_by=default_price&page=1&most_popular=0`
+      `/api/v1/user/units?regions[0]=${regionId}&${params}`
     );
     return response.data;
   } catch (error) {
