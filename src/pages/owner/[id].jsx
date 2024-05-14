@@ -85,6 +85,8 @@ export default function OwnerProfile() {
                 nearest_active_ranges={unit.nearest_active_ranges}
                 updateFavList={handleUpdateFavList}
                 favouritesList={favourites}
+                total_price={unit.total_price}
+                current_price={unit.current_price}
               />
             );
           })}
