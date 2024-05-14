@@ -12,13 +12,10 @@ import { getFaqs } from "../../app/Apis/Faqs";
 
 export default function SubRegion() {
   const router = useRouter();
-  const [meta, setMeta] = useState("");
   const { id } = router.query;
   const [faqs, setFaqs] = useState(null);
-
   const [data, setData] = useState({});
   const [isCopied, setIsCopied] = useState(false);
-  const [page, setPage] = useState(1);
 
   let { lang } = useSelector((state) => state.language);
   if (typeof window !== "undefined") {
@@ -31,13 +28,12 @@ export default function SubRegion() {
   useEffect(
     function () {
       if (id) {
-        getRegionDetails(id, null, page).then((res) => {
+        getRegionDetails(id, null).then((res) => {
           setData(res.data);
-          setMeta(res.meta);
         });
       }
     },
-    [id, lang, page]
+    [id, lang]
   );
   useEffect(() => {
     if (id) {
@@ -59,13 +55,8 @@ export default function SubRegion() {
     }, 2000);
   };
 
-  const handlePagination = (page) => {
-    const PAGE = page.selected + 1;
-    setPage(PAGE);
-  };
-
   return (
-    <div dir={lang === "ar" ? "rtl" : "ltr"} className="subregions_container">
+    <main dir={lang === "ar" ? "rtl" : "ltr"} className="subregions_container">
       <>
         {data?.images ? (
           <div className={`flex-center head`}>
@@ -85,7 +76,7 @@ export default function SubRegion() {
         )}
 
         {data.name && (
-          <div className="d-flex justify-content-center my-5 align-items-center">
+          <div className="d-flex flex-column gap-2 gap-md-0 flex-md-row justify-content-center mt-5 mb-3 align-items-center">
             <img
               src="/assets/location.png"
               alt="location-icon"
@@ -112,10 +103,10 @@ export default function SubRegion() {
           <RegionUnits
             regionId={id}
             isSub={true}
-            className={`container_wrapper units_container mb-5 p-3`}
+            className={`container_wrapper gap-4 justify-content-center units_container mb-0 p-3`}
           />
         ) : (
-          <div className="shimmer_wrapper ">
+          <div className="shimmer_wrapper">
             {[...Array(4)].map((e, i) => (
               <ShimmerThumbnail key={i} height={250} rounded />
             ))}
@@ -137,13 +128,13 @@ export default function SubRegion() {
           </div>
         )} */}
       </>
-      {meta && <Pagination meta={meta} handlePagination={handlePagination} />}
 
       {/* FAQ SECTION */}
       <div className="col-md-12 container_wrapper mb-5 p-3">
         <div className="accordion" id="accordionExample">
           <h3 className="mb-3">FAQs</h3>
-          {faqs && faqs.length > 0 ? (
+          {faqs &&
+            faqs.length > 0 &&
             faqs.map((faq) => {
               return (
                 <div className="accordion-item" key={faq.id}>
@@ -168,16 +159,16 @@ export default function SubRegion() {
                   </div>
                 </div>
               );
-            })
-          ) : (
-            <div className="d-felx flex-column">
-              <h3 className="badge faq_emptyMessage">
-                There&apos;s no FAQs for this Sub-region.
-              </h3>
-            </div>
-          )}
+            })}
         </div>
+        {faqs && faqs.length === 0 && (
+          <section className="d-felx   flex-column ">
+            <h3 className="badge faq_emptyMessage text-break fs-7">
+              There&apos;s no FAQs for this Sub-region.
+            </h3>
+          </section>
+        )}
       </div>
-    </div>
+    </main>
   );
 }

@@ -35,7 +35,6 @@ const reducer = (state, action) => {
         otpCodeSent: false,
       };
     case SET_PHONE_NUMBER:
-      console.log(action.payload);
       localStorage.setItem("userPhoneNumber", action.payload);
       return {
         ...state,

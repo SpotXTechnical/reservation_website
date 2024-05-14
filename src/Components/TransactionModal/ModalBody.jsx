@@ -13,7 +13,6 @@ import moment from "moment";
 
 export default function ModalBody({ card, toggle, icon }) {
   const { transactionData, loading, error } = useTransaction(card);
-  console.log(transactionData);
   if (loading) {
     return <Loading />;
   }
@@ -24,7 +23,6 @@ export default function ModalBody({ card, toggle, icon }) {
       </div>
     );
   }
-  console.log(transactionData);
   const reason = {
     img: null,
     type: null,

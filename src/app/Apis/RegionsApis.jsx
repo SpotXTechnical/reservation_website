@@ -25,11 +25,10 @@ export const getMostPopularRegions = async () => {
   }
 };
 
-export const getRegionDetails = async (id, name, qParams) => {
-  const params = handleQueryparams(qParams);
+export const getRegionDetails = async (id, name) => {
   try {
     const response = await axiosInstance.get(
-      `/api/v1/regions/${id}?search=${name}&${params}`
+      `/api/v1/regions/${id}?search=${name}`
     );
     return response.data;
   } catch (error) {
