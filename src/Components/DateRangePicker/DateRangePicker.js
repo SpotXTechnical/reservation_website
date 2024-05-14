@@ -20,26 +20,51 @@ const DateRangeCalendarPicker = ({
     endDate: new Date(),
     key: "selection",
   });
+
   const router = useRouter();
   const { id } = router.query;
-  console.log(id);
   const [dateError, setDateError] = useState(false);
   const [dateChanged, setDateChanged] = useState(false);
+
+  const modifiedExtractedDates = () => {
+    const modified = extractedDates.map((date) => {
+      return moment(date).format("DD-MM-YYYY");
+    });
+    return modified;
+  };
+
   const getAllDays = (activeReservations) => {
     const allDays = [];
-
+    const endDates = [];
+    const disabledEndDates = [];
+    const formattedExtractedDates = modifiedExtractedDates();
     activeReservations.forEach((range) => {
       const startDate = new Date(range.from);
       const endDate = new Date(range.to) - 1;
 
       const currentDate = new Date(startDate);
+      endDates.push(moment(range.to).format("DD-MM-YYYY"));
       while (currentDate <= endDate) {
-        allDays.push(new Date(currentDate.toISOString().split("T")[0]));
+        if (endDates.includes(moment(currentDate).format("DD-MM-YYYY"))) {
+          disabledEndDates.push(
+            new Date(currentDate.toISOString().split("T")[0])
+          );
+        } else if (
+          formattedExtractedDates.includes(
+            moment(currentDate).format("DD-MM-YYYY")
+          ) &&
+          !endDates.includes(moment(currentDate).format("DD-MM-YYYY"))
+        ) {
+          currentDate.setDate(currentDate.getDate() + 1);
+          continue;
+        } else {
+          allDays.push(new Date(currentDate.toISOString().split("T")[0]));
+        }
         currentDate.setDate(currentDate.getDate() + 1);
       }
-      console.log("currentDate", currentDate.getDate());
     });
-    return allDays;
+
+    return [...allDays, ...disabledEndDates];
   };
 
   // const checkBeforeDay = (days)=> {
@@ -55,7 +80,7 @@ const DateRangeCalendarPicker = ({
 
   const checkBeforeDay = (arr1, arr2) => {
     let disabledDays = [...arr1];
-
+    console.log("arr1", arr1);
     const timestampSet = new Set(arr1.map((date) => date.getTime()));
     for (let i = 0; i < arr2.length; i++) {
       const currentDate = new Date(arr2[i]);
@@ -116,7 +141,6 @@ const DateRangeCalendarPicker = ({
         resetTime(date).getTime() >= resetTime(fromDate).getTime() &&
         resetTime(date).getTime() <= resetTime(toDate).getTime()
       ) {
-        console.log("here");
         return range.price;
       }
     }
