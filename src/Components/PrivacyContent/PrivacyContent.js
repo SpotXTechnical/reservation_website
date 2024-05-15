@@ -1,8 +1,13 @@
 import React from "react";
 import styles from "../../pages/privacy/privacy.module.css";
+import Head from "next/head";
 export default function PrivacyContent() {
   return (
     <>
+      <Head>
+        <title>Privacy | SpotX</title>
+        <meta name="description" content={"SpotX Privacy"} />
+      </Head>{" "}
       <div className={styles.privacy_container}>
         <section>
           <h1 className={styles.header}>Privacy Policy</h1>

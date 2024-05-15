@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import store, { langAction } from "../../store";
+import Head from "next/head";
 
 export default function Profile() {
   let { lang } = useSelector((state) => state.language);
@@ -31,6 +32,10 @@ export default function Profile() {
 
   return (
     <>
+      <Head>
+        <title>Your Profile | SpotX</title>
+        <meta name="description" content={"user Profile in SpotX"} />
+      </Head>{" "}
       <div
         dir={lang === "ar" ? "rtl" : "ltr"}
         className="profile_wrapper container"

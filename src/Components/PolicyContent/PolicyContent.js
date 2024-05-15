@@ -1,10 +1,15 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import styles from "../../pages/policy/policy.module.css";
+import Head from "next/head";
 
 export default function PolicyContent() {
   return (
     <>
+      <Head>
+        <title>Policy | SpotX</title>
+        <meta name="description" content={"SpotX Policy"} />
+      </Head>{" "}
       <div className={styles.policy_container}>
         <h1 className={styles.title}>Cancellation and Refund Policy</h1>
         <section>

@@ -36,9 +36,21 @@ import "./app/radio.css";
 import "./app/regions.css";
 import "./app/checkbox.css";
 import "./app/ownerprofile.css";
+import Head from "next/head";
+
 export default function Layout({ children }) {
   return (
     <div className="d-flex flex-column" style={{ minHeight: "100vh" }}>
+      <Head>
+        <title>SpotX</title>
+        <meta
+          name="description"
+          content={
+            "Choose From a Wide Range of Properties offered by SpotX. Search Now! Chalets. Villas."
+          }
+        />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+      </Head>
       <Header />
       <div className="flex-grow-1 ">{children}</div>
       <Footer />
