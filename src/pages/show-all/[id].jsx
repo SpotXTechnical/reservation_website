@@ -7,6 +7,7 @@ import PopularCard from "../../Components/SharedComponents/PopularCard/PopularCa
 import { getFavouriteList } from "../../app/Apis/UnitsApis";
 import Pagination from "../../Components/Pagination/Pagination";
 import { useSelector } from "react-redux";
+import Head from "next/head";
 
 const initialState = {
   error: "",
@@ -84,65 +85,72 @@ export default function ShowAll() {
     }
   };
   return (
-    <main className="popularList_container">
-      <section className="popularList">
-        {uiBuilderState.error && <Error error={uiBuilderState.error} />}
-        {uiBuilderState.loading &&
-          [...Array(6)].map((e, i) => (
-            <div className="col-6" key={i}>
-              <ShimmerThumbnail height={250} rounded />
-            </div>
-          ))}
+    <>
+      <Head>
+        <title>Show All | SpotX</title>
+        <meta name="description" content={"Show all unit in SpotX"} />
+      </Head>
 
-        {!uiBuilderState.loading && !uiBuilderState.error && (
-          <>
-            <h1 className="py-5">{uiBuilderState.uiBuilderData?.title}</h1>
-            {uiBuilderState.uiBuilderData?.sectionData.map(
-              (
-                {
-                  images,
-                  title,
-                  type,
-                  bathrooms,
-                  beds,
-                  default_price,
-                  is_favourite,
-                  active_ranges,
-                  nearest_active_ranges,
-                  id,
-                  current_price,
-                  total_price,
-                },
-                i
-              ) => (
-                <PopularCard
-                  id={id}
-                  key={i}
-                  title={title}
-                  image={images[0]?.url}
-                  default_price={default_price}
-                  bathrooms={bathrooms}
-                  beds={beds}
-                  type={type}
-                  is_favourite={is_favourite}
-                  active_ranges={active_ranges}
-                  nearest_active_ranges={nearest_active_ranges}
-                  favouritesList={favourites}
-                  updateFavList={handleUpdateFavList}
-                  total_price={total_price}
-                  current_price={current_price}
-                />
-              )
-            )}
-          </>
+      <main className="popularList_container">
+        <section className="popularList">
+          {uiBuilderState.error && <Error error={uiBuilderState.error} />}
+          {uiBuilderState.loading &&
+            [...Array(6)].map((e, i) => (
+              <div className="col-6" key={i}>
+                <ShimmerThumbnail height={250} rounded />
+              </div>
+            ))}
+
+          {!uiBuilderState.loading && !uiBuilderState.error && (
+            <>
+              <h1 className="py-5">{uiBuilderState.uiBuilderData?.title}</h1>
+              {uiBuilderState.uiBuilderData?.sectionData.map(
+                (
+                  {
+                    images,
+                    title,
+                    type,
+                    bathrooms,
+                    beds,
+                    default_price,
+                    is_favourite,
+                    active_ranges,
+                    nearest_active_ranges,
+                    id,
+                    current_price,
+                    total_price,
+                  },
+                  i
+                ) => (
+                  <PopularCard
+                    id={id}
+                    key={i}
+                    title={title}
+                    image={images[0]?.url}
+                    default_price={default_price}
+                    bathrooms={bathrooms}
+                    beds={beds}
+                    type={type}
+                    is_favourite={is_favourite}
+                    active_ranges={active_ranges}
+                    nearest_active_ranges={nearest_active_ranges}
+                    favouritesList={favourites}
+                    updateFavList={handleUpdateFavList}
+                    total_price={total_price}
+                    current_price={current_price}
+                  />
+                )
+              )}
+            </>
+          )}
+        </section>
+        {uiBuilderState.uiBuilderData && (
+          <Pagination
+            lastPage={uiBuilderState.uiBuilderData?.meta?.last_page}
+            callBack={getPageNumberAndFetch}
+          />
         )}
-      </section>
-      {uiBuilderState.uiBuilderData && (
-        <Pagination
-          lastPage={uiBuilderState.uiBuilderData?.meta?.last_page}
-          callBack={getPageNumberAndFetch}
-        />
-      )}
-    </main>
+      </main>
+    </>
   );
 }

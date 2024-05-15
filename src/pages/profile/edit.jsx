@@ -7,6 +7,7 @@ import Input from "../../Components/SharedComponents/Input/Input";
 import { getCities } from "../../app/Apis/HomeApis";
 import { editProfile } from "../../app/Apis/AuthApis";
 import { useSelector } from "react-redux";
+import Head from "next/head";
 
 export default function EditProfile() {
   const intl = useIntl();
@@ -131,6 +132,10 @@ export default function EditProfile() {
 
   return (
     <>
+      <Head>
+        <title>Your Profile | SpotX</title>
+        <meta name="description" content={"user Profile in SpotX"} />
+      </Head>{" "}
       {Object.keys(validationErrors).length > 0 ? (
         <div
           className="alert alert-danger alert-dismissible fade show"
