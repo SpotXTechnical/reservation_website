@@ -16,6 +16,7 @@ import Pagination from "../../Components/SharedComponents/Pagination";
 import PopularCard from "../../Components/SharedComponents/PopularCard/PopularCard";
 import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
+import Head from "next/head";
 
 const Reservations = () => {
   const intl = useIntl();
@@ -457,6 +458,13 @@ const Reservations = () => {
       dir={lang === "ar" ? "rtl" : "ltr"}
       className={`d-flex discover_wrapper`}
     >
+      <Head>
+        <title>Discover | SpotX</title>
+        <meta
+          name="description"
+          content={"Discover units and properties for reservations"}
+        />
+      </Head>
       <div className={`d-flex flex-column filters`}>
         <div className={`w-100 mb-5 sort_section`}>
           <h4 className="mb-4">
@@ -666,6 +674,8 @@ const Reservations = () => {
                     nearest_active_ranges={unit.nearest_active_ranges}
                     updateFavList={handleUpdateFavList}
                     favouritesList={favourites}
+                    total_price={unit.total_price}
+                    current_price={unit.current_price}
                   />
                 );
               })}

@@ -15,11 +15,12 @@ const PopularCard = ({
   type,
   bathrooms,
   beds,
-  default_price,
   updateFavList,
   active_ranges,
   nearest_active_ranges,
   favouritesList,
+  total_price,
+  current_price,
 }) => {
   const [isFav, setIsFav] = useState(false);
   const router = useRouter();
@@ -84,8 +85,11 @@ const PopularCard = ({
         <div className="popular_header">
           <div className="popular_title">{title}</div>
           <div className="default_price">
-            {getOffers()?.length > 0 ? getOffers()[0].price : default_price} LE
-            <span className="per_day">/ day</span>
+            {/* {getOffers()?.length > 0 ? getOffers()[0].price : default_price} LE
+            <span className="per_day">/ day</span> */}
+            {total_price ? `${total_price} ` : `${current_price} `}
+            {total_price && <span className="per_day">/ Reservation</span>}
+            {!total_price && <span className="per_day">/ day</span>}
           </div>
         </div>
         <div className="popular_header2">

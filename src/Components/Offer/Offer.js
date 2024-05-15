@@ -11,7 +11,6 @@ export const Offer = ({ unitImage, alt, offer, setOffers, setRefetch }) => {
 
   const handleDeclineOffer = async () => {
     const res = await rejectOffer(offer.id);
-    console.log("offers", res);
     setOffers(res?.data?.offers);
     if (res?.data?.offers === null) {
       setRefetch(true);

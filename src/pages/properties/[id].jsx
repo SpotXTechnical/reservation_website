@@ -19,6 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import Loading from "../../Components/Loading/Loading";
 import { getFaqs } from "../../app/Apis/Faqs";
+import Head from "next/head";
 
 export default function PropertyDetails() {
   let { lang } = useSelector((state) => state.language);
@@ -122,7 +123,7 @@ export default function PropertyDetails() {
       const modifiedData = data?.active_reservations?.map((obj) => {
         const fromDate = new Date(obj.from);
         extractedDates.push(fromDate.toISOString());
-        fromDate.setDate(fromDate.getDate() + 1);
+        fromDate.setDate(fromDate.getDate());
         const newObj = { ...obj, from: fromDate.toISOString() };
         return newObj;
       });
@@ -212,12 +213,15 @@ export default function PropertyDetails() {
       dir={lang === "ar" ? "rtl" : "ltr"}
       className="properties_details_container"
     >
-      {/* Head */}
+      <Head>
+        <title>{data?.title || "Loading..."}</title>
+        <meta name="description" content={data?.description} />
+      </Head>
       <div className={`flex-center head`}>
         <div className="bread_crumb">
           <Breadcrumb items={items} />
         </div>
-        <div className="actions">
+        <div className="actions justify-content-between">
           {showComponent && data?.is_favourite ? (
             <span
               className="cursor-pointer"
@@ -314,7 +318,7 @@ export default function PropertyDetails() {
       )}
 
       <div className="d-flex gap-5 mb-5 properties_mobile ">
-        <div className="col-md-6">
+        <div className="col-lg-6">
           <div className="properties-details">
             <div className="specs">
               <div className="flex-center">
@@ -469,7 +473,7 @@ export default function PropertyDetails() {
                 })
               ) : (
                 <div className="d-felx flex-column">
-                  <h3 class="badge faq_emptyMessage">
+                  <h3 className="badge faq_emptyMessage">
                     There&apos;s no FAQs for this unit.
                   </h3>
                 </div>
@@ -477,7 +481,7 @@ export default function PropertyDetails() {
             </div>
           </div>
         </div>
-        <div className="col-md-6">
+        <div className="col-lg-6">
           <div className="date_range_wrapper">
             <div className="date_title">
               <img src="/assets/availability.png" alt="availability-icon" />

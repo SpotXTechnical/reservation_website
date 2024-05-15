@@ -5,6 +5,7 @@ import Error from "../../Components/Error/Error";
 import { useWallet } from "../../app/CustomHooks/Wallet/useWallet";
 import Loading from "../../Components/Loading/Loading";
 import TransactionCard from "../../Components/TransactionCard/TransactionCard";
+import Head from "next/head";
 
 export default function Transactions() {
   const { balanceData, transactionsData, loading, error } = useWallet();
@@ -19,6 +20,10 @@ export default function Transactions() {
   }
   return (
     <>
+      <Head>
+        <title>{"Transactions" || "Loading..."} | SpotX</title>
+        <meta name="description" content={"your transactions in SpotX"} />
+      </Head>
       <div className="container">
         <div className={styles.container}>
           <div className={`${styles.balance} d-flex flex-column`}>
