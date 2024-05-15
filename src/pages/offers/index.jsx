@@ -6,6 +6,7 @@ import { ShimmerThumbnail } from "react-shimmer-effects";
 import PopularCard from "../../Components/SharedComponents/PopularCard/PopularCard";
 import { getFavouriteList } from "../../app/Apis/UnitsApis";
 import { FormattedMessage } from "react-intl";
+import Head from "next/head";
 
 export default function Offers() {
   let { lang } = useSelector((state) => state.language);
@@ -36,6 +37,10 @@ export default function Offers() {
   }
   return (
     <div dir={lang === "ar" ? "rtl" : "ltr"} className="offers_page_wrapper">
+      <Head>
+        <title>Offers | SpotX</title>
+        <meta name="description" content={"Check out our offers in SpotX"} />
+      </Head>
       {!data ? (
         <div className="shimmer_wrapper">
           {" "}

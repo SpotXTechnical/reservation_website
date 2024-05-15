@@ -7,6 +7,7 @@ import { ShimmerThumbnail } from "react-shimmer-effects";
 import store, { langAction } from "../../store";
 import PopularCard from "../../Components/SharedComponents/PopularCard/PopularCard";
 import { getFavouriteList } from "../../app/Apis/UnitsApis";
+import Head from "next/head";
 
 export default function OwnerProfile() {
   const router = useRouter();
@@ -41,61 +42,67 @@ export default function OwnerProfile() {
   }
 
   return (
-    <div dir={lang === "ar" ? "rtl" : "ltr"} className="owner_container">
-      <div className="over_view">
-        {data?.name ? (
-          <div className="owner">
-            <img src={data?.image} alt="owner_img" />
-            <p>{data?.name} </p>
-            {/* <p>{data?.phone} </p> */}
+    <>
+      <Head>
+        <title>{data?.name || "Loading"} | SpotX</title>
+        <meta name="description" content={"Owner"} />
+      </Head>{" "}
+      <div dir={lang === "ar" ? "rtl" : "ltr"} className="owner_container">
+        <div className="over_view">
+          {data?.name ? (
+            <div className="owner">
+              <img src={data?.image} alt="owner_img" />
+              <p>{data?.name} </p>
+              {/* <p>{data?.phone} </p> */}
+            </div>
+          ) : (
+            <ShimmerThumbnail height={175} rounded />
+          )}
+        </div>
+        <div className="title">
+          <p>
+            <FormattedMessage id="Other units" />
+          </p>
+        </div>
+        {!data ? (
+          <div className="shimmer_wrapper">
+            {" "}
+            {[...Array(4)].map((e, i) => (
+              <div className="shimmer" key={i}>
+                <ShimmerThumbnail key={i} height={250} rounded />
+              </div>
+            ))}
+          </div>
+        ) : data?.units?.length > 0 ? (
+          <div className="units_container">
+            {data?.units.map((unit, i) => {
+              return (
+                <PopularCard
+                  key={i}
+                  id={unit.id}
+                  title={unit.title}
+                  image={unit.images[0]?.url}
+                  default_price={unit.default_price}
+                  bathrooms={unit.bathrooms}
+                  beds={unit.beds}
+                  type={unit.type}
+                  is_favourite={unit.is_favourite}
+                  active_ranges={unit.active_ranges}
+                  nearest_active_ranges={unit.nearest_active_ranges}
+                  updateFavList={handleUpdateFavList}
+                  favouritesList={favourites}
+                  total_price={unit.total_price}
+                  current_price={unit.current_price}
+                />
+              );
+            })}
           </div>
         ) : (
-          <ShimmerThumbnail height={175} rounded />
+          <p className="not_found">
+            <FormattedMessage id="noDataFound" />
+          </p>
         )}
       </div>
-      <div className="title">
-        <p>
-          <FormattedMessage id="Other units" />
-        </p>
-      </div>
-      {!data ? (
-        <div className="shimmer_wrapper">
-          {" "}
-          {[...Array(4)].map((e, i) => (
-            <div className="shimmer" key={i}>
-              <ShimmerThumbnail key={i} height={250} rounded />
-            </div>
-          ))}
-        </div>
-      ) : data?.units?.length > 0 ? (
-        <div className="units_container">
-          {data?.units.map((unit, i) => {
-            return (
-              <PopularCard
-                key={i}
-                id={unit.id}
-                title={unit.title}
-                image={unit.images[0]?.url}
-                default_price={unit.default_price}
-                bathrooms={unit.bathrooms}
-                beds={unit.beds}
-                type={unit.type}
-                is_favourite={unit.is_favourite}
-                active_ranges={unit.active_ranges}
-                nearest_active_ranges={unit.nearest_active_ranges}
-                updateFavList={handleUpdateFavList}
-                favouritesList={favourites}
-                total_price={unit.total_price}
-                current_price={unit.current_price}
-              />
-            );
-          })}
-        </div>
-      ) : (
-        <p className="not_found">
-          <FormattedMessage id="noDataFound" />
-        </p>
-      )}
-    </div>
+    </>
   );
 }

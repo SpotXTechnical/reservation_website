@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import store, { langAction } from "../../store";
 import { logIn, setAccessToken } from "../../store/Auth/authSlice";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function SignIn() {
   if (typeof window !== "undefined") {
@@ -90,6 +91,10 @@ export default function SignIn() {
 
   return (
     <>
+      <Head>
+        <title>Sign In | SpotX</title>
+        <meta name="description" content={"Sign In page SpotX"} />
+      </Head>
       {Object.keys(validationErrors).length > 0 ? (
         <div
           className="alert alert-danger alert-dismissible fade show"

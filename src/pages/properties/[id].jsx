@@ -19,6 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import Loading from "../../Components/Loading/Loading";
 import { getFaqs } from "../../app/Apis/Faqs";
+import Head from "next/head";
 
 export default function PropertyDetails() {
   let { lang } = useSelector((state) => state.language);
@@ -212,7 +213,10 @@ export default function PropertyDetails() {
       dir={lang === "ar" ? "rtl" : "ltr"}
       className="properties_details_container"
     >
-      {/* Head */}
+      <Head>
+        <title>{data?.title || "Loading..."}</title>
+        <meta name="description" content={data?.description} />
+      </Head>
       <div className={`flex-center head`}>
         <div className="bread_crumb">
           <Breadcrumb items={items} />

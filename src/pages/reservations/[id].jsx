@@ -21,6 +21,7 @@ import { verifyTransacion } from "../../app/Apis/VerifyTransaction";
 import PaymentStatusModal from "../../Components/PaymentStatusModal/PaymentStatusModal";
 import Link from "next/link";
 import CancelReservationModal from "../../Components/CancelReservationModal/CancelReservationModal";
+import Head from "next/head";
 
 // Reservation Context
 export const ReservationContext = createContext();
@@ -94,172 +95,181 @@ export default function SubRegion() {
   };
 
   return (
-    <div className="reservation_container" dir={lang === "ar" ? "rtl" : "ltr"}>
-      {data?.unit?.images ? (
-        <div className={`flex-center head`}>
-          <Carousel showThumbs={false} showStatus={false} emulateTouch={true}>
-            {data?.unit?.images?.map((slide) => (
-              <div key={slide.id}>
-                <div
-                  className="carousel_img"
-                  style={{ backgroundImage: `url(${slide.url}` }}
-                ></div>
-              </div>
-            ))}
-          </Carousel>
-        </div>
-      ) : (
-        <ShimmerThumbnail height={500} rounded />
-      )}
-      <div className="details_wrapper">
-        <div className="view_details_wrapper">
-          <div className="statuses_wrapper">
-            <p className={`align-self-end status ${data.status} icon-text`}>
-              {icon?.src && <Image src={icon} alt="pending" />}
-              {data.status}
+    <>
+      <Head>
+        <title>{data?.unit?.title || "Loading..."}</title>
+        <meta name="description" content={data?.unit?.description} />
+      </Head>
+      <div
+        className="reservation_container"
+        dir={lang === "ar" ? "rtl" : "ltr"}
+      >
+        {data?.unit?.images ? (
+          <div className={`flex-center head`}>
+            <Carousel showThumbs={false} showStatus={false} emulateTouch={true}>
+              {data?.unit?.images?.map((slide) => (
+                <div key={slide.id}>
+                  <div
+                    className="carousel_img"
+                    style={{ backgroundImage: `url(${slide.url}` }}
+                  ></div>
+                </div>
+              ))}
+            </Carousel>
+          </div>
+        ) : (
+          <ShimmerThumbnail height={500} rounded />
+        )}
+        <div className="details_wrapper">
+          <div className="view_details_wrapper">
+            <div className="statuses_wrapper">
+              <p className={`align-self-end status ${data.status} icon-text`}>
+                {icon?.src && <Image src={icon} alt="pending" />}
+                {data.status}
+              </p>
+            </div>
+            <p onClick={handleClick} className="view_details">
+              <FormattedMessage id="viewDetais" />
             </p>
           </div>
-          <p onClick={handleClick} className="view_details">
-            <FormattedMessage id="viewDetais" />
-          </p>
-        </div>
-        <div className="location_details">
-          {(data?.unit?.title ||
-            data?.unit?.sub_region_name ||
-            data?.unit?.region_name) && (
-            <p>
-              {data?.unit?.title}, {data?.unit?.sub_region_name},{" "}
-              {data?.unit?.region_name}
-            </p>
+          <div className="location_details">
+            {(data?.unit?.title ||
+              data?.unit?.sub_region_name ||
+              data?.unit?.region_name) && (
+              <p>
+                {data?.unit?.title}, {data?.unit?.sub_region_name},{" "}
+                {data?.unit?.region_name}
+              </p>
+            )}
+          </div>
+          {data?.status === "reserved" && (
+            <>
+              <hr className="total_price_hr" />
+              <div className="reservation-success">
+                <h3 className="reservation-success__header">
+                  <Image src={Check} alt="checkIcon" /> Reservation Confirmed!
+                </h3>
+                <p className="reservation-success__description">
+                  Great news, Your down payment for this {data?.unit?.type} has
+                  been successfully processed. You&apos;ll complete the total
+                  cost on the first day of your reservation.
+                </p>
+              </div>
+            </>
+          )}
+          {data?.status === "negotiation" && (
+            <>
+              <hr className="total_price_hr" />
+              <div>
+                <NegotiationStatement />
+                {offers &&
+                  offers?.length > 0 &&
+                  offers.map((offer) => (
+                    <Offer
+                      key={offer.id}
+                      unitImage={data?.unit.main_image.url}
+                      alt={data?.unit.type}
+                      offer={offer}
+                      setOffers={setOffers}
+                      setRefetch={setRefetch}
+                    />
+                  ))}
+              </div>
+            </>
+          )}
+
+          {data?.status === "pending" && (
+            <>
+              <hr className="total_price_hr" />
+              <div className="feedback">
+                <h3>Request Submitted</h3>
+                <p>
+                  Awaiting Owner&apos;s Approval (Response will be within 2
+                  hours).
+                </p>
+              </div>
+            </>
+          )}
+          {Object.keys(data).length > 0 && (
+            <>
+              <hr className="total_price_hr" />
+              <div>
+                <h3 className="financial_summary">Summary</h3>
+                <FinancialSummary {...financialObj} />
+              </div>
+            </>
+          )}
+
+          {data.status === "accepted" && (
+            <ReservationContext.Provider value={data}>
+              <PayNow
+                downPayment={data.down_payment}
+                amountToPay={data.amount_to_pay}
+                Refetch={setRefetch}
+              />
+            </ReservationContext.Provider>
+          )}
+          <hr className="total_price_hr" />
+          {data?.unit?.owner?.name ? (
+            <>
+              <h3 className="owner_heading">Owner</h3>
+              <div
+                className="owner"
+                onClick={() =>
+                  handleRedirectToOwnerProfile(data?.unit?.owner?.id)
+                }
+              >
+                <img src={data?.unit?.owner?.image} alt="owner_img" />
+                <p>{data?.unit?.owner?.name} </p>
+                {data?.status === "reserved" && (
+                  <p>{data?.unit?.owner?.phone} </p>
+                )}
+              </div>
+            </>
+          ) : (
+            <ShimmerThumbnail height={175} rounded />
+          )}
+          {data.status !== "canceled" && data.status !== "rejected" && (
+            <>
+              <hr className="total_price_hr" />
+              <div className="cancellation_policy">
+                <h3>Cancellation policy</h3>
+                <div className="free_cancellation">
+                  <p>
+                    Please read our <Link href="/policy">Refund Policy</Link>{" "}
+                    before cancellation.
+                  </p>
+                  <ModalComponent
+                    isOpen={cancellationModal}
+                    toggleModal={toggleCancellationModal}
+                    modalBody={
+                      <CancelReservationModal
+                        reservationStatus={data.status}
+                        closeModalCb={toggleCancellationModal}
+                        reservationId={id}
+                      />
+                    }
+                  />
+                  <button onClick={() => handleCancelReservation(data.id)}>
+                    <FormattedMessage id="cancel reservation" />
+                  </button>
+                </div>
+              </div>
+            </>
           )}
         </div>
-        {data?.status === "reserved" && (
-          <>
-            <hr className="total_price_hr" />
-            <div className="reservation-success">
-              <h3 className="reservation-success__header">
-                <Image src={Check} alt="checkIcon" /> Reservation Confirmed!
-              </h3>
-              <p className="reservation-success__description">
-                Great news, Your down payment for this {data?.unit?.type} has
-                been successfully processed. You&apos;ll complete the total cost
-                on the first day of your reservation.
-              </p>
-            </div>
-          </>
-        )}
-        {data?.status === "negotiation" && (
-          <>
-            <hr className="total_price_hr" />
-            <div>
-              <NegotiationStatement />
-              {offers &&
-                offers?.length > 0 &&
-                offers.map((offer) => (
-                  <Offer
-                    key={offer.id}
-                    unitImage={data?.unit.main_image.url}
-                    alt={data?.unit.type}
-                    offer={offer}
-                    setOffers={setOffers}
-                    setRefetch={setRefetch}
-                  />
-                ))}
-            </div>
-          </>
-        )}
-
-        {data?.status === "pending" && (
-          <>
-            <hr className="total_price_hr" />
-            <div className="feedback">
-              <h3>Request Submitted</h3>
-              <p>
-                Awaiting Owner&apos;s Approval (Response will be within 2
-                hours).
-              </p>
-            </div>
-          </>
-        )}
-        {Object.keys(data).length > 0 && (
-          <>
-            <hr className="total_price_hr" />
-            <div>
-              <h3 className="financial_summary">Summary</h3>
-              <FinancialSummary {...financialObj} />
-            </div>
-          </>
-        )}
-
-        {data.status === "accepted" && (
-          <ReservationContext.Provider value={data}>
-            <PayNow
-              downPayment={data.down_payment}
-              amountToPay={data.amount_to_pay}
-              Refetch={setRefetch}
+        <ModalComponent
+          isOpen={paymentStatusModal}
+          toggleModal={togglePaymentModal}
+          modalBody={
+            <PaymentStatusModal
+              status={paymentStatus}
+              toggle={togglePaymentModal}
             />
-          </ReservationContext.Provider>
-        )}
-        <hr className="total_price_hr" />
-        {data?.unit?.owner?.name ? (
-          <>
-            <h3 className="owner_heading">Owner</h3>
-            <div
-              className="owner"
-              onClick={() =>
-                handleRedirectToOwnerProfile(data?.unit?.owner?.id)
-              }
-            >
-              <img src={data?.unit?.owner?.image} alt="owner_img" />
-              <p>{data?.unit?.owner?.name} </p>
-              {data?.status === "reserved" && (
-                <p>{data?.unit?.owner?.phone} </p>
-              )}
-            </div>
-          </>
-        ) : (
-          <ShimmerThumbnail height={175} rounded />
-        )}
-        {data.status !== "canceled" && data.status !== "rejected" && (
-          <>
-            <hr className="total_price_hr" />
-            <div className="cancellation_policy">
-              <h3>Cancellation policy</h3>
-              <div className="free_cancellation">
-                <p>
-                  Please read our <Link href="/policy">Refund Policy</Link>{" "}
-                  before cancellation.
-                </p>
-                <ModalComponent
-                  isOpen={cancellationModal}
-                  toggleModal={toggleCancellationModal}
-                  modalBody={
-                    <CancelReservationModal
-                      reservationStatus={data.status}
-                      closeModalCb={toggleCancellationModal}
-                      reservationId={id}
-                    />
-                  }
-                />
-                <button onClick={() => handleCancelReservation(data.id)}>
-                  <FormattedMessage id="cancel reservation" />
-                </button>
-              </div>
-            </div>
-          </>
-        )}
+          }
+        />
+        <ToastContainer />
       </div>
-      <ModalComponent
-        isOpen={paymentStatusModal}
-        toggleModal={togglePaymentModal}
-        modalBody={
-          <PaymentStatusModal
-            status={paymentStatus}
-            toggle={togglePaymentModal}
-          />
-        }
-      />
-      <ToastContainer />
-    </div>
+    </>
   );
 }

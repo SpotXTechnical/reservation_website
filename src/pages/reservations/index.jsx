@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
 import ReservationsPagination from "../../Components/ReservationsPagination/ReservationsPagination";
 import { ToastContainer } from "react-toastify";
+import Head from "next/head";
 
 const Reservations = () => {
   let { lang } = useSelector((state) => state.language);
@@ -60,59 +61,65 @@ const Reservations = () => {
   };
 
   return (
-    <div
-      className="reservation_container list"
-      dir={lang === "ar" ? "rtl" : "ltr"}
-    >
-      <h2 className="mb-3">
-        <FormattedMessage id="reservations" />
-      </h2>
-
-      <div className={`d-flex filter_btns mb-3`}>
-        <p
-          className={`m-0 text-center cursor-pointer ${
-            filterState == "upcoming" && "active"
-          }`}
-          onClick={() => handleFilterChange("upcoming")}
-        >
-          <FormattedMessage id="current" />
-        </p>
-        <p
-          className={`m-0 text-center cursor-pointer ${
-            filterState == "past" && "active"
-          }`}
-          onClick={() => handleFilterChange("past")}
-        >
-          <FormattedMessage id="past" />
-        </p>
-      </div>
-
+    <>
+      <Head>
+        <title>Reservations | SpotX</title>
+        <meta name="description" content={"All reservations in SpotX"} />
+      </Head>
       <div
-        className={`${
-          Object.keys(data).length !== 0 ? "reservations" : "loader_container"
-        }`}
+        className="reservation_container list"
+        dir={lang === "ar" ? "rtl" : "ltr"}
       >
-        {loading && Object.keys(data).length === 0 && (
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        )}
-        {error && <FormattedMessage id={error} />}
+        <h2 className="mb-3">
+          <FormattedMessage id="reservations" />
+        </h2>
 
-        {Object.keys(data).length !== 0 &&
-          data.map((item, i) => {
-            return <ReservationCard data={item} key={item.id} />;
-          })}
+        <div className={`d-flex filter_btns mb-3`}>
+          <p
+            className={`m-0 text-center cursor-pointer ${
+              filterState == "upcoming" && "active"
+            }`}
+            onClick={() => handleFilterChange("upcoming")}
+          >
+            <FormattedMessage id="current" />
+          </p>
+          <p
+            className={`m-0 text-center cursor-pointer ${
+              filterState == "past" && "active"
+            }`}
+            onClick={() => handleFilterChange("past")}
+          >
+            <FormattedMessage id="past" />
+          </p>
+        </div>
+
+        <div
+          className={`${
+            Object.keys(data).length !== 0 ? "reservations" : "loader_container"
+          }`}
+        >
+          {loading && Object.keys(data).length === 0 && (
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          )}
+          {error && <FormattedMessage id={error} />}
+
+          {Object.keys(data).length !== 0 &&
+            data.map((item, i) => {
+              return <ReservationCard data={item} key={item.id} />;
+            })}
+        </div>
+        {/* Pagination */}
+        {metaData && (
+          <ReservationsPagination
+            lastPage={metaData?.last_page}
+            callBack={getPageNumberAndFetch}
+          />
+        )}
+        <ToastContainer />
       </div>
-      {/* Pagination */}
-      {metaData && (
-        <ReservationsPagination
-          lastPage={metaData?.last_page}
-          callBack={getPageNumberAndFetch}
-        />
-      )}
-      <ToastContainer />
-    </div>
+    </>
   );
 };
 

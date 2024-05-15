@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import store, { langAction } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../../store/Auth/authSlice";
+import Head from "next/head";
 
 export default function SignUp() {
   if (typeof window !== "undefined") {
@@ -131,6 +132,10 @@ export default function SignUp() {
 
   return (
     <>
+      <Head>
+        <title>Sign Up | SpotX</title>
+        <meta name="description" content={"Sign Up page SpotX"} />
+      </Head>
       <div dir={lang === "ar" ? "rtl" : "ltr"} className="wrapper_sign_up">
         {Object.keys(validationErrors).length > 0 ? (
           <div class="alert alert-danger" role="alert">

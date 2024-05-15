@@ -1,8 +1,13 @@
 import React from "react";
 import styles from "../../pages/terms/terms.module.css";
+import Head from "next/head";
 export default function TermsContent() {
   return (
     <>
+      <Head>
+        <title>Terms | SpotX</title>
+        <meta name="description" content={"SpotX Terms and conditions"} />
+      </Head>{" "}
       <div className={styles.policy_container}>
         <h1 className={styles.header}>Terms And Conditions</h1>
         <section>
