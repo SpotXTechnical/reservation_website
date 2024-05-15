@@ -35,6 +35,7 @@ export const ModalBody = ({ paymentMethods }) => {
             setLoading(false);
             setError(error.message);
           });
+        break;
       case PAYMOB:
         getPaymentURL(id, {
           payment_method_id: method.id,
@@ -50,7 +51,7 @@ export const ModalBody = ({ paymentMethods }) => {
             setLoading(false);
             setError(error.message);
           });
-        return;
+        break;
     }
   };
   return (
