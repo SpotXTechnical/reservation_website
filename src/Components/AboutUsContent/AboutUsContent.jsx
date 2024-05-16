@@ -4,7 +4,7 @@ function AboutUsContent() {
   return (
     <>
       <div className={styles.aboutus_container}>
-        <img src="/assets/Logo.png" alt="Logo" className={styles.logo} />
+        <img src="/assets/Logo.svg" alt="Logo" className={styles.logo} />
         <h1 className={styles.title}>About SpotX</h1>
         <p>
           Welcome to SpotX, your go-to destination for unforgettable vacation
