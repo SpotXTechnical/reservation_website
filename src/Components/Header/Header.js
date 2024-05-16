@@ -65,7 +65,7 @@ export default function Header() {
     >
       <div className="col-sm-6">
         <Link className="col-1  cursor-pointer" href="/">
-          <img src="/assets/Logo.png" alt="Logo" />
+          <img src="/assets/Logo.svg" alt="Logo" />
         </Link>
       </div>
       <div

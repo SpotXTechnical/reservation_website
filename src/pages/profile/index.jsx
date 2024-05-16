@@ -5,6 +5,11 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import store, { langAction } from "../../store";
 import Head from "next/head";
+import AppStore from "../../../public/assets/appstore.svg";
+import PlayStore from "../../../public/assets/googleplay.svg";
+import CallNow from "../../../public/assets/Phone.svg";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Profile() {
   let { lang } = useSelector((state) => state.language);
@@ -14,13 +19,15 @@ export default function Profile() {
   const [data, setData] = useState({});
   const { user } = useSelector((state) => state.auth);
 
-  if (typeof window !== "undefined") {
-    const storedLanguage = localStorage.getItem("language");
-    const language = storedLanguage ? storedLanguage : "en";
-    store.dispatch(
-      language === "ar" ? langAction.langAr() : langAction.langEn()
-    );
-  }
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedLanguage = localStorage.getItem("language");
+      const language = storedLanguage ? storedLanguage : "en";
+      store.dispatch(
+        language === "ar" ? langAction.langAr() : langAction.langEn()
+      );
+    }
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -92,13 +99,13 @@ export default function Profile() {
               <FormattedMessage id="contactUs" />
             </p>
             <span className="calls">
-              <img src="/assets/call.png" alt="callUs" />
-              <span>
-                <FormattedMessage id="callNow" />
-              </span>
+              <a href="tel:+201222381837">
+                <Image src={CallNow} alt="callUs" />
+                <span className="phone">+201222381837</span>
+              </a>
             </span>
           </div>
-          <div>
+          <div className="download_app">
             <div>
               <p>
                 <FormattedMessage id="downloadApp" />
@@ -108,19 +115,29 @@ export default function Profile() {
               </span>
             </div>
             <div className="app_images">
-              <img
-                src="/assets/app-store.png"
-                alt="app-store"
-                className="cursor-pointer"
-              />
-              <img
-                src="/assets/google-play.png"
-                alt="google-play"
-                className="cursor-pointer"
-              />
+              <Link
+                href="https://apps.apple.com/eg/app/spotx-app/id6444921625"
+                target="_blank"
+              >
+                <Image
+                  src={AppStore}
+                  alt="app-store"
+                  className="cursor-pointer"
+                />
+              </Link>
+              <Link
+                href="https://play.google.com/store/apps/details?id=com.spotx.customer"
+                target="_blank"
+              >
+                <Image
+                  src={PlayStore}
+                  alt="google-play"
+                  className="cursor-pointer"
+                />
+              </Link>
             </div>
           </div>
-          <div className="cursor-pointer">
+          <div className="cursor-pointer" onClick={() => router.push("/terms")}>
             <p>
               <FormattedMessage id="termsAndConds" />
             </p>
@@ -131,7 +148,10 @@ export default function Profile() {
               />
             </span>
           </div>
-          <div className="cursor-pointer">
+          <div
+            className="cursor-pointer"
+            onClick={() => router.push("/privacy")}
+          >
             <p>
               <FormattedMessage id="privacyPolicy" />
             </p>
