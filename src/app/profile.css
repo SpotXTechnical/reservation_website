@@ -7,8 +7,9 @@
   background-color: var(--background-grey);
   text-align: center;
   padding: 10px;
-  margin-top: 100px;
-  margin-bottom: 40px;
+  margin-top: 90px;
+  margin-bottom: 20px;
+  border-radius: 12px;
 }
 
 .profile_wrapper .img_wrapper {
@@ -22,8 +23,9 @@
 .profile_wrapper .edit_profile {
   position: absolute;
   right: 0;
-  top: 25%;
+  top: 22%;
   right: 25px;
+  z-index: 1000;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -83,7 +85,7 @@
 }
 
 .profile_wrapper .contact_section > div:first-child img {
-  width: 23px;
+  width: auto;
   margin-inline: 7px;
 }
 
@@ -169,14 +171,13 @@
 .profile_wrapper .title {
   text-align: center;
   font-weight: bold;
-  margin: 30px 0px 0px 0px;
+  margin: 30px 0px 20px 0px;
   font-family: "Montserrat Semi Bold";
   font-style: normal;
   font-weight: 600;
   font-size: 26px;
   line-height: 32px;
   text-transform: capitalize;
-  margin-bottom: 32px;
 }
 
 .edit_profile_wrapper .container h3,
@@ -304,6 +305,11 @@ div[dir="rtl"] .profile_wrapper .rightArrow {
     linear-gradient(180deg, #44bcb7 -16.5%, #2396cc 54.7%)
   );
 }
+
+.calls a {
+  text-decoration: none;
+  color: #44bcb7;
+}
 @media screen and (max-width: 1280px) {
   .edit_profile_wrapper .profile_input {
     width: 100%;
@@ -312,5 +318,54 @@ div[dir="rtl"] .profile_wrapper .rightArrow {
   .edit_profile_wrapper .edit_profile_head_section > div:first-child {
     flex-direction: column-reverse;
     gap: 20px;
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .download_app {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .profile_wrapper .app_images img:first-child {
+    margin: 0;
+  }
+  .app_images {
+    display: flex;
+    gap: 10px;
+  }
+}
+
+@media screen and (max-width: 426px) {
+  .profile_wrapper .app_images {
+    display: flex;
+
+    gap: 10px;
+  }
+  .app_images a {
+    width: 50%;
+  }
+  .app_images a img {
+    width: 100%;
+    height: auto;
+  }
+}
+@media screen and (max-width: 320px) {
+  .contact_section p {
+    font-size: 10px;
+  }
+  .calls a {
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .profile_wrapper .head_section {
+    padding: 0;
+    margin-top: 100px;
+  }
+  .profile_wrapper .edit_profile {
+    top: initial;
+    right: 40%;
   }
 }
