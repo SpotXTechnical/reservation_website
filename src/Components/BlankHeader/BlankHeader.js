@@ -7,7 +7,7 @@ export default function Header() {
       className={`container_wrapper d-flex align-items-center justify-content-between ${styles.header_wrapper}`}
     >
       <div className="col-sm-6">
-        <img src="/assets/Logo.png" alt="Logo" />
+        <img src="/assets/Logo.svg" alt="Logo" />
       </div>
       <div className="col-sm-6 d-flex justify-content-end">
         <div className={styles.header_items_gap}>
