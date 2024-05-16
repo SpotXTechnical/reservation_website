@@ -4,9 +4,9 @@ export default function handler(request, response) {
     const { q: reservationId } = request.query;
     const { respStatus: success } = request.body;
     if (success !== "A") {
-      response.redirect(307, `/reservations/${reservationId}?success=false`);
+      response.redirect(302, `/reservations/${reservationId}?success=false`);
     } else {
-      response.redirect(307, `/reservations/${reservationId}?success=true`);
+      response.redirect(302, `/reservations/${reservationId}?success=true`);
     }
   }
 }
