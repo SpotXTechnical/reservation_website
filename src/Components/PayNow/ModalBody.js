@@ -18,7 +18,7 @@ export const ModalBody = ({ paymentMethods }) => {
   const { user } = useSelector((state) => state.auth);
   const handleGeneratePaymentURL = (method) => {
     setLoading(true);
-    switch (method.provider) {
+    switch (method.provider.toLowerCase()) {
       case PAYTABS:
         getPaymentURL(id, {
           return_url: `${process.env.NEXT_PUBLIC_WEBSITE_BASE_URL}/api/paytabs?q=${id}`,
