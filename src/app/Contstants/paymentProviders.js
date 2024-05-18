@@ -1,2 +1,2 @@
-export const PAYTABS = "Paytabs";
+export const PAYTABS = "paytabs";
 export const PAYMOB = "Paymob";
