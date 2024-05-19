@@ -92,6 +92,9 @@ export default function ShowAll() {
       </Head>
 
       <main className="popularList_container">
+        {!uiBuilderState.loading && !uiBuilderState.error && (
+          <h1 className="py-5">{uiBuilderState.uiBuilderData?.title}</h1>
+        )}
         <section className="popularList">
           {uiBuilderState.error && <Error error={uiBuilderState.error} />}
           {uiBuilderState.loading &&
@@ -103,7 +106,6 @@ export default function ShowAll() {
 
           {!uiBuilderState.loading && !uiBuilderState.error && (
             <>
-              <h1 className="py-5">{uiBuilderState.uiBuilderData?.title}</h1>
               {uiBuilderState.uiBuilderData?.sectionData.map(
                 (
                   {
