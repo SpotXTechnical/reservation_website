@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
@@ -18,9 +19,14 @@ import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { getUnits } from "../../app/Apis/Discover";
+import { useSearchParams } from "next/navigation";
 
 const Reservations = () => {
   const router = useRouter();
+  // const { main, sub } = router.query;
+  const searchParams = useSearchParams();
+
   const intl = useIntl();
   const WITH_SUB_REGION = 1;
   const [data, setData] = useState("");
@@ -32,25 +38,22 @@ const Reservations = () => {
   const [page, setPage] = useState(1);
   const [favourites, setFav] = useState([]);
   const [filters, setFilters] = useState({
-    // type: [],
+    sortFilters: [],
     regions: [],
-    subRegions: [],
-    rooms: [],
+    page: [],
     beds: [],
+    rooms: [],
   });
   const [filterValues, setFilterValues] = useState({
-    // type: [],
-    regions: [],
-    subRegions: [],
     rooms: [],
     beds: [],
     minPrice: 0,
     maxPrice: 50000,
   });
   const [sortFilters, setSortFilters] = useState([
-    { value: "Option 1", checked: false },
-    { value: "Option 2", checked: false },
-    { value: "Option 3", checked: false },
+    { value: "latest", checked: false },
+    { value: "price_low_high", checked: false },
+    { value: "price_high_low", checked: false },
   ]);
   const [priceRange, setPriceRange] = useState([0, 0]);
 
@@ -65,390 +68,532 @@ const Reservations = () => {
   const handlePagination = (page) => {
     const PAGE = page.selected + 1;
     setPage(PAGE);
+    setFilters((prev) => {
+      return {
+        ...prev,
+        page: [["page", PAGE]],
+      };
+    });
   };
+
   useEffect(() => {
     getFavouriteList().then((res) => setFav(res?.data));
   }, []);
 
-  useEffect(
-    function () {
-      const { main, sub } = router.query;
+  // useEffect(
+  //   function () {
+  //     const { main, sub } = router.query;
 
-      getFilterConfig().then((res) => {
-        let { types, max_rooms, max_beds, min_price, max_price } = res.data;
-        setMinPrice(min_price);
-        setMaxPrice(max_price);
-        setPriceRange([min_price, max_price]);
-        types = types?.map((type, i) => ({
-          value: type.value,
-          label: type.name,
+  //     // getFilterConfig().then((res) => {
+  //     //   let { types, max_rooms, max_beds, min_price, max_price } = res.data;
+  //     //   setMinPrice(min_price);
+  //     //   setMaxPrice(max_price);
+  //     //   setPriceRange([min_price, max_price]);
+  //     //   types = types?.map((type, i) => ({
+  //     //     value: type.value,
+  //     //     label: type.name,
+  //     //     checked: false,
+  //     //   }));
+
+  //     //   const rooms = Array(max_rooms)
+  //     //     .fill()
+  //     //     .map((_, index) => ({
+  //     //       value: index + 1,
+  //     //       label: index + 1,
+  //     //       checked: false,
+  //     //     }));
+
+  //     //   const beds = Array(max_beds)
+  //     //     .fill()
+  //     //     .map((_, index) => ({
+  //     //       value: index + 1,
+  //     //       label: index + 1,
+  //     //       checked: false,
+  //     //     }));
+
+  //     //   setFilters((prevFilters) => ({
+  //     //     ...prevFilters,
+  //     //     ["type"]: [
+  //     //       {
+  //     //         value: "all",
+  //     //         label: intl.formatMessage({ id: "all" }),
+  //     //         checked: true,
+  //     //       },
+  //     //       ...types,
+  //     //     ],
+  //     //     ["rooms"]: [
+  //     //       {
+  //     //         value: "all",
+  //     //         label: intl.formatMessage({ id: "all" }),
+  //     //         checked: true,
+  //     //       },
+  //     //       ...rooms,
+  //     //     ],
+  //     //     ["beds"]: [
+  //     //       {
+  //     //         value: "all",
+  //     //         label: intl.formatMessage({ id: "all" }),
+  //     //         checked: true,
+  //     //       },
+  //     //       ...beds,
+  //     //     ],
+  //     //   }));
+  //     // });
+
+  //     // getRegions(1).then((res) => {
+  //     //   let regions = res.data?.map((region, i) => ({
+  //     //     value: region.id,
+  //     //     label: region.name,
+  //     //     checked: Number(router.query?.main) === region.id,
+  //     //     sub_regions: region.sub_regions,
+  //     //   }));
+  //     //   const regionValues = regions?.map((region) => region.value);
+  //     //   getAllSubRegions(regionValues).then((res) => {
+  //     //     const subRegions = res.data?.map((region, i) => ({
+  //     //       value: region.id,
+  //     //       label: region.name,
+  //     //       checked: Number(router.query?.sub) === region.id,
+  //     //     }));
+  //     //     const subRegionValues = subRegions?.map(
+  //     //       (subRegion) => subRegion.value
+  //     //     );
+  //     //     setFilters((prevFilters) => ({
+  //     //       ...prevFilters,
+  //     //       ["subRegions"]: subRegions,
+  //     //     }));
+  //     //   });
+
+  //     //   setFilters((prevFilters) => ({
+  //     //     ...prevFilters,
+  //     //     ["regions"]: regions,
+  //     //   }));
+  //     // });
+  //     // getRegions(WITH_SUB_REGION).then((res) => {
+  //     //   let results = [];
+  //     //   res.data?.map((region, i) => {
+  //     //     results.push({ value: region.id, label: region.name });
+
+  //     //     if (region?.sub_regions && region?.sub_regions.length > 0) {
+  //     //       region?.sub_regions.forEach((subRegion) => {
+  //     //         results.push({ value: subRegion.id, label: subRegion.name });
+  //     //       });
+  //     //     }
+  //     //   });
+  //     //   setMainRegions(results);
+  //     // });
+  //     // }
+  //   },
+  //   [intl, lang, page, router.query]
+  // );
+
+  // Effect for beds and rooms
+  useEffect(() => {
+    getFilterConfig().then((res) => {
+      let { types, max_rooms, max_beds, min_price, max_price } = res.data;
+      setMinPrice(min_price);
+      setMaxPrice(max_price);
+      setPriceRange([min_price, max_price]);
+      types = types?.map((type, i) => ({
+        value: type.value,
+        label: type.name,
+        checked: false,
+      }));
+
+      const rooms = Array(max_rooms)
+        .fill()
+        .map((_, index) => ({
+          value: index + 1,
+          label: index + 1,
           checked: false,
         }));
-        const rooms = Array(max_rooms)
-          .fill()
-          .map((_, index) => ({
-            value: index + 1,
-            label: index + 1,
-            checked: false,
-          }));
-        const beds = Array(max_beds)
-          .fill()
-          .map((_, index) => ({
-            value: index + 1,
-            label: index + 1,
-            checked: false,
-          }));
-        setFilters((prevFilters) => ({
-          ...prevFilters,
-          ["type"]: [
-            {
-              value: "all",
-              label: intl.formatMessage({ id: "all" }),
-              checked: true,
-            },
-            ...types,
-          ],
-          ["rooms"]: [
-            {
-              value: "all",
-              label: intl.formatMessage({ id: "all" }),
-              checked: true,
-            },
-            ...rooms,
-          ],
-          ["beds"]: [
-            {
-              value: "all",
-              label: intl.formatMessage({ id: "all" }),
-              checked: true,
-            },
-            ...beds,
-          ],
+
+      const beds = Array(max_beds)
+        .fill()
+        .map((_, index) => ({
+          value: index + 1,
+          label: index + 1,
+          checked: false,
         }));
+
+      setFilterValues((prevFilters) => ({
+        ...prevFilters,
+        rooms: [
+          {
+            value: "all",
+            label: intl.formatMessage({ id: "all" }),
+            checked: true,
+          },
+          ...rooms,
+        ],
+        beds: [
+          {
+            value: "all",
+            label: intl.formatMessage({ id: "all" }),
+            checked: true,
+          },
+          ...beds,
+        ],
+      }));
+    });
+  }, [intl]);
+
+  // Effect for query params which is based from home page
+  useEffect(() => {
+    const main = searchParams.get("main");
+    const sub = searchParams.get("sub");
+    if (main || sub) {
+      setFilters((prev) => {
+        const newRegions = sub ? [["regions[]", sub]] : [["regions[]", main]];
+
+        return {
+          ...prev,
+          regions: newRegions,
+        };
       });
-
-      getRegions(1).then((res) => {
-        let regions = res.data?.map((region, i) => ({
-          value: region.id,
-          label: region.name,
-          checked: Number(router.query?.main) === region.id,
-          sub_regions: region.sub_regions,
-        }));
-        const regionValues = regions?.map((region) => region.value);
-        getAllSubRegions(regionValues).then((res) => {
-          const subRegions = res.data?.map((region, i) => ({
-            value: region.id,
-            label: region.name,
-            checked: Number(router.query?.sub) === region.id,
-          }));
-          const subRegionValues = subRegions?.map(
-            (subRegion) => subRegion.value
-          );
-          setFilters((prevFilters) => ({
-            ...prevFilters,
-            ["subRegions"]: subRegions,
-          }));
-        });
-
-        setFilters((prevFilters) => ({
-          ...prevFilters,
-          ["regions"]: regions,
-        }));
-      });
-      getRegions(WITH_SUB_REGION).then((res) => {
-        let results = [];
-        res.data?.map((region, i) => {
-          results.push({ value: region.id, label: region.name });
-
-          if (region?.sub_regions && region?.sub_regions.length > 0) {
-            region?.sub_regions.forEach((subRegion) => {
-              results.push({ value: subRegion.id, label: subRegion.name });
-            });
-          }
-        });
-        setMainRegions(results);
-      });
-      if (main || sub) {
-        getAllUnits({ main, sub }, page).then((res) => {
-          setData(res.data);
-          setMeta(res.meta);
-          setFilterValues((prev) => {
-            return { ...prev, regions: [main, sub] };
-          });
-        });
-      }
-    },
-    [intl, lang, page, router.query]
-  );
-
-  function getCheckedOption(data) {
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].checked === true) {
-        return data[i].value;
-      }
     }
-    return null;
-  }
+  }, [searchParams]);
+
+  // Effect for filters change
+  useEffect(() => {
+    window.scroll({
+      top: 0,
+      behavior: "smooth",
+    });
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+    setData("");
+    getUnits(filters, signal).then((response) => {
+      setData(response?.data);
+      setMeta(response?.meta);
+    });
+    return () => abortController.abort();
+  }, [filters, lang, intl]);
+
+  // function getCheckedOption(data) {
+  //   for (let i = 0; i < data.length; i++) {
+  //     if (data[i].checked === true) {
+  //       return data[i].value;
+  //     }
+  //   }
+  //   return null;
+  // }
   const handleUpdateFavList = () => {
     getFavouriteList().then((res) => setFav(res?.data));
   };
 
-  useEffect(() => {
-    setData("");
-    let order_by = "";
-    let order_type = "";
-    if (sortFilters) {
-      const checkedOption = getCheckedOption(sortFilters);
-      switch (checkedOption) {
-        case "Option 2":
-          order_by = "default_price";
-          order_type = "asc";
-          break;
-        case "Option 3":
-          order_by = "default_price";
-          order_type = "desc";
-          break;
-        case "Option 1":
-          order_by = "created_at";
-          order_type = "desc";
-          break;
-      }
-    }
-    if (filterValues?.regions?.length > 0) {
-      getAllSubRegions(filterValues?.regions).then((res) => {
-        let results = [];
-        res?.data?.map((subRegion) => {
-          results.push({ value: subRegion.id, label: subRegion.name });
-        });
-        setSubRegions(results);
-      });
-    } else {
-      setSubRegions([]);
-    }
-    const clonedFilterValues = { ...filterValues };
-    getAllUnits({ ...clonedFilterValues, order_type, order_by }, page).then(
-      (res) => {
-        setData(res.data);
-        setMeta(res.meta);
-      }
-    );
-  }, [filterValues, sortFilters, lang, page]);
+  // useEffect(() => {
+  //   setData("");
+  //   let order_by = "";
+  //   let order_type = "";
+  //   if (sortFilters) {
+  //     const checkedOption = getCheckedOption(sortFilters);
+  //     switch (checkedOption) {
+  //       case "Option 2":
+  //         order_by = "default_price";
+  //         order_type = "asc";
+  //         break;
+  //       case "Option 3":
+  //         order_by = "default_price";
+  //         order_type = "desc";
+  //         break;
+  //       case "Option 1":
+  //         order_by = "created_at";
+  //         order_type = "desc";
+  //         break;
+  //     }
+  //   }
+  //   if (filterValues?.regions?.length > 0) {
+  //     getAllSubRegions(filterValues?.regions).then((res) => {
+  //       let results = [];
+  //       res?.data?.map((subRegion) => {
+  //         results.push({ value: subRegion.id, label: subRegion.name });
+  //       });
+  //       setSubRegions(results);
+  //     });
+  //   } else {
+  //     setSubRegions([]);
+  //   }
+  //   const clonedFilterValues = { ...filterValues };
+  //   getAllUnits({ ...clonedFilterValues, order_type, order_by }, page).then(
+  //     (res) => {
+  //       setData(res.data);
+  //       setMeta(res.meta);
+  //     }
+  //   );
+  // }, [filterValues, sortFilters, lang, page]);
 
   const onSearch = (values) => {
-    setData("");
-    values = values.map((region, i) => region.value);
-    const updatedRegions = [...filters.regions]?.map((region) => {
-      if (values.includes(region.value)) {
-        return {
-          ...region,
-          checked: true,
-        };
-      }
-      return {
-        ...region,
-        checked: false,
-      };
-    });
-    const updatedSubRegions = [...filters.subRegions]?.map((region) => {
-      if (values.includes(region.value)) {
-        return {
-          ...region,
-          checked: true,
-        };
-      }
-      return {
-        ...region,
-        checked: false,
-      };
-    });
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      ["regions"]: updatedRegions,
-      ["subRegions"]: updatedSubRegions,
-    }));
-
-    let results = [...values];
-
-    updatedSubRegions.forEach((subRegion) => {
-      if (subRegion.checked) {
-        const subRegionParent = updatedRegions.find((r) =>
-          r.sub_regions.some((sub) => sub.id === subRegion.value)
-        );
-
-        if (subRegionParent) {
-          const parentIndex = results.indexOf(subRegionParent.value);
-          if (parentIndex !== -1) {
-            results.splice(parentIndex, 1);
-          }
-        }
-      }
-    });
-
-    setFilterValues((prevFilters) => ({
-      ...prevFilters,
-      ["regions"]: [...new Set([...results])],
-    }));
+    // setData("");
+    // values = values.map((region, i) => region.value);
+    // const updatedRegions = [...filters.regions]?.map((region) => {
+    //   if (values.includes(region.value)) {
+    //     return {
+    //       ...region,
+    //       checked: true,
+    //     };
+    //   }
+    //   return {
+    //     ...region,
+    //     checked: false,
+    //   };
+    // });
+    // const updatedSubRegions = [...filters.subRegions]?.map((region) => {
+    //   if (values.includes(region.value)) {
+    //     return {
+    //       ...region,
+    //       checked: true,
+    //     };
+    //   }
+    //   return {
+    //     ...region,
+    //     checked: false,
+    //   };
+    // });
+    // setFilters((prevFilters) => ({
+    //   ...prevFilters,
+    //   ["regions"]: updatedRegions,
+    //   ["subRegions"]: updatedSubRegions,
+    // }));
+    // let results = [...values];
+    // updatedSubRegions.forEach((subRegion) => {
+    //   if (subRegion.checked) {
+    //     const subRegionParent = updatedRegions.find((r) =>
+    //       r.sub_regions.some((sub) => sub.id === subRegion.value)
+    //     );
+    //     if (subRegionParent) {
+    //       const parentIndex = results.indexOf(subRegionParent.value);
+    //       if (parentIndex !== -1) {
+    //         results.splice(parentIndex, 1);
+    //       }
+    //     }
+    //   }
+    // });
+    // setFilterValues((prevFilters) => ({
+    //   ...prevFilters,
+    //   ["regions"]: [...new Set([...results])],
+    // }));
   };
 
   const onSubRegionSearch = (values) => {
-    setData("");
-    values = values.map((region, i) => region.value);
-    const updatedSubRegions = [...filters.subRegions]?.map((region) => {
-      if (values.includes(region.value)) {
-        return {
-          ...region,
-          checked: true,
-        };
-      }
-      return {
-        ...region,
-        checked: false,
-      };
-    });
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      ["subRegions"]: updatedSubRegions,
-    }));
-    const getRegionsOnly = (prevRegions) => {
-      const uncheckedIds = updatedSubRegions
-        .filter(
-          (item) => item.checked === false && prevRegions?.includes(item.value)
-        )
-        .map((item) => item.value);
-
-      const filteredRegions = prevRegions.filter(
-        (id) => !uncheckedIds.includes(id)
-      );
-
-      return filteredRegions;
-    };
-
-    let results = [...values];
-
-    setFilterValues((prevFilters) => {
-      let results = [
-        ...new Set(getRegionsOnly([...values, ...prevFilters.regions])),
-      ];
-      updatedSubRegions.forEach((subRegion) => {
-        if (subRegion.checked) {
-          const subRegionParent = [...filters.regions].find((r) =>
-            r.sub_regions.some((sub) => sub.id === subRegion.value)
-          );
-
-          if (subRegionParent) {
-            const parentIndex = results.indexOf(subRegionParent.value);
-            if (parentIndex !== -1) {
-              results.splice(parentIndex, 1);
-            }
-          }
-        }
-      });
-      return {
-        ...prevFilters,
-        ["regions"]: results,
-      };
-    });
+    // setData("");
+    // values = values.map((region, i) => region.value);
+    // const updatedSubRegions = [...filters.subRegions]?.map((region) => {
+    //   if (values.includes(region.value)) {
+    //     return {
+    //       ...region,
+    //       checked: true,
+    //     };
+    //   }
+    //   return {
+    //     ...region,
+    //     checked: false,
+    //   };
+    // });
+    // setFilters((prevFilters) => ({
+    //   ...prevFilters,
+    //   ["subRegions"]: updatedSubRegions,
+    // }));
+    // const getRegionsOnly = (prevRegions) => {
+    //   const uncheckedIds = updatedSubRegions
+    //     .filter(
+    //       (item) => item.checked === false && prevRegions?.includes(item.value)
+    //     )
+    //     .map((item) => item.value);
+    //   const filteredRegions = prevRegions.filter(
+    //     (id) => !uncheckedIds.includes(id)
+    //   );
+    //   return filteredRegions;
+    // };
+    // let results = [...values];
+    // setFilterValues((prevFilters) => {
+    //   let results = [
+    //     ...new Set(getRegionsOnly([...values, ...prevFilters.regions])),
+    //   ];
+    //   updatedSubRegions.forEach((subRegion) => {
+    //     if (subRegion.checked) {
+    //       const subRegionParent = [...filters.regions].find((r) =>
+    //         r.sub_regions.some((sub) => sub.id === subRegion.value)
+    //       );
+    //       if (subRegionParent) {
+    //         const parentIndex = results.indexOf(subRegionParent.value);
+    //         if (parentIndex !== -1) {
+    //           results.splice(parentIndex, 1);
+    //         }
+    //       }
+    //     }
+    //   });
+    //   return {
+    //     ...prevFilters,
+    //     ["regions"]: results,
+    //   };
+    // });
   };
 
-  const handleChange = (index) => {
-    const updatedFilters = [...sortFilters]; // Create a copy of the current filters array
-
+  const handleSortChange = (index) => {
+    const updatedSortingFilters = [...sortFilters]; // Create a copy of the current filters array
     // Update the selected radio button's status
-    updatedFilters[index].checked = true;
-
+    updatedSortingFilters[index].checked = true;
     // Reset the status of the other radio buttons
-    for (let i = 0; i < updatedFilters.length; i++) {
+    for (let i = 0; i < updatedSortingFilters.length; i++) {
       if (i !== index) {
-        updatedFilters[i].checked = false;
+        updatedSortingFilters[i].checked = false;
       }
     }
+    const checkedOption = updatedSortingFilters[index];
+    switch (checkedOption.value) {
+      case "price_low_high":
+        setFilters((prev) => ({
+          ...prev,
+          sortFilters: [
+            ["order_by", "default_price"],
+            ["order_type", "asc"],
+          ],
+        }));
 
-    setSortFilters(updatedFilters); // Update the state with the new filters
+        break;
+      case "price_high_low":
+        setFilters((prev) => ({
+          ...prev,
+          sortFilters: [
+            ["order_by", "default_price"],
+            ["order_type", "desc"],
+          ],
+        }));
+
+        break;
+      case "latest":
+        setFilters((prev) => ({
+          ...prev,
+          sortFilters: [
+            ["order_by", "created_at"],
+            ["order_type", "desc"],
+          ],
+        }));
+
+        break;
+    }
+    setSortFilters(updatedSortingFilters); // Update the state with the new filters
   };
 
   const handlePriceAfterChange = (newPriceRange) => {
-    setPriceRange(newPriceRange);
-    setFilterValues((prevFilters) => ({
-      ...prevFilters,
-      ["minPrice"]: newPriceRange[0],
-      ["maxPrice"]: newPriceRange[1],
-    }));
+    // setPriceRange(newPriceRange);
+    // setFilterValues((prevFilters) => ({
+    //   ...prevFilters,
+    //   ["minPrice"]: newPriceRange[0],
+    //   ["maxPrice"]: newPriceRange[1],
+    // }));
   };
 
   const handlePriceChange = (newPriceRange) => {
-    setPriceRange(newPriceRange);
+    // setPriceRange(newPriceRange);
   };
 
   const handleResetFilters = () => {};
 
   const handleCheckboxChange = (index, filterKey) => {
-    const updatedFilters = [...filters[filterKey]]; // Create a copy of the current filters array
-    const checkbox = updatedFilters[index];
-    checkbox.checked = !checkbox.checked;
-    if (
-      (filterKey === "rooms" || filterKey === "beds") &&
-      index !== 0 &&
-      checkbox.checked
-    ) {
-      updatedFilters[0].checked = false;
+    let updatedOptionsFilters = [...filterValues[filterKey]];
+    const selectedCheckBox = updatedOptionsFilters[index];
+    selectedCheckBox.checked = !selectedCheckBox.checked;
+    let selectedOptions = updatedOptionsFilters
+      .filter((option, index) => option.checked && index !== 0)
+      .map((option, index) => [`${filterKey}[${index}]`, option.value]);
+
+    if (index !== 0) {
+      updatedOptionsFilters[0].checked = false;
     } else {
-      if (
-        (filterKey === "rooms" || filterKey === "beds") &&
-        index === 0 &&
-        checkbox.checked
-      ) {
-        updatedFilters.map((filter, i) => {
-          filter.checked = false;
-        });
-        updatedFilters[0].checked = true;
-      }
+      updatedOptionsFilters[0].checked = true;
+      selectedOptions = [];
+      const allDisabledOptions = updatedOptionsFilters.map((option, index) => {
+        if (index !== 0) {
+          return { ...option, checked: false };
+        } else {
+          return option;
+        }
+      });
+      setFilterValues((prev) => {
+        return {
+          ...prev,
+          [filterKey]: [...allDisabledOptions],
+        };
+      });
+      setFilters((prev) => {
+        return {
+          ...prev,
+          [filterKey]: selectedOptions,
+        };
+      });
     }
-
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [filterKey]: updatedFilters,
-    })); // Update the state with the new filters
-
-    handleFilterChange(filterKey, checkbox);
+    if (index !== 0) {
+      setFilters((prev) => {
+        return {
+          ...prev,
+          [filterKey]: selectedOptions,
+        };
+      });
+    }
+    // const updatedFilters = [...filters[filterKey]]; // Create a copy of the current filters array
+    // const checkbox = updatedFilters[index];
+    // checkbox.checked = !checkbox.checked;
+    // if (
+    //   (filterKey === "rooms" || filterKey === "beds") &&
+    //   index !== 0 &&
+    //   checkbox.checked
+    // ) {
+    //   updatedFilters[0].checked = false;
+    // } else {
+    //   if (
+    //     (filterKey === "rooms" || filterKey === "beds") &&
+    //     index === 0 &&
+    //     checkbox.checked
+    //   ) {
+    //     updatedFilters.map((filter, i) => {
+    //       filter.checked = false;
+    //     });
+    //     updatedFilters[0].checked = true;
+    //   }
+    // }
+    // setFilters((prevFilters) => ({
+    //   ...prevFilters,
+    //   [filterKey]: updatedFilters,
+    // })); // Update the state with the new filters
+    // handleFilterChange(filterKey, checkbox);
   };
 
   const handleFilterChange = (filterKey, checkbox) => {
-    const values = filterValues[filterKey]; // Get the current filter values
-
-    const updatedValues =
-      checkbox.value === "all" &&
-      (filterKey === "rooms" || filterKey === "beds")
-        ? checkbox.checked
-          ? []
-          : [...values]
-        : checkbox.checked
-        ? [...values, checkbox.value] // Add the checkbox value
-        : values.filter((value) => value !== checkbox.value); // Remove the checkbox value
-
-    setFilterValues((prevFilters) => ({
-      ...prevFilters,
-      [filterKey]: updatedValues,
-    }));
+    // const values = filterValues[filterKey]; // Get the current filter values
+    // const updatedValues =
+    //   checkbox.value === "all" &&
+    //   (filterKey === "rooms" || filterKey === "beds")
+    //     ? checkbox.checked
+    //       ? []
+    //       : [...values]
+    //     : checkbox.checked
+    //     ? [...values, checkbox.value] // Add the checkbox value
+    //     : values.filter((value) => value !== checkbox.value); // Remove the checkbox value
+    // setFilterValues((prevFilters) => ({
+    //   ...prevFilters,
+    //   [filterKey]: updatedValues,
+    // }));
   };
 
   const getSubRegionsValues = () => {
-    const results = [...filters.subRegions]?.filter((region) => {
-      if (region?.checked) {
-        return region;
-      }
-    });
-    return results;
+    // const results = [...filters.subRegions]?.filter((region) => {
+    //   if (region?.checked) {
+    //     return region;
+    //   }
+    // });
+    // return results;
   };
 
   const getRegionsValues = () => {
-    const results = [...filters.subRegions, ...filters?.regions]?.filter(
-      (region) => {
-        if (region?.checked) {
-          return region;
-        }
-      }
-    );
-    return results;
+    // const results = [...filters.subRegions, ...filters?.regions]?.filter(
+    //   (region) => {
+    //     if (region?.checked) {
+    //       return region;
+    //     }
+    //   }
+    // );
+    // return results;
   };
 
   return (
@@ -475,7 +620,7 @@ const Reservations = () => {
                 key={index}
                 value={item.value}
                 checked={item.checked}
-                handleChange={() => handleChange(index)}
+                handleChange={() => handleSortChange(index)}
                 // className={`${styles.filter_radio}`}
                 label={
                   <FormattedMessage
@@ -562,7 +707,7 @@ const Reservations = () => {
               <FormattedMessage id="roomsNum" />
             </p>
             <div className={`d-flex flex-wrap`}>
-              {filters.rooms?.map((item, index) => {
+              {filterValues.rooms?.map((item, index) => {
                 return (
                   <Checkbox
                     key={index}
@@ -581,7 +726,7 @@ const Reservations = () => {
               <FormattedMessage id="bedsNum" />
             </p>
             <div className={`d-flex flex-wrap`}>
-              {filters.beds?.map((item, index) => {
+              {filterValues.beds?.map((item, index) => {
                 return (
                   <Checkbox
                     key={index}

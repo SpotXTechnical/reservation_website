@@ -117,7 +117,8 @@ export const getAllUnits = async (filters, page) => {
       if (key === "order_type" && elem)
         url = appendParamToUrl(url, "order_type", elem);
       if (key === "main") url = appendParamToUrl(url, "regions[]", elem);
-      if (key === "sub") url = appendParamToUrl(url, "regions[]", elem);
+      if (key === "sub" && filters[key])
+        url = appendParamToUrl(url, "regions[]", elem);
     }
   }
 
