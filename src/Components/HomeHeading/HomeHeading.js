@@ -23,8 +23,13 @@ const HomeHeading = () => {
     );
   }
 
-  const onSearch = () => {
-    router.push("/discover");
+  const onSearch = (event) => {
+    const [{ main, sub, label }] = event;
+    if (!sub) {
+      router.push(`/discover?main=${main}`);
+    } else {
+      router.push(`/discover?main=${main}&sub=${sub}`);
+    }
   };
 
   useEffect(
@@ -33,11 +38,15 @@ const HomeHeading = () => {
         .then((res) => {
           let results = [];
           res.data?.map((region, i) => {
-            results.push({ value: region.id, label: region.name });
+            results.push({ main: region.id, label: region.name });
 
             if (region?.sub_regions && region?.sub_regions.length > 0) {
               region?.sub_regions.forEach((subRegion) => {
-                results.push({ value: subRegion.id, label: subRegion.name });
+                results.push({
+                  sub: subRegion.id,
+                  label: subRegion.name,
+                  main: region.id,
+                });
               });
             }
           });
@@ -62,7 +71,7 @@ const HomeHeading = () => {
         ></img> */}
         <div className={`search_container d-inline-block`}>
           <InputSelect
-            onChange={onSearch}
+            onChange={(e) => onSearch(e)}
             hideIndecators={true}
             isMulti={true}
             options={mainRegions}

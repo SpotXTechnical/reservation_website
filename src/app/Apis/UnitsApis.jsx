@@ -105,9 +105,9 @@ export const getFavouriteList = async () => {
 
 export const getAllUnits = async (filters, page) => {
   let url = `/api/v1/user/units?page=${page}`;
-  if (filters && Object.keys(filters).length > 0) {
+  if (filters && Object.keys(filters)?.length > 0) {
     for (const [key, elem] of Object.entries(filters)) {
-      if (elem.length > 0 && Array.isArray(elem)) {
+      if (elem?.length > 0 && Array.isArray(elem)) {
         url = appendArrayToUrl(url, elem, key);
       }
       if (key === "minPrice") url = appendParamToUrl(url, "price[from]", elem);
@@ -116,6 +116,8 @@ export const getAllUnits = async (filters, page) => {
         url = appendParamToUrl(url, "order_by", elem);
       if (key === "order_type" && elem)
         url = appendParamToUrl(url, "order_type", elem);
+      if (key === "main") url = appendParamToUrl(url, "regions[]", elem);
+      if (key === "sub") url = appendParamToUrl(url, "regions[]", elem);
     }
   }
 

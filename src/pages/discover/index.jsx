@@ -17,8 +17,10 @@ import PopularCard from "../../Components/SharedComponents/PopularCard/PopularCa
 import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 const Reservations = () => {
+  const router = useRouter();
   const intl = useIntl();
   const WITH_SUB_REGION = 1;
   const [data, setData] = useState("");
@@ -70,10 +72,7 @@ const Reservations = () => {
 
   useEffect(
     function () {
-      getAllUnits(null, page).then((res) => {
-        setData(res.data);
-        setMeta(res.meta);
-      });
+      const { main, sub } = router.query;
 
       getFilterConfig().then((res) => {
         let { types, max_rooms, max_beds, min_price, max_price } = res.data;
@@ -132,7 +131,7 @@ const Reservations = () => {
         let regions = res.data?.map((region, i) => ({
           value: region.id,
           label: region.name,
-          checked: false,
+          checked: Number(router.query?.main) === region.id,
           sub_regions: region.sub_regions,
         }));
         const regionValues = regions?.map((region) => region.value);
@@ -140,7 +139,7 @@ const Reservations = () => {
           const subRegions = res.data?.map((region, i) => ({
             value: region.id,
             label: region.name,
-            checked: false,
+            checked: Number(router.query?.sub) === region.id,
           }));
           const subRegionValues = subRegions?.map(
             (subRegion) => subRegion.value
@@ -156,16 +155,6 @@ const Reservations = () => {
           ["regions"]: regions,
         }));
       });
-
-      // getMostPopularRegions()
-      // 	.then(res => {
-      // 		const regions = res.data?.map((region, i) => ({ value: region.id, label: region.name, checked: false }))
-      // 		setFilters(prevFilters => ({
-      // 			...prevFilters,
-      // 			["regions"]: regions,
-      // 		}));
-      // 	})
-
       getRegions(WITH_SUB_REGION).then((res) => {
         let results = [];
         res.data?.map((region, i) => {
@@ -179,8 +168,17 @@ const Reservations = () => {
         });
         setMainRegions(results);
       });
+      if (main || sub) {
+        getAllUnits({ main, sub }, page).then((res) => {
+          setData(res.data);
+          setMeta(res.meta);
+          setFilterValues((prev) => {
+            return { ...prev, regions: [main, sub] };
+          });
+        });
+      }
     },
-    [lang]
+    [intl, lang, page, router.query]
   );
 
   function getCheckedOption(data) {
