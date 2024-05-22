@@ -81,7 +81,7 @@ export default function OwnerProfile() {
                   key={i}
                   id={unit.id}
                   title={unit.title}
-                  image={unit.images[0]?.url}
+                  image={unit?.main_image?.url || unit.images[0]?.url}
                   default_price={unit.default_price}
                   bathrooms={unit.bathrooms}
                   beds={unit.beds}

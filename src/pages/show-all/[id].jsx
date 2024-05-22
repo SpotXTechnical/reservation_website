@@ -110,6 +110,7 @@ export default function ShowAll() {
                 (
                   {
                     images,
+                    main_image,
                     title,
                     type,
                     bathrooms,
@@ -128,7 +129,7 @@ export default function ShowAll() {
                     id={id}
                     key={i}
                     title={title}
-                    image={images[0]?.url}
+                    image={main_image?.url || images[0]?.url}
                     default_price={default_price}
                     bathrooms={bathrooms}
                     beds={beds}
