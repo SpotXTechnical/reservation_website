@@ -43,6 +43,7 @@ const MostPopularList = ({ unitsData }) => {
           ? unitsData.sectionData.map(
               ({
                 images,
+                main_image,
                 title,
                 type,
                 bathrooms,
@@ -58,7 +59,7 @@ const MostPopularList = ({ unitsData }) => {
                   id={id}
                   key={id}
                   title={title}
-                  image={images[0]?.url}
+                  image={main_image?.url || images[0]?.url}
                   bathrooms={bathrooms}
                   beds={beds}
                   type={type}
@@ -78,6 +79,7 @@ const MostPopularList = ({ unitsData }) => {
                 (
                   {
                     images,
+                    main_image,
                     title,
                     type,
                     bathrooms,
@@ -95,7 +97,7 @@ const MostPopularList = ({ unitsData }) => {
                     id={id}
                     key={id}
                     title={title}
-                    image={images[0]?.url}
+                    image={main_image?.url || images[0]?.url}
                     bathrooms={bathrooms}
                     beds={beds}
                     type={type}

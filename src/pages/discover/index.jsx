@@ -664,7 +664,7 @@ const Reservations = () => {
                     key={unit.id}
                     id={unit.id}
                     title={unit.title}
-                    image={unit.images[0]?.url}
+                    image={unit?.main_image?.url || unit.images[0]?.url}
                     default_price={unit.current_price}
                     bathrooms={unit.bathrooms}
                     beds={unit.beds}
