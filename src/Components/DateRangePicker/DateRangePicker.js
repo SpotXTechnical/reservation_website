@@ -38,9 +38,10 @@ const DateRangeCalendarPicker = ({
     const endDates = [];
     const disabledEndDates = [];
     const formattedExtractedDates = modifiedExtractedDates();
+
     activeReservations.forEach((range) => {
       const startDate = new Date(range.from);
-      const endDate = new Date(range.to) - 1;
+      const endDate = new Date(range.to);
 
       const currentDate = new Date(startDate);
       endDates.push(moment(range.to).format("DD-MM-YYYY"));
