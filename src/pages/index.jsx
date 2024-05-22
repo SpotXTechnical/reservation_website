@@ -100,7 +100,7 @@ export default function Home() {
 
   const getuiBuilderComponents = (uiBuildersData) => {
     const renderedSections = uiBuildersData.map((uiData) => {
-      switch (uiData.type) {
+      switch (uiData?.type) {
         case constants.UNITS:
           return (
             <MostPopularList
