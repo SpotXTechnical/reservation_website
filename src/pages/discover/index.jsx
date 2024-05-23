@@ -34,7 +34,6 @@ const Reservations = () => {
   const [mainRegions, setMainRegions] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
-  const [subRegions, setSubRegions] = useState([]);
   const [page, setPage] = useState(1);
   const [favourites, setFav] = useState([]);
   const [filters, setFilters] = useState({
@@ -49,6 +48,8 @@ const Reservations = () => {
     beds: [],
     minPrice: 0,
     maxPrice: 50000,
+    subRegions: [],
+    regions: [],
   });
   const [sortFilters, setSortFilters] = useState([
     { value: "latest", checked: false },
@@ -140,28 +141,28 @@ const Reservations = () => {
   //     //   }));
   //     // });
 
-  //     // getRegions(1).then((res) => {
-  //     //   let regions = res.data?.map((region, i) => ({
-  //     //     value: region.id,
-  //     //     label: region.name,
-  //     //     checked: Number(router.query?.main) === region.id,
-  //     //     sub_regions: region.sub_regions,
-  //     //   }));
-  //     //   const regionValues = regions?.map((region) => region.value);
-  //     //   getAllSubRegions(regionValues).then((res) => {
-  //     //     const subRegions = res.data?.map((region, i) => ({
-  //     //       value: region.id,
-  //     //       label: region.name,
-  //     //       checked: Number(router.query?.sub) === region.id,
-  //     //     }));
-  //     //     const subRegionValues = subRegions?.map(
-  //     //       (subRegion) => subRegion.value
-  //     //     );
-  //     //     setFilters((prevFilters) => ({
-  //     //       ...prevFilters,
-  //     //       ["subRegions"]: subRegions,
-  //     //     }));
-  //     //   });
+  // getRegions(1).then((res) => {
+  //   let regions = res.data?.map((region, i) => ({
+  //     value: region.id,
+  //     label: region.name,
+  //     checked: Number(router.query?.main) === region.id,
+  //     sub_regions: region.sub_regions,
+  //   }));
+  //   const regionValues = regions?.map((region) => region.value);
+  //   getAllSubRegions(regionValues).then((res) => {
+  //     const subRegions = res.data?.map((region, i) => ({
+  //       value: region.id,
+  //       label: region.name,
+  //       checked: Number(router.query?.sub) === region.id,
+  //     }));
+  //     const subRegionValues = subRegions?.map(
+  //       (subRegion) => subRegion.value
+  //     );
+  //     setFilters((prevFilters) => ({
+  //       ...prevFilters,
+  //       ["subRegions"]: subRegions,
+  //     }));
+  //   });
 
   //     //   setFilters((prevFilters) => ({
   //     //     ...prevFilters,
@@ -250,8 +251,39 @@ const Reservations = () => {
           regions: newRegions,
         };
       });
+      getRegions(1).then((res) => {
+        let regions = res.data?.map((region) => ({
+          value: region.id,
+          label: region.name,
+          checked: Number(main) === region.id,
+          sub_regions: region.sub_regions,
+        }));
+        regions.unshift({
+          value: "all",
+          label: intl.formatMessage({ id: "all" }),
+          checked: sub || main ? false : true,
+        });
+        setFilterValues((prev) => ({
+          ...prev,
+          regions: regions,
+        }));
+        const regionData = regions?.filter((region) => region.checked);
+        const subRegionsArray = regionData.flatMap(
+          (region) => region?.sub_regions
+        );
+        const subRegionData = subRegionsArray.map((subregion) => ({
+          value: subregion.id,
+          label: subregion.name,
+          checked: Number(sub) === subregion.id,
+        }));
+
+        setFilterValues((prevFilters) => ({
+          ...prevFilters,
+          subRegions: [...subRegionData],
+        }));
+      });
     }
-  }, [searchParams]);
+  }, [intl, searchParams]);
 
   // Effect for filters change
   useEffect(() => {
@@ -269,14 +301,68 @@ const Reservations = () => {
     return () => abortController.abort();
   }, [filters, lang, intl]);
 
-  // function getCheckedOption(data) {
-  //   for (let i = 0; i < data.length; i++) {
-  //     if (data[i].checked === true) {
-  //       return data[i].value;
-  //     }
-  //   }
-  //   return null;
-  // }
+  //  Effect for regions
+  useEffect(() => {
+    const modifiedSelectedRegions = filterValues.regions
+      .filter((region) => region.checked)
+      .map((selectedRegion) => {
+        return selectedRegion.value;
+      });
+    const selectedSubRegions = filterValues.subRegions
+      .filter((subRegion) => subRegion.checked)
+      .map((checkedSubRegion) => checkedSubRegion.value);
+    if (modifiedSelectedRegions[0] === "all") {
+      const allRegions = filterValues.regions.map((selectedRegion) => {
+        return selectedRegion.value;
+      });
+      getAllSubRegions(allRegions).then((res) => {
+        const subRegionsData = res.data?.map((region) => {
+          return {
+            value: region.id,
+            label: region.name,
+            checked: false,
+          };
+        });
+        setFilterValues((prev) => {
+          return {
+            ...prev,
+            subRegions: subRegionsData,
+          };
+        });
+      });
+    } else {
+      getAllSubRegions(modifiedSelectedRegions).then((res) => {
+        const subRegionsData = res.data?.map((region, i) => {
+          if (!selectedSubRegions.includes(region.id)) {
+            return {
+              value: region.id,
+              label: region.name,
+              checked: false,
+            };
+          } else {
+            return {
+              value: region.id,
+              label: region.name,
+              checked: true,
+            };
+          }
+        });
+
+        setFilterValues((prev) => {
+          return {
+            ...prev,
+            subRegions: [...subRegionsData],
+          };
+        });
+      });
+    }
+  }, [filterValues.regions]);
+
+  // Effect for subRegion
+  // useEffect(() => {
+
+  // },[filters.regions])
+
   const handleUpdateFavList = () => {
     getFavouriteList().then((res) => setFav(res?.data));
   };
@@ -322,111 +408,39 @@ const Reservations = () => {
   //   );
   // }, [filterValues, sortFilters, lang, page]);
 
-  const onSearch = (values) => {
-    // setData("");
-    // values = values.map((region, i) => region.value);
-    // const updatedRegions = [...filters.regions]?.map((region) => {
-    //   if (values.includes(region.value)) {
-    //     return {
-    //       ...region,
-    //       checked: true,
-    //     };
-    //   }
-    //   return {
-    //     ...region,
-    //     checked: false,
-    //   };
-    // });
-    // const updatedSubRegions = [...filters.subRegions]?.map((region) => {
-    //   if (values.includes(region.value)) {
-    //     return {
-    //       ...region,
-    //       checked: true,
-    //     };
-    //   }
-    //   return {
-    //     ...region,
-    //     checked: false,
-    //   };
-    // });
-    // setFilters((prevFilters) => ({
-    //   ...prevFilters,
-    //   ["regions"]: updatedRegions,
-    //   ["subRegions"]: updatedSubRegions,
-    // }));
-    // let results = [...values];
-    // updatedSubRegions.forEach((subRegion) => {
-    //   if (subRegion.checked) {
-    //     const subRegionParent = updatedRegions.find((r) =>
-    //       r.sub_regions.some((sub) => sub.id === subRegion.value)
-    //     );
-    //     if (subRegionParent) {
-    //       const parentIndex = results.indexOf(subRegionParent.value);
-    //       if (parentIndex !== -1) {
-    //         results.splice(parentIndex, 1);
-    //       }
-    //     }
-    //   }
-    // });
-    // setFilterValues((prevFilters) => ({
-    //   ...prevFilters,
-    //   ["regions"]: [...new Set([...results])],
-    // }));
-  };
+  const onSearch = (values) => {};
 
   const onSubRegionSearch = (values) => {
-    // setData("");
-    // values = values.map((region, i) => region.value);
-    // const updatedSubRegions = [...filters.subRegions]?.map((region) => {
-    //   if (values.includes(region.value)) {
-    //     return {
-    //       ...region,
-    //       checked: true,
-    //     };
-    //   }
-    //   return {
-    //     ...region,
-    //     checked: false,
-    //   };
-    // });
-    // setFilters((prevFilters) => ({
-    //   ...prevFilters,
-    //   ["subRegions"]: updatedSubRegions,
-    // }));
-    // const getRegionsOnly = (prevRegions) => {
-    //   const uncheckedIds = updatedSubRegions
-    //     .filter(
-    //       (item) => item.checked === false && prevRegions?.includes(item.value)
-    //     )
-    //     .map((item) => item.value);
-    //   const filteredRegions = prevRegions.filter(
-    //     (id) => !uncheckedIds.includes(id)
-    //   );
-    //   return filteredRegions;
-    // };
-    // let results = [...values];
-    // setFilterValues((prevFilters) => {
-    //   let results = [
-    //     ...new Set(getRegionsOnly([...values, ...prevFilters.regions])),
-    //   ];
-    //   updatedSubRegions.forEach((subRegion) => {
-    //     if (subRegion.checked) {
-    //       const subRegionParent = [...filters.regions].find((r) =>
-    //         r.sub_regions.some((sub) => sub.id === subRegion.value)
-    //       );
-    //       if (subRegionParent) {
-    //         const parentIndex = results.indexOf(subRegionParent.value);
-    //         if (parentIndex !== -1) {
-    //           results.splice(parentIndex, 1);
-    //         }
-    //       }
-    //     }
-    //   });
-    //   return {
-    //     ...prevFilters,
-    //     ["regions"]: results,
-    //   };
-    // });
+    values = values.map((region, i) => region.value);
+    const updatedSubRegions = [...filterValues.subRegions]?.map((region) => {
+      if (values.includes(region.value)) {
+        return {
+          ...region,
+          checked: true,
+        };
+      }
+      return {
+        ...region,
+        checked: false,
+      };
+    });
+
+    setFilterValues((prevFilters) => ({
+      ...prevFilters,
+      subRegions: updatedSubRegions,
+    }));
+    const newRegions = updatedSubRegions
+      .filter((sub) => sub.checked)
+      .map((subregion) => {
+        return ["regions[]", subregion.value];
+      });
+
+    setFilters((prev) => {
+      return {
+        ...prev,
+        regions: newRegions,
+      };
+    });
   };
 
   const handleSortChange = (index) => {
@@ -494,6 +508,7 @@ const Reservations = () => {
     let updatedOptionsFilters = [...filterValues[filterKey]];
     const selectedCheckBox = updatedOptionsFilters[index];
     selectedCheckBox.checked = !selectedCheckBox.checked;
+
     let selectedOptions = updatedOptionsFilters
       .filter((option, index) => option.checked && index !== 0)
       .map((option, index) => [`${filterKey}[${index}]`, option.value]);
@@ -531,32 +546,63 @@ const Reservations = () => {
         };
       });
     }
-    // const updatedFilters = [...filters[filterKey]]; // Create a copy of the current filters array
-    // const checkbox = updatedFilters[index];
-    // checkbox.checked = !checkbox.checked;
-    // if (
-    //   (filterKey === "rooms" || filterKey === "beds") &&
-    //   index !== 0 &&
-    //   checkbox.checked
-    // ) {
-    //   updatedFilters[0].checked = false;
-    // } else {
-    //   if (
-    //     (filterKey === "rooms" || filterKey === "beds") &&
-    //     index === 0 &&
-    //     checkbox.checked
-    //   ) {
-    //     updatedFilters.map((filter, i) => {
-    //       filter.checked = false;
+
+    // if (index === 0 && selectedCheckBox.value === "all") {
+    //   const allRegions = filterValues.regions.map((selectedRegion) => {
+    //     return selectedRegion.value;
+    //   });
+    //   getAllSubRegions(allRegions).then((res) => {
+    //     const subRegionsData = res.data?.map((region) => {
+    //       return {
+    //         value: region.id,
+    //         label: region.name,
+    //         checked: false,
+    //       };
     //     });
-    //     updatedFilters[0].checked = true;
-    //   }
+    //     setFilterValues((prev) => {
+    //       return {
+    //         ...prev,
+    //         subRegions: subRegionsData,
+    //       };
+    //     });
+    //   });
     // }
-    // setFilters((prevFilters) => ({
-    //   ...prevFilters,
-    //   [filterKey]: updatedFilters,
-    // })); // Update the state with the new filters
-    // handleFilterChange(filterKey, checkbox);
+    if (filterKey === "regions") {
+      const modifiedSelectedRegions = filterValues.regions
+        .filter((region) => region.checked)
+        .map((selectedRegion) => {
+          return selectedRegion.value;
+        });
+      getAllSubRegions(modifiedSelectedRegions).then((res) => {
+        const subRegionsData = res.data?.map((region, i) => {
+          return {
+            value: region.id,
+            label: region.name,
+            checked: false,
+          };
+        });
+
+        setFilterValues((prev) => {
+          return {
+            ...prev,
+            subRegions: [...subRegionsData],
+          };
+        });
+      });
+
+      const disabledSubRegion = filterValues.subRegions.map((subRegion) => {
+        return {
+          ...subRegion,
+          checked: false,
+        };
+      });
+      setFilterValues((prev) => {
+        return {
+          ...prev,
+          subRegions: [...disabledSubRegion],
+        };
+      });
+    }
   };
 
   const handleFilterChange = (filterKey, checkbox) => {
@@ -577,12 +623,12 @@ const Reservations = () => {
   };
 
   const getSubRegionsValues = () => {
-    // const results = [...filters.subRegions]?.filter((region) => {
-    //   if (region?.checked) {
-    //     return region;
-    //   }
-    // });
-    // return results;
+    const results = [...filterValues.subRegions]?.filter((region) => {
+      if (region?.checked) {
+        return region;
+      }
+    });
+    return results;
   };
 
   const getRegionsValues = () => {
@@ -669,7 +715,7 @@ const Reservations = () => {
             <p className={`mb-2 subtitle`}>
               <FormattedMessage id="profile.edit.fields.city.label" />
             </p>
-            {filters.regions?.map((item, index) => {
+            {filterValues.regions?.map((item, index) => {
               return (
                 <Checkbox
                   key={index}
@@ -690,7 +736,7 @@ const Reservations = () => {
                 <InputSelect
                   value={getSubRegionsValues()}
                   isMulti={true}
-                  options={subRegions}
+                  options={filterValues?.subRegions}
                   className="search_input"
                   onChange={onSubRegionSearch}
                   hideIndecators={false}

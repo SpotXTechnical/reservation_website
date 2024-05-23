@@ -28,7 +28,7 @@ const HomeHeading = () => {
     if (!sub) {
       router.push(`/discover?main=${main}`);
     } else {
-      router.push(`/discover?sub=${sub}`);
+      router.push(`/discover?sub=${sub}&main=${main}`);
     }
   };
 
