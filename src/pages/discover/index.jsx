@@ -19,8 +19,11 @@ import { useSelector } from "react-redux";
 import store, { langAction } from "../../store";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { getUnits } from "../../app/Apis/Discover";
+import { getFeatures, getUnits } from "../../app/Apis/Discover";
 import { useSearchParams } from "next/navigation";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
 
 const Reservations = () => {
   const router = useRouter();
@@ -36,12 +39,22 @@ const Reservations = () => {
   const [maxPrice, setMaxPrice] = useState(0);
   const [page, setPage] = useState(1);
   const [favourites, setFav] = useState([]);
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [startDate, endDate] = dateRange;
+  const [rangeError, setRangeError] = useState(null);
+
   const [filters, setFilters] = useState({
     sortFilters: [],
     regions: [],
     page: [],
     beds: [],
     rooms: [],
+    prices: [],
+    availability: [],
+    keyWord: [],
+    features: [],
+    hasOffer: [],
+    guests: [],
   });
   const [filterValues, setFilterValues] = useState({
     rooms: [],
@@ -50,6 +63,7 @@ const Reservations = () => {
     maxPrice: 50000,
     subRegions: [],
     regions: [],
+    features: [],
   });
   const [sortFilters, setSortFilters] = useState([
     { value: "latest", checked: false },
@@ -199,6 +213,13 @@ const Reservations = () => {
         label: type.name,
         checked: false,
       }));
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        prices: [
+          ["price[from]", min_price],
+          ["price[to]", max_price],
+        ],
+      }));
 
       const rooms = Array(max_rooms)
         .fill()
@@ -235,6 +256,21 @@ const Reservations = () => {
           ...beds,
         ],
       }));
+    });
+    getFeatures().then((response) => {
+      const features = response?.data?.map((feature) => {
+        return {
+          value: feature.id,
+          label: feature.name,
+          checked: false,
+        };
+      });
+      setFilterValues((prev) => {
+        return {
+          ...prev,
+          features: [...features],
+        };
+      });
     });
   }, [intl]);
 
@@ -359,56 +395,71 @@ const Reservations = () => {
   }, [filterValues.regions]);
 
   // Effect for subRegion
-  // useEffect(() => {
+  useEffect(() => {
+    if (filters.regions.length === 0) {
+      const selectedRegion = filterValues.regions
+        .filter((region) => region.checked)
+        .map((option) => {
+          if (option.value !== "all") {
+            return ["regions[]", option.value];
+          } else {
+            return "all";
+          }
+        });
 
-  // },[filters.regions])
+      if (selectedRegion[0] === "all") {
+        setFilters((prev) => {
+          return {
+            ...prev,
+            regions: [],
+          };
+        });
+      } else {
+        setFilters((prev) => {
+          return {
+            ...prev,
+            regions: selectedRegion,
+          };
+        });
+      }
+    }
+  }, [filters.regions.length]);
+
+  // Effect for availability
+  useEffect(() => {
+    if (filters.availability.length > 0) {
+      setFilters((prev) => {
+        return {
+          ...prev,
+          prices: [
+            ["total_price[min]", 1000],
+            ["total_price[max]", priceRange[1]],
+          ],
+        };
+      });
+    } else {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        prices: [
+          ["price[from]", priceRange[0]],
+          ["price[to]", priceRange[1]],
+        ],
+      }));
+    }
+  }, [filters.availability, priceRange]);
 
   const handleUpdateFavList = () => {
     getFavouriteList().then((res) => setFav(res?.data));
   };
 
-  // useEffect(() => {
-  //   setData("");
-  //   let order_by = "";
-  //   let order_type = "";
-  //   if (sortFilters) {
-  //     const checkedOption = getCheckedOption(sortFilters);
-  //     switch (checkedOption) {
-  //       case "Option 2":
-  //         order_by = "default_price";
-  //         order_type = "asc";
-  //         break;
-  //       case "Option 3":
-  //         order_by = "default_price";
-  //         order_type = "desc";
-  //         break;
-  //       case "Option 1":
-  //         order_by = "created_at";
-  //         order_type = "desc";
-  //         break;
-  //     }
-  //   }
-  //   if (filterValues?.regions?.length > 0) {
-  //     getAllSubRegions(filterValues?.regions).then((res) => {
-  //       let results = [];
-  //       res?.data?.map((subRegion) => {
-  //         results.push({ value: subRegion.id, label: subRegion.name });
-  //       });
-  //       setSubRegions(results);
-  //     });
-  //   } else {
-  //     setSubRegions([]);
-  //   }
-  //   const clonedFilterValues = { ...filterValues };
-  //   getAllUnits({ ...clonedFilterValues, order_type, order_by }, page).then(
-  //     (res) => {
-  //       setData(res.data);
-  //       setMeta(res.meta);
-  //     }
-  //   );
-  // }, [filterValues, sortFilters, lang, page]);
-
-  const onSearch = (values) => {};
+  const handleSearch = (event) => {
+    setFilters((prev) => {
+      return {
+        ...prev,
+        keyWord: [["keyword", event.target.value]],
+      };
+    });
+  };
 
   const onSubRegionSearch = (values) => {
     values = values.map((region, i) => region.value);
@@ -490,16 +541,19 @@ const Reservations = () => {
   };
 
   const handlePriceAfterChange = (newPriceRange) => {
-    // setPriceRange(newPriceRange);
-    // setFilterValues((prevFilters) => ({
-    //   ...prevFilters,
-    //   ["minPrice"]: newPriceRange[0],
-    //   ["maxPrice"]: newPriceRange[1],
-    // }));
+    setPriceRange(newPriceRange);
+
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      prices: [
+        ["price[from]", newPriceRange[0]],
+        ["price[to]", newPriceRange[1]],
+      ],
+    }));
   };
 
   const handlePriceChange = (newPriceRange) => {
-    // setPriceRange(newPriceRange);
+    setPriceRange(newPriceRange);
   };
 
   const handleResetFilters = () => {};
@@ -603,23 +657,15 @@ const Reservations = () => {
         };
       });
     }
-  };
 
-  const handleFilterChange = (filterKey, checkbox) => {
-    // const values = filterValues[filterKey]; // Get the current filter values
-    // const updatedValues =
-    //   checkbox.value === "all" &&
-    //   (filterKey === "rooms" || filterKey === "beds")
-    //     ? checkbox.checked
-    //       ? []
-    //       : [...values]
-    //     : checkbox.checked
-    //     ? [...values, checkbox.value] // Add the checkbox value
-    //     : values.filter((value) => value !== checkbox.value); // Remove the checkbox value
-    // setFilterValues((prevFilters) => ({
-    //   ...prevFilters,
-    //   [filterKey]: updatedValues,
-    // }));
+    // if (filterKey === "regions" && index === 0) {
+    //   setFilters((prev) => {
+    //     return {
+    //       ...prev,
+    //       regions: [],
+    //     };
+    //   });
+    // }
   };
 
   const getSubRegionsValues = () => {
@@ -631,15 +677,59 @@ const Reservations = () => {
     return results;
   };
 
-  const getRegionsValues = () => {
-    // const results = [...filters.subRegions, ...filters?.regions]?.filter(
-    //   (region) => {
-    //     if (region?.checked) {
-    //       return region;
-    //     }
-    //   }
-    // );
-    // return results;
+  const handleAvailability = (update) => {
+    setDateRange(update);
+    if (update[0] && update[1]) {
+      setRangeError("");
+      setFilters((prev) => {
+        return {
+          ...prev,
+          availability: [
+            ["available[from]", moment(update[0]).format("DD-MM-YYYY")],
+            ["available[to]", moment(update[1]).format("DD-MM-YYYY")],
+          ],
+        };
+      });
+    } else if (update[0] && !update[1]) {
+      setRangeError("Please Select a valid range");
+    } else {
+      setFilters((prev) => {
+        return {
+          ...prev,
+          availability: [],
+        };
+      });
+    }
+  };
+
+  const handleFeaturesChange = (values) => {
+    const featuresFilter = values?.map((feature) => {
+      return ["features[]", feature.value];
+    });
+    setFilters((prev) => {
+      return {
+        ...prev,
+        features: featuresFilter,
+      };
+    });
+  };
+
+  const handleHasOffer = (event) => {
+    setFilters((prev) => {
+      return {
+        ...prev,
+        hasOffer: [["has_offer", Number(event.target.checked)]],
+      };
+    });
+  };
+
+  const handleGuestChange = (event) => {
+    setFilters((prev) => {
+      return {
+        ...prev,
+        guests: [["guest", event.target.value]],
+      };
+    });
   };
 
   return (
@@ -656,7 +746,7 @@ const Reservations = () => {
       </Head>
       <div className={`d-flex flex-column filters`}>
         <div className={`w-100 mb-5 sort_section`}>
-          <h4 className="mb-4">
+          <h4 className="mb-4 fw-bold">
             <img src="assets/sortIcon.png" alt="sort" className="me-2" />
             <FormattedMessage id="sort" />
           </h4>
@@ -712,7 +802,7 @@ const Reservations = () => {
           {/* </div> */}
 
           <div className={`mb-3 regions`}>
-            <p className={`mb-2 subtitle`}>
+            <p className={`mb-2 subtitle fw-bold`}>
               <FormattedMessage id="profile.edit.fields.city.label" />
             </p>
             {filterValues.regions?.map((item, index) => {
@@ -729,7 +819,7 @@ const Reservations = () => {
             })}
 
             <div className={`mb-3 mt-4 sub_regions`}>
-              <p className={`mb-2 subtitle`}>
+              <p className={`mb-2 subtitle fw-bold`}>
                 <FormattedMessage id="Resort / Region" />
               </p>
               <div className={`search_container d-inline-block w-100`}>
@@ -746,10 +836,29 @@ const Reservations = () => {
                 />
               </div>
             </div>
+
+            {/* Features */}
+            <div className={`mb-3 mt-4 sub_regions`}>
+              <p className={`mb-2 subtitle fw-bold`}>
+                <FormattedMessage id="Features" />
+              </p>
+              <div className={`search_container d-inline-block w-100`}>
+                <InputSelect
+                  isMulti={true}
+                  options={filterValues?.features}
+                  className="search_input"
+                  onChange={handleFeaturesChange}
+                  hideIndecators={false}
+                  placeholder={
+                    <FormattedMessage id="dicover.subRegions.search.placeholder" />
+                  }
+                />
+              </div>
+            </div>
           </div>
 
           <div className={`mb-3 rooms`}>
-            <p className={`mb-2 subtitle`}>
+            <p className={`mb-2 subtitle fw-bold`}>
               <FormattedMessage id="roomsNum" />
             </p>
             <div className={`d-flex flex-wrap`}>
@@ -768,7 +877,7 @@ const Reservations = () => {
           </div>
 
           <div className={`mb-3 beds`}>
-            <p className={`mb-2 subtitle`}>
+            <p className={`mb-2 subtitle fw-bold`}>
               <FormattedMessage id="bedsNum" />
             </p>
             <div className={`d-flex flex-wrap`}>
@@ -787,7 +896,7 @@ const Reservations = () => {
           </div>
 
           <div className={`mb-3 price_range`}>
-            <p className={`mb-2 subtitle`}>
+            <p className={`mb-2 subtitle fw-bold`}>
               <FormattedMessage id="price" />
             </p>
             <div className={`d-flex`}>
@@ -801,6 +910,94 @@ const Reservations = () => {
               />
             </div>
           </div>
+          <div className={`mb-3 price_range`}>
+            <p className={`mb-2 subtitle fw-bold`}>
+              <FormattedMessage id="availability" />
+            </p>
+            <div className={`d-flex flex-column gap-1`}>
+              <div>
+                <ReactDatePicker
+                  selectsRange={true}
+                  startDate={startDate}
+                  endDate={endDate}
+                  onChange={handleAvailability}
+                  isClearable={true}
+                  minDate={new Date()}
+                  showIcon
+                  icon={
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 5.75C7.59 5.75 7.25 5.41 7.25 5V2C7.25 1.59 7.59 1.25 8 1.25C8.41 1.25 8.75 1.59 8.75 2V5C8.75 5.41 8.41 5.75 8 5.75Z"
+                        fill="#A2A2A2"
+                      />
+                      <path
+                        d="M16 5.75C15.59 5.75 15.25 5.41 15.25 5V2C15.25 1.59 15.59 1.25 16 1.25C16.41 1.25 16.75 1.59 16.75 2V5C16.75 5.41 16.41 5.75 16 5.75Z"
+                        fill="#A2A2A2"
+                      />
+                      <path
+                        d="M20.5 9.83997H3.5C3.09 9.83997 2.75 9.49997 2.75 9.08997C2.75 8.67997 3.09 8.33997 3.5 8.33997H20.5C20.91 8.33997 21.25 8.67997 21.25 9.08997C21.25 9.49997 20.91 9.83997 20.5 9.83997Z"
+                        fill="#A2A2A2"
+                      />
+                      <path
+                        d="M16 22.75H8C4.35 22.75 2.25 20.65 2.25 17V8.5C2.25 4.85 4.35 2.75 8 2.75H16C19.65 2.75 21.75 4.85 21.75 8.5V17C21.75 20.65 19.65 22.75 16 22.75ZM8 4.25C5.14 4.25 3.75 5.64 3.75 8.5V17C3.75 19.86 5.14 21.25 8 21.25H16C18.86 21.25 20.25 19.86 20.25 17V8.5C20.25 5.64 18.86 4.25 16 4.25H8Z"
+                        fill="#A2A2A2"
+                      />
+                      <path
+                        d="M8.5 14.5C8.37 14.5 8.24 14.47 8.12 14.42C8 14.37 7.89001 14.3 7.79001 14.21C7.70001 14.11 7.62999 14 7.57999 13.88C7.52999 13.76 7.5 13.63 7.5 13.5C7.5 13.24 7.61001 12.98 7.79001 12.79C7.89001 12.7 8 12.63 8.12 12.58C8.3 12.5 8.50001 12.48 8.70001 12.52C8.76001 12.53 8.82 12.55 8.88 12.58C8.94 12.6 9 12.63 9.06 12.67C9.11 12.71 9.15999 12.75 9.20999 12.79C9.24999 12.84 9.29999 12.89 9.32999 12.94C9.36999 13 9.40001 13.06 9.42001 13.12C9.45001 13.18 9.47001 13.24 9.48001 13.3C9.49001 13.37 9.5 13.43 9.5 13.5C9.5 13.76 9.38999 14.02 9.20999 14.21C9.01999 14.39 8.76 14.5 8.5 14.5Z"
+                        fill="#A2A2A2"
+                      />
+                      <path
+                        d="M12 14.5C11.74 14.5 11.48 14.39 11.29 14.21C11.25 14.16 11.21 14.11 11.17 14.06C11.13 14 11.1 13.94 11.08 13.88C11.05 13.82 11.03 13.76 11.02 13.7C11.01 13.63 11 13.57 11 13.5C11 13.37 11.03 13.24 11.08 13.12C11.13 13 11.2 12.89 11.29 12.79C11.57 12.51 12.02 12.42 12.38 12.58C12.51 12.63 12.61 12.7 12.71 12.79C12.89 12.98 13 13.24 13 13.5C13 13.57 12.99 13.63 12.98 13.7C12.97 13.76 12.95 13.82 12.92 13.88C12.9 13.94 12.87 14 12.83 14.06C12.79 14.11 12.75 14.16 12.71 14.21C12.61 14.3 12.51 14.37 12.38 14.42C12.26 14.47 12.13 14.5 12 14.5Z"
+                        fill="#A2A2A2"
+                      />
+                      <path
+                        d="M8.5 18C8.37 18 8.24 17.97 8.12 17.92C8 17.87 7.89001 17.8 7.79001 17.71C7.70001 17.61 7.62999 17.51 7.57999 17.38C7.52999 17.26 7.5 17.13 7.5 17C7.5 16.74 7.61001 16.48 7.79001 16.29C7.89001 16.2 8 16.13 8.12 16.08C8.49 15.92 8.92999 16.01 9.20999 16.29C9.24999 16.34 9.29999 16.39 9.32999 16.44C9.36999 16.5 9.40001 16.56 9.42001 16.62C9.45001 16.68 9.47001 16.74 9.48001 16.81C9.49001 16.87 9.5 16.94 9.5 17C9.5 17.26 9.38999 17.52 9.20999 17.71C9.01999 17.89 8.76 18 8.5 18Z"
+                        fill="#A2A2A2"
+                      />
+                    </svg>
+                  }
+                />
+              </div>
+              {rangeError && (
+                <span className="d-block mt-1 text-danger">{rangeError}</span>
+              )}
+            </div>
+          </div>
+          <div className={`mb-1 price_range`}>
+            <p className={`mb-2 subtitle fw-bold`}>
+              <FormattedMessage id="Has offers" />
+            </p>
+            <div className="form-check form-switch">
+              <input
+                className="form-check-input cursor-pointer"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckChecked"
+                onChange={handleHasOffer}
+              />
+            </div>
+          </div>
+          {/* Guests */}
+          <div className={`mb-3 mt-3 price_range`}>
+            <p className={`mb-2 subtitle fw-bold`}>
+              <FormattedMessage id="Guests" />
+            </p>
+            <div className={`search_container d-inline-block w-100`}>
+              <input
+                type="number"
+                className="form-control"
+                id="guests"
+                placeholder="Number of guests"
+                onChange={handleGuestChange}
+              />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -810,12 +1007,19 @@ const Reservations = () => {
             <FormattedMessage id="discoverAndbook" />
           </p>
           <div className={`search_container d-inline-block w-100`}>
-            <InputSelect
-              value={getRegionsValues()}
+            <div className="input-group mb-3">
+              <input
+                type="text"
+                className="form-control p-3 fs-5"
+                placeholder="Search for a unit"
+                aria-label="search"
+                aria-describedby="search"
+                onChange={handleSearch}
+              />
+            </div>
+            {/* <input
+              value={""}
               onChange={onSearch}
-              hideIndecators={true}
-              isMulti={true}
-              options={mainRegions}
               placeholder={
                 <>
                   <img
@@ -826,7 +1030,7 @@ const Reservations = () => {
                   <FormattedMessage id="dicover.search.placeholder" />
                 </>
               }
-            />
+            /> */}
           </div>
         </div>
         <div className={`mt-3 units_list`}>

@@ -3,7 +3,19 @@ import { axiosInstance } from "./AxiosInstance";
 
 export const getUnits = async (qparams, signal) => {
   try {
-    const { sortFilters, regions, page, beds, rooms } = qparams;
+    const {
+      sortFilters,
+      regions,
+      page,
+      beds,
+      rooms,
+      prices,
+      availability,
+      keyWord,
+      features,
+      hasOffer,
+      guests,
+    } = qparams;
 
     const sortQueryParams = new URLSearchParams([
       ...sortFilters,
@@ -11,6 +23,12 @@ export const getUnits = async (qparams, signal) => {
       ...page,
       ...beds,
       ...rooms,
+      ...prices,
+      ...availability,
+      ...keyWord,
+      ...features,
+      ...hasOffer,
+      ...guests,
     ]);
 
     const response = await axiosInstance.get(
@@ -20,5 +38,16 @@ export const getUnits = async (qparams, signal) => {
       }
     );
     return response.data;
-  } catch (error) {}
+  } catch (error) {
+    return new Error(error.message);
+  }
+};
+
+export const getFeatures = async () => {
+  try {
+    const response = await axiosInstance.get(`/api/v1/features`);
+    return response.data;
+  } catch (error) {
+    return new Error(error.message);
+  }
 };
