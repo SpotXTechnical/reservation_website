@@ -37,7 +37,7 @@ const PriceRangeComponent = ({
         step={step}
         value={priceRange}
         onChange={handlePriceChange}
-        onAfterChange={handlePriceAfterChange}
+        onChangeComplete={handlePriceAfterChange}
       />
     </div>
   );
