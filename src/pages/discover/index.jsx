@@ -29,6 +29,8 @@ const Reservations = () => {
   const router = useRouter();
   // const { main, sub } = router.query;
   const searchParams = useSearchParams();
+  const main = searchParams.get("main");
+  const sub = searchParams.get("sub");
 
   const intl = useIntl();
   const WITH_SUB_REGION = 1;
@@ -95,112 +97,6 @@ const Reservations = () => {
     getFavouriteList().then((res) => setFav(res?.data));
   }, []);
 
-  // useEffect(
-  //   function () {
-  //     const { main, sub } = router.query;
-
-  //     // getFilterConfig().then((res) => {
-  //     //   let { types, max_rooms, max_beds, min_price, max_price } = res.data;
-  //     //   setMinPrice(min_price);
-  //     //   setMaxPrice(max_price);
-  //     //   setPriceRange([min_price, max_price]);
-  //     //   types = types?.map((type, i) => ({
-  //     //     value: type.value,
-  //     //     label: type.name,
-  //     //     checked: false,
-  //     //   }));
-
-  //     //   const rooms = Array(max_rooms)
-  //     //     .fill()
-  //     //     .map((_, index) => ({
-  //     //       value: index + 1,
-  //     //       label: index + 1,
-  //     //       checked: false,
-  //     //     }));
-
-  //     //   const beds = Array(max_beds)
-  //     //     .fill()
-  //     //     .map((_, index) => ({
-  //     //       value: index + 1,
-  //     //       label: index + 1,
-  //     //       checked: false,
-  //     //     }));
-
-  //     //   setFilters((prevFilters) => ({
-  //     //     ...prevFilters,
-  //     //     ["type"]: [
-  //     //       {
-  //     //         value: "all",
-  //     //         label: intl.formatMessage({ id: "all" }),
-  //     //         checked: true,
-  //     //       },
-  //     //       ...types,
-  //     //     ],
-  //     //     ["rooms"]: [
-  //     //       {
-  //     //         value: "all",
-  //     //         label: intl.formatMessage({ id: "all" }),
-  //     //         checked: true,
-  //     //       },
-  //     //       ...rooms,
-  //     //     ],
-  //     //     ["beds"]: [
-  //     //       {
-  //     //         value: "all",
-  //     //         label: intl.formatMessage({ id: "all" }),
-  //     //         checked: true,
-  //     //       },
-  //     //       ...beds,
-  //     //     ],
-  //     //   }));
-  //     // });
-
-  // getRegions(1).then((res) => {
-  //   let regions = res.data?.map((region, i) => ({
-  //     value: region.id,
-  //     label: region.name,
-  //     checked: Number(router.query?.main) === region.id,
-  //     sub_regions: region.sub_regions,
-  //   }));
-  //   const regionValues = regions?.map((region) => region.value);
-  //   getAllSubRegions(regionValues).then((res) => {
-  //     const subRegions = res.data?.map((region, i) => ({
-  //       value: region.id,
-  //       label: region.name,
-  //       checked: Number(router.query?.sub) === region.id,
-  //     }));
-  //     const subRegionValues = subRegions?.map(
-  //       (subRegion) => subRegion.value
-  //     );
-  //     setFilters((prevFilters) => ({
-  //       ...prevFilters,
-  //       ["subRegions"]: subRegions,
-  //     }));
-  //   });
-
-  //     //   setFilters((prevFilters) => ({
-  //     //     ...prevFilters,
-  //     //     ["regions"]: regions,
-  //     //   }));
-  //     // });
-  //     // getRegions(WITH_SUB_REGION).then((res) => {
-  //     //   let results = [];
-  //     //   res.data?.map((region, i) => {
-  //     //     results.push({ value: region.id, label: region.name });
-
-  //     //     if (region?.sub_regions && region?.sub_regions.length > 0) {
-  //     //       region?.sub_regions.forEach((subRegion) => {
-  //     //         results.push({ value: subRegion.id, label: subRegion.name });
-  //     //       });
-  //     //     }
-  //     //   });
-  //     //   setMainRegions(results);
-  //     // });
-  //     // }
-  //   },
-  //   [intl, lang, page, router.query]
-  // );
-
   // Effect for beds and rooms
   useEffect(() => {
     getFilterConfig().then((res) => {
@@ -213,13 +109,15 @@ const Reservations = () => {
         label: type.name,
         checked: false,
       }));
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        prices: [
-          ["price[from]", min_price],
-          ["price[to]", max_price],
-        ],
-      }));
+      setFilters((prevFilters) => {
+        return {
+          ...prevFilters,
+          prices: [
+            ["price[from]", min_price],
+            ["price[to]", max_price],
+          ],
+        };
+      });
 
       const rooms = Array(max_rooms)
         .fill()
@@ -276,15 +174,13 @@ const Reservations = () => {
 
   // Effect for query params which is based from home page
   useEffect(() => {
-    const main = searchParams.get("main");
-    const sub = searchParams.get("sub");
     if (main || sub) {
+      const newRegions = sub ? [["regions[]", sub]] : [["regions[]", main]];
+      console.log(newRegions);
       setFilters((prev) => {
-        const newRegions = sub ? [["regions[]", sub]] : [["regions[]", main]];
-
         return {
           ...prev,
-          regions: newRegions,
+          regions: [...newRegions],
         };
       });
       getRegions(1).then((res) => {
@@ -319,7 +215,7 @@ const Reservations = () => {
         }));
       });
     }
-  }, [intl, searchParams]);
+  }, [intl, main, sub]);
 
   // Effect for filters change
   useEffect(() => {
@@ -327,6 +223,7 @@ const Reservations = () => {
       top: 0,
       behavior: "smooth",
     });
+    console.log(filters);
     const abortController = new AbortController();
     const signal = abortController.signal;
     setData("");
@@ -335,7 +232,7 @@ const Reservations = () => {
       setMeta(response?.meta);
     });
     return () => abortController.abort();
-  }, [filters, lang, intl]);
+  }, [filters, lang]);
 
   //  Effect for regions
   useEffect(() => {
@@ -406,6 +303,7 @@ const Reservations = () => {
             return "all";
           }
         });
+      console.log(selectedRegion);
 
       if (selectedRegion[0] === "all") {
         setFilters((prev) => {
@@ -414,11 +312,28 @@ const Reservations = () => {
             regions: [],
           };
         });
-      } else {
+      } else if (selectedRegion[0] !== "all" && selectedRegion.length > 0) {
         setFilters((prev) => {
           return {
             ...prev,
             regions: selectedRegion,
+          };
+        });
+      } else if (selectedRegion.length === 0) {
+        const modifiedRegions = filterValues.regions.map((option) => {
+          if (option.value === "all") {
+            return {
+              ...option,
+              checked: true,
+            };
+          } else {
+            return option;
+          }
+        });
+        setFilterValues((prev) => {
+          return {
+            ...prev,
+            regions: modifiedRegions,
           };
         });
       }
@@ -426,27 +341,29 @@ const Reservations = () => {
   }, [filters.regions.length]);
 
   // Effect for availability
-  useEffect(() => {
-    if (filters.availability.length > 0) {
-      setFilters((prev) => {
-        return {
-          ...prev,
-          prices: [
-            ["total_price[min]", 1000],
-            ["total_price[max]", priceRange[1]],
-          ],
-        };
-      });
-    } else {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        prices: [
-          ["price[from]", priceRange[0]],
-          ["price[to]", priceRange[1]],
-        ],
-      }));
-    }
-  }, [filters.availability, priceRange]);
+  // useEffect(() => {
+  //   if (filters.availability.length > 0) {
+  //     setFilters((prev) => {
+  //       return {
+  //         ...prev,
+  //         prices: [
+  //           ["total_price[min]", 1000],
+  //           ["total_price[max]", priceRange[1]],
+  //         ],
+  //       };
+  //     });
+  //   } else {
+  //     setFilters((prevFilters) => {
+  //       return {
+  //         ...prevFilters,
+  //         prices: [
+  //           ["price[from]", priceRange[0]],
+  //           ["price[to]", priceRange[1]],
+  //         ],
+  //       };
+  //     });
+  //   }
+  // }, [filters.availability, priceRange]);
 
   const handleUpdateFavList = () => {
     getFavouriteList().then((res) => setFav(res?.data));
