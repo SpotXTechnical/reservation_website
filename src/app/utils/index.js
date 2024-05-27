@@ -19,18 +19,22 @@ export function appendParamToUrl(url, paramName, paramValue) {
   return `${url}${queryPrefix}${param}`;
 }
 
-
 export const handleQueryparams = (filters) => {
   const params = Object.keys(filters)
     .filter((key) => filters[key] !== null && filters[key] !== "")
-    .map((key) => {
+    .flatMap((key) => {
       const encodedKey = encodeURIComponent(key);
-      const encodedValue = encodeURIComponent(filters[key]);
-      return `${encodedKey}=${encodedValue}`;
+      if (Array.isArray(filters[key])) {
+        return filters[key].map(
+          (value) => `${encodedKey}=${encodeURIComponent(value)}`
+        );
+      } else {
+        const encodedValue = encodeURIComponent(filters[key]);
+        return `${encodedKey}=${encodedValue}`;
+      }
     });
   return params.join("&");
 };
-
 
 // dynamic icon based on the status
 export function getIcon(status) {
