@@ -105,7 +105,7 @@ const RegionUnits = ({ regionId, className, isSub }) => {
                 image={unit?.main_image?.url || unit.images[0]?.url}
                 default_price={unit.default_price}
                 bathrooms={unit.bathrooms}
-                beds={unit.beds}
+                bed_rooms={unit.bed_rooms}
                 type={unit.type}
                 is_favourite={unit.is_favourite}
                 active_ranges={unit.active_ranges}

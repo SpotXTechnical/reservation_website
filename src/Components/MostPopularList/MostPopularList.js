@@ -47,7 +47,7 @@ const MostPopularList = ({ unitsData }) => {
                 title,
                 type,
                 bathrooms,
-                beds,
+                bed_rooms,
                 is_favourite,
                 active_ranges,
                 nearest_active_ranges,
@@ -61,7 +61,7 @@ const MostPopularList = ({ unitsData }) => {
                   title={title}
                   image={main_image?.url || images[0]?.url}
                   bathrooms={bathrooms}
-                  beds={beds}
+                  bed_rooms={bed_rooms}
                   type={type}
                   is_favourite={is_favourite}
                   active_ranges={active_ranges}
@@ -83,7 +83,7 @@ const MostPopularList = ({ unitsData }) => {
                     title,
                     type,
                     bathrooms,
-                    beds,
+                    bed_rooms,
                     is_favourite,
                     active_ranges,
                     nearest_active_ranges,
@@ -99,7 +99,7 @@ const MostPopularList = ({ unitsData }) => {
                     title={title}
                     image={main_image?.url || images[0]?.url}
                     bathrooms={bathrooms}
-                    beds={beds}
+                    bed_rooms={bed_rooms}
                     type={type}
                     is_favourite={is_favourite}
                     active_ranges={active_ranges}
