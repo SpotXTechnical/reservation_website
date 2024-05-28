@@ -114,7 +114,7 @@ export default function ShowAll() {
                     title,
                     type,
                     bathrooms,
-                    beds,
+                    bed_rooms,
                     default_price,
                     is_favourite,
                     active_ranges,
@@ -132,7 +132,7 @@ export default function ShowAll() {
                     image={main_image?.url || images[0]?.url}
                     default_price={default_price}
                     bathrooms={bathrooms}
-                    beds={beds}
+                    bed_rooms={bed_rooms}
                     type={type}
                     is_favourite={is_favourite}
                     active_ranges={active_ranges}
