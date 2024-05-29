@@ -14,7 +14,7 @@ const PopularCard = ({
   title,
   type,
   bathrooms,
-  beds,
+  bed_rooms,
   updateFavList,
   active_ranges,
   nearest_active_ranges,
@@ -94,10 +94,10 @@ const PopularCard = ({
         </div>
         <div className="popular_header2">
           <div className="units_numbers_wrapper">
-            {beds && (
+            {bed_rooms && (
               <div className="icons_wrapper">
-                <span className="units_numbers">{beds}</span>
-                <img src="/assets/bed.png" alt="beds" className="bed_icon" />
+                <span className="units_numbers">{bed_rooms}</span>
+                <img src="/assets/bed.png" alt="rooms" className="bed_icon" />
               </div>
             )}
             {bathrooms && (
