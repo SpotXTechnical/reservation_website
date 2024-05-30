@@ -47,13 +47,16 @@ export default function SubRegion() {
   const [cancellationModal, setCancellationModal] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState(null);
   let { lang } = useSelector((state) => state.language);
-  if (typeof window !== "undefined") {
-    const storedLanguage = localStorage.getItem("language");
-    const language = storedLanguage ? storedLanguage : "en";
-    store.dispatch(
-      language === "ar" ? langAction.langAr() : langAction.langEn()
-    );
-  }
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedLanguage = localStorage.getItem("language");
+      const language = storedLanguage ? storedLanguage : "en";
+      store.dispatch(
+        language === "ar" ? langAction.langAr() : langAction.langEn()
+      );
+    }
+  }, []);
 
   const handleRedirectToOwnerProfile = (id) => {
     router.push(`/owner/${id}`);
@@ -123,9 +126,9 @@ export default function SubRegion() {
         <div className="details_wrapper">
           <div className="view_details_wrapper">
             <div className="statuses_wrapper">
-              <p className={`align-self-end status ${data.status} icon-text`}>
+              <p className={`align-self-end status ${data?.status} icon-text`}>
                 {icon?.src && <Image src={icon} alt="pending" />}
-                {data.status}
+                {data?.status}
               </p>
             </div>
             <p onClick={handleClick} className="view_details">
@@ -167,8 +170,8 @@ export default function SubRegion() {
                   offers.map((offer) => (
                     <Offer
                       key={offer.id}
-                      unitImage={data?.unit.main_image.url}
-                      alt={data?.unit.type}
+                      unitImage={data?.unit?.main_image.url}
+                      alt={data?.unit?.type}
                       offer={offer}
                       setOffers={setOffers}
                       setRefetch={setRefetch}
@@ -200,11 +203,11 @@ export default function SubRegion() {
             </>
           )}
 
-          {data.status === "accepted" && (
+          {data?.status === "accepted" && (
             <ReservationContext.Provider value={data}>
               <PayNow
-                downPayment={data.down_payment}
-                amountToPay={data.amount_to_pay}
+                downPayment={data?.down_payment}
+                amountToPay={data?.amount_to_pay}
                 Refetch={setRefetch}
               />
             </ReservationContext.Provider>
@@ -229,7 +232,7 @@ export default function SubRegion() {
           ) : (
             <ShimmerThumbnail height={175} rounded />
           )}
-          {data.status !== "canceled" && data.status !== "rejected" && (
+          {data?.status !== "canceled" && data?.status !== "rejected" && (
             <>
               <hr className="total_price_hr" />
               <div className="cancellation_policy">
@@ -244,13 +247,13 @@ export default function SubRegion() {
                     toggleModal={toggleCancellationModal}
                     modalBody={
                       <CancelReservationModal
-                        reservationStatus={data.status}
+                        reservationStatus={data?.status}
                         closeModalCb={toggleCancellationModal}
                         reservationId={id}
                       />
                     }
                   />
-                  <button onClick={() => handleCancelReservation(data.id)}>
+                  <button onClick={() => handleCancelReservation(data?.id)}>
                     <FormattedMessage id="cancel reservation" />
                   </button>
                 </div>
