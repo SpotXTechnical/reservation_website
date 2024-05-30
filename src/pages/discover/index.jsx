@@ -978,7 +978,7 @@ const Reservations = () => {
                     default_price={unit.current_price}
                     bathrooms={unit.bathrooms}
                     bed_rooms={unit.bed_rooms}
-                    type={unit.type}
+                    klass={unit.klass}
                     is_favourite={unit.is_favourite}
                     active_ranges={unit.active_ranges}
                     nearest_active_ranges={unit.nearest_active_ranges}
