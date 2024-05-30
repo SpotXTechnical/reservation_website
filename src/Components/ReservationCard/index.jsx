@@ -22,22 +22,22 @@ const ReservationCard = ({ data }) => {
         onClick={() => handleNavigateToDetails(data.id)}
       >
         <div className="main_image">
-          <img src={data.unit.main_image?.url} alt="main image" />
+          <img src={data?.unit?.main_image?.url} alt="main image" />
         </div>
         <div className="info">
           <div>
-            <p className="unit_type">{data.unit.type}</p>
+            <p className="unit_type">{data?.unit?.type}</p>
           </div>
-          <h3 className={`mb-3 title`}>{data.unit.title}</h3>
+          <h3 className={`mb-3 title`}>{data?.unit?.title}</h3>
           <p className={`mb-3 details d-flex flex-column d-lg-block`}>
             <span className="me-3">
-              {data.days} <FormattedMessage id="nights" />
+              {data?.days} <FormattedMessage id="nights" />
             </span>
             <span className="fs-6">
               ( <FormattedMessage id="from" /> &nbsp;
-              <span className="date">{getDayMonth(data.from)}</span> &nbsp;
+              <span className="date">{getDayMonth(data?.from)}</span> &nbsp;
               <FormattedMessage id="to" /> &nbsp;
-              <span className="date">{getDayMonth(data.to)}</span> )
+              <span className="date">{getDayMonth(data?.to)}</span> )
             </span>
           </p>
           <p className={`d-flex gap-3 gap-md-5  total_cost`}>
@@ -45,12 +45,12 @@ const ReservationCard = ({ data }) => {
               <FormattedMessage id="totalCost" />
             </span>
             <span>
-              {data.total_price} <FormattedMessage id="LE" />
+              {data?.total_price} <FormattedMessage id="LE" />
             </span>
           </p>
         </div>
         <div className={`d-flex flex-column justify-content-between`}>
-          {data.is_reviewed ? (
+          {data?.is_reviewed ? (
             <p className={`review cursor-pointer icon-text-alignment`}>
               <span>
                 <FormattedMessage id="reviewYourRent" />
@@ -58,13 +58,13 @@ const ReservationCard = ({ data }) => {
               <Image src={Like} alt="like" />
             </p>
           ) : null}
-          <p className={`align-self-end status ${data.status}`}>
+          <p className={`align-self-end status ${data?.status}`}>
             <Image src={icon} alt="pending" />
-            {data.status}
+            {data?.status}
           </p>
         </div>
       </div>
-      {data.status === "negotiation" && (
+      {data?.status === "negotiation" && (
         <p className="negotiation-msg">
           The owner has sent you suggestions, check them now.{" "}
         </p>
