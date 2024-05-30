@@ -81,14 +81,19 @@ const RegionUnits = ({ regionId, className, isSub }) => {
     getFavouriteList().then((res) => setFav(res?.data));
   };
   const handlePagination = async (pageNumber) => {
-    setData([]);
-    isSub
-      ? getUnitsPerSubRegion(regionId, { page: pageNumber }).then((res) => {
-          setData(res.data);
-        })
-      : getUnitsPerRegion(regionId).then((res) => {
-          setData(res.data);
-        });
+    dispatch({ type: RESET_UNITS });
+    try {
+      dispatch({ type: LOADING_STATE });
+      isSub
+        ? getUnitsPerSubRegion(regionId, { page: pageNumber }).then((res) => {
+            dispatch({ type: SUCCESS_STATE, payload: res.data });
+          })
+        : getUnitsPerRegion(regionId).then((res) => {
+            dispatch({ type: SUCCESS_STATE, payload: res.data });
+          });
+    } catch (error) {
+      dispatch({ type: ERROR_STATE, payload: error.message });
+    }
   };
 
   return (
@@ -106,7 +111,7 @@ const RegionUnits = ({ regionId, className, isSub }) => {
                 default_price={unit.default_price}
                 bathrooms={unit.bathrooms}
                 bed_rooms={unit.bed_rooms}
-                type={unit.type}
+                klass={unit.klass}
                 is_favourite={unit.is_favourite}
                 active_ranges={unit.active_ranges}
                 nearest_active_ranges={unit.nearest_active_ranges}

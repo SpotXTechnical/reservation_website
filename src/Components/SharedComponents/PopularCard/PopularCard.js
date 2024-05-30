@@ -12,7 +12,7 @@ const PopularCard = ({
   id,
   image,
   title,
-  type,
+  klass,
   bathrooms,
   bed_rooms,
   updateFavList,
@@ -69,7 +69,9 @@ const PopularCard = ({
       onClick={() => router.push(`/properties/${id}`)}
     >
       <div className="unit_type_wrapper">
-        <div className="unit_type">{type}</div>
+        {(klass === "villa" || klass === "studio") && (
+          <div className="unit_type">{klass}</div>
+        )}
         {typeof window !== "undefined" && (
           <div onClick={(e) => handleAddToFavourite(e, id)}>
             <img
