@@ -277,15 +277,23 @@ export default function PropertyDetails() {
 
       {data?.images?.length > 0 ? (
         <div
-          className={`images ${data.images.length > 4 && "cursor-pointer"}`}
+          className={`images cursor-pointer`}
           onClick={() => {
-            data.images.length > 4 && handleImageGallery();
+            handleImageGallery();
           }}
         >
           <div className="flex-center mb-3">
-            <img src={data?.images[0]?.url} alt="Feature image" />
+            {data?.images[0]?.type === "image" ? (
+              <img
+                src={data?.images[0]?.url}
+                alt="Feature image"
+                className="width-auto"
+              />
+            ) : (
+              <video src={data?.images[0]?.url} controls={true}></video>
+            )}
           </div>
-          <div className="flex-center mb-5">
+          <div className="flex-center mb-5 property_images_container">
             {data.images.slice(1, 4).map(
               (image, index) =>
                 image.url && (
@@ -295,8 +303,20 @@ export default function PropertyDetails() {
                       index === 2 ? "feature_images_dark" : "feature_images"
                     }`}
                   >
-                    <div className={`${index === 2 ? "top" : ""}`}>
-                      <img src={image.url} alt="Feature image" />
+                    <div
+                      className={`d-flex property_images ${
+                        index === 2 ? "top" : ""
+                      }`}
+                    >
+                      {image.type === "image" ? (
+                        <img
+                          src={image.url}
+                          alt="Feature image"
+                          className="width-auto"
+                        />
+                      ) : (
+                        <video src={image.url} controls={true}></video>
+                      )}
                       {index === 2 && data.images.length > 4 && (
                         <p className="overlay">+{data.images.length - 4}</p>
                       )}
@@ -347,19 +367,6 @@ export default function PropertyDetails() {
                   </span>
                 </span>
               </div>
-              {/* <div className="flex-center">
-                <span>
-                  <img src="/assets/area.png" alt="bed" />
-                </span>
-                <span className={styles.flex_column}>
-                  <span>
-                    <FormattedMessage id="area" />
-                  </span>
-                  <span>
-                    450 <FormattedMessage id="ft" />
-                  </span>
-                </span>
-              </div> */}
             </div>
             <div className="price">
               <span>
@@ -669,18 +676,69 @@ export default function PropertyDetails() {
       <ModalComponent
         isOpen={isGalleryModalOpen}
         toggleModal={toggleGalleryModal}
-        className="image_gallery"
+        className="image_gallery mx-auto p-0 p-md-3"
         modalBody={
-          <Carousel showThumbs={false} showStatus={false} emulateTouch={true}>
-            {data?.images?.map((slide) => (
-              <div key={slide.id}>
+          // <Carousel showThumbs={false} showStatus={false} emulateTouch={true}>
+          //   {data?.images?.map((slide) => (
+          //     <div key={slide.id} className="carousel-container">
+          //       {/* <div
+          //         className="carousel_img"
+          //         style={{ backgroundImage: `url(${slide.url}` }}
+          //       ></div> */}
+          //       {slide.type === "image" ? (
+          //         <img src={`${slide.url}`} alt="unit images" />
+          //       ) : (
+          //         <video src={slide.url} controls={true}></video>
+          //       )}
+          //     </div>
+          //   ))}
+          // </Carousel>
+          <div
+            id="propertyCarousel"
+            className="carousel slide"
+            data-ride="carousel"
+          >
+            <div className="carousel-inner ">
+              {data?.images?.map((slide, index) => (
                 <div
-                  className="carousel_img"
-                  style={{ backgroundImage: `url(${slide.url}` }}
-                ></div>
-              </div>
-            ))}
-          </Carousel>
+                  className={`carousel-item ${index === 0 ? "active" : ""}`}
+                  key={slide?.id}
+                >
+                  <div className="carousel-container">
+                    {slide.type === "image" ? (
+                      <img src={`${slide.url}`} alt="unit images" />
+                    ) : (
+                      <video src={slide.url} controls={true}></video>
+                    )}
+                  </div>
+                </div>
+              ))}
+              <button
+                class="carousel-control-prev control-arrow"
+                type="button"
+                data-bs-target="#propertyCarousel"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon rounded bg-dark"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button
+                class="carousel-control-next control-arrow"
+                type="button"
+                data-bs-target="#propertyCarousel"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon rounded bg-dark"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
         }
       />
       <ToastContainer />
