@@ -116,8 +116,10 @@
   align-items: center;
   justify-content: space-between;
   padding-inline: 16px;
-  position: relative;
-  top: 50px;
+  position: absolute;
+  top: 8%;
+  left: 2%;
+  z-index: 20;
 }
 
 .unit_type {

@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import Link from "next/link";
 const PopularCard = ({
   id,
   image,
@@ -64,16 +65,16 @@ const PopularCard = ({
   };
 
   return (
-    <div
-      className="popular_card"
-      onClick={() => router.push(`/properties/${id}`)}
-    >
+    <div className="popular_card position-relative p-3 ">
       <div className="unit_type_wrapper">
         {(klass === "villa" || klass === "studio") && (
           <div className="unit_type">{klass}</div>
         )}
         {typeof window !== "undefined" && (
-          <div onClick={(e) => handleAddToFavourite(e, id)}>
+          <div
+            onClick={(e) => handleAddToFavourite(e, id)}
+            className="fav_icon_wrapper"
+          >
             <img
               src="/assets/Heart.png"
               alt="favourite"
@@ -83,48 +84,51 @@ const PopularCard = ({
         )}
       </div>
       <div>
-        <img src={image} alt="popular_regions" className="popular_img" />
-        <div className="popular_header">
-          <div className="popular_title">{title}</div>
-          <div className="default_price">
-            {/* {getOffers()?.length > 0 ? getOffers()[0].price : default_price} LE
+        <Link href={`/properties/${id}`} className="text-decoration-none ">
+          <img src={image} alt="popular_regions" className="popular_img" />
+          <div className="popular_header">
+            <div className="popular_title">{title}</div>
+            <div className="default_price">
+              {/* {getOffers()?.length > 0 ? getOffers()[0].price : default_price} LE
             <span className="per_day">/ day</span> */}
-            {total_price ? `${total_price} ` : `${current_price} `}
-            {total_price && <span className="per_day">/ Reservation</span>}
-            {!total_price && <span className="per_day">/ day</span>}
-          </div>
-        </div>
-        <div className="popular_header2">
-          <div className="units_numbers_wrapper">
-            {bed_rooms && (
-              <div className="icons_wrapper">
-                <span className="units_numbers">{bed_rooms}</span>
-                <img src="/assets/bed.png" alt="rooms" className="bed_icon" />
-              </div>
-            )}
-            {bathrooms && (
-              <div className="icons_wrapper">
-                <span className="units_numbers">{bathrooms}</span>
-                <img
-                  src="/assets/bath.png"
-                  alt="bathrooms"
-                  className="bath_icon"
-                />
-              </div>
-            )}
-          </div>
-          {nearest_active_ranges.length > 0 && getOffers()?.length === 0 && (
-            <div className="offers_wrapper">
-              <p className="offer_title">
-                Offer At {moment(nearest_active_ranges[0].from).format("D MMM")}
-              </p>
-              <div className="offer_price">
-                {nearest_active_ranges[0].price} LE{" "}
-                <span className="offers_per_day">/ day</span>
-              </div>
+              {total_price ? `${total_price} ` : `${current_price} `}
+              {total_price && <span className="per_day">/ Reservation</span>}
+              {!total_price && <span className="per_day">/ day</span>}
             </div>
-          )}
-        </div>
+          </div>
+          <div className="popular_header2">
+            <div className="units_numbers_wrapper">
+              {bed_rooms && (
+                <div className="icons_wrapper">
+                  <span className="units_numbers">{bed_rooms}</span>
+                  <img src="/assets/bed.png" alt="rooms" className="bed_icon" />
+                </div>
+              )}
+              {bathrooms && (
+                <div className="icons_wrapper">
+                  <span className="units_numbers">{bathrooms}</span>
+                  <img
+                    src="/assets/bath.png"
+                    alt="bathrooms"
+                    className="bath_icon"
+                  />
+                </div>
+              )}
+            </div>
+            {nearest_active_ranges.length > 0 && getOffers()?.length === 0 && (
+              <div className="offers_wrapper">
+                <p className="offer_title">
+                  Offer At{" "}
+                  {moment(nearest_active_ranges[0].from).format("D MMM")}
+                </p>
+                <div className="offer_price">
+                  {nearest_active_ranges[0].price} LE{" "}
+                  <span className="offers_per_day">/ day</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </Link>
       </div>
       <ToastContainer />
     </div>
