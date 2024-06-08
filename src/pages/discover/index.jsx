@@ -661,7 +661,7 @@ const Reservations = () => {
           content={"Discover units and properties for reservations"}
         />
       </Head>
-      <div className={`d-flex flex-column filters`}>
+      <div className={`d-flex flex-column filters sidbar p-2`}>
         <div className={`w-100 mb-5 sort_section`}>
           <h4 className="mb-4 fw-bold">
             <img src="assets/sortIcon.png" alt="sort" className="me-2" />
@@ -918,7 +918,7 @@ const Reservations = () => {
         </div>
       </div>
 
-      <div className="discover_container">
+      <div className="discover_container flex-2">
         <div className="discover">
           <p className={`text-center heading_title`}>
             <FormattedMessage id="discoverAndbook" />
