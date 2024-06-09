@@ -15,6 +15,7 @@ export const getUnits = async (qparams, signal) => {
       features,
       hasOffer,
       guests,
+      type,
     } = qparams;
 
     const sortQueryParams = new URLSearchParams([
@@ -29,6 +30,7 @@ export const getUnits = async (qparams, signal) => {
       ...features,
       ...hasOffer,
       ...guests,
+      ...type,
     ]);
 
     const response = await axiosInstance.get(

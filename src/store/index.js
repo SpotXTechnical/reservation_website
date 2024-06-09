@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import Auth from "./Auth/authSlice";
+import discoverFilters from "./DiscoverFilters/discoverFilters";
 
 export const langSlice = createSlice({
   name: "lang",
@@ -22,6 +23,7 @@ const store = configureStore({
   reducer: {
     language: langSlice.reducer,
     auth: Auth,
+    discoverFilters: discoverFilters,
   },
 });
 
