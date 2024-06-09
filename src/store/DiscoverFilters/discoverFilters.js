@@ -47,7 +47,6 @@ const discoverFilters = createSlice({
       state.dateRange = action.payload;
     },
     setPrices(state, action) {
-      console.log({ action });
       state.maxPrice = action.payload.maxPrice;
       state.minPrice = action.payload.minPrice;
     },
@@ -58,7 +57,6 @@ const discoverFilters = createSlice({
       };
     },
     setFilterFields: (state, action) => {
-      console.log(action);
       state.filterFields = {
         ...state.filterFields,
         ...action.payload,
