@@ -111,7 +111,6 @@ const Reservations = () => {
         }));
         dispatch(setFilterFields({ types }));
       }
-      console.log(types);
       const rooms = Array(max_rooms)
         .fill()
         .map((_, index) => ({
@@ -259,7 +258,6 @@ const Reservations = () => {
       .filter((subRegion) => subRegion.checked)
       .map((checkedSubRegion) => checkedSubRegion.value);
 
-    console.log({ selectedSubRegions });
     if (modifiedSelectedRegions[0] === "all") {
       const allRegions = discoverFilters.filterFields.regions.map(
         (selectedRegion) => {
@@ -621,7 +619,6 @@ const Reservations = () => {
 
   const handleFeaturesChange = (values) => {
     const valuesIds = values.map((feature) => feature.value);
-    console.log(valuesIds);
     const newFeatures = discoverFilters.filterFields.features.map((feature) => {
       if (valuesIds.includes(feature.value)) {
         return { ...feature, checked: true };
