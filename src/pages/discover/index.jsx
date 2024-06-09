@@ -15,7 +15,7 @@ import Checkbox from "../../Components/SharedComponents/Checkbox";
 import PriceRangeComponent from "../../Components/SharedComponents/InputRange";
 import Pagination from "../../Components/SharedComponents/Pagination";
 import PopularCard from "../../Components/SharedComponents/PopularCard/PopularCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import store, { langAction } from "../../store";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -24,74 +24,55 @@ import { useSearchParams } from "next/navigation";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
+import {
+  setFilterValues,
+  setFilterFields,
+  updateSortFilter,
+  setPrices,
+  setPriceRange,
+  setDateRange,
+  setPage,
+  setHasOffer,
+  setNumberOfGuests,
+} from "../../store/DiscoverFilters/discoverFilters";
 
 const Reservations = () => {
-  const router = useRouter();
-  // const { main, sub } = router.query;
   const searchParams = useSearchParams();
   const main = searchParams.get("main");
   const sub = searchParams.get("sub");
-
+  const discoverFilters = useSelector((state) => state.discoverFilters);
+  const dispatch = useDispatch();
   const intl = useIntl();
   const WITH_SUB_REGION = 1;
   const [data, setData] = useState("");
   const [meta, setMeta] = useState("");
-  const [mainRegions, setMainRegions] = useState([]);
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(0);
-  const [page, setPage] = useState(1);
+
   const [favourites, setFav] = useState([]);
-  const [dateRange, setDateRange] = useState([null, null]);
-  const [startDate, endDate] = dateRange;
+  const [startDate, endDate] = discoverFilters.dateRange;
   const [rangeError, setRangeError] = useState(null);
 
-  const [filters, setFilters] = useState({
-    sortFilters: [],
-    regions: [],
-    page: [],
-    beds: [],
-    rooms: [],
-    prices: [],
-    availability: [],
-    keyWord: [],
-    features: [],
-    hasOffer: [],
-    guests: [],
-  });
-  const [filterValues, setFilterValues] = useState({
-    rooms: [],
-    beds: [],
-    minPrice: 0,
-    maxPrice: 50000,
-    subRegions: [],
-    regions: [],
-    features: [],
-  });
-  const [sortFilters, setSortFilters] = useState([
-    { value: "latest", checked: false },
-    { value: "price_low_high", checked: false },
-    { value: "price_high_low", checked: false },
-  ]);
-  const [priceRange, setPriceRange] = useState([0, 0]);
-
   let { lang } = useSelector((state) => state.language);
-  if (typeof window !== "undefined") {
-    const storedLanguage = localStorage.getItem("language");
-    const language = storedLanguage ? storedLanguage : "en";
-    store.dispatch(
-      language === "ar" ? langAction.langAr() : langAction.langEn()
-    );
-  }
+
   const handlePagination = (page) => {
     const PAGE = page.selected + 1;
-    setPage(PAGE);
-    setFilters((prev) => {
-      return {
-        ...prev,
-        page: [["page", PAGE]],
-      };
-    });
+    dispatch(setPage(PAGE));
+    dispatch(
+      setFilterValues({
+        key: "page",
+        value: [["page", PAGE]],
+      })
+    );
   };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedLanguage = localStorage.getItem("language");
+      const language = storedLanguage ? storedLanguage : "en";
+      store.dispatch(
+        language === "ar" ? langAction.langAr() : langAction.langEn()
+      );
+    }
+  }, []);
 
   useEffect(() => {
     getFavouriteList().then((res) => setFav(res?.data));
@@ -101,24 +82,36 @@ const Reservations = () => {
   useEffect(() => {
     getFilterConfig().then((res) => {
       let { types, max_rooms, max_beds, min_price, max_price } = res.data;
-      setMinPrice(min_price);
-      setMaxPrice(max_price);
-      setPriceRange([min_price, max_price]);
-      types = types?.map((type, i) => ({
-        value: type.value,
-        label: type.name,
-        checked: false,
-      }));
-      setFilters((prevFilters) => {
-        return {
-          ...prevFilters,
-          prices: [
-            ["price[from]", min_price],
-            ["price[to]", max_price],
-          ],
-        };
-      });
+      if (!discoverFilters.minPrice && !discoverFilters.maxPrice) {
+        dispatch(
+          setPrices({
+            minPrice: min_price,
+            maxPrice: max_price,
+          })
+        );
+        dispatch(
+          setFilterValues({
+            key: "prices",
+            value: [
+              ["price[from]", min_price],
+              ["price[to]", max_price],
+            ],
+          })
+        );
+      }
+      if (discoverFilters.priceRange.length === 0) {
+        dispatch(setPriceRange([min_price, max_price]));
+      }
 
+      if (discoverFilters.filterFields.types.length === 0) {
+        types = types?.map((type, i) => ({
+          value: type.value,
+          label: type.name,
+          checked: false,
+        }));
+        dispatch(setFilterFields({ types }));
+      }
+      console.log(types);
       const rooms = Array(max_rooms)
         .fill()
         .map((_, index) => ({
@@ -135,87 +128,109 @@ const Reservations = () => {
           checked: false,
         }));
 
-      setFilterValues((prevFilters) => ({
-        ...prevFilters,
-        rooms: [
-          {
-            value: "all",
-            label: intl.formatMessage({ id: "all" }),
-            checked: true,
-          },
-          ...rooms,
-        ],
-        beds: [
-          {
-            value: "all",
-            label: intl.formatMessage({ id: "all" }),
-            checked: true,
-          },
-          ...beds,
-        ],
-      }));
+      if (
+        discoverFilters.filterFields.beds.length === 0 ||
+        discoverFilters.filterFields.rooms.length === 0
+      ) {
+        dispatch(
+          setFilterFields({
+            rooms: [
+              {
+                value: "all",
+                label: intl.formatMessage({ id: "all" }),
+                checked: true,
+              },
+              ...rooms,
+            ],
+            beds: [
+              {
+                value: "all",
+                label: intl.formatMessage({ id: "all" }),
+                checked: true,
+              },
+              ...beds,
+            ],
+          })
+        );
+      }
     });
-    getFeatures().then((response) => {
-      const features = response?.data?.map((feature) => {
-        return {
-          value: feature.id,
-          label: feature.name,
-          checked: false,
-        };
+    if (discoverFilters.filterFields.features.length === 0) {
+      getFeatures().then((response) => {
+        const features = response?.data?.map((feature) => {
+          return {
+            value: feature.id,
+            label: feature.name,
+            checked: false,
+          };
+        });
+
+        dispatch(
+          setFilterFields({
+            features: [...features],
+          })
+        );
       });
-      setFilterValues((prev) => {
-        return {
-          ...prev,
-          features: [...features],
-        };
-      });
-    });
-  }, [intl]);
+    }
+  }, [
+    discoverFilters.filterFields.beds.length,
+    discoverFilters.filterFields.features.length,
+    discoverFilters.filterFields.rooms.length,
+    discoverFilters.filterFields.types.length,
+    discoverFilters.maxPrice,
+    discoverFilters.minPrice,
+    discoverFilters.priceRange.length,
+    dispatch,
+    intl,
+  ]);
 
   // Effect for query params which is based from home page
   useEffect(() => {
-    if (main || sub) {
-      const newRegions = sub ? [["regions[]", sub]] : [["regions[]", main]];
-      console.log(newRegions);
-      setFilters((prev) => {
-        return {
-          ...prev,
-          regions: [...newRegions],
-        };
-      });
-      getRegions(1).then((res) => {
-        let regions = res.data?.map((region) => ({
-          value: region.id,
-          label: region.name,
-          checked: Number(main) === region.id,
-          sub_regions: region.sub_regions,
-        }));
-        regions.unshift({
-          value: "all",
-          label: intl.formatMessage({ id: "all" }),
-          checked: sub || main ? false : true,
-        });
-        setFilterValues((prev) => ({
-          ...prev,
-          regions: regions,
-        }));
-        const regionData = regions?.filter((region) => region.checked);
-        const subRegionsArray = regionData.flatMap(
-          (region) => region?.sub_regions
+    if (discoverFilters.filterFields.regions.length === 0) {
+      if (main || sub) {
+        const newRegions = sub ? [["regions[]", sub]] : [["regions[]", main]];
+        dispatch(
+          setFilterValues({
+            key: "regions",
+            value: [...newRegions],
+          })
         );
-        const subRegionData = subRegionsArray.map((subregion) => ({
-          value: subregion.id,
-          label: subregion.name,
-          checked: Number(sub) === subregion.id,
-        }));
+        getRegions(1).then((res) => {
+          let regions = res.data?.map((region) => ({
+            value: region.id,
+            label: region.name,
+            checked: Number(main) === region.id,
+            sub_regions: region.sub_regions,
+          }));
+          regions.unshift({
+            value: "all",
+            label: intl.formatMessage({ id: "all" }),
+            checked: sub || main ? false : true,
+          });
 
-        setFilterValues((prevFilters) => ({
-          ...prevFilters,
-          subRegions: [...subRegionData],
-        }));
-      });
+          dispatch(
+            setFilterFields({
+              regions: regions,
+            })
+          );
+          const regionData = regions?.filter((region) => region.checked);
+          const subRegionsArray = regionData.flatMap(
+            (region) => region?.sub_regions
+          );
+          const subRegionData = subRegionsArray.map((subregion) => ({
+            value: subregion.id,
+            label: subregion.name,
+            checked: Number(sub) === subregion.id,
+          }));
+
+          dispatch(
+            setFilterFields({
+              subRegions: [...subRegionData],
+            })
+          );
+        });
+      }
     }
-  }, [intl, main, sub]);
+  }, [dispatch, intl, main, sub]);
 
   // Effect for filters change
   useEffect(() => {
@@ -223,45 +238,48 @@ const Reservations = () => {
       top: 0,
       behavior: "smooth",
     });
-    console.log(filters);
     const abortController = new AbortController();
     const signal = abortController.signal;
     setData("");
-    getUnits(filters, signal).then((response) => {
+    getUnits(discoverFilters.filtersValues, signal).then((response) => {
       setData(response?.data);
       setMeta(response?.meta);
     });
     return () => abortController.abort();
-  }, [filters, lang]);
+  }, [discoverFilters.filtersValues, lang]);
 
   //  Effect for regions
   useEffect(() => {
-    const modifiedSelectedRegions = filterValues.regions
-      .filter((region) => region.checked)
+    const modifiedSelectedRegions = discoverFilters?.filterFields?.regions
+      .filter((region) => region?.checked)
       .map((selectedRegion) => {
         return selectedRegion.value;
       });
-    const selectedSubRegions = filterValues.subRegions
+    const selectedSubRegions = discoverFilters.filterFields.subRegions
       .filter((subRegion) => subRegion.checked)
       .map((checkedSubRegion) => checkedSubRegion.value);
+
+    console.log({ selectedSubRegions });
     if (modifiedSelectedRegions[0] === "all") {
-      const allRegions = filterValues.regions.map((selectedRegion) => {
-        return selectedRegion.value;
-      });
+      const allRegions = discoverFilters.filterFields.regions.map(
+        (selectedRegion) => {
+          return selectedRegion.value;
+        }
+      );
       getAllSubRegions(allRegions).then((res) => {
         const subRegionsData = res.data?.map((region) => {
           return {
             value: region.id,
             label: region.name,
-            checked: false,
+            checked: selectedSubRegions.includes(region.id) ? true : false,
           };
         });
-        setFilterValues((prev) => {
-          return {
-            ...prev,
+
+        dispatch(
+          setFilterFields({
             subRegions: subRegionsData,
-          };
-        });
+          })
+        );
       });
     } else {
       getAllSubRegions(modifiedSelectedRegions).then((res) => {
@@ -281,20 +299,19 @@ const Reservations = () => {
           }
         });
 
-        setFilterValues((prev) => {
-          return {
-            ...prev,
+        dispatch(
+          setFilterFields({
             subRegions: [...subRegionsData],
-          };
-        });
+          })
+        );
       });
     }
-  }, [filterValues.regions]);
+  }, [discoverFilters.filterFields.regions, dispatch]);
 
   // Effect for subRegion
   useEffect(() => {
-    if (filters.regions.length === 0) {
-      const selectedRegion = filterValues.regions
+    if (discoverFilters.filtersValues.regions.length === 0) {
+      const selectedRegion = discoverFilters.filterFields.regions
         .filter((region) => region.checked)
         .map((option) => {
           if (option.value !== "all") {
@@ -303,116 +320,96 @@ const Reservations = () => {
             return "all";
           }
         });
-      console.log(selectedRegion);
-
       if (selectedRegion[0] === "all") {
-        setFilters((prev) => {
-          return {
-            ...prev,
-            regions: [],
-          };
-        });
+        dispatch(
+          setFilterValues({
+            key: "regions",
+            value: [],
+          })
+        );
       } else if (selectedRegion[0] !== "all" && selectedRegion.length > 0) {
-        setFilters((prev) => {
-          return {
-            ...prev,
-            regions: selectedRegion,
-          };
-        });
+        dispatch(
+          setFilterValues({
+            key: "regions",
+            value: selectedRegion,
+          })
+        );
       } else if (selectedRegion.length === 0) {
-        const modifiedRegions = filterValues.regions.map((option) => {
-          if (option.value === "all") {
-            return {
-              ...option,
-              checked: true,
-            };
-          } else {
-            return option;
+        const modifiedRegions = discoverFilters.filterFields.regions.map(
+          (option) => {
+            if (option.value === "all") {
+              return {
+                ...option,
+                checked: true,
+              };
+            } else {
+              return option;
+            }
           }
-        });
-        setFilterValues((prev) => {
-          return {
-            ...prev,
+        );
+        dispatch(
+          setFilterFields({
             regions: modifiedRegions,
-          };
-        });
+          })
+        );
       }
     }
-  }, [filters.regions.length]);
-
-  // Effect for availability
-  // useEffect(() => {
-  //   if (filters.availability.length > 0) {
-  //     setFilters((prev) => {
-  //       return {
-  //         ...prev,
-  //         prices: [
-  //           ["total_price[min]", 1000],
-  //           ["total_price[max]", priceRange[1]],
-  //         ],
-  //       };
-  //     });
-  //   } else {
-  //     setFilters((prevFilters) => {
-  //       return {
-  //         ...prevFilters,
-  //         prices: [
-  //           ["price[from]", priceRange[0]],
-  //           ["price[to]", priceRange[1]],
-  //         ],
-  //       };
-  //     });
-  //   }
-  // }, [filters.availability, priceRange]);
+  }, [discoverFilters.filtersValues.regions.length, dispatch]);
 
   const handleUpdateFavList = () => {
     getFavouriteList().then((res) => setFav(res?.data));
   };
 
   const handleSearch = (event) => {
-    setFilters((prev) => {
-      return {
-        ...prev,
-        keyWord: [["keyword", event.target.value]],
-      };
-    });
+    dispatch(
+      setFilterValues({
+        key: "keyWord",
+        value: [["keyword", event.target.value]],
+      })
+    );
   };
 
   const onSubRegionSearch = (values) => {
     values = values.map((region, i) => region.value);
-    const updatedSubRegions = [...filterValues.subRegions]?.map((region) => {
-      if (values.includes(region.value)) {
+    const updatedSubRegions = [...discoverFilters.filterFields.subRegions]?.map(
+      (region) => {
+        if (values.includes(region.value)) {
+          return {
+            ...region,
+            checked: true,
+          };
+        }
         return {
           ...region,
-          checked: true,
+          checked: false,
         };
       }
-      return {
-        ...region,
-        checked: false,
-      };
-    });
+    );
 
-    setFilterValues((prevFilters) => ({
-      ...prevFilters,
-      subRegions: updatedSubRegions,
-    }));
+    dispatch(
+      setFilterFields({
+        subRegions: updatedSubRegions,
+      })
+    );
+
     const newRegions = updatedSubRegions
       .filter((sub) => sub.checked)
       .map((subregion) => {
         return ["regions[]", subregion.value];
       });
 
-    setFilters((prev) => {
-      return {
-        ...prev,
-        regions: newRegions,
-      };
-    });
+    dispatch(
+      setFilterValues({
+        key: "regions",
+        value: newRegions,
+      })
+    );
   };
 
   const handleSortChange = (index) => {
-    const updatedSortingFilters = [...sortFilters]; // Create a copy of the current filters array
+    const updatedSortingFilters = discoverFilters.sortFilters.map((option) => ({
+      ...option,
+    }));
     // Update the selected radio button's status
     updatedSortingFilters[index].checked = true;
     // Reset the status of the other radio buttons
@@ -421,71 +418,90 @@ const Reservations = () => {
         updatedSortingFilters[i].checked = false;
       }
     }
+
+    dispatch(updateSortFilter(updatedSortingFilters));
     const checkedOption = updatedSortingFilters[index];
     switch (checkedOption.value) {
       case "price_low_high":
-        setFilters((prev) => ({
-          ...prev,
-          sortFilters: [
-            ["order_by", "default_price"],
-            ["order_type", "asc"],
-          ],
-        }));
+        dispatch(
+          setFilterValues({
+            key: "sortFilters",
+            value: [
+              ["order_by", "default_price"],
+              ["order_type", "asc"],
+            ],
+          })
+        );
 
         break;
       case "price_high_low":
-        setFilters((prev) => ({
-          ...prev,
-          sortFilters: [
-            ["order_by", "default_price"],
-            ["order_type", "desc"],
-          ],
-        }));
+        dispatch(
+          setFilterValues({
+            key: "sortFilters",
+            value: [
+              ["order_by", "default_price"],
+              ["order_type", "desc"],
+            ],
+          })
+        );
 
         break;
       case "latest":
-        setFilters((prev) => ({
-          ...prev,
-          sortFilters: [
-            ["order_by", "created_at"],
-            ["order_type", "desc"],
-          ],
-        }));
+        dispatch(
+          setFilterValues({
+            key: "sortFilters",
+            value: [
+              ["order_by", "created_at"],
+              ["order_type", "desc"],
+            ],
+          })
+        );
 
         break;
     }
-    setSortFilters(updatedSortingFilters); // Update the state with the new filters
   };
 
   const handlePriceAfterChange = (newPriceRange) => {
-    setPriceRange(newPriceRange);
+    // dispatch(
+    //   setPrices({ maxPrice: newPriceRange[1], minPrice: newPriceRange[0] })
+    // );
 
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      prices: [
-        ["price[from]", newPriceRange[0]],
-        ["price[to]", newPriceRange[1]],
-      ],
-    }));
+    dispatch(
+      setFilterValues({
+        key: "prices",
+        value: [
+          ["price[from]", newPriceRange[0]],
+          ["price[to]", newPriceRange[1]],
+        ],
+      })
+    );
   };
 
   const handlePriceChange = (newPriceRange) => {
-    setPriceRange(newPriceRange);
+    dispatch(setPriceRange(newPriceRange));
   };
 
   const handleResetFilters = () => {};
 
   const handleCheckboxChange = (index, filterKey) => {
-    let updatedOptionsFilters = [...filterValues[filterKey]];
+    let updatedOptionsFilters = discoverFilters.filterFields[filterKey].map(
+      (option) => ({ ...option })
+    );
     const selectedCheckBox = updatedOptionsFilters[index];
-    selectedCheckBox.checked = !selectedCheckBox.checked;
 
-    let selectedOptions = updatedOptionsFilters
-      .filter((option, index) => option.checked && index !== 0)
-      .map((option, index) => [`${filterKey}[${index}]`, option.value]);
+    let selectedOptions;
 
     if (index !== 0) {
+      selectedCheckBox.checked = !selectedCheckBox.checked;
       updatedOptionsFilters[0].checked = false;
+      selectedOptions = updatedOptionsFilters
+        .filter((option, index) => option.checked && index !== 0)
+        .map((option, index) => [`${filterKey}[${index}]`, option.value]);
+      dispatch(
+        setFilterFields({
+          [filterKey]: updatedOptionsFilters,
+        })
+      );
     } else {
       updatedOptionsFilters[0].checked = true;
       selectedOptions = [];
@@ -496,50 +512,29 @@ const Reservations = () => {
           return option;
         }
       });
-      setFilterValues((prev) => {
-        return {
-          ...prev,
-          [filterKey]: [...allDisabledOptions],
-        };
-      });
-      setFilters((prev) => {
-        return {
-          ...prev,
-          [filterKey]: selectedOptions,
-        };
-      });
+
+      dispatch(
+        setFilterFields({
+          [filterKey]: allDisabledOptions,
+        })
+      );
+      dispatch(
+        setFilterValues({
+          key: filterKey,
+          value: selectedOptions,
+        })
+      );
     }
     if (index !== 0) {
-      setFilters((prev) => {
-        return {
-          ...prev,
-          [filterKey]: selectedOptions,
-        };
-      });
+      dispatch(
+        setFilterValues({
+          key: filterKey,
+          value: selectedOptions,
+        })
+      );
     }
-
-    // if (index === 0 && selectedCheckBox.value === "all") {
-    //   const allRegions = filterValues.regions.map((selectedRegion) => {
-    //     return selectedRegion.value;
-    //   });
-    //   getAllSubRegions(allRegions).then((res) => {
-    //     const subRegionsData = res.data?.map((region) => {
-    //       return {
-    //         value: region.id,
-    //         label: region.name,
-    //         checked: false,
-    //       };
-    //     });
-    //     setFilterValues((prev) => {
-    //       return {
-    //         ...prev,
-    //         subRegions: subRegionsData,
-    //       };
-    //     });
-    //   });
-    // }
     if (filterKey === "regions") {
-      const modifiedSelectedRegions = filterValues.regions
+      const modifiedSelectedRegions = discoverFilters.filterFields.regions
         .filter((region) => region.checked)
         .map((selectedRegion) => {
           return selectedRegion.value;
@@ -553,100 +548,146 @@ const Reservations = () => {
           };
         });
 
-        setFilterValues((prev) => {
-          return {
-            ...prev,
+        dispatch(
+          setFilterFields({
             subRegions: [...subRegionsData],
+          })
+        );
+      });
+
+      const disabledSubRegion = discoverFilters.filterFields.subRegions.map(
+        (subRegion) => {
+          return {
+            ...subRegion,
+            checked: false,
           };
-        });
-      });
+        }
+      );
 
-      const disabledSubRegion = filterValues.subRegions.map((subRegion) => {
-        return {
-          ...subRegion,
-          checked: false,
-        };
-      });
-      setFilterValues((prev) => {
-        return {
-          ...prev,
+      dispatch(
+        setFilterFields({
           subRegions: [...disabledSubRegion],
-        };
-      });
+        })
+      );
     }
-
-    // if (filterKey === "regions" && index === 0) {
-    //   setFilters((prev) => {
-    //     return {
-    //       ...prev,
-    //       regions: [],
-    //     };
-    //   });
-    // }
   };
 
   const getSubRegionsValues = () => {
-    const results = [...filterValues.subRegions]?.filter((region) => {
-      if (region?.checked) {
-        return region;
+    const results = [...discoverFilters.filterFields.subRegions]?.filter(
+      (region) => {
+        if (region?.checked) {
+          return region;
+        }
       }
-    });
+    );
+    return results;
+  };
+
+  const getFeaturesValues = () => {
+    const results = [...discoverFilters.filterFields.features]?.filter(
+      (feature) => {
+        if (feature?.checked) {
+          return feature;
+        }
+      }
+    );
     return results;
   };
 
   const handleAvailability = (update) => {
-    setDateRange(update);
+    dispatch(setDateRange(update));
     if (update[0] && update[1]) {
       setRangeError("");
-      setFilters((prev) => {
-        return {
-          ...prev,
-          availability: [
+      dispatch(
+        setFilterValues({
+          key: "availability",
+          value: [
             ["available[from]", moment(update[0]).format("DD-MM-YYYY")],
             ["available[to]", moment(update[1]).format("DD-MM-YYYY")],
           ],
-        };
-      });
+        })
+      );
     } else if (update[0] && !update[1]) {
       setRangeError("Please Select a valid range");
     } else {
-      setFilters((prev) => {
-        return {
-          ...prev,
-          availability: [],
-        };
-      });
+      dispatch(
+        setFilterValues({
+          key: "availability",
+          value: [],
+        })
+      );
     }
   };
 
   const handleFeaturesChange = (values) => {
+    const valuesIds = values.map((feature) => feature.value);
+    console.log(valuesIds);
+    const newFeatures = discoverFilters.filterFields.features.map((feature) => {
+      if (valuesIds.includes(feature.value)) {
+        return { ...feature, checked: true };
+      } else {
+        return { ...feature, checked: false };
+      }
+    });
+
+    dispatch(setFilterFields({ features: newFeatures }));
     const featuresFilter = values?.map((feature) => {
       return ["features[]", feature.value];
     });
-    setFilters((prev) => {
-      return {
-        ...prev,
-        features: featuresFilter,
-      };
-    });
+    dispatch(
+      setFilterValues({
+        key: "features",
+        value: featuresFilter,
+      })
+    );
   };
 
   const handleHasOffer = (event) => {
-    setFilters((prev) => {
-      return {
-        ...prev,
-        hasOffer: [["has_offer", Number(event.target.checked)]],
-      };
-    });
+    dispatch(setHasOffer(Number(event.target.checked)));
+    dispatch(
+      setFilterValues({
+        key: "hasOffer",
+        value: [["has_offer", Number(event.target.checked)]],
+      })
+    );
   };
 
   const handleGuestChange = (event) => {
-    setFilters((prev) => {
-      return {
-        ...prev,
-        guests: [["guest", event.target.value]],
-      };
+    dispatch(setNumberOfGuests(event.target.value));
+    dispatch(
+      setFilterValues({
+        key: "guests",
+        value: [["guest", event.target.value]],
+      })
+    );
+  };
+
+  const handleTypesChange = (selectedType) => {
+    const newTypes = discoverFilters.filterFields.types.map((type) => {
+      if (type.value === selectedType.value) {
+        return { ...type, checked: true };
+      } else {
+        return { ...type, checked: false };
+      }
     });
+
+    dispatch(setFilterFields({ types: newTypes }));
+
+    dispatch(
+      setFilterValues({
+        key: "type",
+        value: [["type", selectedType.value]],
+      })
+    );
+  };
+
+  const getTypesValues = () => {
+    const results = [...discoverFilters.filterFields.types]?.filter((type) => {
+      if (type?.checked) {
+        return type;
+      }
+    });
+    return results;
   };
 
   return (
@@ -667,7 +708,7 @@ const Reservations = () => {
             <img src="assets/sortIcon.png" alt="sort" className="me-2" />
             <FormattedMessage id="sort" />
           </h4>
-          {sortFilters.map((item, index) => {
+          {discoverFilters?.sortFilters.map((item, index) => {
             return (
               <Radio
                 key={index}
@@ -722,15 +763,15 @@ const Reservations = () => {
             <p className={`mb-2 subtitle fw-bold`}>
               <FormattedMessage id="profile.edit.fields.city.label" />
             </p>
-            {filterValues.regions?.map((item, index) => {
+            {discoverFilters.filterFields.regions?.map((item, index) => {
               return (
                 <Checkbox
                   key={index}
-                  value={item.value}
-                  checked={item.checked}
+                  value={item?.value}
+                  checked={item?.checked}
                   handleChange={() => handleCheckboxChange(index, "regions")}
                   // className={`${styles.filter_radio}`}
-                  label={item.label}
+                  label={item?.label}
                 />
               );
             })}
@@ -743,7 +784,7 @@ const Reservations = () => {
                 <InputSelect
                   value={getSubRegionsValues()}
                   isMulti={true}
-                  options={filterValues?.subRegions}
+                  options={discoverFilters.filterFields?.subRegions}
                   className="search_input"
                   onChange={onSubRegionSearch}
                   hideIndecators={false}
@@ -761,10 +802,29 @@ const Reservations = () => {
               </p>
               <div className={`search_container d-inline-block w-100`}>
                 <InputSelect
+                  value={getFeaturesValues()}
                   isMulti={true}
-                  options={filterValues?.features}
+                  options={discoverFilters.filterFields?.features}
                   className="search_input"
                   onChange={handleFeaturesChange}
+                  hideIndecators={false}
+                  placeholder={
+                    <FormattedMessage id="dicover.subRegions.search.placeholder" />
+                  }
+                />
+              </div>
+            </div>
+            {/* Types */}
+            <div className={`mb-3 mt-4 sub_regions`}>
+              <p className={`mb-2 subtitle fw-bold`}>
+                <FormattedMessage id="Types" />
+              </p>
+              <div className={`search_container d-inline-block w-100`}>
+                <InputSelect
+                  value={getTypesValues()}
+                  options={discoverFilters.filterFields?.types}
+                  className="search_input"
+                  onChange={handleTypesChange}
                   hideIndecators={false}
                   placeholder={
                     <FormattedMessage id="dicover.subRegions.search.placeholder" />
@@ -779,7 +839,7 @@ const Reservations = () => {
               <FormattedMessage id="roomsNum" />
             </p>
             <div className={`d-flex flex-wrap`}>
-              {filterValues.rooms?.map((item, index) => {
+              {discoverFilters.filterFields.rooms?.map((item, index) => {
                 return (
                   <Checkbox
                     key={index}
@@ -798,7 +858,7 @@ const Reservations = () => {
               <FormattedMessage id="bedsNum" />
             </p>
             <div className={`d-flex flex-wrap`}>
-              {filterValues.beds?.map((item, index) => {
+              {discoverFilters.filterFields.beds?.map((item, index) => {
                 return (
                   <Checkbox
                     key={index}
@@ -818,10 +878,10 @@ const Reservations = () => {
             </p>
             <div className={`d-flex`}>
               <PriceRangeComponent
-                min={minPrice}
-                max={maxPrice}
+                min={discoverFilters.minPrice}
+                max={discoverFilters.maxPrice}
                 step={1}
-                priceRange={priceRange}
+                priceRange={discoverFilters.priceRange}
                 handlePriceChange={handlePriceChange}
                 handlePriceAfterChange={handlePriceAfterChange}
               />
@@ -897,6 +957,7 @@ const Reservations = () => {
                 role="switch"
                 id="flexSwitchCheckChecked"
                 onChange={handleHasOffer}
+                checked={Boolean(discoverFilters.hasOffer)}
               />
             </div>
           </div>
@@ -912,6 +973,7 @@ const Reservations = () => {
                 id="guests"
                 placeholder="Number of guests"
                 onChange={handleGuestChange}
+                value={discoverFilters.noOfGuests}
               />
             </div>
           </div>
