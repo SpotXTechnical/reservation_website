@@ -22,7 +22,7 @@ const initialState = {
     features: [],
     hasOffer: [],
     guests: [],
-    type: [],
+    klass: [],
   },
   filterFields: {
     rooms: [],
@@ -32,7 +32,23 @@ const initialState = {
     subRegions: [],
     regions: [],
     features: [],
-    types: [],
+    types: [
+      {
+        value: "chalet",
+        label: "Chalet",
+        checked: false,
+      },
+      {
+        value: "studio",
+        label: "Studio",
+        checked: false,
+      },
+      {
+        value: "villa",
+        label: "Villa",
+        checked: false,
+      },
+    ],
   },
   minPrice: null,
   maxPrice: null,
@@ -87,6 +103,7 @@ const discoverFilters = createSlice({
     setNumberOfGuests: (state, action) => {
       state.noOfGuests = action.payload;
     },
+    resetState: () => initialState,
   },
 });
 
@@ -101,6 +118,7 @@ export const {
   setPage,
   setHasOffer,
   setNumberOfGuests,
+  resetState,
 } = discoverFilters.actions;
 
 export default discoverFilters.reducer;

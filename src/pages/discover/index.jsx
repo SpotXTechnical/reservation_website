@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
-  getAllUnits,
   getFilterConfig,
   getAllSubRegions,
   getFavouriteList,
@@ -18,7 +17,6 @@ import PopularCard from "../../Components/SharedComponents/PopularCard/PopularCa
 import { useDispatch, useSelector } from "react-redux";
 import store, { langAction } from "../../store";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { getFeatures, getUnits } from "../../app/Apis/Discover";
 import { useSearchParams } from "next/navigation";
 import ReactDatePicker from "react-datepicker";
@@ -81,7 +79,7 @@ const Reservations = () => {
   // Effect for beds and rooms
   useEffect(() => {
     getFilterConfig().then((res) => {
-      let { types, max_rooms, max_beds, min_price, max_price } = res.data;
+      let { max_rooms, max_beds, min_price, max_price } = res.data;
       if (!discoverFilters.minPrice && !discoverFilters.maxPrice) {
         dispatch(
           setPrices({
@@ -103,14 +101,6 @@ const Reservations = () => {
         dispatch(setPriceRange([min_price, max_price]));
       }
 
-      if (discoverFilters.filterFields.types.length === 0) {
-        types = types?.map((type, i) => ({
-          value: type.value,
-          label: type.name,
-          checked: false,
-        }));
-        dispatch(setFilterFields({ types }));
-      }
       const rooms = Array(max_rooms)
         .fill()
         .map((_, index) => ({
@@ -672,8 +662,8 @@ const Reservations = () => {
 
     dispatch(
       setFilterValues({
-        key: "type",
-        value: [["type", selectedType.value]],
+        key: "klass",
+        value: [["klass", selectedType.value]],
       })
     );
   };
