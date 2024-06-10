@@ -7,7 +7,7 @@ import SubscribeUs from "../Components/SubscribeUs/SubscribeUs";
 import MostPopularList from "../Components/MostPopularList/MostPopularList";
 import Error from "../Components/Error/Error";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import store, { langAction } from "../store";
 import { useEffect, useReducer, useState } from "react";
@@ -16,6 +16,7 @@ import ErrorBoundary from "../Components/ErrorBoundary/ErrorBoundary";
 import Loading from "../Components/Loading/Loading";
 import * as constants from "../app/utils/ui-builders/constants";
 import { ShimmerThumbnail } from "react-shimmer-effects";
+import { resetState } from "../store/DiscoverFilters/discoverFilters";
 const inter = Inter({ subsets: ["latin"] });
 const LOADING_STATE = "LOADING_STATE";
 const ERROR_STATE = "ERROR_STATE";
@@ -81,6 +82,11 @@ export default function Home() {
   }, [router]);
 
   const [uiBuildersState, dispatch] = useReducer(reducer, initialState);
+  const storeDispatch = useDispatch();
+  // reset discoverFilters state
+  useEffect(() => {
+    storeDispatch(resetState());
+  }, [storeDispatch]);
 
   // get ui builders
   useEffect(() => {
