@@ -7,6 +7,7 @@ import store, { langAction } from "../../store";
 import ReservationsPagination from "../../Components/ReservationsPagination/ReservationsPagination";
 import { ToastContainer } from "react-toastify";
 import Head from "next/head";
+import "react-toastify/dist/ReactToastify.css";
 
 const Reservations = () => {
   let { lang } = useSelector((state) => state.language);
