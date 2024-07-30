@@ -4,6 +4,9 @@ import Head from "next/head";
 import Loading from "../Loading/Loading";
 import { getRefundPolicy } from "../../app/Apis/refundPolicy";
 
+const minDays = 21;
+const maxDays = 14;
+
 const initialState = {
   refundPolicyData: null,
   loading: false,
@@ -82,20 +85,25 @@ export default function PolicyContent() {
                     </li>
                     <li>
                       If the reservation is canceled{" "}
-                      {refundState.refundPolicyData?.min_days_before_cancel}{" "}
+                      {refundState.refundPolicyData?.min_days_before_cancel ||
+                        minDays}{" "}
                       days prior to the booking date, the full amount will be
                       refunded.
                     </li>
                     <li>
                       If the reservation is canceled between{" "}
-                      {refundState.refundPolicyData?.max_days_before_cancel} to{" "}
-                      {refundState.refundPolicyData?.min_days_before_cancel}{" "}
+                      {refundState.refundPolicyData?.max_days_before_cancel ||
+                        maxDays}{" "}
+                      to{" "}
+                      {refundState.refundPolicyData?.min_days_before_cancel ||
+                        minDays}{" "}
                       days before the reservation date, 50% of the amount paid
                       will be refunded.
                     </li>
                     <li>
                       If the reservation is canceled{" "}
-                      {refundState.refundPolicyData?.max_days_before_cancel}{" "}
+                      {refundState.refundPolicyData?.max_days_before_cancel ||
+                        maxDays}{" "}
                       days or less before the booking date, no refund will be
                       issued.
                     </li>
@@ -158,18 +166,23 @@ export default function PolicyContent() {
                     </li>
                     <li>
                       إذا تم إلغاء الحجز قبل{" "}
-                      {refundState.refundPolicyData?.min_days_before_cancel}{" "}
+                      {refundState.refundPolicyData?.min_days_before_cancel ||
+                        minDays}{" "}
                       أيام من تاريخ الحجز، يتم استرداد المبلغ المدفوع بالكامل.
                     </li>
                     <li>
                       إذا تم إلغاء الحجز في فترة من{" "}
-                      {refundState.refundPolicyData?.max_days_before_cancel} إلى{" "}
-                      {refundState.refundPolicyData?.min_days_before_cancel}{" "}
+                      {refundState.refundPolicyData?.max_days_before_cancel ||
+                        maxDays}{" "}
+                      إلى{" "}
+                      {refundState.refundPolicyData?.min_days_before_cancel ||
+                        minDays}{" "}
                       أيام قبل تاريخ الحجز، يتم استرداد 50% من المبلغ المدفوع.
                     </li>
                     <li>
                       إذا تم إلغاء الحجز قبل{" "}
-                      {refundState.refundPolicyData?.max_days_before_cancel}{" "}
+                      {refundState.refundPolicyData?.max_days_before_cancel ||
+                        maxDays}{" "}
                       أيام أو أقل من تاريخ الحجز، لا يتم استرداد المبلغ المدفوع.
                     </li>
                   </ul>
