@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.spotx.customer",
+      "sha256_cert_fingerprints": [
+        "1b:f4:28:e9:bb:18:e5:2f:14:fc:cf:df:c8:06:f6:45:83:89:59:c6:a3:ca:cb:a4:26:3d:89:ca:c6:d6:2d:12",
+        "72:86:af:c1:5f:f5:aa:3e:68:0d:ba:4a:63:9a:64:0c:36:2a:07:21:f0:f1:e7:fc:82:f8:3e:67:d3:8f:60:f6"
+      ]
+    }
+  }
+]
