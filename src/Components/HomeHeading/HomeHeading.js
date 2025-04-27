@@ -15,13 +15,15 @@ const HomeHeading = () => {
   const [mainRegions, setMainRegions] = useState([]);
 
   let { lang } = useSelector((state) => state.language);
-  if (typeof window !== "undefined") {
-    const storedLanguage = localStorage.getItem("language");
-    const language = storedLanguage ? storedLanguage : "en";
-    store.dispatch(
-      language === "ar" ? langAction.langAr() : langAction.langEn()
-    );
-  }
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedLanguage = localStorage.getItem("language");
+      const language = storedLanguage ? storedLanguage : "en";
+      store.dispatch(
+        language === "ar" ? langAction.langAr() : langAction.langEn()
+      );
+    }
+  }, []);
 
   const onSearch = (event) => {
     const [{ main, sub, label }] = event;

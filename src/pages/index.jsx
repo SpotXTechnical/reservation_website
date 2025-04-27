@@ -53,13 +53,15 @@ export default function Home() {
   let { lang } = useSelector((state) => state.language);
 
   const router = useRouter();
-  if (typeof window !== "undefined") {
-    const storedLanguage = localStorage.getItem("language");
-    const language = storedLanguage ? storedLanguage : "en";
-    store.dispatch(
-      language === "ar" ? langAction.langAr() : langAction.langEn()
-    );
-  }
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedLanguage = localStorage.getItem("language");
+      const language = storedLanguage ? storedLanguage : "en";
+      store.dispatch(
+        language === "ar" ? langAction.langAr() : langAction.langEn()
+      );
+    }
+  }, []);
   // Detect route Link and redirect
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
