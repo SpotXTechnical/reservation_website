@@ -93,6 +93,14 @@ export default function Header() {
 
   const avatar = "/assets/avatar.png";
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [mobileMenuOpen]);
+
   return (
     <header className="tw-relative tw-w-full tw-bg-white tw-shadow-sm">
       <div className="tw-container tw-mx-auto tw-px-4 tw-py-3">
@@ -274,7 +282,7 @@ export default function Header() {
               >
                 {/* <Image src={LoginIcon} alt="Sign In" width={16} height={16} /> */}
                 <span className="tw-text-sm tw-font-medium">
-                  <FormattedMessage id="home.SignIn" defaultMessage="SIGN IN" />
+                  <FormattedMessage id="signIn" defaultMessage="SIGN IN" />
                 </span>
               </Link>
             )}
@@ -301,7 +309,7 @@ export default function Header() {
         <div className="tw-flex tw-flex-col tw-h-full">
           <div className="tw-p-5 tw-flex tw-justify-between tw-items-center tw-border-b">
             <h2 className="tw-text-lg tw-font-semibold tw-text-gray-800">
-              Menu
+              <FormattedMessage id="home.menu" defaultMessage="Offers" />
             </h2>
             <button
               onClick={() => setMobileMenuOpen(false)}
@@ -364,7 +372,7 @@ export default function Header() {
               >
                 <Image src={LoginIcon} alt="Sign In" width={20} height={20} />
                 <span className="tw-text-base tw-font-medium">
-                  <FormattedMessage id="home.SignIn" defaultMessage="Sign In" />
+                  <FormattedMessage id="signIn" defaultMessage="Sign In" />
                 </span>
               </Link>
             )}
