@@ -26,11 +26,13 @@ const HomeHeading = () => {
   }, []);
 
   const onSearch = (event) => {
-    const [{ main, sub, label }] = event;
-    if (!sub) {
-      router.push(`/discover?main=${main}`);
-    } else {
-      router.push(`/discover?sub=${sub}&main=${main}`);
+    if (event.length) {
+      const [{ main, sub, label }] = event;
+      if (!sub) {
+        router.push(`/discover?main=${main}`);
+      } else {
+        router.push(`/discover?sub=${sub}&main=${main}`);
+      }
     }
   };
 
@@ -65,13 +67,13 @@ const HomeHeading = () => {
       <h1 className="heading_main_title" style={{ fontWeight: 600 }}>
         <FormattedMessage id="home.headingMainTitle" />
       </h1>
-      <div className="heading_search_input_wrapper">
+      <div className="tw-flex tw-flex-col md:tw-flex-row tw-min-w-[90%] md:tw-min-w-[60%] tw-items-center tw-gap-3 tw-max-w-4xl tw-mx-auto tw-rounded-lg tw-shadow-md tw-bg-white tw-p-3">
         {/* <img
           className={styles.heading_search_icon}
           src="/assets/search-normal.png"
           alt="search"
         ></img> */}
-        <div className={`search_container d-inline-block`}>
+        <div className="tw-flex-grow tw-w-full">
           <InputSelect
             onChange={(e) => onSearch(e)}
             hideIndecators={true}
@@ -79,14 +81,25 @@ const HomeHeading = () => {
             options={mainRegions}
             value={[]}
             placeholder={
-              <>
-                <img
-                  className="heading_search_icon"
-                  src="/assets/search-normal.png"
-                  alt="search"
-                />
-                <FormattedMessage id="home.searchForYourDestination" />
-              </>
+              <div className="tw-flex tw-items-center tw-gap-2">
+                <svg
+                  className="tw-w-5 tw-h-5 tw-text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+                <span>
+                  {intl.formatMessage({ id: "home.searchForYourDestination" })}
+                </span>
+              </div>
             }
           />
         </div>
@@ -98,7 +111,7 @@ const HomeHeading = () => {
         /> */}
         <Button
           text={intl.formatMessage({ id: "home.search" })}
-          className="heading_btn"
+          className="tw-bg-[#fcd95c] tw-text-[#0c0c0c] tw-font-bold tw-py-3 tw-px-6 tw-rounded-md tw-transition-all tw-duration-200 hover:tw-bg-[#f8ce38] hover:tw-shadow-lg tw-whitespace-nowrap tw-flex tw-items-center tw-justify-center tw-h-12 tw-min-w-[100px] tw-flex-shrink-0"
         />
       </div>
     </div>
