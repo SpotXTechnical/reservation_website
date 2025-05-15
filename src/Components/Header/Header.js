@@ -228,7 +228,7 @@ export default function Header() {
                       className="tw-h-full tw-w-full tw-object-cover"
                     />
                   </div>
-                  <span className="tw-text-sm tw-font-medium tw-text-gray-700">
+                  <span className="tw-text-sm tw-font-medium tw-text-gray-700 tw-truncate tw-max-w-[100px]">
                     {user.name || "Account"}
                   </span>
                 </button>
