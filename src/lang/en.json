@@ -360,5 +360,10 @@
   "spotXPrivacyPolicy.prohibitedActivities.heading": "Prohibited Activities",
   "spotXPrivacyPolicy.prohibitedActivities.dataCollection": "Users are prohibited from using our app to collect data about other users or send them annoying messages, as this violates our Terms and Conditions and Privacy Policy.",
   "spotXPrivacyPolicy.contactUs.heading": "Contact Us",
-  "spotXPrivacyPolicy.contactUs.info": "If you have any questions or concerns about this Privacy Policy or our practices, please contact us at "
+  "spotXPrivacyPolicy.contactUs.info": "If you have any questions or concerns about this Privacy Policy or our practices, please contact us at ",
+  "Refund_Policy": "Refund Policy",
+  "follow_us": "Follow Us",
+  "quickLinks": "Quick Links",
+  "copyRights": "SpotX is the first platform in Egypt, all rights reserved @{year}.",
+  "downloadOurApp": "Download Our App"
 }
