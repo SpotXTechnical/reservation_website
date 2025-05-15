@@ -15,10 +15,10 @@ const InputSelect = ({
     control: (provided, state) => ({
       ...provided,
       borderRadius: "0.5rem",
-      borderColor: state.isFocused ? "#4F46E5" : "#E2E8F0",
-      boxShadow: state.isFocused ? "0 0 0 1px #4F46E5" : "none",
+      borderColor: state.isFocused ? "#44bcb7" : "#E2E8F0",
+      boxShadow: state.isFocused ? "0 0 0 1px #44bcb7" : "none",
       "&:hover": {
-        borderColor: "#4F46E5",
+        borderColor: "#44bcb7",
       },
       padding: "2px 4px",
       backgroundColor: "white",
