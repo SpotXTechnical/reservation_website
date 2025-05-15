@@ -147,7 +147,6 @@ export default function Home() {
           <ErrorBoundary fallback={<Error error={uiBuildersState.error} />}>
             <HomeHeading />
             {getuiBuilderComponents(uiBuildersState.sections)}
-            <SubscribeUs />
           </ErrorBoundary>
         </>
       )}
