@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DateRangePicker } from "react-date-range";
 import { FormattedMessage } from "react-intl";
 import moment from "moment";
@@ -26,6 +26,40 @@ const DateRangeCalendarPicker = ({
   const [dateError, setDateError] = useState(false);
   const [dateChanged, setDateChanged] = useState(false);
 
+  const [startDates, setStartDates] = useState([]);
+  const [endDates, setEndDates] = useState([]);
+  const [overlapDates, setOverlapDates] = useState([]);
+
+  // Process reservation dates to identify starts, ends, and overlaps
+  useEffect(() => {
+    if (modifiedReservedDays && modifiedReservedDays.length > 0) {
+      const starts = new Set();
+      const ends = new Set();
+      const overlaps = new Set();
+
+      // First collect all start and end dates
+      modifiedReservedDays.forEach((reservation) => {
+        const startFormatted = moment(reservation.from).format("YYYY-MM-DD");
+        const endFormatted = moment(reservation.to).format("YYYY-MM-DD");
+        starts.add(startFormatted);
+        ends.add(endFormatted);
+      });
+
+      // Find overlaps (dates that are both start and end)
+      starts.forEach((date) => {
+        if (ends.has(date)) {
+          overlaps.add(date);
+          starts.delete(date);
+          ends.delete(date);
+        }
+      });
+
+      setStartDates(Array.from(starts).map((date) => new Date(date)));
+      setEndDates(Array.from(ends).map((date) => new Date(date)));
+      setOverlapDates(Array.from(overlaps).map((date) => new Date(date)));
+    }
+  }, [modifiedReservedDays]);
+
   const modifiedExtractedDates = () => {
     const modified = extractedDates.map((date) => {
       return moment(date).format("DD-MM-YYYY");
@@ -35,67 +69,73 @@ const DateRangeCalendarPicker = ({
 
   const getAllDays = (activeReservations) => {
     const allDays = [];
-    const endDates = [];
-    const disabledEndDates = [];
+    const formattedEndDates = new Set(
+      endDates.map((date) => moment(date).format("DD-MM-YYYY"))
+    );
+    const formattedStartDates = new Set(
+      startDates.map((date) => moment(date).format("DD-MM-YYYY"))
+    );
+    const formattedOverlapDates = new Set(
+      overlapDates.map((date) => moment(date).format("DD-MM-YYYY"))
+    );
     const formattedExtractedDates = modifiedExtractedDates();
 
     activeReservations.forEach((range) => {
       const startDate = new Date(range.from);
-      const endDate = new Date(range.to) - 1;
+      const endDate = new Date(range.to);
+
+      // Subtract 1 day from end date to get the last day of stay
+      const lastDayOfStay = new Date(endDate);
+      lastDayOfStay.setDate(lastDayOfStay.getDate() - 1);
 
       const currentDate = new Date(startDate);
-      endDates.push(moment(range.to).format("DD-MM-YYYY"));
-      while (currentDate <= endDate) {
-        if (endDates.includes(moment(currentDate).format("DD-MM-YYYY"))) {
-          disabledEndDates.push(
-            new Date(currentDate.toISOString().split("T")[0])
-          );
-        } else if (
-          formattedExtractedDates.includes(
-            moment(currentDate).format("DD-MM-YYYY")
-          ) &&
-          !endDates.includes(moment(currentDate).format("DD-MM-YYYY"))
+
+      // Iterate through all days in the reservation range
+      while (currentDate <= lastDayOfStay) {
+        const currentFormatted = moment(currentDate).format("DD-MM-YYYY");
+
+        // Skip extracted dates that aren't end dates (these will have special rendering)
+        if (
+          formattedExtractedDates.includes(currentFormatted) &&
+          !formattedEndDates.has(currentFormatted) &&
+          !formattedOverlapDates.has(currentFormatted)
         ) {
           currentDate.setDate(currentDate.getDate() + 1);
           continue;
-        } else {
-          allDays.push(new Date(currentDate.toISOString().split("T")[0]));
         }
+
+        // Add regular disabled days
+        allDays.push(new Date(currentDate.toISOString().split("T")[0]));
         currentDate.setDate(currentDate.getDate() + 1);
       }
     });
 
-    return [...allDays, ...disabledEndDates];
+    // Add overlap dates (dates that are both start and end) to disabled days
+    overlapDates.forEach((date) => {
+      allDays.push(new Date(date));
+    });
+
+    return allDays;
   };
 
-  // const checkBeforeDay = (days)=> {
-  //   let disabledDays = [...days]
-  //   extractedDates.map((date)=> {
-  //     const currentDate = new Date(date);
-  //     if( disabledDays.includes(currentDate.getDate() - 1)){
-  //       disabledDays.push(new Date(date))
-  //     }
-  //   })
-  //   return days
-  // }
+  const getPastDays = () => {
+    const pastDays = [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-  const checkBeforeDay = (arr1, arr2) => {
-    let disabledDays = [...arr1];
-    const timestampSet = new Set(arr1.map((date) => date.getTime()));
-    for (let i = 0; i < arr2.length; i++) {
-      const currentDate = new Date(arr2[i]);
-      currentDate.setDate(currentDate.getDate() - 1);
+    const startDate = new Date();
+    startDate.setFullYear(startDate.getFullYear() - 1); // Go back one year
 
-      if (timestampSet.has(currentDate.getTime())) {
-        disabledDays.push(new Date(arr2[i]));
-      }
+    const currentDate = new Date(startDate);
+    while (currentDate < today) {
+      pastDays.push(new Date(currentDate.toISOString().split("T")[0])); // Make sure we have clean date objects
+      currentDate.setDate(currentDate.getDate() + 1);
     }
-    return disabledDays;
+
+    return pastDays;
   };
-  const allDaysArray = checkBeforeDay(
-    getAllDays(modifiedReservedDays),
-    extractedDates
-  );
+
+  const allDaysArray = [...getAllDays(modifiedReservedDays), ...getPastDays()];
 
   const handleSelect = (ranges) => {
     setSelectedDateRange(ranges.selection);
@@ -146,85 +186,112 @@ const DateRangeCalendarPicker = ({
     return defaultPrice;
   }
 
-  // function to reset time
   function resetTime(date) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   }
 
-  return (
-    <div>
-      <DateRangePicker
-        ranges={[selectedDateRange]}
-        onChange={handleSelect}
-        direction="horizontal"
-        disabledDates={allDaysArray}
-        showMonthAndYearPickers={false}
-        showSelectionPreview={true}
-        moveRangeOnFirstSelection={false}
-        months={1}
-        showPreview={true}
-        minDate={new Date()}
-        dayContentRenderer={(day) => {
-          const price = calculatePrice(day, activeRanges, defaultPrice);
-          const date = new Date(day);
-          const dayOfMonth = date.getDate();
+  const isDateInArray = (date, dateArray) => {
+    const formattedDate = moment(date).format("YYYY-MM-DD");
+    return dateArray.some(
+      (item) => moment(item).format("YYYY-MM-DD") === formattedDate
+    );
+  };
 
-          const isDateInArray = extractedDates.some((item) => {
-            const itemDate = new Date(item);
-            const formattedItemDate = moment(itemDate).format("DD-MM-YYYY");
-            const formattedCurrentDate = moment(date).format("DD-MM-YYYY");
-            return formattedItemDate === formattedCurrentDate;
-          });
-          return (
-            <div
-              className={`calendar-day-wrapper ${
-                isDateInArray ? "half_day" : ""
-              }`}
-            >
-              <span>{dayOfMonth}</span>
-              <sub>{price}</sub>
-            </div>
-          );
-        }}
-      />
+  return (
+    <div className="tw-flex tw-flex-col tw-w-full">
+      {/* Calendar Container */}
+      <div className="tw-w-full tw-rounded-lg tw-shadow-sm tw-overflow-hidden">
+        <DateRangePicker
+          ranges={[selectedDateRange]}
+          onChange={handleSelect}
+          direction="horizontal"
+          disabledDates={allDaysArray}
+          showMonthAndYearPickers={false}
+          showSelectionPreview={true}
+          moveRangeOnFirstSelection={false}
+          months={1}
+          showPreview={true}
+          minDate={new Date()}
+          className="tw-w-full"
+          dayContentRenderer={(day) => {
+            const price = calculatePrice(day, activeRanges, defaultPrice);
+            const date = new Date(day);
+            const dayOfMonth = date.getDate();
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const isPastDate = date < today;
+
+            const isStartDate = !isPastDate && isDateInArray(date, startDates);
+            const isEndDate = !isPastDate && isDateInArray(date, endDates);
+
+            return (
+              <div
+                className={`tw-flex tw-flex-col tw-items-center tw-justify-center tw-h-full
+                  ${
+                    isStartDate
+                      ? "tw-relative before:tw-absolute before:tw-content-[''] before:tw-inset-0 before:tw-bg-[linear-gradient(to_bottom_right,transparent_49%,#e3e3e399_50%)] tw-z-0"
+                      : ""
+                  }
+                  ${
+                    isEndDate
+                      ? "tw-relative before:tw-absolute before:tw-content-[''] before:tw-inset-0 before:tw-bg-[linear-gradient(to_bottom_right,#e3e3e399_49%,transparent_50%)] tw-z-0"
+                      : ""
+                  }
+                `}
+              >
+                <span className="tw-text-sm tw-font-medium">{dayOfMonth}</span>
+                <span className="tw-text-xs tw-text-blue-500">{price}</span>
+              </div>
+            );
+          }}
+        />
+      </div>
+
       {dateError && (
-        <div className="text-danger error_date_range">
+        <div className="tw-text-red-500 tw-mt-2 tw-text-sm tw-font-medium">
           <FormattedMessage id="you_must_select_a_range" />
         </div>
       )}
-      <div className="d-flex justify-content-between align-items-center selection_days_wrapper">
-        <div className="flex gap-2 align-items-center">
-          <div className="selected_period"></div>
-          <div className="selected_labels">
+
+      <div className="tw-flex tw-flex-wrap tw-justify-between tw-items-center tw-mt-4 tw-p-3 tw-bg-gray-50 tw-rounded-lg">
+        <div className="tw-flex tw-items-center tw-gap-2 tw-mb-2 sm:tw-mb-0">
+          <div className="tw-w-4 tw-h-4 tw-bg-[#fcd95c] tw-rounded-sm"></div>
+          <span className="tw-text-xs tw-text-gray-600">
             <FormattedMessage id="Selected" />
-          </div>
+          </span>
         </div>
-        <div className="flex gap-2 align-items-center">
-          <div className="selected_period available_period"></div>
-          <div className="selected_labels">
+
+        <div className="tw-flex tw-items-center tw-gap-2 tw-mb-2 sm:tw-mb-0">
+          <div className="tw-w-4 tw-h-4 tw-bg-white tw-border tw-border-gray-300 tw-rounded-sm"></div>
+          <span className="tw-text-xs tw-text-gray-600">
             <FormattedMessage id="Avaliable" />
-          </div>
+          </span>
         </div>
-        <div className="flex gap-2 align-items-center">
-          <div className="selected_period not_available"></div>
-          <div className="selected_labels">
+
+        <div className="tw-flex tw-items-center tw-gap-2 tw-mb-2 sm:tw-mb-0">
+          <div className="tw-w-4 tw-h-4 tw-bg-[#e3e3e399] tw-rounded-sm"></div>
+          <span className="tw-text-xs tw-text-gray-600">
             <FormattedMessage id="Not_Avaliable" />
-          </div>
+          </span>
         </div>
-        <div className="flex gap-2 align-items-center">
-          <div className="selected_period checkout"></div>
-          <div className="selected_labels">
-            <FormattedMessage id="checkout" />
-          </div>
+
+        <div className="tw-flex tw-items-center tw-gap-2">
+          <div className="tw-w-4 tw-h-4 tw-bg-[linear-gradient(to_bottom_right,transparent_49%,#e3e3e399_50%)] tw-border tw-border-gray-300  tw-rounded-sm"></div>
+          <span className="tw-text-xs tw-text-gray-600">
+            <FormattedMessage id="Checkout" />
+          </span>
         </div>
       </div>
+
       <button
-        className="reservation_btn"
+        className="tw-w-full tw-mt-4 tw-bg-[#44bcb7] hover:tw-bg-[#44bcd7] tw-text-white tw-font-bold tw-py-3 tw-px-6 tw-rounded-lg tw-transition-colors tw-duration-200"
         onClick={() => {
           handleReserve();
         }}
       >
-        <FormattedMessage id="Summary" />{" "}
+        <FormattedMessage id="Summary" />
       </button>
     </div>
   );
