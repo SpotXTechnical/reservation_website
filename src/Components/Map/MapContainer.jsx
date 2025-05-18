@@ -16,7 +16,15 @@ const MapContainer = ({ mapPosition }) => {
   };
 
   return (
-    <div style={{ height: "400px", width: "100%" }}>
+    <div className="tw-h-[400px] tw-w-full tw-rounded-lg tw-overflow-hidden tw-relative">
+      {/* Map overlay to prevent scroll issues */}
+      <div
+        className="tw-absolute tw-inset-0 tw-bg-transparent tw-z-[5]"
+        onClick={handleMapClick}
+        onMouseOver={(e) => (e.currentTarget.style.pointerEvents = "none")}
+        onMouseOut={(e) => (e.currentTarget.style.pointerEvents = "auto")}
+      />
+
       <GoogleMapReact
         bootstrapURLKeys={{
           key: "AIzaSyBf_LK1_yKWP7nq49NGLqpmwIIpwNS-PzI",
@@ -25,7 +33,11 @@ const MapContainer = ({ mapPosition }) => {
         defaultZoom={8}
         onGoogleApiLoaded={({ map, maps }) => renderMarkers(map, maps)}
         onClick={handleMapClick}
-      ></GoogleMapReact>
+        options={{
+          fullscreenControl: false,
+          zoomControl: true,
+        }}
+      />
     </div>
   );
 };
