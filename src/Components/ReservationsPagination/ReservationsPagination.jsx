@@ -12,25 +12,25 @@ const ReservationsPagination = ({ lastPage, callBack }) => {
     callBack(pageNumber);
   };
   return (
-    <nav aria-label="..." className="pt-4 ">
-      <ul className="pagination pagination-lg justify-content-center">
+    <nav aria-label="Pagination Navigation" className="tw-pt-6 sm:tw-pt-8">
+      <ul className="tw-flex tw-flex-wrap tw-items-center tw-justify-center tw-gap-1 sm:tw-gap-2">
         {pageNumbers.map((pageNumber) => (
-          <li
-            className={`page-item ${
-              currentPage === pageNumber ? "active" : ""
-            }`}
-            aria-current="page"
-            key={pageNumber}
-            onClick={() => handlePageChange(pageNumber)}
-            role="button"
-          >
-            <span
-              className={`page-link pagination_not_active_link  ${
-                currentPage === pageNumber ? "pagination_active_link" : ""
-              }`}
+          <li key={pageNumber} className="tw-inline-flex">
+            <button
+              className={`tw-inline-flex tw-items-center tw-justify-center tw-min-w-10 tw-h-10 sm:tw-min-w-12 sm:tw-h-12 tw-px-3 sm:tw-px-4 tw-text-sm sm:tw-text-base tw-font-medium tw-rounded-lg tw-transition-all tw-duration-200 tw-border
+                ${
+                  currentPage === pageNumber
+                    ? "tw-bg-[#44bcb7] tw-text-white tw-border-[#44bcb7] tw-shadow-md"
+                    : "tw-bg-white tw-text-gray-700 tw-border-gray-300 hover:tw-bg-gray-50 hover:tw-border-gray-400 hover:tw-text-gray-900"
+                }
+                tw-cursor-pointer tw-select-none focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-blue-500 focus:tw-ring-offset-2
+              `}
+              onClick={() => handlePageChange(pageNumber)}
+              aria-current={currentPage === pageNumber ? "page" : undefined}
+              aria-label={`Go to page ${pageNumber}`}
             >
               {pageNumber}
-            </span>
+            </button>
           </li>
         ))}
       </ul>
