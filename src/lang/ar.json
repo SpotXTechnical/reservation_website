@@ -65,7 +65,7 @@
   "profile.edit.fields.city.placeholder": "Your city",
   "profile.edit.fields.password.placeholder": "Your password",
 
-  "overview": "overview",
+  "overview": "Overview",
   "More Features": "More Features",
   "Cancellation Policy": "Cancellation Policy",
   "Free-free cancellation": "free-free cancellation",
@@ -308,5 +308,6 @@
   "follow_us": "تابعنا",
   "quickLinks": "روابط سريعة",
   "copyRights": "SpotX هو المنصة الاولى في مصر جميع الحقوق محفوظة @{year}.",
-  "downloadOurApp": "تحميل التطبيق"
+  "downloadOurApp": "تحميل التطبيق",
+  "moreFeatures": "المزيد من الميزات"
 }

@@ -94,7 +94,7 @@
   "le": "LE",
   "Resort / Region": "Resort / Region",
 
-  "overview": "overview",
+  "overview": "Overview",
   "More Features": "More Features",
   "Cancellation Policy": "Cancellation Policy",
   "Free-free cancellation": "free-free cancellation",
@@ -365,5 +365,6 @@
   "follow_us": "Follow Us",
   "quickLinks": "Quick Links",
   "copyRights": "SpotX is the first platform in Egypt, all rights reserved @{year}.",
-  "downloadOurApp": "Download Our App"
+  "downloadOurApp": "Download Our App",
+  "moreFeatures": "More Features"
 }
