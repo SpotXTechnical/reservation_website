@@ -20,15 +20,15 @@ const RegionsHomeList = ({ subRegionData }) => {
   };
 
   return (
-    <div className="regionsList_container">
-      <div className="regionsList_header">
+    <div className="tw-w-full tw-max-w-7xl tw-mx-auto tw-px-4 tw-py-6">
+      <div className="tw-mb-10">
         <Title text={subRegionData.title} />
-        {/* <ViewAll /> */}
       </div>
-      <div className="regionsList_wrapper">
-        <div className="regionsList overflow-auto">
+
+      <div className="tw-pb-4">
+        <div className="tw-flex tw-gap-3  md:tw-gap-6 tw-overflow-x-auto tw-pb-4 tw-pt-2 tw-px-2">
           {subRegionData.sectionData?.length > 0 &&
-            subRegionData.sectionData.map(({ name, images, id }, i) => (
+            subRegionData.sectionData.map(({ name, images, id }) => (
               <RegionsCard
                 key={id}
                 id={id}
