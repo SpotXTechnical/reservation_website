@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useRouter } from "next/router";
 import Breadcrumb from "../../Components/BreadCrumb";
@@ -173,6 +173,16 @@ export default function PropertyDetails() {
     [id, lang]
   );
 
+
+  useEffect(() => {
+    if(showHotelCalendar){
+      document.getElementById("app-hotel-calendar").scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [showHotelCalendar]);
+
   if (typeof window !== "undefined") {
     const storedLanguage = localStorage.getItem("language");
     const language = storedLanguage ? storedLanguage : "en";
@@ -234,6 +244,10 @@ export default function PropertyDetails() {
       setSummaryData(summaryData);
     });
   };
+
+  const handleGuestMealsChange = useCallback(() => {
+    setShowHotelCalendar(false);
+  }, []);
 
   const reserveUnitCallback = () => {
     const formData = new FormData();
@@ -746,11 +760,12 @@ export default function PropertyDetails() {
                     freeChildrenNumber={data?.free_children_number}
                     maxChildrenNumber={data?.max_children_number}
                     onSelectGuestMeals={handleGuestMealsSelection}
+                    onGuestMealsChange={handleGuestMealsChange}
                   />
                 </div>
 
                 {showHotelCalendar && (
-                  <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4 sm:tw-p-6">
+                  <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4 sm:tw-p-6" id="app-hotel-calendar">
                     <div className="tw-flex tw-items-center tw-mb-4 sm:tw-mb-6">
                       <div className="tw-bg-blue-50 tw-p-2 tw-rounded-full">
                         <img
@@ -764,7 +779,7 @@ export default function PropertyDetails() {
                       </h2>
                     </div>
 
-                    <div className="tw-bg-gray-50 p-0 md:tw-p-3 sm:tw-p-4 tw-rounded-lg">
+                    <div className="tw-bg-gray-50 p-0 md:tw-p-3 sm:tw-p-4 tw-rounded-lg" >
                       {reservationData?.active_ranges &&
                         reservationData?.active_reservations && (
                           <DateRangePicker
