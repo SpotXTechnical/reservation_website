@@ -10,6 +10,7 @@ const GuestMealsSelector = ({
   maxChildrenNumber,
   freeChildrenNumber,
   onSelectGuestMeals,
+  onGuestMealsChange
 }) => {
   const [selectedMeal, setSelectedMeal] = useState(mealsOptions[0].id);
   const [adults, setAdults] = useState(adultsNumber);
@@ -37,6 +38,10 @@ const GuestMealsSelector = ({
     });
     setFreeChildrenSelectedRanges(freeChildren.length);
   }, [childrenAges, ageRanges]);
+
+  useEffect(() => {
+    onGuestMealsChange()
+  },[selectedMeal, adults, children, onGuestMealsChange])
 
   const handleIncrement = (type) => {
     if (type === "adults") {
