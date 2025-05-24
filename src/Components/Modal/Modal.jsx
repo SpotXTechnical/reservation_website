@@ -33,7 +33,7 @@ const ModalComponent = ({ toggleModal, isOpen, modalBody, className }) => {
     <Modal
       isOpen={Boolean(isOpen)}
       toggle={toggle}
-      className={`${className} tw-max-w-5xl tw-mx-auto`}
+      className={`${className} tw-max-w-4xl tw-mx-auto`}
       contentClassName="tw-border-0 tw-rounded-lg tw-shadow-lg tw-overflow-hidden"
     >
       <ModalHeader
@@ -41,7 +41,7 @@ const ModalComponent = ({ toggleModal, isOpen, modalBody, className }) => {
         close={closeBtn}
         className="tw-border-0 tw-py-2 tw-px-4"
       ></ModalHeader>
-      <ModalBody className="tw-p-0">{modalBody}</ModalBody>
+      <ModalBody className="tw-p-4">{modalBody}</ModalBody>
     </Modal>
   );
 };

@@ -14,6 +14,7 @@ const DateRangeCalendarPicker = ({
   unitType,
   setModalLoadingState,
   showModal,
+  onShowSummary,
 }) => {
   const [selectedDateRange, setSelectedDateRange] = useState({
     startDate: new Date(),
@@ -288,7 +289,12 @@ const DateRangeCalendarPicker = ({
       <button
         className="tw-w-full tw-mt-4 tw-bg-[#44bcb7] hover:tw-bg-[#44bcd7] tw-text-white tw-font-bold tw-py-3 tw-px-6 tw-rounded-lg tw-transition-colors tw-duration-200"
         onClick={() => {
-          handleReserve();
+          onShowSummary
+            ? onShowSummary(
+                selectedDateRange.startDate,
+                selectedDateRange.endDate
+              )
+            : handleReserve();
         }}
       >
         <FormattedMessage id="Summary" />
