@@ -6,6 +6,7 @@ import {
   getHotelRoomReservationDetails,
   getPropertyDetails,
   getPropertyReservationDetails,
+  getSummary,
   reserveUnit,
 } from "../../app/Apis/PropertyApis";
 import ReactStars from "react-rating-stars-component";
@@ -173,9 +174,8 @@ export default function PropertyDetails() {
     [id, lang]
   );
 
-
   useEffect(() => {
-    if(showHotelCalendar){
+    if (showHotelCalendar) {
       document.getElementById("app-hotel-calendar").scrollIntoView({
         behavior: "smooth",
         block: "start",
@@ -270,10 +270,38 @@ export default function PropertyDetails() {
       }
     });
   };
+
+  const onShowSummary = (startDate, endDate) => {
+    const summaryHotelData = new FormData();
+    summaryHotelData.append("from", moment(startDate).format("YYYY-MM-DD"));
+    summaryHotelData.append("to", moment(endDate).format("YYYY-MM-DD"));
+    summaryHotelData.append("unit_id", id);
+    summaryHotelData.append("unit_type", data.type);
+    console.log({ summaryData });
+
+    if (data.type === "hotel") {
+      summaryHotelData.append("meal_id", summaryData?.modifiedSelectedMeal?.id);
+      summaryHotelData.append("adults", summaryData?.adults);
+      summaryData?.childrenFormRanges?.forEach((child) => {
+        summaryHotelData.append("children[]", child);
+      });
+    }
+    setSummaryModalLoading(true);
+    setIsOpen(true);
+    getSummary(summaryHotelData)
+      .then((res) => {
+        setSummaryModalLoading(false);
+        handleShowReservationModal(res?.data);
+      })
+      .catch((error) => {
+        setSummaryModalLoading(false);
+        setIsOpen(false);
+      });
+  };
   return (
     <div
       dir={lang === "ar" ? "rtl" : "ltr"}
-      className="tw-w-full tw-max-w-7xl tw-mx-auto tw-px-4 sm:tw-px-6 lg:tw-px-8 tw-py-6"
+      className="tw-w-full tw-max-w-7xl tw-mx-auto tw-px-3 sm:tw-px-4 lg:tw-px-6 tw-py-4"
     >
       <Head>
         <title>{data?.title || "Loading..."}</title>
@@ -281,14 +309,14 @@ export default function PropertyDetails() {
       </Head>
 
       {/* Header Section - Improved mobile layout */}
-      <div className="tw-flex tw-flex-col lg:tw-flex-row tw-justify-between tw-items-start lg:tw-items-center tw-gap-4 tw-mb-6 tw-border-b tw-border-gray-100 tw-pb-4">
+      <div className="tw-flex tw-flex-col lg:tw-flex-row tw-justify-between tw-items-start lg:tw-items-center tw-gap-3 tw-mb-4 tw-border-b tw-border-gray-100 tw-pb-3">
         {/* Breadcrumb */}
         <div className="tw-flex-shrink-0 tw-w-full lg:tw-w-auto">
           <Breadcrumb items={items} />
         </div>
 
         {/* Actions - Better mobile stacking */}
-        <div className="tw-flex tw-items-center tw-flex-wrap tw-gap-3 tw-w-full lg:tw-w-auto tw-justify-start lg:tw-justify-end lg:tw-ml-auto">
+        <div className="tw-flex tw-items-center tw-flex-wrap tw-gap-2 tw-w-full lg:tw-w-auto tw-justify-start lg:tw-justify-end lg:tw-ml-auto">
           {/* Favorite Button */}
           {showComponent && (
             <button
@@ -307,7 +335,7 @@ export default function PropertyDetails() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 64 64"
                 enableBackground="new 0 0 64 64"
-                className="tw-w-5 tw-h-5 sm:tw-w-6 sm:tw-h-6 tw-fill-gray-400"
+                className="tw-w-5 tw-h-5 tw-fill-gray-400"
               >
                 <path
                   fill="none"
@@ -323,7 +351,7 @@ export default function PropertyDetails() {
 	c0-8.285-6-16-15-16c-8.285,0-16,5.715-16,14c0-8.285-7.715-14-16-14C7,5,1,12.715,1,21z"
                 />
               </svg>
-              <span className="tw-text-xs sm:tw-text-sm tw-font-medium tw-text-[#44bcb7]">
+              <span className="tw-text-sm tw-font-medium tw-text-[#44bcb7]">
                 <FormattedMessage
                   id={data?.is_favourite ? "removeFromFav" : "addToFav"}
                 />
@@ -340,11 +368,11 @@ export default function PropertyDetails() {
               <img
                 src="/assets/share.png"
                 alt="share"
-                className="tw-w-4 tw-h-4 sm:tw-w-5 sm:tw-h-5 tw-opacity-70 tw-transition-transform tw-duration-300 hover:tw-scale-110"
+                className="tw-w-4 tw-h-4 tw-opacity-70 tw-transition-transform tw-duration-300 hover:tw-scale-110"
               />
             )}
             <span
-              className={`tw-text-xs sm:tw-text-sm tw-font-medium ${
+              className={`tw-text-sm tw-font-medium ${
                 isCopied ? "tw-text-[#44bcb7]" : "tw-text-[#a2a2a2]"
               }`}
             >
@@ -352,7 +380,7 @@ export default function PropertyDetails() {
                 <span className="tw-flex tw-items-center tw-gap-1">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="tw-h-3 tw-w-3 sm:tw-h-4 sm:tw-w-4"
+                    className="tw-h-4 tw-w-4"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -376,7 +404,7 @@ export default function PropertyDetails() {
 
       {/* Title and Rating Section - Better mobile layout */}
       {data && (
-        <div className="tw-w-full tw-flex tw-flex-col sm:tw-flex-row tw-items-start sm:tw-items-center tw-justify-between tw-gap-4 tw-py-4 tw-mb-4">
+        <div className="tw-w-full tw-flex tw-flex-col sm:tw-flex-row tw-items-start sm:tw-items-center tw-justify-between tw-gap-3 tw-py-3 tw-mb-4">
           <div className="tw-flex-1 tw-min-w-0">
             <Title text={data?.title} />
           </div>
@@ -403,28 +431,28 @@ export default function PropertyDetails() {
       {/* Image Gallery Section - Improved responsiveness */}
       {data?.images?.length > 0 ? (
         <div
-          className="tw-w-full tw-cursor-pointer tw-mb-6"
+          className="tw-w-full tw-cursor-pointer tw-mb-4"
           onClick={handleImageGallery}
         >
           {/* Main Feature Image */}
-          <div className="tw-w-full tw-overflow-hidden tw-rounded-xl tw-mb-3 tw-shadow-sm tw-bg-gray-100">
+          <div className="tw-w-full tw-overflow-hidden tw-rounded-xl tw-mb-2 tw-shadow-sm tw-bg-gray-100">
             {data?.images[0]?.type === "image" ? (
               <img
                 src={data?.images[0]?.url}
                 alt="Feature image"
-                className="tw-w-full tw-h-[280px] sm:tw-h-[350px] md:tw-h-[400px] lg:tw-h-[450px] xl:tw-h-[500px] tw-object-cover tw-transition-transform tw-duration-500 hover:tw-scale-105"
+                className="tw-w-full tw-h-60 sm:tw-h-80 lg:tw-h-96 tw-object-cover tw-transition-transform tw-duration-500 hover:tw-scale-105"
               />
             ) : (
               <video
                 src={data?.images[0]?.url}
                 controls={true}
-                className="tw-w-full tw-h-[280px] sm:tw-h-[350px] md:tw-h-[400px] lg:tw-h-[450px] xl:tw-h-[500px] tw-object-cover"
+                className="tw-w-full tw-h-60 sm:tw-h-80 lg:tw-h-96 tw-object-cover"
               ></video>
             )}
           </div>
 
           {/* Thumbnail Gallery - Responsive grid */}
-          <div className="tw-grid tw-grid-cols-2 sm:tw-grid-cols-3 tw-gap-2 sm:tw-gap-3">
+          <div className="tw-grid tw-grid-cols-3 tw-gap-2">
             {data.images.slice(1, 4).map(
               (image, index) =>
                 image.url && (
@@ -434,7 +462,7 @@ export default function PropertyDetails() {
                       index === 2 ? "tw-overlay-container" : ""
                     }`}
                   >
-                    <div className="tw-h-[100px] sm:tw-h-[120px] md:tw-h-[150px] lg:tw-h-[180px] xl:tw-h-[220px]">
+                    <div className="tw-h-20 sm:tw-h-24 lg:tw-h-32">
                       {image.type === "image" ? (
                         <img
                           src={image.url}
@@ -452,7 +480,7 @@ export default function PropertyDetails() {
                       {/* Overlay with count for last thumbnail */}
                       {index === 2 && data.images.length > 4 && (
                         <div className="tw-absolute tw-inset-0 tw-bg-black/60 tw-flex tw-items-center tw-justify-center tw-transition-opacity tw-duration-300">
-                          <p className="tw-text-white tw-font-semibold tw-text-lg sm:tw-text-xl md:tw-text-2xl">
+                          <p className="tw-text-white tw-font-semibold tw-text-lg">
                             +{data.images.length - 4}
                           </p>
                         </div>
@@ -466,7 +494,7 @@ export default function PropertyDetails() {
       ) : (
         <div>
           <ShimmerThumbnail height={400} rounded />
-          <div className="tw-grid tw-grid-cols-2 sm:tw-grid-cols-3 tw-gap-2 sm:tw-gap-3 tw-mt-3">
+          <div className="tw-grid tw-grid-cols-3 tw-gap-2 tw-mt-2">
             {[...Array(3)].map((_, i) => (
               <ShimmerThumbnail key={i} height={150} rounded />
             ))}
@@ -475,47 +503,68 @@ export default function PropertyDetails() {
       )}
 
       {/* Main Content Grid - Better responsive breakpoints */}
-      <div className="tw-container tw-mx-auto tw-px-0 tw-py-8 tw-max-w-7xl">
-        <div className="tw-grid tw-grid-cols-1 tw-gap-6 lg:tw-gap-8 xl:tw-grid-cols-2">
+      <div className="tw-container tw-mx-auto tw-px-0 tw-py-4 tw-max-w-7xl">
+        <div className="tw-grid tw-grid-cols-1 tw-gap-4 lg:tw-gap-6 xl:tw-grid-cols-2">
           {/* Left Column - Property Details */}
-          <div className="tw-space-y-6 lg:tw-space-y-8">
+          <div className="tw-space-y-4">
             {/* Property Specs & Price Card - Improved mobile layout */}
-            <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-overflow-hidden">
-              <div className="tw-flex tw-flex-col lg:tw-flex-row tw-justify-between tw-p-4 sm:tw-p-6">
-                <div className="tw-flex tw-flex-col sm:tw-flex-row tw-space-y-4 sm:tw-space-y-0 sm:tw-space-x-6 lg:tw-space-x-8 tw-mb-4 lg:tw-mb-0">
+            <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-overflow-hidden tw-border tw-border-gray-50">
+              <div className="tw-flex tw-flex-col lg:tw-flex-row tw-justify-between tw-items-start lg:tw-items-center tw-p-6 tw-gap-4">
+                <div className="tw-flex tw-flex-col sm:tw-flex-row tw-gap-6 tw-flex-1">
                   {/* Bedrooms */}
-                  <div className="tw-flex tw-items-center">
-                    <span className="tw-bg-blue-50 tw-p-2 tw-rounded-full">
-                      <img
-                        src="/assets/bed.png"
-                        alt="bedroom"
-                        className="tw-h-5 tw-w-5 sm:tw-h-6 sm:tw-w-6"
-                      />
-                    </span>
-                    <div className="tw-flex tw-flex-col tw-ml-3">
-                      <span className="tw-text-gray-500 tw-text-xs sm:tw-text-sm">
+                  <div className="tw-flex tw-items-center tw-gap-3">
+                    <div className="tw-bg-gradient-to-br  tw-from-[#c3f5f3] tw-to-[#b8f4f1] tw-p-3 tw-rounded-xl tw-shadow-sm">
+                      <svg
+                        className="tw-w-6 tw-h-6"
+                        viewBox="0 0 16 16"
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill="#000"
+                          d="M4.28 7h2.72l-1.15-1.68c-0.542-0.725-1.36-1.216-2.295-1.319l-0.555-0.001v1.54c-0.011 0.063-0.018 0.136-0.018 0.211 0 0.69 0.56 1.25 1.25 1.25 0.017 0 0.034-0 0.050-0.001z"
+                        ></path>
+                        <path
+                          fill="#000"
+                          d="M13 7v-0.28c0-0.003 0-0.007 0-0.010 0-0.934-0.749-1.693-1.678-1.71l-4.692-0c0.5 0.62 1.37 2 1.37 2h5z"
+                        ></path>
+                        <path
+                          fill="#000"
+                          d="M15 5.1c-0.552 0-1 0.448-1 1v1.9h-12v-4c0-0.552-0.448-1-1-1s-1 0.448-1 1v9h2v-2h12v2h2v-6.9c0-0.552-0.448-1-1-1z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div className="tw-flex tw-flex-col">
+                      <span className="tw-text-gray-500 tw-text-sm tw-font-medium tw-mb-1">
                         <FormattedMessage id="bedroom" />
                       </span>
-                      <span className="tw-font-semibold tw-text-sm sm:tw-text-base tw-text-center">
+                      <span className="tw-font-bold tw-text-lg tw-text-gray-900">
                         {data?.bed_rooms}
                       </span>
                     </div>
                   </div>
 
                   {/* Bathrooms */}
-                  <div className="tw-flex tw-items-center">
-                    <span className="tw-bg-blue-50 tw-p-2 tw-rounded-full">
-                      <img
-                        src="/assets/bath.png"
-                        alt="bathroom"
-                        className="tw-h-5 tw-w-5 sm:tw-h-6 sm:tw-w-6"
-                      />
-                    </span>
-                    <div className="tw-flex tw-flex-col tw-ml-3">
-                      <span className="tw-text-gray-500 tw-text-xs sm:tw-text-sm">
+                  <div className="tw-flex tw-items-center tw-gap-3">
+                    <div className="tw-bg-gradient-to-br tw-from-[#c3f5f3] tw-to-[#b8f4f1] tw-p-3 tw-rounded-xl tw-shadow-sm">
+                      <svg
+                        className="tw-w-6 tw-h-6"
+                        viewBox="0 0 15 15"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M2 3.5C2 2.11929 3.11929 1 4.5 1H6V2H7V0H4.5C2.567 0 1 1.567 1 3.5V7H0V8H1V9.5C1 11.2632 2.30385 12.7219 4 12.9646V15H5V13H10V15H11V12.9646C12.6961 12.7219 14 11.2632 14 9.5V8H15V7H2V3.5Z"
+                          fill="#000000"
+                        />
+                        <path d="M8 4H5V3H8V4Z" fill="#000000" />
+                      </svg>
+                    </div>
+                    <div className="tw-flex tw-flex-col">
+                      <span className="tw-text-gray-500 tw-text-sm tw-font-medium tw-mb-1">
                         <FormattedMessage id="bathroom" />
                       </span>
-                      <span className="tw-font-semibold tw-text-sm sm:tw-text-base tw-text-center">
+                      <span className="tw-font-bold tw-text-lg tw-text-gray-900">
                         {data?.bathrooms}
                       </span>
                     </div>
@@ -523,43 +572,47 @@ export default function PropertyDetails() {
                 </div>
 
                 {/* Price */}
-                <div className="tw-flex tw-items-center tw-justify-start lg:tw-justify-end">
-                  <div className="tw-bg-[#44bcb7] tw-text-white tw-px-3 sm:tw-px-4 tw-py-2 tw-rounded-lg">
-                    <span className="tw-text-lg sm:tw-text-xl tw-font-bold">
-                      {data?.current_price}
-                    </span>
-                    <span className="tw-text-blue-100">
-                      {" "}
-                      <FormattedMessage id="le" />
-                    </span>
-                    <span className="tw-text-xs sm:tw-text-sm">
-                      {" "}
-                      / <FormattedMessage id="day" />
-                    </span>
+                <div className="tw-flex tw-items-center tw-justify-end lg:tw-justify-end tw-w-full lg:tw-w-auto">
+                  <div className="tw-bg-gradient-to-r tw-from-[#44bcb7] tw-to-[#3da8a3] tw-text-white tw-px-5 tw-py-2 tw-rounded-xl tw-shadow-lg tw-border tw-border-[#3da8a3]/20 tw-relative tw-overflow-hidden">
+                    {/* Background decoration */}
+                    <div className="tw-absolute tw-top-0 tw-right-0 tw-w-8 tw-h-8 tw-bg-white/10 tw-rounded-full tw-transform tw-translate-x-2 tw--translate-y-2"></div>
+                    <div className="tw-absolute tw-bottom-0 tw-left-0 tw-w-6 tw-h-6 tw-bg-white/5 tw-rounded-full tw-transform tw--translate-x-1 tw-translate-y-1"></div>
+
+                    <div className="tw-relative tw-flex tw-items-baseline tw-gap-1">
+                      <span className="tw-text-2xl tw-font-bold tw-text-white">
+                        {data?.current_price}
+                      </span>
+                      <span className="tw-text-emerald-100 tw-font-medium">
+                        <FormattedMessage id="le" />
+                      </span>
+                      <span className="tw-text-sm tw-text-emerald-100/80 tw-font-medium">
+                        / <FormattedMessage id="day" />
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Overview Section */}
-            <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4 sm:tw-p-6">
-              <h2 className="tw-text-xl sm:tw-text-2xl tw-font-bold tw-mb-4 tw-text-gray-800">
+            <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4">
+              <h2 className="tw-text-xl tw-font-bold tw-mb-3 tw-text-gray-800">
                 <FormattedMessage id="overview" />
               </h2>
 
               {data && Object.keys(data).length > 0 ? (
                 <>
-                  <h3 className="tw-text-lg sm:tw-text-xl tw-font-semibold tw-mb-3 tw-text-gray-700">
+                  <h3 className="tw-text-lg tw-font-semibold tw-mb-2 tw-text-gray-700">
                     {data?.title}
                   </h3>
-                  <p className="tw-text-sm sm:tw-text-base tw-text-gray-600 tw-leading-relaxed">
+                  <p className="tw-text-sm tw-text-gray-600 tw-leading-relaxed">
                     {data?.description}
                   </p>
                 </>
               ) : (
                 <>
                   <ShimmerThumbnail height={25} rounded />
-                  <div className="tw-mt-4">
+                  <div className="tw-mt-3">
                     <ShimmerThumbnail height={80} rounded />
                   </div>
                 </>
@@ -567,32 +620,32 @@ export default function PropertyDetails() {
             </div>
 
             {/* Features Section - Improved responsive grid */}
-            <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4 sm:tw-p-6">
-              <h2 className="tw-text-xl sm:tw-text-2xl tw-font-bold tw-mb-4 sm:tw-mb-6 tw-text-gray-800">
+            <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4">
+              <h2 className="tw-text-xl tw-font-bold tw-mb-4 tw-text-gray-800">
                 <FormattedMessage
                   id="moreFeatures"
                   defaultMessage="moreFeatures"
                 />
               </h2>
 
-              <div className="tw-grid tw-grid-cols-2 md:tw-grid-cols-3 tw-gap-4 sm:tw-gap-6">
+              <div className="tw-grid tw-grid-cols-2 md:tw-grid-cols-3 tw-gap-4">
                 {data?.features?.length > 0
                   ? data.features?.map((feature, i) => (
                       <div
                         key={i}
                         className="tw-flex tw-flex-col tw-items-center tw-text-center"
                       >
-                        <div className="tw-bg-[#44bcb7] tw-rounded-full tw-p-3 sm:tw-p-4 tw-mb-2 sm:tw-mb-3">
+                        <div className="tw-bg-[#44bcb7] tw-rounded-full tw-p-3 tw-mb-2">
                           <img
                             width="24px"
                             height="24px"
                             src={feature.url}
                             key={feature.id}
                             alt={feature.name}
-                            className="tw-w-6 tw-h-6 sm:tw-w-8 sm:tw-h-8"
+                            className="tw-w-6 tw-h-6"
                           />
                         </div>
-                        <p className="tw-text-xs sm:tw-text-sm tw-text-gray-700 tw-leading-tight">
+                        <p className="tw-text-xs tw-text-gray-700 tw-leading-tight">
                           {feature.name}
                         </p>
                       </div>
@@ -604,15 +657,15 @@ export default function PropertyDetails() {
             </div>
 
             {/* Cancellation Policy */}
-            <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4 sm:tw-p-6">
+            <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4">
               <h2
-                className="tw-text-xl sm:tw-text-2xl tw-font-bold tw-mb-4 tw-text-gray-800 tw-cursor-pointer"
+                className="tw-text-xl tw-font-bold tw-mb-3 tw-text-gray-800 tw-cursor-pointer"
                 onClick={() => (window.location = "/policy")}
               >
                 <FormattedMessage id="Cancellation Policy" />
               </h2>
 
-              <p className="tw-text-sm sm:tw-text-base tw-text-gray-600">
+              <p className="tw-text-sm tw-text-gray-600">
                 Please read our{" "}
                 <Link
                   href="/policy"
@@ -625,22 +678,22 @@ export default function PropertyDetails() {
             </div>
 
             {/* Property Owner */}
-            <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4 sm:tw-p-6">
-              <h2 className="tw-text-xl sm:tw-text-2xl tw-font-bold tw-mb-4 tw-text-gray-800">
+            <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4">
+              <h2 className="tw-text-xl tw-font-bold tw-mb-3 tw-text-gray-800">
                 <FormattedMessage id="Property Owner" />
               </h2>
 
               {data?.owner?.name ? (
                 <div
-                  className="tw-flex tw-items-center tw-cursor-pointer tw-bg-gray-50 tw-p-3 sm:tw-p-4 tw-rounded-lg hover:tw-bg-gray-100"
+                  className="tw-flex tw-items-center tw-cursor-pointer tw-bg-gray-50 tw-p-3 tw-rounded-lg hover:tw-bg-gray-100"
                   onClick={() => handleRedirectToOwnerProfile(data?.owner?.id)}
                 >
                   <img
                     src={data?.owner?.image}
                     alt="owner_img"
-                    className="tw-w-12 tw-h-12 sm:tw-w-16 sm:tw-h-16 tw-rounded-full tw-object-cover tw-border-2 tw-border-blue-300"
+                    className="tw-w-12 tw-h-12 tw-rounded-full tw-object-cover tw-border-2 tw-border-blue-300"
                   />
-                  <p className="tw-ml-3 sm:tw-ml-4 tw-font-medium tw-text-base sm:tw-text-lg">
+                  <p className="tw-ml-3 tw-font-medium tw-text-base">
                     {data?.owner?.name}
                   </p>
                 </div>
@@ -650,19 +703,19 @@ export default function PropertyDetails() {
             </div>
 
             {/* FAQ Section */}
-            <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4 sm:tw-p-6">
-              <h3 className="tw-text-xl sm:tw-text-2xl tw-font-bold tw-mb-4 sm:tw-mb-6 tw-text-gray-800">
+            <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4">
+              <h3 className="tw-text-xl tw-font-bold tw-mb-4 tw-text-gray-800">
                 FAQs
               </h3>
 
               {faqs && faqs.length > 0 ? (
                 <div className="tw-divide-y tw-divide-gray-200">
                   {faqs.map((faq) => (
-                    <div className="tw-py-3 sm:tw-py-4" key={faq.id}>
+                    <div className="tw-py-3" key={faq.id}>
                       <div className="tw-accordion-item">
                         <h2 className="tw-accordion-header">
                           <button
-                            className="tw-w-full tw-flex tw-justify-between tw-items-center tw-text-left tw-font-medium tw-text-gray-800 tw-p-3 sm:tw-p-4 tw-rounded-lg tw-bg-gray-50 hover:tw-bg-gray-100 tw-text-sm sm:tw-text-base"
+                            className="tw-w-full tw-flex tw-justify-between tw-items-center tw-text-left tw-font-medium tw-text-gray-800 tw-p-3 tw-rounded-lg tw-bg-gray-50 hover:tw-bg-gray-100 tw-text-sm"
                             type="button"
                             data-bs-toggle="collapse"
                             data-bs-target={`#collapse${faq.id}`}
@@ -671,7 +724,7 @@ export default function PropertyDetails() {
                           >
                             {faq.question}
                             <svg
-                              className="tw-h-4 tw-w-4 sm:tw-h-5 sm:tw-w-5 tw-text-gray-500 tw-flex-shrink-0 tw-ml-2"
+                              className="tw-h-4 tw-w-4 tw-text-gray-500 tw-flex-shrink-0 tw-ml-2"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -690,7 +743,7 @@ export default function PropertyDetails() {
                           className="tw-accordion-collapse tw-collapse"
                           data-bs-parent="#accordionExample"
                         >
-                          <div className="tw-p-3 sm:tw-p-4 tw-bg-white tw-rounded-lg tw-mt-2 tw-text-gray-600 tw-text-sm sm:tw-text-base">
+                          <div className="tw-p-3 tw-bg-white tw-rounded-lg tw-mt-2 tw-text-gray-600 tw-text-sm">
                             {faq.answer}
                           </div>
                         </div>
@@ -699,8 +752,8 @@ export default function PropertyDetails() {
                   ))}
                 </div>
               ) : (
-                <div className="tw-bg-gray-50 tw-p-4 sm:tw-p-6 tw-rounded-lg tw-text-center">
-                  <span className="tw-inline-block tw-px-3 sm:tw-px-4 tw-py-2 tw-bg-gray-200 tw-text-gray-700 tw-rounded-full tw-text-sm sm:tw-text-base">
+                <div className="tw-bg-gray-50 tw-p-4 tw-rounded-lg tw-text-center">
+                  <span className="tw-inline-block tw-px-3 tw-py-2 tw-bg-gray-200 tw-text-gray-700 tw-rounded-full tw-text-sm">
                     There&apos;s no FAQs for this unit.
                   </span>
                 </div>
@@ -709,49 +762,51 @@ export default function PropertyDetails() {
           </div>
 
           {/* Right Column - Availability & Map */}
-          <div className="tw-space-y-6 lg:tw-space-y-8">
+          <div className="tw-space-y-4">
             {/* Availability Calendar */}
-            {Object.keys(data).length > 0 && data?.type !== "hotel" && (
-              <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4 sm:tw-p-6">
-                <div className="tw-flex tw-items-center tw-mb-4 sm:tw-mb-6">
-                  <div className="tw-bg-blue-50 tw-p-2 tw-rounded-full">
-                    <img
-                      src="/assets/availability.png"
-                      alt="availability-icon"
-                      className="tw-h-5 tw-w-5 sm:tw-h-6 sm:tw-w-6"
-                    />
-                  </div>
-                  <h2 className="tw-text-xl sm:tw-text-2xl tw-font-bold tw-ml-3 tw-text-gray-800">
-                    <FormattedMessage id="Avaliability" />
-                  </h2>
-                </div>
-
-                <div className="tw-bg-gray-50 tw-p-3 sm:tw-p-4 tw-rounded-lg">
-                  {Object.keys(data).length > 0 &&
-                    reservationData?.active_ranges &&
-                    reservationData?.active_reservations && (
-                      <DateRangePicker
-                        activeRanges={reservationData?.active_ranges}
-                        defaultPrice={data?.default_price}
-                        activeReservations={
-                          reservationData?.active_reservations
-                        }
-                        handleShowReservationModal={handleShowReservationModal}
-                        showModal={setIsOpen}
-                        extractedDates={extractedDates}
-                        modifiedReservedDays={modifiedReservedDays}
-                        unitType={data?.type}
-                        setModalLoadingState={setSummaryModalLoading}
+            {Object.keys(reservationData).length > 0 &&
+              data?.type !== "hotel" && (
+                <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4">
+                  <div className="tw-flex tw-items-center tw-mb-4">
+                    <div className="tw-bg-blue-50 tw-p-2 tw-rounded-full">
+                      <img
+                        src="/assets/availability.png"
+                        alt="availability-icon"
+                        className="tw-h-5 tw-w-5"
                       />
-                    )}
+                    </div>
+                    <h2 className="tw-text-xl tw-font-bold tw-ml-3 tw-text-gray-800">
+                      <FormattedMessage id="Avaliability" />
+                    </h2>
+                  </div>
+
+                  <div className="tw-bg-gray-50 tw-p-3 tw-rounded-lg">
+                    {reservationData?.active_ranges &&
+                      reservationData?.active_reservations && (
+                        <DateRangePicker
+                          activeRanges={reservationData?.active_ranges}
+                          defaultPrice={data?.default_price}
+                          activeReservations={
+                            reservationData?.active_reservations
+                          }
+                          handleShowReservationModal={
+                            handleShowReservationModal
+                          }
+                          showModal={setIsOpen}
+                          extractedDates={extractedDates}
+                          modifiedReservedDays={modifiedReservedDays}
+                          unitType={data?.type}
+                          setModalLoadingState={setSummaryModalLoading}
+                        />
+                      )}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
             {/* Hotel Guest Meals Selector */}
             {data.type === "hotel" && (
               <>
-                <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4 sm:tw-p-6">
+                <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4">
                   <GuestMealsSelector
                     ageRanges={data?.age_policies}
                     mealsOptions={data?.meals}
@@ -765,21 +820,24 @@ export default function PropertyDetails() {
                 </div>
 
                 {showHotelCalendar && (
-                  <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4 sm:tw-p-6" id="app-hotel-calendar">
-                    <div className="tw-flex tw-items-center tw-mb-4 sm:tw-mb-6">
+                  <div
+                    className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4"
+                    id="app-hotel-calendar"
+                  >
+                    <div className="tw-flex tw-items-center tw-mb-4">
                       <div className="tw-bg-blue-50 tw-p-2 tw-rounded-full">
                         <img
                           src="/assets/availability.png"
                           alt="availability-icon"
-                          className="tw-h-5 tw-w-5 sm:tw-h-6 sm:tw-w-6"
+                          className="tw-h-5 tw-w-5"
                         />
                       </div>
-                      <h2 className="tw-text-xl sm:tw-text-2xl tw-font-bold tw-ml-3 tw-text-gray-800">
+                      <h2 className="tw-text-xl tw-font-bold tw-ml-3 tw-text-gray-800">
                         <FormattedMessage id="Avaliability" />
                       </h2>
                     </div>
 
-                    <div className="tw-bg-gray-50 p-0 md:tw-p-3 sm:tw-p-4 tw-rounded-lg" >
+                    <div className="tw-bg-gray-50 tw-p-0 md:tw-p-3 tw-rounded-lg">
                       {reservationData?.active_ranges &&
                         reservationData?.active_reservations && (
                           <DateRangePicker
@@ -796,6 +854,7 @@ export default function PropertyDetails() {
                             modifiedReservedDays={modifiedReservedDays}
                             unitType={data?.type}
                             setModalLoadingState={setSummaryModalLoading}
+                            onShowSummary={onShowSummary}
                           />
                         )}
                     </div>
@@ -806,12 +865,12 @@ export default function PropertyDetails() {
 
             {/* Map Section */}
             {mapPosition && (
-              <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4 sm:tw-p-6 tw-z-10">
-                <h2 className="tw-text-xl sm:tw-text-2xl tw-font-bold tw-mb-4 sm:tw-mb-6 tw-text-gray-800">
+              <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4 tw-z-10">
+                <h2 className="tw-text-xl tw-font-bold tw-mb-4 tw-text-gray-800">
                   <FormattedMessage id="Location" />
                 </h2>
 
-                <div className="tw-rounded-lg tw-overflow-hidden tw-h-[250px] sm:tw-h-[300px] lg:tw-h-[350px]">
+                <div className="tw-rounded-lg tw-overflow-hidden tw-h-60 lg:tw-h-80">
                   {mapPosition && Object.keys(data).length > 0 && (
                     <MapContainer
                       mapPosition={{
@@ -828,13 +887,13 @@ export default function PropertyDetails() {
       </div>
 
       {/* Reviews Section - Improved responsive grid */}
-      <div className="tw-w-full tw-py-6 sm:tw-py-10 tw-px-0">
+      <div className="tw-w-full tw-py-4 tw-px-0">
         {data?.reviews?.length > 0 && (
-          <h3 className="tw-text-xl sm:tw-text-2xl tw-font-bold tw-mb-4 sm:tw-mb-6 tw-text-gray-800 tw-text-center sm:tw-text-left">
+          <h3 className="tw-text-xl tw-font-bold tw-mb-4 tw-text-gray-800 tw-text-center sm:tw-text-left">
             <FormattedMessage id="Reviews" />
           </h3>
         )}
-        <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 xl:tw-grid-cols-3 tw-gap-4 tw-max-w-7xl tw-mx-auto">
+        <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 xl:tw-grid-cols-3 tw-gap-3 tw-max-w-7xl tw-mx-auto">
           {data?.reviews
             ? data.reviews.map((review) => (
                 <div className="tw-w-full" key={review?.id}>
@@ -859,7 +918,6 @@ export default function PropertyDetails() {
       <ModalComponent
         isOpen={isOpen}
         toggleModal={toggleModal}
-        className=""
         modalBody={
           <UnitBookingSummary
             unitType={data?.type}
@@ -876,126 +934,15 @@ export default function PropertyDetails() {
             childrenData={summaryData?.modifiedRangesCount}
             selectedMeal={summaryData?.modifiedSelectedMeal?.description}
             onSubmit={reserveUnitCallback}
+            loading={summaryModalLoading}
           />
-          // <div className="summary_container">
-          //   {/* Loading */}
-          //   {summaryModalLoading && <Loading />}
-          //   {!summaryModalLoading && (
-          //     <>
-          //       <p className="title">
-          //         <FormattedMessage id="Summary" />{" "}
-          //       </p>
-          //       <div className="summary_card">
-          //         <div className="unit_type_wrapper">
-          //           <div className="unit_type">challet</div>
-          //           {data?.rate > 0 && (
-          //             <div className="rating_wrapper">
-          //               <img src="/assets/star.png" alt="star" />
-          //               <span className="rate">{data?.rate}</span>
-          //             </div>
-          //           )}
-          //         </div>
-          //         <img
-          //           className="card_image"
-          //           src={data?.images?.[0]?.url}
-          //           alt="unit_image"
-          //         />
-          //         <p className="unit_title">{data?.title}</p>
-          //       </div>
-          //       <div className="d-flex align-items-center justify-content-between">
-          //         <div className="d-flex gap-2 align-items-center">
-          //           <img
-          //             src="/assets/ic_calendar.svg"
-          //             alt="calendar"
-          //             width="40"
-          //             height="40"
-          //           />
-          //           <p className="reservation_date mb-0">
-          //             <FormattedMessage id="Reservation_date" />{" "}
-          //           </p>
-          //         </div>
-          //         <div className="nights">
-          //           {daysCount} <FormattedMessage id="nights" />
-          //         </div>
-          //       </div>
-          //       <div className="from_to_wrapper mt-3">
-          //         <p className="d-flex justify-content-between">
-          //           <span>
-          //             <span className="label">
-          //               <FormattedMessage id="from" />
-          //             </span>
-          //             <span className="date">
-          //               {moment(modalData?.from).format("ddd, DD MMM")}
-          //             </span>
-          //           </span>
-          //           <span>
-          //             <span>{parseTime(modalData?.check_in)}</span>
-          //           </span>
-          //         </p>
-          //         <p className="d-flex justify-content-between">
-          //           <span>
-          //             <span className="label">
-          //               <FormattedMessage id="to" />
-          //             </span>
-          //             <span className="date">
-          //               {moment(modalData?.to).format("ddd, DD MMM")}
-          //             </span>
-          //           </span>
-          //           <span>
-          //             <span>{parseTime(modalData?.check_out)}</span>
-          //           </span>
-          //         </p>
-          //       </div>
-          //       <hr className="total_price_hr" />
-          //       <div className="d-flex align-items-center justify-content-between">
-          //         <div className="d-flex gap-2 align-items-center">
-          //           <img
-          //             src="/assets/money.svg"
-          //             alt="money"
-          //             width="40"
-          //             height="40"
-          //           />
-          //           <p className="reservation_date mb-0">
-          //             <FormattedMessage id="total_cost" />{" "}
-          //           </p>
-          //         </div>
-          //         <div className="total_money">
-          //           {totalReservationMoney} {" LE"}
-          //         </div>
-          //       </div>
-
-          //       <button
-          //         className="submit_reservations"
-          //         onClick={() => {
-          //           const submitData = {
-          //             from: moment(modalData?.from).format("D-M-YYYY"),
-          //             to: moment(modalData?.to).format("D-M-YYYY"),
-          //             unit_id: id,
-          //             unit_type: data.type,
-          //           };
-          //           reserveUnit(submitData).then((res) => {
-          //             if (res) {
-          //               router.push("/reservations");
-          //             }
-          //             getPropertyDetails(id).then((resp) => {
-          //               setData(resp.data);
-          //             });
-          //             setIsOpen(false);
-          //           });
-          //         }}
-          //       >
-          //         <FormattedMessage id="submit" />{" "}
-          //       </button>
-          //     </>
-          //   )}
-          // </div>
         }
       />
 
       <ModalComponent
         isOpen={isGalleryModalOpen}
         toggleModal={toggleGalleryModal}
-        className="image_gallery mx-auto p-0 p-md-3"
+        className="mx-auto p-0 p-md-3"
         modalBody={<PropertyCarousel images={data?.images} />}
       />
       <ToastContainer />
