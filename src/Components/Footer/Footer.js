@@ -31,10 +31,10 @@ export default function Footer() {
                   />
                 </svg>
                 <a
-                  href="tel:+201222381837"
+                  href="tel:+201117444212"
                   className="tw-hover:text-yellow-400 tw-transition-colors"
                 >
-                  +201222381837
+                  +201117444212
                 </a>
               </div>
               <div className="tw-flex tw-items-center tw-space-x-3">
