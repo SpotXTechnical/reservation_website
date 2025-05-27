@@ -660,41 +660,122 @@ export default function PropertyDetails() {
             </div>
 
             {/* Rules */}
-            <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4">
-              <RulesBanner onClick={() => setIsRulesModalOpen(true)} />
-
-              <ModalComponent
-                modalBody={
-                  <RulesDisplay
-                    rules={data?.rules}
-                    onGotIt={() => setIsRulesModalOpen(false)}
-                  />
-                }
-                isOpen={isRulesModalOpen}
-                toggleModal={() => setIsRulesModalOpen(!isRulesModalOpen)}
-              />
-            </div>
+            {Object.keys(data).length > 0 && (
+              <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4">
+                <RulesBanner onClick={() => setIsRulesModalOpen(true)} />
+                <ModalComponent
+                  modalBody={
+                    <RulesDisplay
+                      rules={data?.rules}
+                      onGotIt={() => setIsRulesModalOpen(false)}
+                    />
+                  }
+                  isOpen={isRulesModalOpen}
+                  toggleModal={() => setIsRulesModalOpen(!isRulesModalOpen)}
+                />
+              </div>
+            )}
 
             {/* Cancellation Policy */}
-            <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4">
-              <h2
-                className="tw-text-xl tw-font-bold tw-mb-3 tw-text-gray-800 tw-cursor-pointer"
-                onClick={() => (window.location = "/policy")}
-              >
-                <FormattedMessage id="Cancellation Policy" />
-              </h2>
+            {Object.keys(data).length > 0 &&
+              data.cancelation_policy?.details?.description && (
+                <div className="tw-bg-gradient-to-br tw-from-white tw-to-gray-50 tw-rounded-2xl tw-shadow-[0px_4px_20px_rgba(0,_0,_0,_0.08)] tw-border tw-border-gray-100 tw-p-6 tw-transition-all tw-duration-300 hover:tw-shadow-[0px_8px_30px_rgba(0,_0,_0,_0.12)] ">
+                  {/* Header with icon */}
+                  <div className="tw-flex tw-items-center tw-gap-3 tw-mb-4">
+                    <h2 className="tw-text-xl tw-font-bold tw-text-gray-800 tw-leading-tight">
+                      <FormattedMessage id="Cancellation Policy" />
+                    </h2>
+                  </div>
 
-              <p className="tw-text-sm tw-text-gray-600">
-                Please read our{" "}
-                <Link
-                  href="/policy"
-                  className="tw-text-blue-500 tw-font-medium hover:tw-underline"
-                >
-                  Refund Policy
-                </Link>{" "}
-                before cancellation.
-              </p>
-            </div>
+                  {/* Content section */}
+                  <div className="tw-space-y-4">
+                    {/* Policy title */}
+                    <div className="tw-flex tw-items-center tw-gap-3">
+                      <div className="tw-bg-blue-50 tw-p-1.5 tw-rounded-lg tw-mt-0.5 tw-flex tw-items-center tw-justify-center">
+                        <svg
+                          className="tw-w-4 tw-h-4 tw-text-blue-500"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M8 7V3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v4m2 0h-10m10 0h1a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1m6 0V5H10v2"
+                          />
+                        </svg>
+                      </div>
+                      <p className="tw-text-base tw-font-semibold tw-text-gray-800 tw-leading-relaxed">
+                        {data?.cancelation_policy?.details?.title}
+                      </p>
+                    </div>
+
+                    {/* Policy description */}
+                    <div className="tw-flex tw-items-center tw-gap-3">
+                      <div className="tw-bg-amber-50 tw-p-1.5 tw-rounded-lg tw-mt-0.5 tw-flex tw-items-center tw-justify-center">
+                        <svg
+                          className="tw-w-4 tw-h-4 tw-text-amber-500"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                      </div>
+                      <p className="tw-text-sm tw-text-gray-600 tw-leading-relaxed tw-font-medium">
+                        {data?.cancelation_policy?.details?.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Bottom accent line */}
+                  <div className="tw-mt-5 tw-h-1 tw-bg-gradient-to-r tw-from-[#44bcb7] tw-via-blue-200 tw-to-[#6cded9] tw-rounded-full tw-opacity-60"></div>
+                </div>
+              )}
+
+            {Object.keys(data).length > 0 &&
+              !data.cancelation_policy?.details?.description && (
+                <div className="tw-bg-gradient-to-br tw-from-gray-50 tw-to-gray-100 tw-rounded-2xl tw-shadow-[0px_4px_20px_rgba(0,_0,_0,_0.05)] tw-border tw-border-gray-200 tw-p-8 tw-text-center">
+                  {/* Empty state icon */}
+                  <div className="tw-mx-auto tw-mb-4 tw-bg-gray-100 tw-p-4 tw-rounded-full tw-w-16 tw-h-16 tw-flex tw-items-center tw-justify-center">
+                    <svg
+                      className="tw-w-8 tw-h-8 tw-text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      />
+                    </svg>
+                  </div>
+
+                  {/* Empty state text */}
+                  <h3 className="tw-text-lg tw-font-semibold tw-text-gray-700 tw-mb-2">
+                    <FormattedMessage id="Cancellation Policy" />
+                  </h3>
+                  <p className="tw-text-sm tw-text-gray-500 tw-leading-relaxed tw-max-w-xs tw-mx-auto">
+                    No cancellation policy information is currently available
+                    for this property.
+                  </p>
+
+                  {/* Subtle decoration */}
+                  <div className="tw-mt-6 tw-flex tw-justify-center tw-space-x-1">
+                    <div className="tw-w-2 tw-h-2 tw-bg-gray-300 tw-rounded-full tw-opacity-50"></div>
+                    <div className="tw-w-2 tw-h-2 tw-bg-gray-300 tw-rounded-full tw-opacity-30"></div>
+                    <div className="tw-w-2 tw-h-2 tw-bg-gray-300 tw-rounded-full tw-opacity-10"></div>
+                  </div>
+                </div>
+              )}
 
             {/* Property Owner */}
             <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4">
