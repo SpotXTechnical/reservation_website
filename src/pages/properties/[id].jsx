@@ -30,6 +30,8 @@ import Title from "../../Components/SharedComponents/Title/Title";
 import PropertyCarousel from "../../Components/PropertyCarousel";
 import GuestMealsSelector from "../../Components/GuestMealsSelector";
 import UnitBookingSummary from "../../Components/UnitBookingSummary";
+import RulesDisplay from "../../Components/RuleDisplay";
+import RulesBanner from "../../Components/RulesBanner";
 
 export default function PropertyDetails() {
   let { lang } = useSelector((state) => state.language);
@@ -55,6 +57,7 @@ export default function PropertyDetails() {
   const [mapPosition, setMapPosition] = useState(null);
   const [showHotelCalendar, setShowHotelCalendar] = useState(false);
   const [summaryData, setSummaryData] = useState(null);
+  const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
 
   const handleRedirectToOwnerProfile = (id) => {
     router.push(`/owner/${id}`);
@@ -654,6 +657,22 @@ export default function PropertyDetails() {
                       <ShimmerThumbnail key={i} height={150} rounded />
                     ))}
               </div>
+            </div>
+
+            {/* Rules */}
+            <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4">
+              <RulesBanner onClick={() => setIsRulesModalOpen(true)} />
+
+              <ModalComponent
+                modalBody={
+                  <RulesDisplay
+                    rules={data?.rules}
+                    onGotIt={() => setIsRulesModalOpen(false)}
+                  />
+                }
+                isOpen={isRulesModalOpen}
+                toggleModal={() => setIsRulesModalOpen(!isRulesModalOpen)}
+              />
             </div>
 
             {/* Cancellation Policy */}
