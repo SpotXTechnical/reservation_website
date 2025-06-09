@@ -9,15 +9,16 @@ export const axiosInstance = axios.create({
   },
 });
 
-// Request interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined" && localStorage.getItem("language")) {
       config.headers["Accept-Language"] = localStorage.getItem("language");
     }
-    config.headers["Authorization"] = `Bearer ${JSON.parse(
-      localStorage.getItem("access_token")
-    )}`;
+    if (typeof window !== "undefined" && localStorage.getItem("access_token")) {
+      config.headers["Authorization"] = `Bearer ${JSON.parse(
+        localStorage.getItem("access_token")
+      )}`;
+    }
     return config;
   },
   (error) => {
@@ -25,8 +26,6 @@ axiosInstance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
-// Response interceptor
 
 axiosInstance.interceptors.response.use(
   (response) => {

@@ -16,58 +16,128 @@ const ReservationCard = ({ data }) => {
   };
 
   return (
-    <div className="reservation_card d-flex flex-column">
+    <div className="tw-bg-white tw-rounded-lg tw-shadow-md tw-overflow-hidden tw-transition-shadow tw-duration-200 hover:tw-shadow-lg">
       <div
-        className={` d-flex cursor-pointer flex-column flex-lg-row`}
+        className="tw-flex tw-flex-col lg:tw-flex-row tw-cursor-pointer"
         onClick={() => handleNavigateToDetails(data.id)}
       >
-        <div className="main_image">
-          <img src={data?.unit?.main_image?.url} alt="main image" />
+        {/* Image Section */}
+        <div className="tw-w-full lg:tw-w-64 xl:tw-w-80 tw-h-48 lg:tw-h-40 xl:tw-h-48 tw-flex-shrink-0">
+          <img
+            src={data?.unit?.main_image?.url}
+            alt="main image"
+            className="tw-w-full tw-h-full tw-object-cover tw-rounded-t-lg lg:tw-rounded-t-none lg:tw-rounded-l-lg"
+          />
         </div>
-        <div className="info">
-          <div>
-            <p className="unit_type">{data?.unit?.type}</p>
-          </div>
-          <h3 className={`mb-3 title`}>{data?.unit?.title}</h3>
-          <p className={`mb-3 details d-flex flex-column d-lg-block`}>
-            <span className="me-3">
-              {data?.days} <FormattedMessage id="nights" />
-            </span>
-            <span className="fs-6">
-              ( <FormattedMessage id="from" /> &nbsp;
-              <span className="date">{getDayMonth(data?.from)}</span> &nbsp;
-              <FormattedMessage id="to" /> &nbsp;
-              <span className="date">{getDayMonth(data?.to)}</span> )
-            </span>
-          </p>
-          <p className={`d-flex gap-3 gap-md-5  total_cost`}>
-            <span>
-              <FormattedMessage id="totalCost" />
-            </span>
-            <span>
-              {data?.total_price} <FormattedMessage id="LE" />
-            </span>
-          </p>
-        </div>
-        <div className={`d-flex flex-column justify-content-between`}>
-          {data?.is_reviewed ? (
-            <p className={`review cursor-pointer icon-text-alignment`}>
-              <span>
-                <FormattedMessage id="reviewYourRent" />
+
+        {/* Content Section */}
+        <div className="tw-flex tw-flex-1 tw-flex-col lg:tw-flex-row tw-p-4 sm:tw-p-6">
+          {/* Main Information */}
+          <div className="tw-flex-1 tw-space-y-3 sm:tw-space-y-4">
+            {/* Unit Type */}
+            <div>
+              <p className="tw-text-xs sm:tw-text-sm tw-font-medium tw-text-[#44bcb7] tw-uppercase tw-tracking-wide">
+                {data?.unit?.type}
+              </p>
+            </div>
+
+            {/* Title */}
+            <h3 className="tw-text-lg sm:tw-text-xl lg:tw-text-2xl tw-font-semibold tw-text-gray-800 tw-leading-tight">
+              {data?.unit?.title}
+            </h3>
+
+            {/* Details */}
+            <div className="tw-text-sm sm:tw-text-base tw-text-gray-600 tw-space-y-1 sm:tw-space-y-0">
+              <div className="tw-flex tw-flex-col sm:tw-flex-row sm:tw-items-center tw-gap-1 sm:tw-gap-3">
+                <span className="tw-font-medium">
+                  {data?.days} <FormattedMessage id="nights" />
+                </span>
+                <span className="tw-text-xs sm:tw-text-sm tw-text-gray-500">
+                  ( <FormattedMessage id="from" />{" "}
+                  <span className="tw-font-medium tw-text-gray-700">
+                    {getDayMonth(data?.from)}
+                  </span>{" "}
+                  <FormattedMessage id="to" />{" "}
+                  <span className="tw-font-medium tw-text-gray-700">
+                    {getDayMonth(data?.to)}
+                  </span>{" "}
+                  )
+                </span>
+              </div>
+            </div>
+
+            {/* Total Cost */}
+            <div className="tw-flex tw-flex-col sm:tw-flex-row sm:tw-items-center tw-gap-2 sm:tw-gap-4 tw-text-sm sm:tw-text-base">
+              <span className="tw-text-gray-600">
+                <FormattedMessage id="totalCost" />
               </span>
-              <Image src={Like} alt="like" />
-            </p>
-          ) : null}
-          <p className={`align-self-end status ${data?.status}`}>
-            <Image src={icon} alt="pending" />
-            {data?.status}
-          </p>
+              <span className="tw-font-semibold tw-text-lg sm:tw-text-xl tw-text-gray-800">
+                {data?.total_price} <FormattedMessage id="LE" />
+              </span>
+            </div>
+          </div>
+
+          {/* Status Section */}
+          <div className="tw-flex tw-flex-row lg:tw-flex-col tw-items-center lg:tw-items-end tw-justify-between lg:tw-justify-between tw-mt-4 lg:tw-mt-0 tw-lg:tw-ml-6">
+            {/* Review Button */}
+            {data?.is_reviewed && (
+              <button className="tw-flex tw-items-center tw-gap-2 tw-px-3 tw-py-2 tw-text-sm tw-text-blue-600 hover:tw-text-blue-800 tw-font-medium tw-rounded-lg hover:tw-bg-blue-50 tw-transition-colors tw-duration-200">
+                <span>
+                  <FormattedMessage id="reviewYourRent" />
+                </span>
+                <Image src={Like} alt="like" className="tw-w-4 tw-h-4" />
+              </button>
+            )}
+
+            {/* Status Badge */}
+            <div
+              className={`tw-flex tw-items-center tw-gap-2 tw-px-3 tw-py-1 tw-rounded-full tw-text-sm tw-font-medium
+              ${
+                data?.status === "reserved"
+                  ? "tw-bg-green-100 tw-text-green-800"
+                  : ""
+              }
+              ${
+                data?.status === "pending"
+                  ? "tw-bg-yellow-100 tw-text-yellow-800"
+                  : ""
+              }
+              ${
+                data?.status === "negotiation"
+                  ? "tw-bg-blue-100 tw-text-blue-800"
+                  : ""
+              }
+              ${
+                data?.status === "accepted"
+                  ? "tw-bg-purple-100 tw-text-purple-800"
+                  : ""
+              }
+              ${
+                data?.status === "canceled"
+                  ? "tw-bg-red-100 tw-text-red-800"
+                  : ""
+              }
+              ${
+                data?.status === "rejected"
+                  ? "tw-bg-gray-100 tw-text-gray-800"
+                  : ""
+              }
+            `}
+            >
+              <Image src={icon} alt={data?.status} className="tw-w-4 tw-h-4" />
+              <span className="tw-capitalize">{data?.status}</span>
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* Negotiation Message */}
       {data?.status === "negotiation" && (
-        <p className="negotiation-msg">
-          The owner has sent you suggestions, check them now.{" "}
-        </p>
+        <div className="tw-bg-blue-50 tw-border-t tw-border-blue-100 tw-p-4 sm:tw-p-6">
+          <p className="tw-text-sm sm:tw-text-base tw-text-blue-800 tw-font-medium">
+            The owner has sent you suggestions, check them now.
+          </p>
+        </div>
       )}
     </div>
   );

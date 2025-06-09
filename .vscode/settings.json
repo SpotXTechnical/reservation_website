@@ -1,4 +1,15 @@
 {
   "typescript.tsdk": "node_modules\\typescript\\lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "tailwindCSS.includeLanguages": {
+    "javascript": "javascript",
+    "javascriptreact": "javascriptreact",
+    "typescript": "typescript",
+    "typescriptreact": "typescriptreact",
+    "mdx": "mdx"
+  },
+  "tailwindCSS.experimental.classRegex": ["tw-([\\w-]+)/"],
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
 }

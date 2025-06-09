@@ -37,6 +37,7 @@ import "./app/regions.css";
 import "./app/checkbox.css";
 import "./app/ownerprofile.css";
 import Head from "next/head";
+import Announcements from "./Components/Announcements";
 
 export default function Layout({ children }) {
   return (
@@ -51,6 +52,7 @@ export default function Layout({ children }) {
         />
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
       </Head>
+      <Announcements />
       <Header />
       <div className="flex-grow-1 ">{children}</div>
       <Footer />

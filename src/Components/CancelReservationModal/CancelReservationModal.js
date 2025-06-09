@@ -28,25 +28,31 @@ export default function CancelReservationModal({
     });
   };
   return (
-    <div>
-      <h4 className={styles.header}>
+    <div className="tw-p-4 sm:tw-p-6 tw-text-center">
+      <h4 className="tw-text-lg sm:tw-text-xl lg:tw-text-2xl tw-font-semibold tw-text-gray-800 tw-mb-4 sm:tw-mb-6">
         Are you sure you want to cancel Reservation?
       </h4>
       {reservationStatus === "reserved" && (
-        <p className={styles.cancellation}>
-          Please Read Our <Link href="/policy">Refund Policy</Link> Before
-          Cancellation.
+        <p className="tw-text-sm sm:tw-text-base tw-text-gray-600 tw-mb-6 sm:tw-mb-8 tw-leading-relaxed">
+          Please Read Our{" "}
+          <Link
+            href="/policy"
+            className="tw-text-blue-600 hover:tw-text-blue-800 tw-underline tw-font-medium"
+          >
+            Refund Policy
+          </Link>{" "}
+          Before Cancellation.
         </p>
       )}
-      <div className="d-flex mt-5 gap-3 align-items-center justify-content-center">
+      <div className="tw-flex tw-flex-col sm:tw-flex-row tw-gap-3 sm:tw-gap-4 tw-items-center tw-justify-center tw-mt-6 sm:tw-mt-8">
         <button
-          className={`btn  ${styles.CTA_yes}`}
+          className="tw-w-full sm:tw-w-auto tw-px-6 tw-py-3 tw-bg-red-600 hover:tw-bg-red-700 tw-text-white tw-font-medium tw-rounded-lg tw-transition-colors tw-duration-200 tw-min-w-20 sm:tw-min-w-24"
           onClick={handleCancelReservation}
         >
           Yes
         </button>
         <button
-          className={`btn  ${styles.CTA_no}`}
+          className="tw-w-full sm:tw-w-auto tw-px-6 tw-py-3 tw-bg-gray-300 hover:tw-bg-gray-400 tw-text-gray-800 tw-font-medium tw-rounded-lg tw-transition-colors tw-duration-200 tw-min-w-20 sm:tw-min-w-24"
           onClick={() => closeModalCb()}
         >
           No
