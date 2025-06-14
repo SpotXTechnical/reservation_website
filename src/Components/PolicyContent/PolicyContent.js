@@ -1,233 +1,231 @@
-import React, { useEffect, useReducer, useState } from "react";
-import styles from "../../pages/policy/policy.module.css";
 import Head from "next/head";
-import Loading from "../Loading/Loading";
-import { getRefundPolicy } from "../../app/Apis/refundPolicy";
-
-const minDays = 21;
-const maxDays = 14;
-
-const initialState = {
-  refundPolicyData: null,
-  loading: false,
-  error: false,
-};
-const LOADING_STATE = "LOADING_STATE";
-const ERROR_STATE = "ERROR_STATE";
-const SUCCESS_STATE = "SUCCESS_STATE";
-const reducer = (state, action) => {
-  switch (action.type) {
-    case LOADING_STATE:
-      return {
-        ...state,
-        loading: true,
-        error: false,
-      };
-    case ERROR_STATE:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-      };
-    case SUCCESS_STATE:
-      return {
-        refundPolicyData: action.payload,
-        loading: false,
-        error: false,
-      };
-
-    default:
-      return initialState;
-  }
-};
 
 export default function PolicyContent() {
-  const [refundState, dispatch] = useReducer(reducer, initialState);
-  useEffect(() => {
-    dispatch({ type: LOADING_STATE });
-    getRefundPolicy()
-      .then((response) => {
-        const customPolicyObject = {};
-        response.map((policy) => {
-          customPolicyObject[policy.key] = policy.value;
-        });
-        console.log(customPolicyObject);
-        dispatch({ type: SUCCESS_STATE, payload: { ...customPolicyObject } });
-      })
-      .catch((error) => {
-        dispatch({ type: ERROR_STATE, payload: error.message });
-      });
-  }, []);
   return (
     <>
       <Head>
         <title>Policy | SpotX</title>
         <meta name="description" content={"SpotX Policy"} />
-      </Head>{" "}
-      {!refundState.loading && !refundState?.error && (
-        <main>
-          <div className={styles.policy_container}>
-            <h1 className={styles.title}>Cancellation and Refund Policy</h1>
-            <section>
-              <h2>Cancellation and Refund</h2>
-              <ol>
-                <li>
-                  The tenant can cancel the reservation before the start of the
-                  stay under the following conditions:
-                  <ul>
-                    <li>
-                      The cancellation must be officially communicated to the
-                      host through the app.
+      </Head>
+
+      <main className="tw-min-h-screen tw-bg-gray-50 tw-py-8 tw-px-4">
+        <div className="tw-max-w-4xl tw-mx-auto tw-space-y-12">
+          {/* English Section */}
+          <section className="tw-bg-white tw-rounded-xl tw-shadow-lg tw-p-6 md:tw-p-8">
+            <div className="tw-mb-8">
+              <h1 className="tw-text-3xl md:tw-text-4xl tw-font-bold tw-text-gray-900 tw-mb-2">
+                Cancellation Policies
+              </h1>
+              <div className="tw-w-20 tw-h-1 tw-bg-blue-600 tw-rounded"></div>
+            </div>
+
+            <div className="tw-prose tw-prose-lg tw-max-w-none">
+              <p className="tw-text-gray-700 tw-mb-8 tw-leading-relaxed">
+                Our platform offers different types of cancellation policies
+                depending on the unit you book. Each unit may have different
+                conditions, so we strongly recommend reviewing the cancellation
+                terms shown on the unit details screen before confirming your
+                reservation.
+              </p>
+
+              <div className="tw-space-y-8">
+                {/* Non-Refundable Policy */}
+                <div className="tw-border-l-4 tw-border-red-500 tw-pl-6 tw-py-4 tw-bg-red-50 tw-rounded-r-lg">
+                  <div className="tw-flex tw-items-center tw-mb-3">
+                    <span className="tw-text-2xl tw-mr-3">❌</span>
+                    <h3 className="tw-text-xl tw-font-semibold tw-text-gray-900">
+                      Non-Refundable
+                    </h3>
+                  </div>
+                  <p className="tw-text-gray-700 tw-mb-3">
+                    You may cancel your reservation at any time; however, no
+                    refund will be issued regardless of when the cancellation
+                    occurs.
+                  </p>
+                  <div className="tw-bg-yellow-100 tw-p-3 tw-rounded-lg tw-border-l-4 tw-border-yellow-500">
+                    <p className="tw-text-sm tw-text-yellow-800">
+                      <strong>Note:</strong> This policy applies as-is, but
+                      whether a unit follows this policy or not varies from one
+                      unit to another.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Free Cancellation Policy */}
+                <div className="tw-border-l-4 tw-border-green-500 tw-pl-6 tw-py-4 tw-bg-green-50 tw-rounded-r-lg">
+                  <div className="tw-flex tw-items-center tw-mb-3">
+                    <span className="tw-text-2xl tw-mr-3">✅</span>
+                    <h3 className="tw-text-xl tw-font-semibold tw-text-gray-900">
+                      Free Cancellation
+                    </h3>
+                  </div>
+                  <p className="tw-text-gray-700 tw-mb-3">
+                    This policy allows you to cancel your reservation and
+                    receive a full refund, if the cancellation is made a certain
+                    number of days before check-in.
+                  </p>
+                  <div className="tw-bg-blue-100 tw-p-3 tw-rounded-lg tw-border-l-4 tw-border-blue-500 tw-mb-3">
+                    <p className="tw-text-sm tw-text-blue-800">
+                      <strong>Example:</strong> Cancel up to 2 days before
+                      check-in for a full refund.
+                    </p>
+                  </div>
+                  <div className="tw-bg-yellow-100 tw-p-3 tw-rounded-lg tw-border-l-4 tw-border-yellow-500">
+                    <p className="tw-text-sm tw-text-yellow-800">
+                      <strong>Note:</strong> The exact number of days allowed
+                      for free cancellation varies depending on the unit.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Flexible Cancellation Policy */}
+                <div className="tw-border-l-4 tw-border-orange-500 tw-pl-6 tw-py-4 tw-bg-orange-50 tw-rounded-r-lg">
+                  <div className="tw-flex tw-items-center tw-mb-3">
+                    <span className="tw-text-2xl tw-mr-3">📅</span>
+                    <h3 className="tw-text-xl tw-font-semibold tw-text-gray-900">
+                      Flexible Cancellation
+                    </h3>
+                  </div>
+                  <p className="tw-text-gray-700 tw-mb-4">
+                    This policy offers partial or full refunds based on how far
+                    in advance you cancel:
+                  </p>
+                  <ul className="tw-space-y-2 tw-mb-4">
+                    <li className="tw-flex tw-items-center tw-text-gray-700">
+                      <div className="tw-w-2 tw-h-2 tw-bg-green-500 tw-rounded-full tw-mr-3"></div>
+                      Full refund if you cancel several days before check-in
                     </li>
-                    <li>
-                      Cancellation fees may apply according to the policy
-                      specified during the booking process.
+                    <li className="tw-flex tw-items-center tw-text-gray-700">
+                      <div className="tw-w-2 tw-h-2 tw-bg-yellow-500 tw-rounded-full tw-mr-3"></div>
+                      Partial refund (e.g., 40%) if you cancel closer to the
+                      check-in date
                     </li>
-                    <li>
-                      If the reservation is canceled{" "}
-                      {refundState.refundPolicyData?.min_days_before_cancel ||
-                        minDays}{" "}
-                      days prior to the booking date, the full amount will be
-                      refunded.
-                    </li>
-                    <li>
-                      If the reservation is canceled between{" "}
-                      {refundState.refundPolicyData?.max_days_before_cancel ||
-                        maxDays}{" "}
-                      to{" "}
-                      {refundState.refundPolicyData?.min_days_before_cancel ||
-                        minDays}{" "}
-                      days before the reservation date, 50% of the amount paid
-                      will be refunded.
-                    </li>
-                    <li>
-                      If the reservation is canceled{" "}
-                      {refundState.refundPolicyData?.max_days_before_cancel ||
-                        maxDays}{" "}
-                      days or less before the booking date, no refund will be
-                      issued.
+                    <li className="tw-flex tw-items-center tw-text-gray-700">
+                      <div className="tw-w-2 tw-h-2 tw-bg-red-500 tw-rounded-full tw-mr-3"></div>
+                      No refund if you cancel within a short window before
+                      arrival
                     </li>
                   </ul>
-                </li>
-                <li>
-                  The cancellation and refund policy may be clearly specified
-                  during the booking process, including the allowable
-                  cancellation period and applicable fees.
-                </li>
-              </ol>
-            </section>
-            <section>
-              <h2>Cancellation by the Host</h2>
-              <ol>
-                <li>
-                  The host reserves the right to cancel the reservation in
-                  exceptional circumstances, such as unavailability of the
-                  accommodation or emergencies.
-                </li>
-                <li>
-                  In case of cancellation by the host, a full refund will be
-                  issued to the tenant without any cancellation fees.
-                </li>
-              </ol>
-            </section>
-            <section>
-              <h2>Communication and Inquiries</h2>
-              <ul>
-                <li>
-                  For any inquiries regarding the cancellation and refund
-                  policy, please directly contact the host through the app.{" "}
-                </li>
-                <li>
-                  For disputes or additional inquiries, please contact the
-                  customer support team via email at{" "}
-                  <a href="mailto:info@spotx.app">info@spotx.app</a>
-                </li>
-              </ul>
-              <p>
-                Note: The terms and conditions outlined in the cancellation and
-                refund policy apply to all bookings, tenants, and hosts on the
-                app.{" "}
+                  <div className="tw-bg-yellow-100 tw-p-3 tw-rounded-lg tw-border-l-4 tw-border-yellow-500">
+                    <p className="tw-text-sm tw-text-yellow-800">
+                      <strong>Note:</strong> The time periods and refund
+                      percentages differ between units. Always review the
+                      cancellation details for each specific unit.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Arabic Section */}
+          <section
+            className="tw-bg-white tw-rounded-xl tw-shadow-lg tw-p-6 md:tw-p-8"
+            dir="rtl"
+          >
+            <div className="tw-mb-8">
+              <h1 className="tw-text-3xl md:tw-text-4xl tw-font-bold tw-text-gray-900 tw-mb-2">
+                سياسات الإلغاء
+              </h1>
+              <div className="tw-w-20 tw-h-1 tw-bg-blue-600 tw-rounded"></div>
+            </div>
+
+            <div className="tw-prose tw-prose-lg tw-max-w-none">
+              <p className="tw-text-gray-700 tw-mb-8 tw-leading-relaxed">
+                نحن نوفر أنواعًا مختلفة من سياسات الإلغاء حسب كل وحدة حجز. تختلف
+                الشروط من وحدة إلى أخرى، لذلك نوصي بمراجعة سياسة الإلغاء
+                المعروضة في صفحة تفاصيل الوحدة قبل تأكيد الحجز.
               </p>
-            </section>
-          </div>
-          <div className={styles.policy_container} dir="rtl">
-            <h1 className={styles.title}>سياسة الإلغاء والاسترداد</h1>
-            <section>
-              <h2>الإلغاء والاسترداد</h2>
-              <ol>
-                <li>
-                  يمكن للمستأجر إلغاء الحجز قبل بدء الإقامة بموجب الشروط
-                  التالية:
-                  <ul>
-                    <li>يجب إبلاغ المضيف بالإلغاء بشكل رسمي عبر التطبيق.</li>
-                    <li>
-                      قد يتم تطبيق رسوم إلغاء وفقًا للسياسة المحددة في عملية
-                      الحجز.
+
+              <div className="tw-space-y-8">
+                {/* Non-Refundable Policy - Arabic */}
+                <div className="tw-border-r-4 tw-border-red-500 tw-pr-6 tw-py-4 tw-bg-red-50 tw-rounded-l-lg">
+                  <div className="tw-flex tw-items-center tw-mb-3 tw-flex-row">
+                    <span className="tw-text-2xl tw-ml-3">❌</span>
+                    <h3 className="tw-text-xl tw-font-semibold tw-text-gray-900">
+                      غير قابلة للاسترداد
+                    </h3>
+                  </div>
+                  <p className="tw-text-gray-700 tw-mb-3">
+                    يمكنك إلغاء الحجز في أي وقت، ولكن لن يتم استرداد أي مبلغ بغض
+                    النظر عن موعد الإلغاء.
+                  </p>
+                  <div className="tw-bg-yellow-100 tw-p-3 tw-rounded-lg tw-border-r-4 tw-border-yellow-500">
+                    <p className="tw-text-sm tw-text-yellow-800">
+                      <strong>ملاحظة:</strong> هذه السياسة ثابتة، ولكن تطبيقها
+                      يختلف من وحدة إلى أخرى.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Free Cancellation Policy - Arabic */}
+                <div className="tw-border-r-4 tw-border-green-500 tw-pr-6 tw-py-4 tw-bg-green-50 tw-rounded-l-lg">
+                  <div className="tw-flex tw-items-center tw-mb-3">
+                    <span className="tw-text-2xl tw-ml-3">✅</span>
+                    <h3 className="tw-text-xl tw-font-semibold tw-text-gray-900">
+                      إلغاء مجاني
+                    </h3>
+                  </div>
+                  <p className="tw-text-gray-700 tw-mb-3">
+                    تمنحك هذه السياسة إمكانية إلغاء الحجز واسترداد كامل المبلغ،
+                    إذا تم الإلغاء قبل عدد معين من الأيام من موعد تسجيل الوصول.
+                  </p>
+                  <div className="tw-bg-blue-100 tw-p-3 tw-rounded-lg tw-border-r-4 tw-border-blue-500 tw-mb-3">
+                    <p className="tw-text-sm tw-text-blue-800">
+                      <strong>مثال:</strong> يمكن الإلغاء حتى يومين قبل تسجيل
+                      الوصول مع استرداد كامل للمبلغ.
+                    </p>
+                  </div>
+                  <div className="tw-bg-yellow-100 tw-p-3 tw-rounded-lg tw-border-r-4 tw-border-yellow-500">
+                    <p className="tw-text-sm tw-text-yellow-800">
+                      <strong>ملاحظة:</strong> عدد الأيام المسموح بها للإلغاء
+                      المجاني يختلف حسب كل وحدة.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Flexible Cancellation Policy - Arabic */}
+                <div className="tw-border-r-4 tw-border-orange-500 tw-pr-6 tw-py-4 tw-bg-orange-50 tw-rounded-l-lg">
+                  <div className="tw-flex tw-items-center tw-mb-3">
+                    <span className="tw-text-2xl tw-ml-3">📅</span>
+                    <h3 className="tw-text-xl tw-font-semibold tw-text-gray-900">
+                      إلغاء مرن
+                    </h3>
+                  </div>
+                  <p className="tw-text-gray-700 tw-mb-4">
+                    تتيح هذه السياسة استردادًا كليًا أو جزئيًا حسب توقيت
+                    الإلغاء:
+                  </p>
+                  <ul className="tw-space-y-2 tw-mb-4">
+                    <li className="tw-flex tw-items-center tw-text-gray-700">
+                      <div className="tw-w-2 tw-h-2 tw-bg-green-500 tw-rounded-full tw-ml-3"></div>
+                      استرداد كامل عند الإلغاء قبل عدد معين من الأيام من تسجيل
+                      الوصول
                     </li>
-                    <li>
-                      إذا تم إلغاء الحجز قبل{" "}
-                      {refundState.refundPolicyData?.min_days_before_cancel ||
-                        minDays}{" "}
-                      أيام من تاريخ الحجز، يتم استرداد المبلغ المدفوع بالكامل.
+                    <li className="tw-flex tw-items-center tw-text-gray-700">
+                      <div className="tw-w-2 tw-h-2 tw-bg-yellow-500 tw-rounded-full tw-ml-3"></div>
+                      استرداد جزئي (مثل 40٪) عند الإلغاء في فترة أقرب من موعد
+                      الوصول
                     </li>
-                    <li>
-                      إذا تم إلغاء الحجز في فترة من{" "}
-                      {refundState.refundPolicyData?.max_days_before_cancel ||
-                        maxDays}{" "}
-                      إلى{" "}
-                      {refundState.refundPolicyData?.min_days_before_cancel ||
-                        minDays}{" "}
-                      أيام قبل تاريخ الحجز، يتم استرداد 50% من المبلغ المدفوع.
-                    </li>
-                    <li>
-                      إذا تم إلغاء الحجز قبل{" "}
-                      {refundState.refundPolicyData?.max_days_before_cancel ||
-                        maxDays}{" "}
-                      أيام أو أقل من تاريخ الحجز، لا يتم استرداد المبلغ المدفوع.
+                    <li className="tw-flex tw-items-center tw-text-gray-700">
+                      <div className="tw-w-2 tw-h-2 tw-bg-red-500 tw-rounded-full tw-ml-3"></div>
+                      غير قابل للاسترداد عند الإلغاء في الأيام الأخيرة قبل تسجيل
+                      الوصول
                     </li>
                   </ul>
-                </li>
-                <li>
-                  قد يتم تحديد سياسة الإلغاء والاسترداد بوضوح في عملية الحجز،
-                  بما في ذلك الفترة المسموح بها للإلغاء والرسوم المطبقة.
-                </li>
-              </ol>
-            </section>
-            <section>
-              <h2>الإلغاء بواسطة المضيف</h2>
-              <ol>
-                <li>
-                  يحتفظ المضيف بحق إلغاء الحجز في حالات استثنائية، مثل عدم توافر
-                  الإقامة أو ظروف طارئة.
-                </li>
-                <li>
-                  في حالة إلغاء الحجز من قبل المضيف، يتم استرداد المبلغ بالكامل
-                  للمستأجر دون خصم أي رسوم إلغاء.
-                </li>
-              </ol>
-            </section>
-            <section>
-              <h2>التواصل والاستفسارات</h2>
-              <ul>
-                <li>
-                  لأية استفسارات حول سياسة الإلغاء والاسترداد، يرجى التواصل مع
-                  المضيف مباشرة عبر التطبيق.
-                </li>
-                <li>
-                  في حالة وجود خلافات أو استفسارات إضافية، يرجى الاتصال بفريق
-                  الدعم الفني عبر البريد الإلكتروني{" "}
-                  <a href="mailto:info@spotx.app">info@spotx.app</a>
-                </li>
-              </ul>
-              <p>
-                ملاحظة: تطبق الشروط والأحكام الواردة في سياسة الإلغاء والاسترداد
-                على جميع الحجوزات والمستأجرين والمضيفين في التطبيق.
-              </p>
-            </section>
-          </div>
-        </main>
-      )}
-      {refundState?.loading && <Loading />}
+                  <div className="tw-bg-yellow-100 tw-p-3 tw-rounded-lg tw-border-r-4 tw-border-yellow-500">
+                    <p className="tw-text-sm tw-text-yellow-800">
+                      <strong>ملاحظة:</strong> الفترات الزمنية ونسبة الاسترداد
+                      تختلف من وحدة إلى أخرى. يرجى دائمًا مراجعة سياسة الإلغاء
+                      الخاصة بكل وحدة على حدة.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
     </>
   );
 }
