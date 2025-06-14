@@ -157,21 +157,28 @@ export default function PropertyDetails() {
   useEffect(
     function () {
       if (id) {
-        getPropertyDetails(id).then((res) => {
-          setData(res.data);
-          res?.data?.latitude &&
-            res?.data?.longitude &&
-            setMapPosition({
-              lat: res?.data?.latitude,
-              lng: res?.data?.longitude,
-            });
+        getPropertyDetails(id)
+          .then((res) => {
+            setData(res.data);
+            res?.data?.latitude &&
+              res?.data?.longitude &&
+              setMapPosition({
+                lat: res?.data?.latitude,
+                lng: res?.data?.longitude,
+              });
 
-          if (res.data.type !== "hotel") {
-            getPropertyReservationDetails(id).then((res) => {
-              setReservationData(res);
-            });
-          }
-        });
+            if (res.data.type !== "hotel") {
+              getPropertyReservationDetails(id).then((res) => {
+                setReservationData(res);
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching property details:", error);
+            if (error.response?.status === 404) {
+              router.push("/404");
+            }
+          });
       }
     },
     [id, lang]
