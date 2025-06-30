@@ -275,6 +275,9 @@ export default function PropertyDetails() {
         formData.append("children[]", child);
       });
     }
+    if (summaryData?.range_id) {
+      formData.append("range_id", summaryData?.range_id);
+    }
     setSummaryModalLoading(true);
     reserveUnit(formData).then((res) => {
       setSummaryModalLoading(false);
@@ -297,6 +300,7 @@ export default function PropertyDetails() {
       summaryHotelData.append("from", moment(startDate).format("YYYY-MM-DD"));
       summaryHotelData.append("to", moment(endDate).format("YYYY-MM-DD"));
     }
+    // if the unit type is hotel and the reservation is an offer
     if (isOffer && data.type === "hotel") {
       summaryHotelData.append("range_id", offerId);
       summaryHotelData.append(
@@ -307,16 +311,21 @@ export default function PropertyDetails() {
       offerSummaryData?.childrenFormRanges?.forEach((child) => {
         summaryHotelData.append("children[]", child);
       });
-      setSummaryData(offerSummaryData);
+      setSummaryData({
+        ...offerSummaryData,
+        range_id: offerId,
+      });
     }
-
+    // if the unit type is not hotel and the reservation is an offer
     if (isOffer && data.type !== "hotel") {
+      setSummaryData((prev) => ({ ...prev, range_id: offerId }));
       summaryHotelData.append("range_id", offerId);
     }
 
     summaryHotelData.append("unit_id", id);
     summaryHotelData.append("unit_type", data.type);
 
+    // if the unit type is hotel and the reservation is not an offer
     if (data.type === "hotel" && !isOffer) {
       summaryHotelData.append("meal_id", summaryData?.modifiedSelectedMeal?.id);
       summaryHotelData.append("adults", summaryData?.adults);
