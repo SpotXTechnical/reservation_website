@@ -52,3 +52,10 @@ export const acceptOffer = async (id) => {
     throw new Error(error.message);
   }
 };
+
+export const getOffers = async (unitId, offerquery) => {
+  const response = await axiosInstance.get(
+    `/api/v1/user/units/${unitId}/offers?${offerquery}`
+  );
+  return response.data;
+};
