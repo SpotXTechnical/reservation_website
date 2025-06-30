@@ -49,11 +49,9 @@ export default function PropertyDetails() {
   const { id } = router.query;
   const [data, setData] = useState({});
   const [reservationData, setReservationData] = useState({});
-
   const [isOpen, setIsOpen] = useState(false);
   const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
   const [summaryModalLoading, setSummaryModalLoading] = useState(false);
-  const toggleModal = () => setIsOpen(!isOpen);
   const toggleGalleryModal = () => setIsGalleryModalOpen(!isGalleryModalOpen);
   const [showComponent, setShowComponent] = useState(false);
   const [mapPosition, setMapPosition] = useState(null);
@@ -61,6 +59,12 @@ export default function PropertyDetails() {
   const [summaryData, setSummaryData] = useState(null);
   const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
   const [isOffersModalOpen, setIsOffersModalOpen] = useState(false);
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+    if (isOpen) {
+      setSummaryData(null);
+    }
+  };
 
   const handleRedirectToOwnerProfile = (id) => {
     router.push(`/owner/${id}`);
@@ -326,6 +330,7 @@ export default function PropertyDetails() {
     summaryHotelData.append("unit_type", data.type);
 
     // if the unit type is hotel and the reservation is not an offer
+
     if (data.type === "hotel" && !isOffer) {
       summaryHotelData.append("meal_id", summaryData?.modifiedSelectedMeal?.id);
       summaryHotelData.append("adults", summaryData?.adults);
@@ -333,6 +338,7 @@ export default function PropertyDetails() {
         summaryHotelData.append("children[]", child);
       });
     }
+
     setIsOpen(true);
     setSummaryModalLoading(true);
     getSummary(summaryHotelData)
@@ -721,7 +727,9 @@ export default function PropertyDetails() {
                     />
                   }
                   isOpen={isOffersModalOpen}
-                  toggleModal={() => setIsOffersModalOpen(!isOffersModalOpen)}
+                  toggleModal={() => {
+                    setIsOffersModalOpen(!isOffersModalOpen);
+                  }}
                 />
               </div>
             )}
