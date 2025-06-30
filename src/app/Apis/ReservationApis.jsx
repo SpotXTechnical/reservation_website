@@ -55,7 +55,7 @@ export const acceptOffer = async (id) => {
 
 export const getOffers = async (unitId, offerquery) => {
   const response = await axiosInstance.get(
-    `/api/v1/user/units/${unitId}/offers?${offerquery}`
+    `/api/v1/user/units/${unitId}/offers?${offerquery ? offerquery : ""}`
   );
   return response.data;
 };
