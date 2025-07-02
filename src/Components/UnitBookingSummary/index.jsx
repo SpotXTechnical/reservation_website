@@ -138,7 +138,8 @@ const UnitBookingSummary = ({
                   </div>
 
                   {/* Children */}
-                  {Object.keys(childrenData).length > 0 &&
+                  {childrenData &&
+                    Object.keys(childrenData).length > 0 &&
                     Object.keys(childrenData).map((key) => (
                       <div
                         className="tw-text-center tw-bg-gray-50 tw-p-2 sm:tw-p-3 tw-rounded-lg tw-border"

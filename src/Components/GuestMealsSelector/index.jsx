@@ -1,5 +1,4 @@
 "use client";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const GuestMealsSelector = ({
@@ -10,7 +9,8 @@ const GuestMealsSelector = ({
   maxChildrenNumber,
   freeChildrenNumber,
   onSelectGuestMeals,
-  onGuestMealsChange
+  onGuestMealsChange,
+  buttonText = "Check Availability",
 }) => {
   const [selectedMeal, setSelectedMeal] = useState(mealsOptions[0].id);
   const [adults, setAdults] = useState(adultsNumber);
@@ -40,8 +40,8 @@ const GuestMealsSelector = ({
   }, [childrenAges, ageRanges]);
 
   useEffect(() => {
-    onGuestMealsChange()
-  },[selectedMeal, adults, children, onGuestMealsChange])
+    onGuestMealsChange();
+  }, [selectedMeal, adults, children, onGuestMealsChange]);
 
   const handleIncrement = (type) => {
     if (type === "adults") {
@@ -315,7 +315,7 @@ const GuestMealsSelector = ({
           });
         }}
       >
-        Check Availability
+        {buttonText}
       </button>
     </div>
   );

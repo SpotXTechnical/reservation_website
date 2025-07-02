@@ -32,6 +32,8 @@ import GuestMealsSelector from "../../Components/GuestMealsSelector";
 import UnitBookingSummary from "../../Components/UnitBookingSummary";
 import RulesDisplay from "../../Components/RuleDisplay";
 import RulesBanner from "../../Components/RulesBanner";
+import OffersBanner from "../../Components/OffersBanner";
+import OffersDisplay from "../../Components/OffersDisplay";
 
 export default function PropertyDetails() {
   let { lang } = useSelector((state) => state.language);
@@ -47,17 +49,22 @@ export default function PropertyDetails() {
   const { id } = router.query;
   const [data, setData] = useState({});
   const [reservationData, setReservationData] = useState({});
-
   const [isOpen, setIsOpen] = useState(false);
   const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
   const [summaryModalLoading, setSummaryModalLoading] = useState(false);
-  const toggleModal = () => setIsOpen(!isOpen);
   const toggleGalleryModal = () => setIsGalleryModalOpen(!isGalleryModalOpen);
   const [showComponent, setShowComponent] = useState(false);
   const [mapPosition, setMapPosition] = useState(null);
   const [showHotelCalendar, setShowHotelCalendar] = useState(false);
   const [summaryData, setSummaryData] = useState(null);
   const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
+  const [isOffersModalOpen, setIsOffersModalOpen] = useState(false);
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+    if (isOpen) {
+      setSummaryData(null);
+    }
+  };
 
   const handleRedirectToOwnerProfile = (id) => {
     router.push(`/owner/${id}`);
@@ -272,8 +279,12 @@ export default function PropertyDetails() {
         formData.append("children[]", child);
       });
     }
-
+    if (summaryData?.range_id) {
+      formData.append("range_id", summaryData?.range_id);
+    }
+    setSummaryModalLoading(true);
     reserveUnit(formData).then((res) => {
+      setSummaryModalLoading(false);
       setIsOpen(false);
       if (res) {
         router.push("/reservations");
@@ -281,23 +292,55 @@ export default function PropertyDetails() {
     });
   };
 
-  const onShowSummary = (startDate, endDate) => {
+  const onShowSummary = (
+    startDate,
+    endDate,
+    isOffer = false,
+    offerId = null,
+    offerSummaryData = null
+  ) => {
     const summaryHotelData = new FormData();
-    summaryHotelData.append("from", moment(startDate).format("YYYY-MM-DD"));
-    summaryHotelData.append("to", moment(endDate).format("YYYY-MM-DD"));
+    if (!isOffer) {
+      summaryHotelData.append("from", moment(startDate).format("YYYY-MM-DD"));
+      summaryHotelData.append("to", moment(endDate).format("YYYY-MM-DD"));
+    }
+    // if the unit type is hotel and the reservation is an offer
+    if (isOffer && data.type === "hotel") {
+      summaryHotelData.append("range_id", offerId);
+      summaryHotelData.append(
+        "meal_id",
+        offerSummaryData?.modifiedSelectedMeal?.id
+      );
+      summaryHotelData.append("adults", offerSummaryData?.adults);
+      offerSummaryData?.childrenFormRanges?.forEach((child) => {
+        summaryHotelData.append("children[]", child);
+      });
+      setSummaryData({
+        ...offerSummaryData,
+        range_id: offerId,
+      });
+    }
+    // if the unit type is not hotel and the reservation is an offer
+    if (isOffer && data.type !== "hotel") {
+      setSummaryData((prev) => ({ ...prev, range_id: offerId }));
+      summaryHotelData.append("range_id", offerId);
+    }
+
     summaryHotelData.append("unit_id", id);
     summaryHotelData.append("unit_type", data.type);
-    console.log({ summaryData });
 
-    if (data.type === "hotel") {
+    // if the unit type is hotel and the reservation is not an offer
+
+    if (data.type === "hotel" && !isOffer) {
       summaryHotelData.append("meal_id", summaryData?.modifiedSelectedMeal?.id);
       summaryHotelData.append("adults", summaryData?.adults);
       summaryData?.childrenFormRanges?.forEach((child) => {
         summaryHotelData.append("children[]", child);
       });
     }
-    setSummaryModalLoading(true);
+
     setIsOpen(true);
+    setSummaryModalLoading(true);
     getSummary(summaryHotelData)
       .then((res) => {
         setSummaryModalLoading(false);
@@ -665,6 +708,31 @@ export default function PropertyDetails() {
                     ))}
               </div>
             </div>
+            {/* Offers */}
+            {Object.keys(data).length > 0 && data.has_offers && (
+              <div className="tw-bg-white tw-rounded-xl tw-shadow-[0px_0px_9px_-1px_rgba(0,_0,_0,_0.1)] tw-p-4">
+                <OffersBanner onClick={() => setIsOffersModalOpen(true)} />
+                <ModalComponent
+                  modalBody={
+                    <OffersDisplay
+                      unitType={data?.type}
+                      ageRanges={data?.age_policies}
+                      mealsOptions={data?.meals}
+                      adultsNumber={data?.adults_number}
+                      maxAdultsNumber={data?.max_adults_number}
+                      freeChildrenNumber={data?.free_children_number}
+                      maxChildrenNumber={data?.max_children_number}
+                      onRedeemOffer={onShowSummary}
+                      onCloseOffersModal={() => setIsOffersModalOpen(false)}
+                    />
+                  }
+                  isOpen={isOffersModalOpen}
+                  toggleModal={() => {
+                    setIsOffersModalOpen(!isOffersModalOpen);
+                  }}
+                />
+              </div>
+            )}
 
             {/* Rules */}
             {Object.keys(data).length > 0 && (
